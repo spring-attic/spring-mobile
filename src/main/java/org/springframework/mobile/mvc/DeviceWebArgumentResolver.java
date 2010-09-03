@@ -1,8 +1,7 @@
 package org.springframework.mobile.mvc;
 
-import net.sourceforge.wurfl.core.Device;
-
 import org.springframework.core.MethodParameter;
+import org.springframework.mobile.Device;
 import org.springframework.web.bind.support.WebArgumentResolver;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.RequestAttributes;
