@@ -15,7 +15,7 @@ public class ChainedDeviceResolver implements DeviceResolver {
 		for (DeviceResolver resolver : resolvers) {
 			Device device = resolver.resolveDeviceForUserAgent(userAgent);
 			if (device != null) {
-				return null;
+				return device;
 			}
 		}
 		return defaultDevice(userAgent);
