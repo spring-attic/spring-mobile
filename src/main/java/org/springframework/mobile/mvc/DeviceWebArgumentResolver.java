@@ -1,4 +1,4 @@
-package org.springframework.mobile;
+package org.springframework.mobile.mvc;
 
 import net.sourceforge.wurfl.core.Device;
 
@@ -10,7 +10,7 @@ import org.springframework.web.context.request.RequestAttributes;
 public class DeviceWebArgumentResolver implements WebArgumentResolver {
 	public Object resolveArgument(MethodParameter param, NativeWebRequest request) throws Exception {
 		if (Device.class.isAssignableFrom(param.getParameterType())) {
-			return request.getAttribute(DeviceDetectingHandlerInterceptor.CURRENT_DEVICE_ATTRIBUTE, RequestAttributes.SCOPE_REQUEST);
+			return request.getAttribute(DeviceResolvingHandlerInterceptor.CURRENT_DEVICE_ATTRIBUTE, RequestAttributes.SCOPE_REQUEST);
 		} else {
 			return WebArgumentResolver.UNRESOLVED;
 		}

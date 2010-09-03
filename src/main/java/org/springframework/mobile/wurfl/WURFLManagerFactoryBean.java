@@ -1,4 +1,4 @@
-package org.springframework.mobile;
+package org.springframework.mobile.wurfl;
 
 import net.sourceforge.wurfl.core.DefaultDeviceProvider;
 import net.sourceforge.wurfl.core.DefaultWURFLManager;
@@ -39,9 +39,8 @@ public class WURFLManagerFactoryBean implements FactoryBean<WURFLManager>, Initi
 		WURFLResources resources = new WURFLResources();
 		resources.add(new SpringXMLResource(new InputStreamResource(getClass().getClassLoader().getResourceAsStream(
 		        "org/springframework/mobile/web_browsers_patch.xml"))));
-
 		DefaultWURFLModel model = new DefaultWURFLModel(new SpringXMLResource(new InputStreamResource(getClass()
-		        .getClassLoader().getResourceAsStream("org/springframework/mobile/wurfl.xml"))), resources);
+		        .getClassLoader().getResourceAsStream("org/springframework/mobile/wurfl/wurfl.xml"))), resources);
 		MatcherManager matcherManager = new MatcherManager(model);
 		DefaultDeviceProvider deviceProvider = new DefaultDeviceProvider(model);
 		DefaultWURFLService service = new DefaultWURFLService(matcherManager, deviceProvider);
