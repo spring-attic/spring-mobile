@@ -6,6 +6,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.FactoryBean;
+import org.springframework.mobile.AndroidDeviceResolver;
 import org.springframework.mobile.AppleDeviceResolver;
 import org.springframework.mobile.ChainedDeviceResolver;
 import org.springframework.mobile.DeviceResolver;
@@ -34,6 +35,7 @@ public class DeviceResolverFactoryBean implements FactoryBean<DeviceResolver>, B
 		}
 		ChainedDeviceResolver deviceResolver = new ChainedDeviceResolver();
 		deviceResolver.add(new AppleDeviceResolver());
+		deviceResolver.add(new AndroidDeviceResolver());
 		return deviceResolver;
 	}
 
