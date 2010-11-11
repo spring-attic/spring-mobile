@@ -1,8 +1,8 @@
-package org.springframework.mobile.device.support;
+package org.springframework.mobile.device.resolver;
 
 import org.springframework.mobile.device.resolver.DeviceRequest;
 
-class StubDeviceRequest implements DeviceRequest {
+public class StubDeviceRequest implements DeviceRequest {
 
 	private String userAgent;
 	

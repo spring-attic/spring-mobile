@@ -24,7 +24,7 @@ import org.springframework.mobile.device.resolver.DeviceRequest;
  * Does not perform any request processing or normalization; simply returns the User-Agent header value as-is. 
  * @author Keith Donald
  */
-public final class HttpServletDeviceRequest implements DeviceRequest {
+final class HttpServletDeviceRequest implements DeviceRequest {
 
 	private final HttpServletRequest request;
 	

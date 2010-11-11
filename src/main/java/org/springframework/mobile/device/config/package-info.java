@@ -1,5 +1,5 @@
 /**
- * Spring configuration support for the device resolution service implementation.
+ * Support for configuring a DeviceResolutionService implementation.
  */
 package org.springframework.mobile.device.config;
 

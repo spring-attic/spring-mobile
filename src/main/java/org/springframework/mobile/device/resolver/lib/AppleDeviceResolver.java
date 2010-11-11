@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.mobile.device.support;
+package org.springframework.mobile.device.resolver.lib;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -21,17 +21,18 @@ import java.util.Collection;
 import org.springframework.mobile.device.Device;
 import org.springframework.mobile.device.resolver.DeviceRequest;
 import org.springframework.mobile.device.resolver.DeviceResolver;
+import org.springframework.mobile.device.support.GenericDevice;
 
 /**
- * Resolves Android-based devices.
+ * Resolves Apple-based devices.
  * @author Keith Donald
  */
-public class AndroidDeviceResolver implements DeviceResolver {
+public class AppleDeviceResolver implements DeviceResolver {
 
 	public Device resolveDevice(DeviceRequest request) {
 		String userAgent = request.getUserAgent();
-		if (isAndroid(userAgent)) {
-			return new GenericDevice(userAgent, true, false);
+		if (isApple(userAgent)) {
+			return new GenericDevice(userAgent, true, true);
 		} else {
 			return null;
 		}
@@ -39,8 +40,8 @@ public class AndroidDeviceResolver implements DeviceResolver {
 	
 	// internal helpers
 	
-	private boolean isAndroid(String userAgent) {
-		for (String keyword : androidKeywords) {
+	private boolean isApple(String userAgent) {
+		for (String keyword : appleKeywords) {
 			if (userAgent.contains(keyword)) {
 				return true;
 			}
@@ -48,6 +49,6 @@ public class AndroidDeviceResolver implements DeviceResolver {
 		return false;
 	}
 
-	private Collection<String> androidKeywords = Arrays.asList(new String[] { "Android" });
+	private final Collection<String> appleKeywords = Arrays.asList(new String[] { "iPhone", "iPod", "iPad" });
 
 }

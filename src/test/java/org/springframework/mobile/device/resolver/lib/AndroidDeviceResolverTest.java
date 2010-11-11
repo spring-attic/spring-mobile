@@ -1,10 +1,11 @@
-package org.springframework.mobile.device.support;
+package org.springframework.mobile.device.resolver.lib;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.springframework.mobile.device.Device;
-import org.springframework.mobile.device.support.AndroidDeviceResolver;
+import org.springframework.mobile.device.resolver.StubDeviceRequest;
+import org.springframework.mobile.device.resolver.lib.AndroidDeviceResolver;
 
 public class AndroidDeviceResolverTest {
 	

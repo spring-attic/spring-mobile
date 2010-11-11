@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Test;
 import org.springframework.mobile.device.Device;
+import org.springframework.mobile.device.resolver.lib.AppleDeviceResolver;
 import org.springframework.mock.web.MockHttpServletRequest;
 
 public class GenericDeviceResolutionServiceTest {

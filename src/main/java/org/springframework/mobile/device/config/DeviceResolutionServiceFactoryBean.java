@@ -15,51 +15,25 @@
  */
 package org.springframework.mobile.device.config;
 
-import net.sourceforge.wurfl.core.WURFLManager;
-
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.mobile.device.DeviceResolutionService;
-import org.springframework.mobile.device.support.AndroidDeviceResolver;
-import org.springframework.mobile.device.support.AppleDeviceResolver;
+import org.springframework.mobile.device.resolver.lib.AndroidDeviceResolver;
+import org.springframework.mobile.device.resolver.lib.AppleDeviceResolver;
 import org.springframework.mobile.device.support.GenericDeviceResolutionService;
-import org.springframework.mobile.device.wurfl.WurflDeviceResolutionService;
-import org.springframework.util.ClassUtils;
 
 /**
  * Factory for a {@link DeviceResolutionService} that exports the service as a spring bean that can be injected into other beans.
- * If WURFL is present in the classpath, assumes you wish to use WURFL for device resolution and automatically creates a {@link WurflDeviceResolutionService}.
- * This requires exactly one {@link WURFLManager} to exist in the {@link BeanFactory} hosting this factory bean.
- * If WURFL is not in the classpath, constructs a device resolution service implementation by calling {@link #createDeviceResolutionService()}.
+ * Constructs a device resolution service implementation by calling {@link #createDeviceResolutionService()}.
  * @author Keith Donald
  */
-public class DeviceResolutionServiceFactoryBean implements FactoryBean<DeviceResolutionService>, BeanFactoryAware {
-
-	private static final boolean wurflPresent = ClassUtils.isPresent("net.sourceforge.wurfl.core.WURFLManager", DeviceResolutionServiceFactoryBean.class.getClassLoader());
-	
-	private BeanFactory beanFactory;
-
-	// implementing BeanFactoryAware
-	
-	public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
-		this.beanFactory = beanFactory;
-	}
-
-	// implementing FactoryBean
+public class DeviceResolutionServiceFactoryBean implements FactoryBean<DeviceResolutionService> {
 
 	public Class<?> getObjectType() {
 		return DeviceResolutionService.class;
 	}
 
 	public DeviceResolutionService getObject() throws Exception {
-		if (wurflPresent) {
-			// TODO likely factor this out into a spring-mobile-device-wurfl module
-			return new WurflDeviceResolutionService(beanFactory.getBean(WURFLManager.class));			
-		} else {
-			return createDeviceResolutionService();
-		}
+		return createDeviceResolutionService();
 	}
 	
 	public boolean isSingleton() {
@@ -79,7 +53,7 @@ public class DeviceResolutionServiceFactoryBean implements FactoryBean<DeviceRes
 		GenericDeviceResolutionService service = new GenericDeviceResolutionService();
 		service.addDeviceResolver(new AppleDeviceResolver());
 		service.addDeviceResolver(new AndroidDeviceResolver());
-		return service;	
+		return service;
 	}
 
 }
