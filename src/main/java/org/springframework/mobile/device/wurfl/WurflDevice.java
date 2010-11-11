@@ -21,8 +21,8 @@ import net.sourceforge.wurfl.core.handlers.AppleHandler;
 import org.springframework.mobile.device.Device;
 
 /**
- * Device implementation that delegates to the {@link net.sourceforge.wurfl.core.Device} implementation.
- * The native WURFL device can be obtained by calling {@link #getWurflDevice()}.
+ * Device implementation that delegates to the {@link net.sourceforge.wurfl.core.Device WURFL device} implementation.
+ * The native WURFL device can also be accessed by calling {@link #getWurflDevice()}.
  * @author Keith Donald
  */
 public class WurflDevice implements Device {

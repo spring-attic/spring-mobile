@@ -17,6 +17,7 @@ package org.springframework.mobile.device;
 
 /**
  * A model for the user agent or device that submitted the current request.
+ * Callers may introspect this model to vary UI control or rendering logic by device type.
  * @author Keith Donald
  */
 public interface Device {
