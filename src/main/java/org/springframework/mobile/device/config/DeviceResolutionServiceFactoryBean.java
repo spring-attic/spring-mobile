@@ -37,7 +37,7 @@ import org.springframework.util.ClassUtils;
  */
 public class DeviceResolutionServiceFactoryBean implements FactoryBean<DeviceResolutionService>, BeanFactoryAware {
 
-	private static final boolean wurflPresent = ClassUtils.isPresent("net.sourceforge.wurfl.core.WURFLManager;", DeviceResolutionServiceFactoryBean.class.getClassLoader());
+	private static final boolean wurflPresent = ClassUtils.isPresent("net.sourceforge.wurfl.core.WURFLManager", DeviceResolutionServiceFactoryBean.class.getClassLoader());
 	
 	private BeanFactory beanFactory;
 
@@ -55,6 +55,7 @@ public class DeviceResolutionServiceFactoryBean implements FactoryBean<DeviceRes
 
 	public DeviceResolutionService getObject() throws Exception {
 		if (wurflPresent) {
+			// TODO likely factor this out into a spring-mobile-device-wurfl module
 			return new WurflDeviceResolutionService(beanFactory.getBean(WURFLManager.class));			
 		} else {
 			return createDeviceResolutionService();
