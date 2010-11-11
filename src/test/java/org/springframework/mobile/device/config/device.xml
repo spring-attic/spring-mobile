@@ -10,4 +10,10 @@
 	<device:wurfl-device-resolution-service id="rootAndPatches" root-location="classpath:org/springframework/mobile/device/wurfl/test-wurfl.xml" 
 		patch-locations="classpath:org/springframework/mobile/device/wurfl/test-wurfl-patch.xml" />
 
+	<bean class="org.springframework.mobile.device.mvc.DeviceResolvingHandlerInterceptor">
+		<constructor-arg>
+			<device:wurfl-device-resolution-service root-location="classpath:org/springframework/mobile/device/wurfl/test-wurfl.xml" />
+		</constructor-arg>
+	</bean>
+
 </beans>
