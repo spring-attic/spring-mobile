@@ -17,7 +17,7 @@ public class WurflManagerFactoryBeanTests {
 	@Test
 	public void customRootAndPatches() throws Exception {
 		WurflManagerFactoryBean factory = new WurflManagerFactoryBean(new ClassPathResource("test-wurfl.xml", getClass()));
-		factory.setPatchResources(Collections.singletonList(new ClassPathResource("test-wurfl-patch.xml", getClass())));
+		factory.setPatchLocations(Collections.singletonList(new ClassPathResource("test-wurfl-patch.xml", getClass())));
 		factory.afterPropertiesSet();
 		factory.getObject();
 	}

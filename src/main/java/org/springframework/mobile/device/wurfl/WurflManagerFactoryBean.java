@@ -37,28 +37,30 @@ import org.springframework.util.Assert;
  */
 public class WurflManagerFactoryBean implements FactoryBean<WURFLManager>, InitializingBean {
 
-	private final Resource rootResource;
+	private final Resource rootLocation;
 	
-	private List<? extends Resource> patchResources;
+	private List<? extends Resource> patchLocations;
 	
 	private WURFLManager manager;
 
 	/**
 	 * Constructs a WurflManagerFactoryBean that loads the root Device model from the XML file at the specified resource path.
-	 * @param rootResource the path to the root device model XML file
+	 * The specified resource must be resolvable to a file on the filesystem.
+	 * @param rootLocation the path to the root device model XML file
 	 */
-	public WurflManagerFactoryBean(Resource rootResource) {
-		Assert.notNull(rootResource, "The rootResource property cannot be null");
-		this.rootResource = rootResource;
+	public WurflManagerFactoryBean(Resource rootLocation) {
+		Assert.notNull(rootLocation, "The rootResource property cannot be null");
+		this.rootLocation = rootLocation;
 	}
 
 	/**
 	 * Set additional resource paths for patches that should be applied atop the root model.
 	 * If not set, no patches will be applied.
-	 * @param patchResources the XML-based patch resources to apply
+	 * The specified resources must be resolvable to files on the filesystem.
+	 * @param patchLocations the XML-based patch resources to apply
 	 */
-	public void setPatchResources(List<? extends Resource> patchResources) {
-		this.patchResources = patchResources;
+	public void setPatchLocations(List<? extends Resource> patchLocations) {
+		this.patchLocations = patchLocations;
 	}
 	
 	// implementing InitializingBean
@@ -92,15 +94,15 @@ public class WurflManagerFactoryBean implements FactoryBean<WURFLManager>, Initi
 	}
 
 	private SpringXMLResource getRoot() {
-		return new SpringXMLResource(rootResource);
+		return new SpringXMLResource(rootLocation);
 	}
 	
 	private WURFLResources getPatches() {
-		if (patchResources == null) {
+		if (patchLocations == null) {
 			return null;
 		}
 		WURFLResources patches = new WURFLResources();
-		for (Resource patch : patchResources) {
+		for (Resource patch : patchLocations) {
 			patches.add(new SpringXMLResource(patch));
 		}
 		return patches;
