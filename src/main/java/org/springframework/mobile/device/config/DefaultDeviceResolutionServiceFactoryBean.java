@@ -22,11 +22,11 @@ import org.springframework.mobile.device.resolver.lib.AppleDeviceResolver;
 import org.springframework.mobile.device.support.GenericDeviceResolutionService;
 
 /**
- * Factory for a {@link DeviceResolutionService} that exports the service as a spring bean that can be injected into other beans.
+ * Factory for a standard {@link DeviceResolutionService} implementation that exports the service as a spring bean that can be injected into other beans.
  * Constructs a device resolution service implementation by calling {@link #createDeviceResolutionService()}.
  * @author Keith Donald
  */
-public class DeviceResolutionServiceFactoryBean implements FactoryBean<DeviceResolutionService> {
+public class DefaultDeviceResolutionServiceFactoryBean implements FactoryBean<DeviceResolutionService> {
 
 	public Class<?> getObjectType() {
 		return DeviceResolutionService.class;
