@@ -22,7 +22,7 @@ import org.springframework.mobile.device.Device;
 
 /**
  * Device implementation that delegates to the {@link net.sourceforge.wurfl.core.Device WURFL device} implementation.
- * The native WURFL device can also be accessed by calling {@link #getWurflDevice()}.
+ * The native WURFL device can also be accessed by calling {@link #getWurfl()}.
  * @author Keith Donald
  */
 public class WurflDevice implements Device {
@@ -53,7 +53,7 @@ public class WurflDevice implements Device {
 	/**
 	 * The native WURFL device object, exposing the full capabilities of the WURFL API.
 	 */
-	public net.sourceforge.wurfl.core.Device getWurflDevice() {
+	public net.sourceforge.wurfl.core.Device getWurfl() {
 		return device;
 	}
 
