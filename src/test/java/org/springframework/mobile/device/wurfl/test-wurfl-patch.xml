@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wurfl_patch>
+	<version>
+		<last_updated>September 11, 2010</last_updated>
+	</version>
+	<devices>
+<device id="apple_generic" user_agent="DO_NOT_MATCH_APPLE_GENERIC" fall_back="generic_xhtml">
+  <group id="product_info">
+    <capability name="mobile_browser" value="Safari"/>
+    <capability name="device_os" value="iPhone OS"/>
+    <capability name="has_qwerty_keyboard" value="true"/>
+    <capability name="pointing_method" value="touchscreen"/>
+    <capability name="model_name" value="iPhone"/>
+    <capability name="device_claims_web_support" value="true"/>
+    <capability name="can_skip_aligned_link_row" value="true"/>
+    <capability name="brand_name" value="Apple"/>
+    <capability name="release_date" value="2007_june"/>
+  </group>
+  <group id="markup">
+    <capability name="html_web_3_2" value="true"/>
+    <capability name="html_wi_oma_xhtmlmp_1_0" value="true"/>
+    <capability name="html_wi_w3_xhtmlbasic" value="true"/>
+    <capability name="html_wi_imode_compact_generic" value="true"/>
+    <capability name="wml_1_1" value="false"/>
+    <capability name="preferred_markup" value="html_web_4_0"/>
+    <capability name="xhtml_support_level" value="4"/>
+    <capability name="html_web_4_0" value="true"/>
+  </group>
+  <group id="xhtml_ui">
+    <capability name="xhtml_supports_css_cell_table_coloring" value="true"/>
+    <capability name="xhtml_make_phone_call_string" value="tel:"/>
+    <capability name="xhtml_table_support" value="true"/>
+    <capability name="xhtml_display_accesskey" value="false"/>
+    <capability name="xhtml_supports_iframe" value="full"/>
+    <capability name="xhtmlmp_preferred_mime_type" value="text/html"/>
+    <capability name="xhtml_format_as_attribute" value="false"/>
+    <capability name="xhtml_readable_background_color1" value="#D9EFFF"/>
+    <capability name="xhtml_supports_table_for_layout" value="true"/>
+    <capability name="xhtml_format_as_css_property" value="true"/>
+    <capability name="xhtml_honors_bgcolor" value="true"/>
+  </group>
+  <group id="image_format">
+    <capability name="jpg" value="true"/>
+    <capability name="gif" value="true"/>
+    <capability name="bmp" value="true"/>
+    <capability name="wbmp" value="false"/>
+    <capability name="gif_animated" value="true"/>
+    <capability name="colors" value="65536"/>
+    <capability name="png" value="true"/>
+  </group>
+  <group id="object_download">
+    <capability name="ringtone_voices" value="12"/>
+    <capability name="ringtone_mp3" value="true"/>
+    <capability name="ringtone_amr" value="true"/>
+    <capability name="ringtone_midi_monophonic" value="true"/>
+    <capability name="ringtone" value="true"/>
+    <capability name="ringtone_wav" value="true"/>
+    <capability name="ringtone_midi_polyphonic" value="true"/>
+    <capability name="video" value="true"/>
+    <capability name="ringtone_aac" value="true"/>
+  </group>
+  <group id="ajax">
+    <capability name="ajax_xhr_type" value="standard"/>
+    <capability name="ajax_support_getelementbyid" value="true"/>
+    <capability name="ajax_support_event_listener" value="true"/>
+    <capability name="ajax_manipulate_dom" value="true"/>
+    <capability name="ajax_support_javascript" value="true"/>
+    <capability name="ajax_support_inner_html" value="true"/>
+    <capability name="ajax_manipulate_css" value="true"/>
+    <capability name="ajax_support_events" value="true"/>
+  </group>
+  <group id="display">
+    <capability name="physical_screen_height" value="100"/>
+    <capability name="columns" value="20"/>
+    <capability name="dual_orientation" value="true"/>
+    <capability name="physical_screen_width" value="50"/>
+    <capability name="max_image_width" value="300"/>
+    <capability name="rows" value="20"/>
+    <capability name="resolution_width" value="320"/>
+    <capability name="resolution_height" value="480"/>
+    <capability name="max_image_height" value="320"/>
+  </group>
+  <group id="bearer">
+    <capability name="wifi" value="true"/>
+    <capability name="max_data_rate" value="384"/>
+  </group>
+  <group id="css">
+    <capability name="css_border_image" value="webkit"/>
+    <capability name="css_rounded_corners" value="webkit"/>
+    <capability name="css_spriting" value="true"/>
+    <capability name="css_supports_width_as_percentage" value="true"/>
+  </group>
+  <group id="rss">
+    <capability name="rss_support" value="true"/>
+  </group>
+  <group id="playback">
+    <capability name="playback_vcodec_h264_bp" value="1.2"/>
+  </group>
+  <group id="storage">
+    <capability name="max_deck_size" value="100000"/>
+    <capability name="max_url_length_in_requests" value="512"/>
+  </group>
+  <group id="wml_ui">
+    <capability name="wml_make_phone_call_string" value="none"/>
+    <capability name="card_title_support" value="false"/>
+    <capability name="table_support" value="false"/>
+    <capability name="elective_forms_recommended" value="false"/>
+    <capability name="menu_with_list_of_links_recommended" value="false"/>
+    <capability name="break_list_of_links_with_br_element_recommended" value="false"/>
+  </group>
+  <group id="html_ui">
+    <capability name="canvas_support" value="full"/>
+    <capability name="viewport_width" value="device_width_token"/>
+    <capability name="viewport_supported" value="true"/>
+    <capability name="viewport_userscalable" value="no"/>
+    <capability name="image_inlining" value="true"/>
+  </group>
+</device>
+
+	</devices>
+</wurfl_patch>
