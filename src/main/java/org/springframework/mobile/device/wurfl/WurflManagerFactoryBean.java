@@ -28,8 +28,8 @@ import net.sourceforge.wurfl.core.resource.WURFLResources;
 
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.util.Assert;
 
 /**
  * Factory that constructs the central {@link WURFLManager} and exports it as a Spring bean that can be injected into other beans.
@@ -37,25 +37,25 @@ import org.springframework.core.io.Resource;
  */
 public class WurflManagerFactoryBean implements FactoryBean<WURFLManager>, InitializingBean {
 
-	private Resource rootResource;
+	private final Resource rootResource;
 	
 	private List<? extends Resource> patchResources;
 	
 	private WURFLManager manager;
-	
+
 	/**
-	 * Sets the resource path to the XML-based root device model.
-	 * If not set, defaults to a ClassPathResource pointing to org/springframework/mobile/device/wurfl/wurfl-${version}.xml.
-	 * @param rootResource the root resource path
+	 * Constructs a WurflManagerFactoryBean that loads the root Device model from the XML file at the specified resource path.
+	 * @param rootResource the path to the root device model XML file
 	 */
-	public void setRootResource(Resource rootResource) {
+	public WurflManagerFactoryBean(Resource rootResource) {
+		Assert.notNull(rootResource, "The rootResource property cannot be null");
 		this.rootResource = rootResource;
 	}
-	
+
 	/**
-	 * Set the resource paths to patches that should be applied atop the root model.
-	 * If not set, defaults to a single ClasspathResource pointing to org/springframework/mobiel/device/wurfl/web_browsers_patch.xml.
-	 * @param patchResources the patch resources to apply
+	 * Set additional resource paths for patches that should be applied atop the root model.
+	 * If not set, no patches will be applied.
+	 * @param patchResources the XML-based patch resources to apply
 	 */
 	public void setPatchResources(List<? extends Resource> patchResources) {
 		this.patchResources = patchResources;
@@ -92,27 +92,18 @@ public class WurflManagerFactoryBean implements FactoryBean<WURFLManager>, Initi
 	}
 
 	private SpringXMLResource getRoot() {
-		if (rootResource != null) {
-			return new SpringXMLResource(rootResource);
-		} else {
-			return new SpringXMLResource(new ClassPathResource(DEFAULT_WURFL_ROOT, getClass()));
-		}
+		return new SpringXMLResource(rootResource);
 	}
 	
 	private WURFLResources getPatches() {
+		if (patchResources == null) {
+			return null;
+		}
 		WURFLResources patches = new WURFLResources();
-		if (patchResources != null) {
-			for (Resource patch : patchResources) {
-				patches.add(new SpringXMLResource(patch));
-			}
-		} else {
-			patches.add(new SpringXMLResource(new ClassPathResource(DEFAULT_WEB_BROWSERS_PATCH, getClass())));
+		for (Resource patch : patchResources) {
+			patches.add(new SpringXMLResource(patch));
 		}
 		return patches;
 	}
 	
-	private static final String DEFAULT_WURFL_ROOT = "wurfl-2.0.25.xml";
-
-	private static final String DEFAULT_WEB_BROWSERS_PATCH = "web_browsers_patch.xml";
-
 }
