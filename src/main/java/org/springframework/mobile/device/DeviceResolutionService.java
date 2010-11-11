@@ -18,7 +18,7 @@ package org.springframework.mobile.device;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Resolves the Devices that submit web requests to the application.
+ * Service interface for resolving Devices that originate web requests with the application.
  * @author Keith Donald
  */
 public interface DeviceResolutionService {
