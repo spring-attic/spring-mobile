@@ -35,9 +35,9 @@ import org.springframework.util.ClassUtils;
  * If WURFL is not in the classpath, constructs a device resolution service implementation by calling {@link #createDeviceResolutionService()}.
  * @author Keith Donald
  */
-public class DeviceResolverFactoryBean implements FactoryBean<DeviceResolutionService>, BeanFactoryAware {
+public class DeviceResolutionServiceFactoryBean implements FactoryBean<DeviceResolutionService>, BeanFactoryAware {
 
-	private static final boolean wurflPresent = ClassUtils.isPresent("net.sourceforge.wurfl.core.WURFLManager;", DeviceResolverFactoryBean.class.getClassLoader());
+	private static final boolean wurflPresent = ClassUtils.isPresent("net.sourceforge.wurfl.core.WURFLManager;", DeviceResolutionServiceFactoryBean.class.getClassLoader());
 	
 	private BeanFactory beanFactory;
 
