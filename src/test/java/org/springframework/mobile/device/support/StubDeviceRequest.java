@@ -2,15 +2,15 @@ package org.springframework.mobile.device.support;
 
 import org.springframework.mobile.device.resolver.DeviceRequest;
 
-class TestDeviceRequest implements DeviceRequest {
+class StubDeviceRequest implements DeviceRequest {
 
 	private String userAgent;
 	
-	public TestDeviceRequest() {
+	public StubDeviceRequest() {
 		this.userAgent = "test";
 	}
 	
-	public TestDeviceRequest(String userAgent) {
+	public StubDeviceRequest(String userAgent) {
 		this.userAgent = userAgent;
 	}
 

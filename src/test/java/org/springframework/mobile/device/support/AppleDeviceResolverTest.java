@@ -13,7 +13,7 @@ public class AppleDeviceResolverTest {
 	@Test
 	public void resolve() {
 		AppleDeviceResolver resolver = new AppleDeviceResolver();
-		Device device = resolver.resolveDevice(new TestDeviceRequest("Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_0 like Mac OS X; en-us) AppleWebKit/532.9 (KHTML, like Gecko) Mobile/7D11"));
+		Device device = resolver.resolveDevice(new StubDeviceRequest("Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_0 like Mac OS X; en-us) AppleWebKit/532.9 (KHTML, like Gecko) Mobile/7D11"));
 		assertNotNull(device);
 		assertTrue(device.isMobileBrowser());
 		assertTrue(device.isApple());
@@ -22,7 +22,7 @@ public class AppleDeviceResolverTest {
 	@Test
 	public void noResolve() {
 		AppleDeviceResolver resolver = new AppleDeviceResolver();
-		Device device = resolver.resolveDevice(new TestDeviceRequest());
+		Device device = resolver.resolveDevice(new StubDeviceRequest());
 		assertNull(device);
 	}
 	
