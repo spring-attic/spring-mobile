@@ -24,7 +24,7 @@ import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
 public class DeviceNamespaceHandler extends NamespaceHandlerSupport {
 
 	public void init() {
-		registerBeanDefinitionParser("wurfl-device-resolution-service", new WurflDeviceResolutionServiceParser());
+		registerBeanDefinitionParser("wurfl-device-resolution-service", new WurflDeviceResolutionServiceBeanDefinitionParser());
 	}
 
 }
