@@ -128,6 +128,7 @@ project('spring-mobile-device') {
         compile ("javax.servlet:servlet-api:2.5") { provided = true }
         compile ("net.sourceforge.wurfl:wurfl:1.2") { optional = true }
         compile ("net.sourceforge.wurfl:wng:1.0.1-rc2") {
+            optional = true
             exclude group: 'org.slf4j', module: 'jcl-over-slf4j'
         }
     }
