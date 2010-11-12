@@ -1,4 +1,11 @@
 .DS_Store
+*.iml
+*.ipr
+*.iws
+*.sw?
+.classpath
+.project
+.settings
 .gradle
 build
 target
