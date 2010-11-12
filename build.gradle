@@ -126,8 +126,8 @@ project('spring-mobile-device') {
     dependencies {
         compile "org.springframework:spring-webmvc:$springVersion"
         compile "org.springframework:spring-context:$springVersion"
-        compile "net.sourceforge.wurfl:wurfl:1.2" { optional = true }
-        compile "net.sourceforge.wurfl:wng:1.0.1-rc2" { optional = true }
+        compile("net.sourceforge.wurfl:wurfl:1.2") { optional = true }
+        compile("net.sourceforge.wurfl:wng:1.0.1-rc2") { optional = true }
     }
 }
 

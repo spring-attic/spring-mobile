@@ -17,4 +17,4 @@
 rootProject.name = 'spring-mobile'
 
 include 'docs'
-include 'spring-mobile-device
+include 'spring-mobile-device'
