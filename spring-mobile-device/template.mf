@@ -1,0 +1,9 @@
+Bundle-SymbolicName: org.springframework.mobile.device
+Bundle-Name: Spring Mobile Device Resolution
+Bundle-Vendor: SpringSource
+Bundle-Version: ${version}
+Bundle-ManifestVersion: 2
+Import-Template: 
+ org.springframework.*;version="[3.0.5, 4.0.0)",
+ net.sourceforge.wurfl.*;version="[1.0.0, 2.0.0)";resolution:=optional,
+ net.sourceforge.wurfl.wng;version="[1.0.0, 2.0.0)";resolution:=optional
