@@ -80,7 +80,6 @@ configure(javaprojects) {
     apply plugin: 'maven'    // `gradle install` to push jars to local .m2 cache
     apply plugin: 'eclipse'  // `gradle eclipse` to generate .classpath/.project
     apply plugin: 'idea'     // `gradle idea` to generate .ipr/.iml
-    apply plugin: 'bundlor'  // all core projects should be OSGi-compliant
 
     // ensure JDK 5 compatibility
     sourceCompatibility=1.5
