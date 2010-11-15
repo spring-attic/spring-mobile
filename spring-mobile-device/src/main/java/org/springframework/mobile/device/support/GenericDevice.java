@@ -48,4 +48,12 @@ public class GenericDevice implements Device {
 		return apple;
 	}
 	
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("[Device ").append("userAgent").append("=").append(getUserAgent()).append(", ");
+		builder.append("mobileBrowser").append("=").append(isMobileBrowser()).append(", ");
+		builder.append("isApple").append("=").append(isApple()).append("]");
+		return builder.toString();
+	}
+
 }

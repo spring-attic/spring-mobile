@@ -15,7 +15,6 @@
  */
 package org.springframework.mobile.device.wurfl;
 
-import net.sourceforge.wurfl.core.handlers.AndroidHandler;
 import net.sourceforge.wurfl.core.handlers.AppleHandler;
 
 import org.springframework.mobile.device.Device;
@@ -46,15 +45,20 @@ public class WurflDevice implements Device {
 		return new AppleHandler().canHandle(device.getUserAgent());
 	}
 	
-	public boolean isAndroid() {
-		return new AndroidHandler().canHandle(device.getUserAgent());
-	}
-	
 	/**
 	 * The native WURFL device object, exposing the full capabilities of the WURFL API.
 	 */
 	public net.sourceforge.wurfl.core.Device getWurfl() {
 		return device;
+	}
+	
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("[WurflDevice ").append("userAgent").append("=").append(getUserAgent()).append(", ");
+		builder.append("mobileBrowser").append("=").append(isMobileBrowser()).append(", ");
+		builder.append("isApple").append("=").append(isApple()).append(", ");
+		builder.append("wurfl").append("=").append(getWurfl()).append("]");
+		return builder.toString();
 	}
 
 }

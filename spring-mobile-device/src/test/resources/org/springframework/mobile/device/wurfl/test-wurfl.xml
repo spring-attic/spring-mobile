@@ -643,5 +643,164 @@ WMLProgramming mailing list
       <capability name="xhtml_support_level" value="1"/>
     </group>
   </device>
+  <device id="audiovox_cdm180_ver1" user_agent="AUDIOVOX-CDM180" fall_back="generic" actual_device_root="true">
+    <group id="product_info">
+      <capability name="mobile_browser" value="Openwave Mobile Browser"/>
+      <capability name="model_name" value="CDM-180"/>
+      <capability name="brand_name" value="Audiovox"/>
+    </group>
+    <group id="display">
+      <capability name="max_image_width" value="152"/>
+      <capability name="resolution_height" value="128"/>
+      <capability name="resolution_width" value="160"/>
+      <capability name="max_image_height" value="108"/>
+    </group>
+    <group id="image_format">
+      <capability name="jpg" value="true"/>
+      <capability name="gif" value="true"/>
+      <capability name="gif_animated" value="true"/>
+      <capability name="colors" value="262144"/>
+    </group>
+    <group id="object_download">
+      <capability name="screensaver_jpg" value="true"/>
+      <capability name="screensaver_preferred_width" value="160"/>
+      <capability name="ringtone_voices" value="32"/>
+      <capability name="directdownload_support" value="true"/>
+      <capability name="screensaver_max_height" value="128"/>
+      <capability name="wallpaper_colors" value="18"/>
+      <capability name="wallpaper_max_height" value="128"/>
+      <capability name="wallpaper" value="true"/>
+      <capability name="screensaver_directdownload_size_limit" value="128000"/>
+      <capability name="screensaver_gif" value="true"/>
+      <capability name="screensaver_max_width" value="160"/>
+      <capability name="wallpaper_directdownload_size_limit" value="128000"/>
+      <capability name="wallpaper_max_width" value="160"/>
+      <capability name="ringtone_midi_monophonic" value="true"/>
+      <capability name="wallpaper_jpg" value="true"/>
+      <capability name="wallpaper_preferred_width" value="160"/>
+      <capability name="screensaver_preferred_height" value="128"/>
+      <capability name="wallpaper_preferred_height" value="128"/>
+      <capability name="ringtone" value="true"/>
+      <capability name="wallpaper_gif" value="true"/>
+      <capability name="ringtone_directdownload_size_limit" value="128000"/>
+      <capability name="ringtone_midi_polyphonic" value="true"/>
+      <capability name="screensaver" value="true"/>
+      <capability name="ringtone_spmidi" value="true"/>
+      <capability name="screensaver_colors" value="18"/>
+    </group>
+    <group id="drm">
+      <capability name="oma_v_1_0_forwardlock" value="true"/>
+    </group>
+    <group id="mms">
+      <capability name="mms_gif_static" value="true"/>
+      <capability name="sender" value="true"/>
+      <capability name="mms_midi_polyphonic" value="true"/>
+      <capability name="mms_jpeg_progressive" value="true"/>
+      <capability name="mms_midi_monophonic" value="true"/>
+      <capability name="receiver" value="true"/>
+      <capability name="mms_jpeg_baseline" value="true"/>
+      <capability name="mms_midi_polyphonic_voices" value="32"/>
+      <capability name="mms_gif_animated" value="true"/>
+    </group>
+    <group id="sound_format">
+      <capability name="voices" value="32"/>
+      <capability name="midi_monophonic" value="true"/>
+      <capability name="midi_polyphonic" value="true"/>
+    </group>
+    <group id="markup">
+      <capability name="xhtml_support_level" value="-1"/>
+      <capability name="preferred_markup" value="wml_1_1"/>
+    </group>
+    <group id="streaming">
+      <capability name="streaming_real_media" value="none"/>
+    </group>
+  </device> 
+  <device id="generic_web_browser" user_agent="Mozilla/4.0" fall_back="generic_xhtml">
+    <group id="product_info">
+      <capability name="has_qwerty_keyboard" value="true"/>
+      <capability name="pointing_method" value="touchscreen"/>
+      <capability name="model_name" value=""/>
+      <capability name="can_skip_aligned_link_row" value="true"/>
+      <capability name="device_claims_web_support" value="true"/>
+      <capability name="is_wireless_device" value="false"/>
+      <capability name="brand_name" value="Desktop"/>
+      <capability name="can_assign_phone_number" value="false"/>
+      <capability name="release_date" value="1994_january"/>
+    </group>
+    <group id="display">
+      <capability name="physical_screen_height" value="400"/>
+      <capability name="columns" value="120"/>
+      <capability name="physical_screen_width" value="400"/>
+      <capability name="rows" value="200"/>
+      <capability name="max_image_width" value="600"/>
+      <capability name="resolution_height" value="480"/>
+      <capability name="resolution_width" value="640"/>
+      <capability name="max_image_height" value="600"/>
+    </group>
+    <group id="markup">
+      <capability name="html_web_3_2" value="true"/>
+      <capability name="html_wi_oma_xhtmlmp_1_0" value="false"/>
+      <capability name="wml_1_1" value="false"/>
+      <capability name="xhtml_support_level" value="4"/>
+      <capability name="preferred_markup" value="html_web_4_0"/>
+      <capability name="html_web_4_0" value="true"/>
+    </group>
+    <group id="chtml_ui">
+      <capability name="chtml_table_support" value="true"/>
+    </group>
+    <group id="xhtml_ui">
+      <capability name="xhtml_select_as_radiobutton" value="true"/>
+      <capability name="xhtml_avoid_accesskeys" value="true"/>
+      <capability name="xhtml_select_as_dropdown" value="true"/>
+      <capability name="xhtml_supports_iframe" value="full"/>
+      <capability name="xhtml_supports_forms_in_table" value="true"/>
+      <capability name="xhtmlmp_preferred_mime_type" value="text/html"/>
+      <capability name="xhtml_select_as_popup" value="true"/>
+      <capability name="xhtml_honors_bgcolor" value="true"/>
+      <capability name="xhtml_file_upload" value="supported"/>
+    </group>
+    <group id="image_format">
+      <capability name="jpg" value="true"/>
+      <capability name="gif" value="true"/>
+      <capability name="bmp" value="true"/>
+      <capability name="wbmp" value="false"/>
+      <capability name="gif_animated" value="true"/>
+      <capability name="colors" value="65536"/>
+      <capability name="png" value="true"/>
+    </group>
+    <group id="security">
+      <capability name="https_support" value="true"/>
+    </group>
+    <group id="storage">
+      <capability name="max_deck_size" value="100000"/>
+    </group>
+    <group id="ajax">
+      <capability name="ajax_support_getelementbyid" value="true"/>
+      <capability name="ajax_xhr_type" value="standard"/>
+      <capability name="ajax_support_event_listener" value="true"/>
+      <capability name="ajax_support_javascript" value="true"/>
+      <capability name="ajax_manipulate_dom" value="true"/>
+      <capability name="ajax_support_inner_html" value="true"/>
+      <capability name="ajax_manipulate_css" value="true"/>
+      <capability name="ajax_support_events" value="true"/>
+    </group>
+    <group id="wml_ui">
+      <capability name="wml_make_phone_call_string" value="none"/>
+      <capability name="card_title_support" value="false"/>
+      <capability name="table_support" value="false"/>
+      <capability name="elective_forms_recommended" value="false"/>
+      <capability name="menu_with_list_of_links_recommended" value="false"/>
+      <capability name="break_list_of_links_with_br_element_recommended" value="false"/>
+    </group>
+    <group id="sms">
+      <capability name="sms_enabled" value="false"/>
+    </group>
+    <group id="bearer">
+      <capability name="has_cellular_radio" value="false"/>
+    </group>
+    <group id="pdf">
+      <capability name="pdf_support" value="true"/>
+    </group>
+  </device>   
   </devices>
 </wurfl>
