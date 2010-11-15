@@ -22,9 +22,6 @@ Once complete, you may then import the projects into Eclipse as usual:
 
  File -> Import -> Existing projects into workspace
 
-Browse to the 'spring-integration' root directory. All projects should import
-free of errors.
-
 -------------------------------------------------------------------------------
 To generate IDEA metadata (.iml and .ipr files), do the following:
 
