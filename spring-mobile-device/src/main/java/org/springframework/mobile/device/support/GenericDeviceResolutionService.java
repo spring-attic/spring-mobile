@@ -29,7 +29,7 @@ import org.springframework.mobile.device.resolver.DeviceResolver;
  * General-purpose device resolution service implementation.
  * Allows one or more device resolvers to be registered that are applied in the order they are registered.
  * The first resolver that succeeds wins.
- * If no resolver succeeds, a {@link #defaultDevice(DeviceRequest)} implementation is returned.
+ * If no resolver succeeds, a {@link #createDefaultDevice(DeviceRequest)} implementation is returned.
  * @author Keith Donald
  * @see #addDeviceResolver(DeviceResolver)
  */
