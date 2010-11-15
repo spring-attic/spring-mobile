@@ -30,7 +30,7 @@ public class WurflDeviceResolutionServiceTests {
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		request.addHeader("User-Agent", "AUDIOVOX-CDM180");
 		Device device = service.resolveDevice(request);
-		assertTrue(device.isMobileBrowser());
+		assertTrue(device.isMobile());
 	}
 
 	@Test
@@ -39,7 +39,7 @@ public class WurflDeviceResolutionServiceTests {
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		request.addHeader("User-Agent", "Firefox");
 		Device device = service.resolveDevice(request);
-		assertFalse(device.isMobileBrowser());
+		assertTrue(device.isMobile());
 	}
 
 	@Test
@@ -54,7 +54,7 @@ public class WurflDeviceResolutionServiceTests {
 		request.addHeader("User-Agent", "Firefox");
 		Device device = service.resolveDevice(request);
 		System.out.println(device);
-		assertFalse(device.isMobileBrowser());
+		assertFalse(device.isMobile());
 	}
 
 }

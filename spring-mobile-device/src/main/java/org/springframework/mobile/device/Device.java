@@ -30,13 +30,10 @@ public interface Device {
 	String getUserAgent();
 
 	/**
-	 * True if this device is a mobile browser such as the Safari for the iPhone or Chrome Lite for the Android.
+	 * True if this device is a mobile device such as an Apple iPhone or an Nexus One Android.
+	 * Could be used by an pre-handle interceptor to redirect the user to a dedicated mobile web site.
+	 * Could be used to apply a different page layout if the device is a mobile device.
 	 */
-	boolean isMobileBrowser();
+	boolean isMobile();
 
-	/**
-	 * True if this device is an Apple device such as the Apple iPhone, iPod Touch, or iPad.
-	 */
-	boolean isApple();
-	
 }

@@ -1,7 +1,7 @@
 package org.springframework.mobile.device.config;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -18,8 +18,7 @@ public class DeviceNamespaceHandlerTests {
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		Device device = service.resolveDevice(request);
 		assertNotNull(device);
-		assertFalse(device.isMobileBrowser());
-		assertFalse(device.isApple());
+		assertTrue(device.isMobile());
 		context.getBean("rootAndPatches", DeviceResolutionService.class);
 	}
 	

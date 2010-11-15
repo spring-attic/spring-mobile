@@ -15,40 +15,16 @@
  */
 package org.springframework.mobile.device.resolver.lib;
 
-import java.util.Arrays;
-import java.util.Collection;
-
-import org.springframework.mobile.device.Device;
-import org.springframework.mobile.device.resolver.DeviceRequest;
-import org.springframework.mobile.device.resolver.DeviceResolver;
-import org.springframework.mobile.device.support.GenericDevice;
+import org.springframework.mobile.device.support.KeywordBasedDeviceResolver;
 
 /**
  * Resolves Android-based devices.
  * @author Keith Donald
  */
-public class AndroidDeviceResolver implements DeviceResolver {
+public class AndroidDeviceResolver extends KeywordBasedDeviceResolver {
 
-	public Device resolveDevice(DeviceRequest request) {
-		String userAgent = request.getUserAgent();
-		if (isAndroid(userAgent)) {
-			return new GenericDevice(userAgent, true, false);
-		} else {
-			return null;
-		}
+	public AndroidDeviceResolver() {
+		addKeyword("Android");
 	}
-	
-	// internal helpers
-	
-	private boolean isAndroid(String userAgent) {
-		for (String keyword : androidKeywords) {
-			if (userAgent.contains(keyword)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private Collection<String> androidKeywords = Arrays.asList(new String[] { "Android" });
 
 }

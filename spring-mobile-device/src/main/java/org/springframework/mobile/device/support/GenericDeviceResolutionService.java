@@ -62,7 +62,7 @@ public class GenericDeviceResolutionService implements DeviceResolutionService {
 	 * Subclasses may override.
 	 */
 	protected Device createDefaultDevice(DeviceRequest request) {
-		return new GenericDevice(request.getUserAgent(), false ,false);
+		return new GenericDevice(request.getUserAgent(), false);
 	}
 
 }

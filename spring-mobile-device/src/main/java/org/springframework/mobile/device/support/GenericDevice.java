@@ -26,33 +26,28 @@ public class GenericDevice implements Device {
 
 	private final String userAgent;
 
-	private final boolean mobileBrowser;
-	
-	private final boolean apple;
-	
-	public GenericDevice(String userAgent, boolean mobileBrowser, boolean apple) {
+	private final boolean mobile;
+
+	/**
+	 * Creates a GeneriDevice.
+	 */
+	public GenericDevice(String userAgent, boolean mobile) {
 		this.userAgent = userAgent;
-		this.mobileBrowser = mobileBrowser;
-		this.apple = apple;
+		this.mobile = mobile;
 	}
 	
 	public String getUserAgent() {
 		return userAgent;
 	}
 
-	public boolean isMobileBrowser() {
-		return mobileBrowser;
+	public boolean isMobile() {
+		return mobile;
 	}
 
-	public boolean isApple() {
-		return apple;
-	}
-	
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("[Device ").append("userAgent").append("=").append(getUserAgent()).append(", ");
-		builder.append("mobileBrowser").append("=").append(isMobileBrowser()).append(", ");
-		builder.append("isApple").append("=").append(isApple()).append("]");
+		builder.append("mobile").append("=").append(isMobile()).append("]");
 		return builder.toString();
 	}
 

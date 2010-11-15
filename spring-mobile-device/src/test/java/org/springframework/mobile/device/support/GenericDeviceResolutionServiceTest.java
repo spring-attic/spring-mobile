@@ -20,8 +20,7 @@ public class GenericDeviceResolutionServiceTest {
 		resolver.addDeviceResolver(new AppleDeviceResolver());
 		Device device = resolver.resolveDevice(new TestRequestFactory("Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_0 like Mac OS X; en-us) AppleWebKit/532.9 (KHTML, like Gecko) Mobile/7D11").getRequest());
 		assertNotNull(device);
-		assertTrue(device.isMobileBrowser());
-		assertTrue(device.isApple());		
+		assertTrue(device.isMobile());
 	}
 
 	@Test
@@ -29,16 +28,14 @@ public class GenericDeviceResolutionServiceTest {
 		resolver.addDeviceResolver(new AppleDeviceResolver());
 		Device device = resolver.resolveDevice(new TestRequestFactory().getRequest());
 		assertNotNull(device);
-		assertFalse(device.isMobileBrowser());
-		assertFalse(device.isApple());		
+		assertFalse(device.isMobile());
 	}
 
 	@Test
 	public void resolveDefaultNone() {
 		Device device = resolver.resolveDevice(new TestRequestFactory().getRequest());
 		assertNotNull(device);
-		assertFalse(device.isMobileBrowser());
-		assertFalse(device.isApple());		
+		assertFalse(device.isMobile());
 	}
 	
 	static class TestRequestFactory {

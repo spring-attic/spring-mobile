@@ -15,40 +15,16 @@
  */
 package org.springframework.mobile.device.resolver.lib;
 
-import java.util.Arrays;
-import java.util.Collection;
-
-import org.springframework.mobile.device.Device;
-import org.springframework.mobile.device.resolver.DeviceRequest;
-import org.springframework.mobile.device.resolver.DeviceResolver;
-import org.springframework.mobile.device.support.GenericDevice;
+import org.springframework.mobile.device.support.KeywordBasedDeviceResolver;
 
 /**
  * Resolves Apple-based devices.
  * @author Keith Donald
  */
-public class AppleDeviceResolver implements DeviceResolver {
+public class AppleDeviceResolver extends KeywordBasedDeviceResolver {
 
-	public Device resolveDevice(DeviceRequest request) {
-		String userAgent = request.getUserAgent();
-		if (isApple(userAgent)) {
-			return new GenericDevice(userAgent, true, true);
-		} else {
-			return null;
-		}
+	public AppleDeviceResolver() {
+		addKeywords("iPhone", "iPod", "iPad");
 	}
 	
-	// internal helpers
-	
-	private boolean isApple(String userAgent) {
-		for (String keyword : appleKeywords) {
-			if (userAgent.contains(keyword)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private final Collection<String> appleKeywords = Arrays.asList(new String[] { "iPhone", "iPod", "iPad" });
-
 }
