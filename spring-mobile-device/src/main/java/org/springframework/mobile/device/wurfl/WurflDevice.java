@@ -23,8 +23,8 @@ import net.sourceforge.wurfl.core.MarkUp;
 import org.springframework.mobile.device.Device;
 
 /**
- * Device implementation that delegates to the {@link net.sourceforge.wurfl.core.Device WURFL device} implementation.
- * The native WURFL device can also be accessed by calling {@link #getWurfl()}.
+ * WURFL-based device implementation.
+ * Directly implements net.sourceforge.wurfl.core.Device, exposing the full capabilities of the WURFL API.
  * @author Keith Donald
  */
 public class WurflDevice implements Device, net.sourceforge.wurfl.core.Device {
@@ -38,7 +38,7 @@ public class WurflDevice implements Device, net.sourceforge.wurfl.core.Device {
 	// implementing our Device interface
 	
 	public boolean isMobile() {
-		String capability = device.getCapability("is_wireless_device");
+		String capability = getCapability("is_wireless_device");
 		return capability != null && capability.length() > 0 && Boolean.valueOf(capability);
 	}
 
