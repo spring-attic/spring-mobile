@@ -1,2 +1,14 @@
 Spring Mobile Changelog
-============================
+=======================
+
+1.0.0.M1 (2010.11.16)
+=======================
+* Initial release
+* Added 'spring-mobile-device' module for mobile device detection.
+* Added LiteDeviceResolver that detects mobile device presence but not capabilities.
+* Added WurflDeviceResolver that detects mobile device presence as well as capabilities; requires net.sourceforge.wurfl:wurfl to be present in the classpath.
+* Added 'http://www.springframework.org/schema/mobile/spring-mobile-device' namespace with a convenient 'wurfl-device-resolver' tag for configuring a WurflDeviceResolver.
+* Added DeviceResolvingHandlerInterceptor that, on preHandle, resolves the Device that originated the current web request.
+* Added DeviceWebArgumentResolver that allows the currentDevice to be injected as a @Controller handler method argument.
+* Added a MobileRedirectHandlerInterceptor that, on preHandle, redirects to a dedicated mobile site if the currentDevice isMobile().
+* Added a WngHandlerInterceptor that allows WUrfl's "Wall NG" tag library to be used to author pages in one markup and have it rendered in different grades (WML, XHTML Simple, XHTML Advanced).
