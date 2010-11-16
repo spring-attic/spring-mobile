@@ -19,6 +19,7 @@ import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
 
 /**
  * Registers bean-definition parsers for the device XML configuration namespace.
+ * See org/springframework/mobile/device/config/spring-mobile-device.xsd for the definition of the namespace.
  * @author Keith Donald
  */
 public class DeviceNamespaceHandler extends NamespaceHandlerSupport {
