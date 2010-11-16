@@ -37,18 +37,18 @@ public class DeviceResolvingHandlerInterceptor implements HandlerInterceptor {
 	 */
 	public static final String CURRENT_DEVICE_ATTRIBUTE = "currentDevice";
 	
-	private final DeviceResolver deviceResolutionService;
+	private final DeviceResolver deviceResolver;
 
 	/**
 	 * Create a device resolving {@link HandlerInterceptor}.
-	 * @param deviceResolutionService the device resolution system to delegate to in {@link #preHandle(HttpServletRequest, HttpServletResponse, Object)}.
+	 * @param deviceResolver the device resolver to delegate to in {@link #preHandle(HttpServletRequest, HttpServletResponse, Object)}.
 	 */
-	public DeviceResolvingHandlerInterceptor(DeviceResolver deviceResolutionService) {
-		this.deviceResolutionService = deviceResolutionService;
+	public DeviceResolvingHandlerInterceptor(DeviceResolver deviceResolver) {
+		this.deviceResolver = deviceResolver;
 	}
 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		Device device = deviceResolutionService.resolveDevice(request);
+		Device device = deviceResolver.resolveDevice(request);
 		request.setAttribute(CURRENT_DEVICE_ATTRIBUTE, device);
 		return true;
 	}
