@@ -69,9 +69,9 @@ public class WurflDevice implements Device, net.sourceforge.wurfl.core.Device {
 		StringBuilder builder = new StringBuilder();
 		builder.append("[WurflDevice ");
 		builder.append("mobile").append("=").append(isMobile()).append(", ");
-		builder.append("id").append("=").append(getId());
-		builder.append("userAgent").append("=").append(getUserAgent());
-		builder.append("capabilities").append("=").append(getCapabilities());
+		builder.append("id").append("=").append(getId()).append(", ");
+		builder.append("userAgent").append("=").append(getUserAgent()).append(", ");
+		builder.append("capabilities").append("=").append(getCapabilities()).append(", ");
 		builder.append("markup").append("=").append(getMarkUp());
 		builder.append("]");
 		return builder.toString();

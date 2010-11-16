@@ -34,7 +34,7 @@ class LiteDevice implements Device {
 
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("[Device ");
+		builder.append("[LiteDevice ");
 		builder.append("mobile").append("=").append(isMobile());
 		builder.append("]");
 		return builder.toString();
