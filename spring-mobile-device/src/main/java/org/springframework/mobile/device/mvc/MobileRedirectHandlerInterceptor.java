@@ -46,7 +46,7 @@ public class MobileRedirectHandlerInterceptor implements HandlerInterceptor {
 	/**
 	 * Creates a mobile redirect handler interceptor.
 	 * @param redirectUrl the url to redirect to if the device is a mobile device; may be an absolute URL such as http://host or a relative URL.
-	 * If relative, when the url begins with "/" and contextRelative is true the URL it is treated as relative to the application context path.
+	 * If relative, when the url begins with "/" and contextRelative is true it is treated as relative to the application context path.
 	 * Redirection is handled by calling {@link HttpServletResponse#sendRedirect(String)}.
 	 * @param contextRelative if the redirectUrl is relative to the current application context path;
 	 */
