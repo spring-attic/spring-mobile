@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.mobile.device.Device;
 import org.springframework.mobile.device.DeviceResolver;
+import org.springframework.mobile.device.lite.LiteDeviceResolver;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -39,6 +40,13 @@ public class DeviceResolvingHandlerInterceptor implements HandlerInterceptor {
 	
 	private final DeviceResolver deviceResolver;
 
+	/**
+	 * Create a device resolving {@link HandlerInterceptor} that defaults to a {@link LiteDeviceResolver} implementation.
+	 */
+	public DeviceResolvingHandlerInterceptor() {
+		this(new LiteDeviceResolver());
+	}
+	
 	/**
 	 * Create a device resolving {@link HandlerInterceptor}.
 	 * @param deviceResolver the device resolver to delegate to in {@link #preHandle(HttpServletRequest, HttpServletResponse, Object)}.

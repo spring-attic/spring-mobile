@@ -34,5 +34,14 @@ public class DeviceResolvingHandlerInterceptorTest {
 		assertTrue(interceptor.preHandle(request, response, null));
 		assertSame(device, request.getAttribute(DeviceResolvingHandlerInterceptor.CURRENT_DEVICE_ATTRIBUTE));
 	}
-	
+
+	@Test
+	public void resolveDefaultResolver() throws Exception {
+		interceptor = new DeviceResolvingHandlerInterceptor();
+		request.addHeader("User-Agent", "Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_0 like Mac OS X; en-us) AppleWebKit/532.9 (KHTML, like Gecko) Version/4.0.5 Mobile/8A293 Safari/6531.22.7");
+		assertTrue(interceptor.preHandle(request, response, null));
+		Device device = (Device) request.getAttribute(DeviceResolvingHandlerInterceptor.CURRENT_DEVICE_ATTRIBUTE);
+		assertTrue(device.isMobile());
+	}
+
 }
