@@ -13,18 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.mobile.device.resolver.lib;
+package org.springframework.mobile.device;
 
-import org.springframework.mobile.device.support.KeywordBasedDeviceResolver;
+import javax.servlet.http.HttpServletRequest;
 
 /**
- * Resolves Android-based devices.
+ * Service interface for resolving Devices that originate web requests with the application.
  * @author Keith Donald
  */
-public class AndroidDeviceResolver extends KeywordBasedDeviceResolver {
+public interface DeviceResolver {
 
-	public AndroidDeviceResolver() {
-		addKeyword("Android");
-	}
-
+	/**
+	 * Resolve the device that originated the web request.
+	 */
+	Device resolveDevice(HttpServletRequest request);
+	
 }

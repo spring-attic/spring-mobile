@@ -26,7 +26,7 @@ public class WurflDeviceResolutionServiceTests {
 	
 	@Test
 	public void resolveMobile() throws Exception {
-		WurflDeviceResolutionService service = new WurflDeviceResolutionService(manager);
+		WurflDeviceResolver service = new WurflDeviceResolver(manager);
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		request.addHeader("User-Agent", "AUDIOVOX-CDM180");
 		Device device = service.resolveDevice(request);
@@ -35,7 +35,7 @@ public class WurflDeviceResolutionServiceTests {
 
 	@Test
 	public void resolveWebBrowserNoPatch() throws Exception {
-		WurflDeviceResolutionService service = new WurflDeviceResolutionService(manager);
+		WurflDeviceResolver service = new WurflDeviceResolver(manager);
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		request.addHeader("User-Agent", "Firefox");
 		Device device = service.resolveDevice(request);
@@ -49,7 +49,7 @@ public class WurflDeviceResolutionServiceTests {
 		factory.afterPropertiesSet();
 		manager = factory.getObject();
 
-		WurflDeviceResolutionService service = new WurflDeviceResolutionService(manager);
+		WurflDeviceResolver service = new WurflDeviceResolver(manager);
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		request.addHeader("User-Agent", "Firefox");
 		Device device = service.resolveDevice(request);

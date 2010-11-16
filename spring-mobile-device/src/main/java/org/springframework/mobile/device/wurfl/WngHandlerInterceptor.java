@@ -21,6 +21,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.wurfl.core.Device;
 import net.sourceforge.wurfl.wng.Constants;
 import net.sourceforge.wurfl.wng.WNGDevice;
 import net.sourceforge.wurfl.wng.component.ComponentException;
@@ -68,7 +69,7 @@ public class WngHandlerInterceptor implements HandlerInterceptor {
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
 		if (isWngDocumentCreated(request)) {
 			// logic adapted from WNGContextFilter which has the same responsibility
-			WNGDevice device = new WNGDevice(((WurflDevice) request.getAttribute(DeviceResolvingHandlerInterceptor.CURRENT_DEVICE_ATTRIBUTE)).getWurfl());
+			WNGDevice device = new WNGDevice((Device) request.getAttribute(DeviceResolvingHandlerInterceptor.CURRENT_DEVICE_ATTRIBUTE));
 			Document document = resolveDocument(request);
 			StyleContainer styleContainer = (StyleContainer)CollectionUtils.find(document.getHead().getChildren(), new InstanceofPredicate(StyleContainer.class));
 			if (styleContainer==null) {

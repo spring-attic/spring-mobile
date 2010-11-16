@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.mobile.device.Device;
-import org.springframework.mobile.device.DeviceResolutionService;
+import org.springframework.mobile.device.DeviceResolver;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -37,13 +37,13 @@ public class DeviceResolvingHandlerInterceptor implements HandlerInterceptor {
 	 */
 	public static final String CURRENT_DEVICE_ATTRIBUTE = "currentDevice";
 	
-	private final DeviceResolutionService deviceResolutionService;
+	private final DeviceResolver deviceResolutionService;
 
 	/**
 	 * Create a device resolving {@link HandlerInterceptor}.
 	 * @param deviceResolutionService the device resolution system to delegate to in {@link #preHandle(HttpServletRequest, HttpServletResponse, Object)}.
 	 */
-	public DeviceResolvingHandlerInterceptor(DeviceResolutionService deviceResolutionService) {
+	public DeviceResolvingHandlerInterceptor(DeviceResolver deviceResolutionService) {
 		this.deviceResolutionService = deviceResolutionService;
 	}
 

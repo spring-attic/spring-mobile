@@ -5,15 +5,15 @@ import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.beans.factory.xml.AbstractBeanDefinitionParser;
 import org.springframework.beans.factory.xml.ParserContext;
-import org.springframework.mobile.device.wurfl.WurflDeviceResolutionService;
+import org.springframework.mobile.device.wurfl.WurflDeviceResolver;
 import org.springframework.mobile.device.wurfl.WurflManagerFactoryBean;
 import org.w3c.dom.Element;
 
-class WurflDeviceResolutionServiceBeanDefinitionParser extends AbstractBeanDefinitionParser {
+class WurflDeviceResolverBeanDefinitionParser extends AbstractBeanDefinitionParser {
 
 	protected AbstractBeanDefinition parseInternal(Element element, ParserContext parserContext) {
 		Object source = parserContext.extractSource(element);
-		RootBeanDefinition serviceDef = new RootBeanDefinition(WurflDeviceResolutionService.class);
+		RootBeanDefinition serviceDef = new RootBeanDefinition(WurflDeviceResolver.class);
 		serviceDef.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
 		serviceDef.setSource(source);
 		

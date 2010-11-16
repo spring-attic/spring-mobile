@@ -22,7 +22,7 @@ import net.sourceforge.wurfl.core.request.DefaultWURFLRequestFactory;
 import net.sourceforge.wurfl.core.request.WURFLRequestFactory;
 
 import org.springframework.mobile.device.Device;
-import org.springframework.mobile.device.DeviceResolutionService;
+import org.springframework.mobile.device.DeviceResolver;
 
 /**
  * WURFL-based device resolution service.
@@ -30,7 +30,7 @@ import org.springframework.mobile.device.DeviceResolutionService;
  * See http://wurfl.sourceforge.net for more information.
  * @author Keith Donald
  */
-public class WurflDeviceResolutionService implements DeviceResolutionService {
+public class WurflDeviceResolver implements DeviceResolver {
 
 	private final WURFLManager wurflManager;
 
@@ -40,7 +40,7 @@ public class WurflDeviceResolutionService implements DeviceResolutionService {
 	 * Creates a new Wurfl-based device resolution service.
 	 * @param wurflManager the central WURFL manager object to delegate to.
 	 */
-	public WurflDeviceResolutionService(WURFLManager wurflManager) {
+	public WurflDeviceResolver(WURFLManager wurflManager) {
 		this(wurflManager, new DefaultWURFLRequestFactory());
 	}
 
@@ -49,7 +49,7 @@ public class WurflDeviceResolutionService implements DeviceResolutionService {
 	 * @param wurflManager the central WURFL manager object to delegate to
 	 * @param requestFactory a custom WurflRequest factory
 	 */
-	public WurflDeviceResolutionService(WURFLManager wurflManager, WURFLRequestFactory requestFactory) {
+	public WurflDeviceResolver(WURFLManager wurflManager, WURFLRequestFactory requestFactory) {
 		this.wurflManager = wurflManager;
 		this.requestFactory = requestFactory;
 	}

@@ -5,14 +5,14 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/mobile/device http://www.springframework.org/schema/mobile/device/spring-mobile-device-1.0.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-	<device:wurfl-device-resolution-service id="root" root-location="classpath:org/springframework/mobile/device/wurfl/test-wurfl.xml" />
+	<device:wurfl-device-resolver id="root" root-location="classpath:org/springframework/mobile/device/wurfl/test-wurfl.xml" />
 
-	<device:wurfl-device-resolution-service id="rootAndPatches" root-location="classpath:org/springframework/mobile/device/wurfl/test-wurfl.xml" 
+	<device:wurfl-device-resolver id="rootAndPatches" root-location="classpath:org/springframework/mobile/device/wurfl/test-wurfl.xml" 
 		patch-locations="classpath:org/springframework/mobile/device/wurfl/test-wurfl-patch.xml" />
 
 	<bean class="org.springframework.mobile.device.mvc.DeviceResolvingHandlerInterceptor">
 		<constructor-arg>
-			<device:wurfl-device-resolution-service root-location="classpath:org/springframework/mobile/device/wurfl/test-wurfl.xml" />
+			<device:wurfl-device-resolver root-location="classpath:org/springframework/mobile/device/wurfl/test-wurfl.xml" />
 		</constructor-arg>
 	</bean>
 

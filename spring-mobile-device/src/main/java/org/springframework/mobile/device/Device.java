@@ -23,16 +23,9 @@ package org.springframework.mobile.device;
 public interface Device {
 
 	/**
-	 * The user agent string for this device.
-	 * Generally obtained by reading the User-Agent header of the HTTP request.
-	 * The DeviceResolver may have normalized this value when mapping it to a Device model in its library.
-	 */
-	String getUserAgent();
-
-	/**
 	 * True if this device is a mobile device such as an Apple iPhone or an Nexus One Android.
-	 * Could be used by an pre-handle interceptor to redirect the user to a dedicated mobile web site.
-	 * Could be used to apply a different page layout if the device is a mobile device.
+	 * Could be used by a pre-handle interceptor to redirect the user to a dedicated mobile web site.
+	 * Could be used to apply a different page layout when the device is a mobile device.
 	 */
 	boolean isMobile();
 
