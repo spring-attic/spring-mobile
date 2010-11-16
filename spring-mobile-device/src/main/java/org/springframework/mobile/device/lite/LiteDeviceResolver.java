@@ -31,7 +31,7 @@ import org.springframework.mobile.device.wurfl.WurflDeviceResolver;
  * Detects the presence of a mobile device and works for a large percentage of mobile browsers.
  * Does not perform any device capability mapping, if you need that consider {@link WurflDeviceResolver}.
  *  
- * The code is primarily based on a list of approximately 90 well-known mobile browser UA string snippets,
+ * The code is based primarily on a list of approximately 90 well-known mobile browser UA string snippets,
  * with a couple of special cases for Opera Mini, the W3C default delivery context and certain other Windows browsers.
  * The code also looks to see if the browser advertises WAP capabilities as a hint.
  * 
