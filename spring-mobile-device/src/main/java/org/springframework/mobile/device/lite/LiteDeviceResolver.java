@@ -115,9 +115,9 @@ public class LiteDeviceResolver implements DeviceResolver {
 	}
 
 	/**
-	 * Fallback called if no mobile device is matched.
-	 * This implemetnation returns a {@link Device} implementation with the mobile property set to false.
-	 * Subclasses may override to perform additional custom device matching not known to this implementation.
+	 * Fallback called if no mobile device is matched by this resolver.
+	 * The default implementation of this method returns a "not mobile" {@link Device} with the mobile property set to false.
+	 * Subclasses may override to try additional mobile device matching before falling back to a "not mobile" device.
 	 */
 	protected Device resolveFallback(HttpServletRequest request) {
 		return LiteDevice.NOT_MOBILE_INSTANCE;
