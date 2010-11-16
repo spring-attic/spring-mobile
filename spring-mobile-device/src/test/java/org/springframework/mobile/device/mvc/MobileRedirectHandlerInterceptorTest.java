@@ -42,4 +42,19 @@ public class MobileRedirectHandlerInterceptorTest {
 		assertNull(response.getRedirectedUrl());
 	}
 	
+	@Test
+	public void redirectContextRelative() throws Exception {
+		interceptor = new MobileRedirectHandlerInterceptor("/mobile", true);
+		Device mobile = new Device() {
+			public boolean isMobile() {
+				return true;
+			}
+		};
+		request.setContextPath("/app");
+		request.setAttribute(DeviceResolvingHandlerInterceptor.CURRENT_DEVICE_ATTRIBUTE, mobile);
+		assertFalse(interceptor.preHandle(request, response, null));
+		assertEquals("/app/mobile", response.getRedirectedUrl());
+	}
+
+	
 }

@@ -31,18 +31,35 @@ public class MobileRedirectHandlerInterceptor implements HandlerInterceptor {
 
 	private final String redirectUrl;
 	
+	private final boolean contextRelative;
+	
 	/**
 	 * Creates a mobile redirect handler interceptor.
-	 * @param redirectUrl the url to redirect to if the device is a mobile device; redirection is handled by calling {@link HttpServletResponse#sendRedirect(String)}.
+	 * @param redirectUrl the url to redirect to if the device is a mobile device; may be an absolute URL such as http://host or a relative URL.
+	 * If relative, when the url begins with "/" it is treated as relative to the current server root, else it is treated as relative to the current request path.
+	 * Redirection is handled by calling {@link HttpServletResponse#sendRedirect(String)}.
 	 */
 	public MobileRedirectHandlerInterceptor(String redirectUrl) {
-		this.redirectUrl = redirectUrl;
+		this (redirectUrl, false);
 	}
-	
+
+	/**
+	 * Creates a mobile redirect handler interceptor.
+	 * @param redirectUrl the url to redirect to if the device is a mobile device; may be an absolute URL such as http://host or a relative URL.
+	 * If relative, when the url begins with "/" and contextRelative is true the URL it is treated as relative to the application context path.
+	 * Redirection is handled by calling {@link HttpServletResponse#sendRedirect(String)}.
+	 * @param contextRelative if the redirectUrl is relative to the current application context path;
+	 */
+	public MobileRedirectHandlerInterceptor(String redirectUrl, boolean contextRelative) {
+		this.redirectUrl = redirectUrl;
+		this.contextRelative = contextRelative;
+	}
+
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		Device device = (Device) request.getAttribute(DeviceResolvingHandlerInterceptor.CURRENT_DEVICE_ATTRIBUTE);
 		if (device.isMobile()) {
-			response.sendRedirect(response.encodeRedirectURL(redirectUrl));
+			String targetUrl = getTargetRedirectUrl(request);
+			response.sendRedirect(response.encodeRedirectURL(targetUrl));
 			return false;
 		} else {
 			return true;
@@ -54,5 +71,15 @@ public class MobileRedirectHandlerInterceptor implements HandlerInterceptor {
 
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {	
 	}
+
+	// internal helpers
 	
+	private String getTargetRedirectUrl(HttpServletRequest request) {
+		if (redirectUrl.startsWith("/") && contextRelative) {
+			return request.getContextPath() + redirectUrl;
+		} else {
+			return redirectUrl;
+		}
+	}
+
 }
