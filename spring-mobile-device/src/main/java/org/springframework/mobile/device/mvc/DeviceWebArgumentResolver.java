@@ -22,8 +22,8 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.RequestAttributes;
 
 /**
- * Spring MVC {@link WebArgumentResolver} that resolves @Controller MethodParameters of type
- * {@link Device} to the value of the web request's {@link DeviceResolvingHandlerInterceptor#CURRENT_DEVICE_ATTRIBUTE current device} attribute.
+ * Spring MVC {@link WebArgumentResolver} that resolves @Controller MethodParameters of type {@link Device}
+ * to the value of the web request's {@link DeviceResolvingHandlerInterceptor#CURRENT_DEVICE_ATTRIBUTE current device} attribute.
  * @author Keith Donald
  */
 public class DeviceWebArgumentResolver implements WebArgumentResolver {
