@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.mobile.device.wurfl;
+package org.springframework.mobile.device.wurfl.wng;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -37,42 +38,45 @@ import net.sourceforge.wurfl.wng.style.StyleOptimizerVisitor;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.functors.InstanceofPredicate;
 import org.springframework.mobile.device.mvc.DeviceResolvingHandlerInterceptor;
-import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
 
 /**
- * A Spring MVC Interceptor that renders a WNG {@link Document} after request completion, if one has been set in the current request.
+ * A Spring MVC {@link View} that renders a WNG {@link Document}, if one has been set in the current request by a 'target' view this class delegates to.
  * As a mobile web view technology, WNG allows the developer to control the rendering of markup by device type in a declarative manner without resorting to manual if/else logic in his or her JSP templates.
  * When a WNG-based JSP view renders itself, the view builds a component tree that contains a {@link Document} object as its root element--no response writing is performed at that time.
- * After view rendering completes, this handler finishes WNG processing by rendering the assembled Document.  That action triggers the device markup to be generated and written to the response.
+ * After view rendering completes, this decorator finishes WNG processing by rendering the assembled Document.  That action triggers the device markup to be generated and written to the response.
  * @author Keith Donald
  */
-public class WngHandlerInterceptor implements HandlerInterceptor {
+public class WngView implements View {
 
+	private final View target;
+	
 	private final DocumentRenderer documentRenderer;
 
-	public WngHandlerInterceptor() {
-		this.documentRenderer = new DefaultDocumentRenderer(new DefaultRendererGroupResolver());
+	public WngView(View target) {
+		this(target, new DefaultDocumentRenderer(new DefaultRendererGroupResolver()));
 	}
 
-	public WngHandlerInterceptor(DocumentRenderer documentRenderer) {
+	public WngView(View target, DocumentRenderer documentRenderer) {
+		this.target = target;
 		this.documentRenderer = documentRenderer;;
 	}
 
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		return true;
+	// implementing View
+	
+	public String getContentType() {
+		return target.getContentType();
 	}
-
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-	}
-
-	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+	
+	public void render(Map<String, ?> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		BufferedHttpServletResponse buffered = new BufferedHttpServletResponse(response);
+		target.render(model, request, buffered);
+		// logic adapted from WNGContextFilter which has the same responsibility
 		if (isWngDocumentCreated(request)) {
-			// logic adapted from WNGContextFilter which has the same responsibility
 			WNGDevice device = new WNGDevice((Device) request.getAttribute(DeviceResolvingHandlerInterceptor.CURRENT_DEVICE_ATTRIBUTE));
 			Document document = resolveDocument(request);
 			StyleContainer styleContainer = (StyleContainer)CollectionUtils.find(document.getHead().getChildren(), new InstanceofPredicate(StyleContainer.class));
-			if (styleContainer==null) {
+			if (styleContainer == null) {
 				styleContainer = new StyleContainer();
 				document.addToHead(styleContainer);
 			}
@@ -80,11 +84,11 @@ public class WngHandlerInterceptor implements HandlerInterceptor {
 			document.accept(visitor);
 			RenderedDocument renderedDocument = documentRenderer.renderDocument(document, device);
 			writeDocument(renderedDocument, response);			
+		} else {
+			buffered.writeTo(response.getOutputStream());
 		}
 	}
-	
-	// internal helper;
-	
+
 	private boolean isWngDocumentCreated(ServletRequest request) {
 		return request.getAttribute(Constants.ATT_DOCUMENT) != null;
 	}
@@ -97,11 +101,9 @@ public class WngHandlerInterceptor implements HandlerInterceptor {
 	}
 	
 	private void writeDocument(RenderedDocument renderedDocument, HttpServletResponse response) throws IOException {
-		// reset the response in case a JSP happened to write some whitespace to it
-		response.reset();
 		response.setContentType(renderedDocument.getContentType());
 		response.getWriter().print(renderedDocument.getMarkup());
-		response.flushBuffer();
+		response.getWriter().flush();
 	}
 
 }

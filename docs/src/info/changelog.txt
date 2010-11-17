@@ -11,4 +11,4 @@ Spring Mobile Changelog
 * Added DeviceResolvingHandlerInterceptor that, on preHandle, resolves the Device that originated the current web request.
 * Added DeviceWebArgumentResolver that allows the currentDevice to be injected as a @Controller handler method argument.
 * Added a MobileRedirectHandlerInterceptor that, on preHandle, redirects to a dedicated mobile site if the currentDevice isMobile().
-* Added a WngHandlerInterceptor that allows WUrfl's "Wall NG" tag library to be used to author pages in one markup and have it rendered in different grades (WML, XHTML Simple, XHTML Advanced).
+* Added a WngViewResolver that allows WUrfl's "Wall NG" tag library to be used to author pages in one markup and have it rendered in different grades (WML, XHTML Simple, XHTML Advanced).
