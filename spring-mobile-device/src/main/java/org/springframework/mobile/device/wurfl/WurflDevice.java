@@ -23,8 +23,8 @@ import net.sourceforge.wurfl.core.MarkUp;
 import org.springframework.mobile.device.Device;
 
 /**
- * WURFL-based device implementation.
- * Directly implements net.sourceforge.wurfl.core.Device, exposing the full capabilities of the WURFL API.
+ * WURFL-based {@link Device} implementation.
+ * Also implements net.sourceforge.wurfl.core.Device, exposing the full capabilities of the WURFL API.
  * @author Keith Donald
  */
 public class WurflDevice implements Device, net.sourceforge.wurfl.core.Device {

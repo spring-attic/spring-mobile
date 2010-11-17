@@ -33,6 +33,7 @@ import org.springframework.util.Assert;
 
 /**
  * Factory that constructs the central {@link WURFLManager} and exports it as a Spring bean that can be injected into other beans.
+ * The specifics of this factory class are hidden when working with the wurfl-device-resolver tag in the spring-mobile-device XML namespace.
  * @author Keith Donald
  */
 public class WurflManagerFactoryBean implements FactoryBean<WURFLManager>, InitializingBean {

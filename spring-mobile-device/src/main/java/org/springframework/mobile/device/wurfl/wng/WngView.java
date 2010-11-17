@@ -42,9 +42,10 @@ import org.springframework.web.servlet.View;
 
 /**
  * A Spring MVC {@link View} that renders a WNG {@link Document}, if one has been set in the current request by a 'target' view this class delegates to.
- * As a mobile web view technology, WNG allows the developer to control the rendering of markup by device type in a declarative manner without resorting to manual if/else logic in his or her JSP templates.
+ * WNG aims to allow the developer to control the rendering of markup by device type in a declarative manner without resorting to manual if/else logic in his or her JSP templates.
  * When a WNG-based JSP view renders itself, the view builds a component tree that contains a {@link Document} object as its root element--no response writing is performed at that time.
- * After view rendering completes, this decorator finishes WNG processing by rendering the assembled Document.  That action triggers the device markup to be generated and written to the response.
+ * After view rendering completes, this decorator finishes WNG processing by rendering the assembled Document.
+ * That action triggers the device markup to be generated and written to the response.
  * @author Keith Donald
  */
 public class WngView implements View {

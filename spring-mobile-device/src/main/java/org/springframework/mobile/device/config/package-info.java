@@ -1,5 +1,4 @@
 /**
- * Support for configuring a DeviceResolutionService implementation.
+ * spring-mobile-device XML configuration namespace definition.
  */
 package org.springframework.mobile.device.config;
-

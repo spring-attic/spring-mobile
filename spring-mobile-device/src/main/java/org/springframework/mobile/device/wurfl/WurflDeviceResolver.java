@@ -25,7 +25,7 @@ import org.springframework.mobile.device.Device;
 import org.springframework.mobile.device.DeviceResolver;
 
 /**
- * WURFL-based device resolution service.
+ * WURFL-based device resolver.
  * WURL provides a comprehensive catalog of Devices and their capabilities.
  * See http://wurfl.sourceforge.net for more information.
  * @author Keith Donald

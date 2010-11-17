@@ -6,7 +6,7 @@ import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 
 /**
- * Wraps View instances returned by a target ViewResolver in {@link WngView} decorators in order build in WNG-awareness.
+ * Wraps View instances returned by a target ViewResolver in {@link WngView} decorators that build in WNG-awareness.
  * @author Keith Donald
  * @see WngView
  */
