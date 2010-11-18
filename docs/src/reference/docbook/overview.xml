@@ -3,9 +3,11 @@
     xmlns:xlink="http://www.w3.org/1999/xlink">
   <title>Spring Mobile Overview</title>
 
-  <section id="overview-introduction">
+  <section id="spring-mobile-overview-introduction">
     <title>Introduction</title>
     <para>
+		Spring Mobile contains extensions to Spring MVC for developing mobile web applications.
+		This includes a module for server-side mobile device detection.
     </para>
   </section>
 
