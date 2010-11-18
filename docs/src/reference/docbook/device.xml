@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="device" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <title>Device Module</title>
+  <title>Spring Mobile Device Module</title>
 
   <section id="spring-mobile-device-introduction">
     <title>Introduction</title>
@@ -8,6 +8,20 @@
 		Device detection is useful when requests by mobile devices need to be handled differently from requests made by desktop browsers.
 		The Spring Mobile Device module provides support for server-side device detection.
     </para>
+  </section>
+
+  <section id="spring-mobile-device-howtoget">
+    <title>How to get</title>
+	<para>
+		Add the spring-mobile-device artifact to your classpath:
+		<programlisting language="xml"><![CDATA[
+<dependency>
+    <groupId>org.springframework.mobile</groupId>
+    <artifactId>spring-mobile-device</artifactId>
+    <version>${org.springframework.mobile-version}</version>
+</dependency>]]>
+		</programlisting>
+	</para>
   </section>
 
   <section id="spring-mobile-device-resolving-interceptor">
@@ -18,7 +32,7 @@
 		This allows handlers to vary their controller and/or presentation logic by device type.
     </para>
 	<para>
-		To use, simply add the DeviceResolvingHandlerInterceptor to the list of interceptors defined in your DispatcherServlet context configuration:
+		To use, add the DeviceResolvingHandlerInterceptor to the list of interceptors defined in your DispatcherServlet context configuration:
 		<programlisting language="xml"><![CDATA[
 <interceptors>
     <!-- On pre-handle, detect the device that originated the web request -->
@@ -29,7 +43,7 @@
 	<para>
 		By default, the interceptor will use a LiteDeviceResolver for device detection.
 		You may plug-in your own DeviceResolver by injecting a constructor argument.
-		See the DeviceResolver section for more information on the implementation options.
+		See <xref linkend="spring-mobile-device-resolvers"/> for more information on the implementation options.
 	</para>
   </section>
 
@@ -76,7 +90,7 @@ public class HomeController {
   </section>
 
   <section id="spring-mobile-device-resolvers">
-    <title>Device Resolvers</title>
+    <title>Device resolvers</title>
 	<para>
 		The DeviceResolver interface is central the service API for device detection.
 		Spring Mobile provides two DeviceResolver implementations: LiteDeviceResolver and WurflDeviceResolver.
@@ -85,8 +99,8 @@ public class HomeController {
   	<section id="spring-mobile-device-resolvers-lite">
 		<title>LiteDeviceResolver</title>
 		<para>
-The default DeviceResolver implementation based on the "lite" <ulink="http://plugins.trac.wordpress.org/browser/wordpress-mobile-pack/trunk/plugins/wpmp_switcher/lite_detection.php">detection algorithm</ulink>
-implemented as part of the <ulink="http://wordpress.org/extend/plugins/wordpress-mobile-pack">Wordpress Mobile Pack</ulink>.
+The default DeviceResolver implementation based on the "lite" <ulink url="http://plugins.trac.wordpress.org/browser/wordpress-mobile-pack/trunk/plugins/wpmp_switcher/lite_detection.php">detection algorithm</ulink>
+implemented as part of the <ulink url="http://wordpress.org/extend/plugins/wordpress-mobile-pack">Wordpress Mobile Pack</ulink>.
 This resolver only detects the presence of a mobile device and does not detect specific capabilities.
 		</para>
 	</section>
@@ -103,8 +117,8 @@ This resolver only detects the presence of a mobile device and does not detect s
 <dependency>
     <groupId>net.sourceforge.wurfl</groupId>
     <artifactId>wurfl</artifactId>
-    <version>${wurfl.version}</version>
-</dependency]]>
+    <version>${net.sourceforge.wurfl-version}</version>
+</dependency>]]>
 			</programlisting>
 		</para>
 		<para>
@@ -126,17 +140,19 @@ This resolver only detects the presence of a mobile device and does not detect s
                 <device:wurfl-device-resolver root-location="/WEB-INF/wurfl/wurfl-2.0.25.zip" patch-locations="/WEB-INF/wurfl/web_browsers_patch.xml" />
             </beans:constructor-arg>		
         </beans:bean>
-    </interceptors>]]>
+    </interceptors>
+
+</beans:beans>]]>
 			</programlisting>
 		</para>
 		<para>
-			Read more about WURFL at <ulink="http://wurfl.sourceforge.net">http://wurfl.sourceforge.net</ulink>.
-			Checkout the <ulink="http://git.springsource.org/spring-mobile/samples">wurfl-showcase</ulink> for a live demonstration.
+			Read more about WURFL at <ulink url="http://wurfl.sourceforge.net">http://wurfl.sourceforge.net</ulink>.
+			Checkout the <ulink url="http://git.springsource.org/spring-mobile/samples">wurfl-showcase</ulink> for a live demonstration.
 			This sample illustrates WURFL-based device detection as well as the use of the WNG tag library to perform multi-serving from common page markup.
 		</para>
 	</section>
 	<para>
-		If you implement your own DeviceResolver, please consider contributing your implementation back to the community at <ulink="http://www.springsource.org/spring-mobile">http://www.springsource.org/spring-mobile</ulink>.
+		If you implement your own DeviceResolver, please consider contributing your implementation back to the community at <ulink url="http://www.springsource.org/spring-mobile">http://www.springsource.org/spring-mobile</ulink>.
 	</para>
   </section>
 

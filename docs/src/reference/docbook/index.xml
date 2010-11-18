@@ -31,14 +31,8 @@
   </bookinfo>
 
   <toc></toc>
-  
-  <part id="spring-mobile-introduction">
-    <title>Introducing the Spring Mobile project</title>
-    <partintro id="spring-mobile-intro">
-    	 <para>The Spring Mobile project simplifies the development of cross-platform mobile web applications.</para>
-    </partintro>
-    <xi:include href="./overview.xml"/>
-    <xi:include href="./device.xml"/>
-  </part>
+
+  <xi:include href="./overview.xml"/>
+  <xi:include href="./device.xml"/>
   
 </book>
