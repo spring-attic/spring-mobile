@@ -85,8 +85,8 @@ public class HomeController {
   	<section id="spring-mobile-device-resolvers-lite">
 		<title>LiteDeviceResolver</title>
 		<para>
-The default DeviceResolver implementation based on the "lite" <link href="http://plugins.trac.wordpress.org/browser/wordpress-mobile-pack/trunk/plugins/wpmp_switcher/lite_detection.php">detection algorithm</link>
-implemented as part of the <link href="http://wordpress.org/extend/plugins/wordpress-mobile-pack">Wordpress Mobile Pack</link>.
+The default DeviceResolver implementation based on the "lite" <ulink="http://plugins.trac.wordpress.org/browser/wordpress-mobile-pack/trunk/plugins/wpmp_switcher/lite_detection.php">detection algorithm</ulink>
+implemented as part of the <ulink="http://wordpress.org/extend/plugins/wordpress-mobile-pack">Wordpress Mobile Pack</ulink>.
 This resolver only detects the presence of a mobile device and does not detect specific capabilities.
 		</para>
 	</section>
@@ -130,13 +130,13 @@ This resolver only detects the presence of a mobile device and does not detect s
 			</programlisting>
 		</para>
 		<para>
-			Read more about WURFL at http://wurfl.sourceforge.net.
-			Checkout the wurfl-showcase sample application at http://git.springsource.org/spring-mobile/samples for a live demonstration.
+			Read more about WURFL at <ulink="http://wurfl.sourceforge.net">http://wurfl.sourceforge.net</ulink>.
+			Checkout the <ulink="http://git.springsource.org/spring-mobile/samples">wurfl-showcase</ulink> for a live demonstration.
 			This sample illustrates WURFL-based device detection as well as the use of the WNG tag library to perform multi-serving from common page markup.
 		</para>
 	</section>
 	<para>
-		If you implement your own DeviceResolver, please consider contributing your implementation back to the community at http://www.springsource.org/spring-mobile.
+		If you implement your own DeviceResolver, please consider contributing your implementation back to the community at <ulink="http://www.springsource.org/spring-mobile">http://www.springsource.org/spring-mobile</ulink>.
 	</para>
   </section>
 
