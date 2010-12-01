@@ -74,7 +74,7 @@ public class WngView implements View {
 		target.render(model, request, buffered);
 		// logic adapted from WNGContextFilter which has the same responsibility
 		if (isWngDocumentCreated(request)) {
-			WNGDevice device = new WNGDevice((Device) request.getAttribute(DeviceResolvingHandlerInterceptor.CURRENT_DEVICE_ATTRIBUTE));
+			WNGDevice device = new WNGDevice((Device) DeviceResolvingHandlerInterceptor.getCurrentDevice(request));
 			Document document = resolveDocument(request);
 			StyleContainer styleContainer = (StyleContainer)CollectionUtils.find(document.getHead().getChildren(), new InstanceofPredicate(StyleContainer.class));
 			if (styleContainer == null) {

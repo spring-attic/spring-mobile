@@ -13,23 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.mobile.device.mvc;
+package org.springframework.mobile.device.site;
 
 import org.springframework.core.MethodParameter;
-import org.springframework.mobile.device.Device;
+import org.springframework.mobile.device.switcher.SiteSwitcherHandlerInterceptor;
 import org.springframework.web.bind.support.WebArgumentResolver;
 import org.springframework.web.context.request.NativeWebRequest;
 
 /**
- * Spring MVC {@link WebArgumentResolver} that resolves @Controller MethodParameters of type {@link Device}
- * to the value of the web request's {@link DeviceResolvingHandlerInterceptor#CURRENT_DEVICE_ATTRIBUTE current device} attribute.
+ * Spring MVC {@link WebArgumentResolver} that resolves @Controller MethodParameters of type {@link SitePreference}
+ * to the value of the web request's {@link SiteSwitcherHandlerInterceptor#CURRENT_SITE_PREFERENCE_ATTRIBUTE current site preference} attribute.
  * @author Keith Donald
  */
-public class DeviceWebArgumentResolver implements WebArgumentResolver {
+public class SitePreferenceWebArgumentResolver implements WebArgumentResolver {
 	
 	public Object resolveArgument(MethodParameter param, NativeWebRequest request) throws Exception {
-		if (Device.class.isAssignableFrom(param.getParameterType())) {
-			return DeviceResolvingHandlerInterceptor.getCurrentDevice(request);
+		if (SitePreference.class.isAssignableFrom(param.getParameterType())) {
+			return SitePreferenceResolvingHandlerInterceptor.getCurrentSitePreference(request);
 		} else {
 			return WebArgumentResolver.UNRESOLVED;
 		}
