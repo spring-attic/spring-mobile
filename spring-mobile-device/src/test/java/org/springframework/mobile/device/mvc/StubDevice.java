@@ -9,7 +9,11 @@ public class StubDevice implements Device {
 	public StubDevice() {
 		this.mobile = true;
 	}
-	
+
+	public StubDevice(boolean mobile) {
+		this.mobile = mobile;
+	}
+
 	public boolean isMobile() {
 		return mobile;
 	}

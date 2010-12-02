@@ -29,7 +29,7 @@ public class SitePreferenceWebArgumentResolver implements WebArgumentResolver {
 	
 	public Object resolveArgument(MethodParameter param, NativeWebRequest request) throws Exception {
 		if (SitePreference.class.isAssignableFrom(param.getParameterType())) {
-			return SitePreferenceResolvingHandlerInterceptor.getCurrentSitePreference(request);
+			return SitePreferenceResolver.getCurrentSitePreference(request);
 		} else {
 			return WebArgumentResolver.UNRESOLVED;
 		}

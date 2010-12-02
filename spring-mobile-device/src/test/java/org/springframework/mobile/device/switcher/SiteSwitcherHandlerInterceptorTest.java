@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.mobile.device.mvc.DeviceResolvingHandlerInterceptor;
+import org.springframework.mobile.device.mvc.DeviceResolverHandlerInterceptor;
 import org.springframework.mobile.device.mvc.StubDevice;
 import org.springframework.mobile.device.site.SitePreference;
-import org.springframework.mobile.device.site.SitePreferenceResolvingHandlerInterceptor;
+import org.springframework.mobile.device.site.StubSitePreferenceRepository;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
@@ -24,12 +24,13 @@ public class SiteSwitcherHandlerInterceptorTest {
 
 	private MockHttpServletResponse response = new MockHttpServletResponse();
 
-	private StubDevice device;
+	private StubDevice device = new StubDevice();
+	
+	private StubSitePreferenceRepository sitePreferenceRepository = new StubSitePreferenceRepository();
 	
 	@Before
 	public void setup() throws Exception {
-		device = new StubDevice();
-		request.setAttribute(DeviceResolvingHandlerInterceptor.CURRENT_DEVICE_ATTRIBUTE, device);
+		request.setAttribute(DeviceResolverHandlerInterceptor.CURRENT_DEVICE_ATTRIBUTE, device);
 		SiteUrlFactory normalSiteUrlFactory = new SiteUrlFactory() {
 			public boolean isRequestForSite(HttpServletRequest request) {
 				return request.getServerName().equals("app.com");
@@ -46,7 +47,7 @@ public class SiteSwitcherHandlerInterceptorTest {
 				return "http://m.app.com";
 			}
 		};
-		siteSwitcher = new SiteSwitcherHandlerInterceptor(normalSiteUrlFactory, mobileSiteUrlFactory);
+		siteSwitcher = new SiteSwitcherHandlerInterceptor(normalSiteUrlFactory, mobileSiteUrlFactory, sitePreferenceRepository);
 	}
 	
 	@Test
@@ -57,14 +58,14 @@ public class SiteSwitcherHandlerInterceptorTest {
 
 	@Test
 	public void mobileDeviceNormalSiteMobilePreference() throws Exception {
-		request.setAttribute(SitePreferenceResolvingHandlerInterceptor.CURRENT_SITE_PREFERENCE_ATTRIBUTE, SitePreference.MOBILE);
+		sitePreferenceRepository.setSitePreference(SitePreference.MOBILE);
 		assertFalse(siteSwitcher.preHandle(request, response, null));
 		assertEquals("http://m.app.com", response.getRedirectedUrl());
 	}
 
 	@Test
 	public void mobileDeviceNormalSiteNormalPreference() throws Exception {
-		request.setAttribute(SitePreferenceResolvingHandlerInterceptor.CURRENT_SITE_PREFERENCE_ATTRIBUTE, SitePreference.NORMAL);
+		sitePreferenceRepository.setSitePreference(SitePreference.NORMAL);
 		assertTrue(siteSwitcher.preHandle(request, response, null));
 		assertNull(response.getRedirectedUrl());		
 	}
@@ -79,7 +80,7 @@ public class SiteSwitcherHandlerInterceptorTest {
 	@Test
 	public void normalDeviceNormalSiteMobilePreference() throws Exception {
 		device.setMobile(false);
-		request.setAttribute(SitePreferenceResolvingHandlerInterceptor.CURRENT_SITE_PREFERENCE_ATTRIBUTE, SitePreference.MOBILE);
+		sitePreferenceRepository.setSitePreference(SitePreference.MOBILE);
 		assertFalse(siteSwitcher.preHandle(request, response, null));
 		assertEquals("http://m.app.com", response.getRedirectedUrl());
 	}
@@ -87,13 +88,13 @@ public class SiteSwitcherHandlerInterceptorTest {
 	@Test
 	public void normalDeviceNormalSiteNormalPreference() throws Exception {
 		device.setMobile(false);
-		request.setAttribute(SitePreferenceResolvingHandlerInterceptor.CURRENT_SITE_PREFERENCE_ATTRIBUTE, SitePreference.NORMAL);
+		sitePreferenceRepository.setSitePreference(SitePreference.NORMAL);
 		assertTrue(siteSwitcher.preHandle(request, response, null));
 		assertNull(response.getRedirectedUrl());
 	}
 
 	@Test
-	public void mDot() throws Exception {
+	public void mDotMobileDeviceNormalSiteNoPreference() throws Exception {
 		SiteSwitcherHandlerInterceptor mDot = SiteSwitcherHandlerInterceptor.mDot("app.com");
 		assertFalse(mDot.preHandle(request, response, null));
 		assertEquals(0, response.getCookies().length);
@@ -101,11 +102,33 @@ public class SiteSwitcherHandlerInterceptorTest {
 	}
 
 	@Test
-	public void dotMobi() throws Exception {
-		SiteSwitcherHandlerInterceptor dotMobi = SiteSwitcherHandlerInterceptor.dotMobi("app.com");		
-		assertFalse(dotMobi.preHandle(request, response, null));
-		assertEquals(0, response.getCookies().length);
-		assertEquals("http://app.mobi", response.getRedirectedUrl());
+	public void mDotMobileDeviceNormalSiteNormalPreference() throws Exception {
+		SiteSwitcherHandlerInterceptor mDot = SiteSwitcherHandlerInterceptor.mDot("app.com");
+		request.addParameter("site_preference", "normal");
+		assertTrue(mDot.preHandle(request, response, null));
+		assertEquals(1, response.getCookies().length);
+		assertEquals(".app.com", response.getCookies()[0].getDomain());
+		assertEquals("NORMAL", response.getCookies()[0].getValue());
+		assertNull(response.getRedirectedUrl());
 	}
-	
+
+	@Test
+	public void dotMobiMobileDeviceNormalSiteNoPreference() throws Exception {
+		SiteSwitcherHandlerInterceptor mDot = SiteSwitcherHandlerInterceptor.dotMobi("app.com");
+		assertFalse(mDot.preHandle(request, response, null));
+		assertEquals(0, response.getCookies().length);
+		assertEquals("http://app.mobi", response.getRedirectedUrl());		
+	}
+
+	@Test
+	public void dotMobiMobileDeviceNormalSiteNormalPreference() throws Exception {
+		SiteSwitcherHandlerInterceptor mDot = SiteSwitcherHandlerInterceptor.dotMobi("app.com");
+		request.addParameter("site_preference", "normal");
+		assertTrue(mDot.preHandle(request, response, null));
+		assertEquals(1, response.getCookies().length);
+		assertEquals(".app.com", response.getCookies()[0].getDomain());
+		assertEquals("NORMAL", response.getCookies()[0].getValue());
+		assertNull(response.getRedirectedUrl());
+	}
+
 }

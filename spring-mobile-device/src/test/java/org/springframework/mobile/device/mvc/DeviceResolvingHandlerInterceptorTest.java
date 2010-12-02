@@ -15,7 +15,7 @@ public class DeviceResolvingHandlerInterceptorTest {
 	
 	private Device device = new StubDevice();
 
-	private DeviceResolvingHandlerInterceptor interceptor = new DeviceResolvingHandlerInterceptor(new DeviceResolver() {
+	private DeviceResolverHandlerInterceptor interceptor = new DeviceResolverHandlerInterceptor(new DeviceResolver() {
 		public Device resolveDevice(HttpServletRequest request) {
 			return device;
 		}
@@ -28,15 +28,15 @@ public class DeviceResolvingHandlerInterceptorTest {
 	@Test
 	public void resolve() throws Exception {
 		assertTrue(interceptor.preHandle(request, response, null));
-		assertSame(device, DeviceResolvingHandlerInterceptor.getCurrentDevice(request));
+		assertSame(device, DeviceResolverHandlerInterceptor.getCurrentDevice(request));
 	}
 
 	@Test
 	public void resolveDefaultResolver() throws Exception {
-		interceptor = new DeviceResolvingHandlerInterceptor();
+		interceptor = new DeviceResolverHandlerInterceptor();
 		request.addHeader("User-Agent", "Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_0 like Mac OS X; en-us) AppleWebKit/532.9 (KHTML, like Gecko) Version/4.0.5 Mobile/8A293 Safari/6531.22.7");
 		assertTrue(interceptor.preHandle(request, response, null));
-		Device device = DeviceResolvingHandlerInterceptor.getCurrentDevice(request);
+		Device device = DeviceResolverHandlerInterceptor.getCurrentDevice(request);
 		assertTrue(device.isMobile());
 	}
 

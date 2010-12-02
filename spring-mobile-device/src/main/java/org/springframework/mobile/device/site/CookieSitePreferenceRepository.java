@@ -34,6 +34,11 @@ public class CookieSitePreferenceRepository extends CookieGenerator implements S
 		setCookieName(DEFAULT_COOKIE_NAME);
 	}
 
+	public CookieSitePreferenceRepository(String cookieDomain) {
+		setCookieName(DEFAULT_COOKIE_NAME);
+		setCookieDomain(cookieDomain);
+	}
+
 	public void saveSitePreference(SitePreference preference, HttpServletRequest request, HttpServletResponse response) {
 		addCookie(response, preference.name());
 	}

@@ -31,7 +31,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  * Request handlers such as @Controllers and views may then access the currentDevice to vary their control and rendering logic, respectively.
  * @author Keith Donald
  */
-public class DeviceResolvingHandlerInterceptor extends HandlerInterceptorAdapter {
+public class DeviceResolverHandlerInterceptor extends HandlerInterceptorAdapter {
 
 	/**
 	 * The name of the request attribute the current Device is indexed by.
@@ -44,7 +44,7 @@ public class DeviceResolvingHandlerInterceptor extends HandlerInterceptorAdapter
 	/**
 	 * Create a device resolving {@link HandlerInterceptor} that defaults to a {@link LiteDeviceResolver} implementation.
 	 */
-	public DeviceResolvingHandlerInterceptor() {
+	public DeviceResolverHandlerInterceptor() {
 		this(new LiteDeviceResolver());
 	}
 	
@@ -52,7 +52,7 @@ public class DeviceResolvingHandlerInterceptor extends HandlerInterceptorAdapter
 	 * Create a device resolving {@link HandlerInterceptor}.
 	 * @param deviceResolver the device resolver to delegate to in {@link #preHandle(HttpServletRequest, HttpServletResponse, Object)}.
 	 */
-	public DeviceResolvingHandlerInterceptor(DeviceResolver deviceResolver) {
+	public DeviceResolverHandlerInterceptor(DeviceResolver deviceResolver) {
 		this.deviceResolver = deviceResolver;
 	}
 
@@ -69,7 +69,7 @@ public class DeviceResolvingHandlerInterceptor extends HandlerInterceptorAdapter
 	 * @return the current device, or null if no device has been resolved for the request
 	 */
 	public static Device getCurrentDevice(HttpServletRequest request) {
-		return (Device) request.getAttribute(DeviceResolvingHandlerInterceptor.CURRENT_DEVICE_ATTRIBUTE);
+		return (Device) request.getAttribute(DeviceResolverHandlerInterceptor.CURRENT_DEVICE_ATTRIBUTE);
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class DeviceResolvingHandlerInterceptor extends HandlerInterceptorAdapter
 	 * @return the current device, or null if no device has been resolved for the request
 	 */
 	public static Device getCurrentDevice(RequestAttributes attributes) {
-		return (Device) attributes.getAttribute(DeviceResolvingHandlerInterceptor.CURRENT_DEVICE_ATTRIBUTE, RequestAttributes.SCOPE_REQUEST);
+		return (Device) attributes.getAttribute(DeviceResolverHandlerInterceptor.CURRENT_DEVICE_ATTRIBUTE, RequestAttributes.SCOPE_REQUEST);
 	}
 	
 }

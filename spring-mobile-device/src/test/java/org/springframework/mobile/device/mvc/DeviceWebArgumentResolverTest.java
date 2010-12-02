@@ -21,7 +21,7 @@ public class DeviceWebArgumentResolverTest {
 	
 	@Test
 	public void resolve() throws Exception {
-		request.setAttribute(DeviceResolvingHandlerInterceptor.CURRENT_DEVICE_ATTRIBUTE, device, WebRequest.SCOPE_REQUEST);
+		request.setAttribute(DeviceResolverHandlerInterceptor.CURRENT_DEVICE_ATTRIBUTE, device, WebRequest.SCOPE_REQUEST);
 		MethodParameter parameter = new MethodParameter(getClass().getMethod("handlerMethod", Device.class), 0);
 		Object resolved = resolver.resolveArgument(parameter, request);
 		assertSame(device, resolved);
@@ -29,7 +29,7 @@ public class DeviceWebArgumentResolverTest {
 
 	@Test
 	public void unresolved() throws Exception {
-		request.setAttribute(DeviceResolvingHandlerInterceptor.CURRENT_DEVICE_ATTRIBUTE, device, WebRequest.SCOPE_REQUEST);
+		request.setAttribute(DeviceResolverHandlerInterceptor.CURRENT_DEVICE_ATTRIBUTE, device, WebRequest.SCOPE_REQUEST);
 		MethodParameter parameter = new MethodParameter(getClass().getMethod("handlerMethodUnresolved", String.class), 0);
 		Object resolved = resolver.resolveArgument(parameter, request);
 		assertSame(WebArgumentResolver.UNRESOLVED, resolved);

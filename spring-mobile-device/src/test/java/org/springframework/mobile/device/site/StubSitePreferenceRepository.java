@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.mobile.device.site.SitePreferenceRepository;
 
-class StubSitePreferenceRepository implements SitePreferenceRepository {
+public class StubSitePreferenceRepository implements SitePreferenceRepository {
 
 	private SitePreference sitePreference;
 
@@ -18,4 +18,11 @@ class StubSitePreferenceRepository implements SitePreferenceRepository {
 		return sitePreference;
 	}
 	
+	public SitePreference getSitePreference() {
+		return sitePreference;
+	}
+	
+	public void setSitePreference(SitePreference sitePreference) {
+		this.sitePreference = sitePreference;
+	}
 }

@@ -9,7 +9,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 
 public class ServerNameSiteUrlFactoryTest {
 
-	private ServerNameSiteUrlFactory factory = new ServerNameSiteUrlFactory("m.app.com");
+	private StandardSiteUrlFactory factory = new StandardSiteUrlFactory("m.app.com");
 	
 	private MockHttpServletRequest request = new MockHttpServletRequest();
 	
@@ -31,15 +31,6 @@ public class ServerNameSiteUrlFactoryTest {
 		request.setServerPort(80);
 		request.setRequestURI("/foo");
 		assertEquals("http://m.app.com/foo", factory.createSiteUrl(request));
-	}
-
-	@Test
-	public void createSiteUrlQueryParameters() {
-		request.setServerName("m.app.com");
-		request.setServerPort(80);
-		request.setRequestURI("/foo");
-		request.setQueryString("bar=baz");
-		assertEquals("http://m.app.com/foo?bar=baz", factory.createSiteUrl(request));
 	}
 
 }

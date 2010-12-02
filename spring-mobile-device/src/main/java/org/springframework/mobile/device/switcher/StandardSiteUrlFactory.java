@@ -22,15 +22,15 @@ import javax.servlet.http.HttpServletRequest;
  * For example, your 'normal' site might be bound to 'myapp.com', while ypur mobile site might be bound to 'm.myapp.com'. 
  * @author Keith Donald
  */
-public class ServerNameSiteUrlFactory implements SiteUrlFactory {
+public class StandardSiteUrlFactory implements SiteUrlFactory {
 	
 	private final String serverName;
 
 	/**
-	 * Creates a new {@link ServerNameSiteUrlFactory}.
+	 * Creates a new {@link StandardSiteUrlFactory}.
 	 * @param serverName the server name
 	 */
-	public ServerNameSiteUrlFactory(String serverName) {
+	public StandardSiteUrlFactory(String serverName) {
 		this.serverName = serverName;
 	}
 
@@ -46,10 +46,6 @@ public class ServerNameSiteUrlFactory implements SiteUrlFactory {
 			builder.append(optionalPort);
 		}
 		builder.append(request.getRequestURI());
-		String queryString = request.getQueryString();
-		if (queryString != null) {
-			builder.append("?").append(queryString);
-		}
 		return builder.toString();
 	}
 	
