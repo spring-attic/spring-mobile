@@ -203,14 +203,55 @@ This resolver only detects the presence of a mobile device and does not detect s
 Site: <a href="${currentUrl}?site_preference=normal">Normal</a> | <a href="${currentUrl}?site_preference=mobile">Mobile</a>
 ]]>
 			</programlisting>
-			The indicated site preference is saved for the user in a SitePreferenceRepository.
-			The default repository implementation used by the mDot and dotMobi SiteSwitcher factory methods is cookie-based.
+			The indicated site preference is saved for the user in a SitePreferenceRepository, and also made available as a request attribute named 'currentSitePreference'.
+			The default SitePreferenceRepository implementation used by the mDot and dotMobi SiteSwitcher factory methods is cookie-based.
 			The cookie value is shared across the normal and mobile site domains.
 		</para>
 	</section>
-	<para>
-		See the spring-mobile <ulink url="http://git.springsource.org/spring-mobile/samples">samples</ulink> project for SiteSwitcher usage examples.
-	</para>
+	<section id="spring-mobile-site-prefernce-argument-resolver">
+	    <title>SitePreferenceWebArgumentResolver</title>
+	    <para>
+			The SitePreferenceWebArgumentResolver allows you to inject the user's indicated SitePreference into @Controller handler methods.
+			To use, add this resolver to the list of custom WebArgumentResolvers registered with the DispatcherServlet's AnnotationMethodHandlerAdapter infastructure bean:
+			<programlisting language="java"><![CDATA[
+@Component
+public class CustomWebArgumentResolverInstaller {
+
+    @Inject
+    public CustomWebArgumentResolverInstaller(AnnotationMethodHandlerAdapter controllerInvoker) {
+        WebArgumentResolver[] resolvers = new WebArgumentResolver[2]
+        resolvers[0] = new DeviceWebArgumentResolver();
+        resolvers[1] = new SitePreferenceArgumentResolver();
+        controllerInvoker.setCustomArgumentResolvers(resolvers);
+    }
+	
+}]]>
+			</programlisting>
+		</para>
+		<para>
+			You can then inject the indicated SitePreference into your @Controllers as shown below:
+			<programlisting language="java"><![CDATA[
+@Controller
+public class HomeController {
+
+    @RequestMapping("/")
+    public String home(SitePreference sitePreference, Model model) {
+        if (sitePreference == SitePreference.MOBILE) {
+            // prepare mobile view for rendering
+            return "home-mobile";
+        } else {
+            // prepare normal view for rendering
+            return "home";
+        }
+    }
+
+}]]>
+			</programlisting>
+		</para>
+		<para>
+			See the spring-mobile <ulink url="http://git.springsource.org/spring-mobile/samples">samples</ulink> repository for runnable SiteSwitcher examples.
+		</para>		
+	  </section>	
   </section>
 
 </chapter>
