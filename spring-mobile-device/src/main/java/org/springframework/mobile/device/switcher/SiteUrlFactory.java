@@ -18,7 +18,7 @@ package org.springframework.mobile.device.switcher;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Strategy for constructing different site URLs, such as the 'mobile' site vs. the 'normal' site.
+ * Strategy for constructing different site URLs, such as the 'mobile' site URL.
  * @author Keith Donald
  */
 public interface SiteUrlFactory {
@@ -28,6 +28,7 @@ public interface SiteUrlFactory {
 	 * Used to determine what site the user is currently viewing.
 	 * For example, if the user is viewing a page on "m.app.com", this method would likely return 'true' if it constructs m.app.com URLs.
 	 * The {@link SiteSwitcherHandlerInterceptor} uses this knowledge to implement its switching algorithm.
+	 * @see SiteSwitcherHandlerInterceptor#preHandle(HttpServletRequest, javax.servlet.http.HttpServletResponse, Object)
 	 */
 	boolean isRequestForSite(HttpServletRequest request);
 

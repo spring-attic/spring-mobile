@@ -27,7 +27,20 @@ import org.springframework.mobile.device.site.SitePreferenceResolver;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
- * A Spring MVC interceptor that redirects the user to a dedicated mobile web-site if appropriate.
+ * A Spring MVC interceptor that switches the user between the mobile and normal site by employing a specific switching algorithm.
+ * The switching algorithm is as follows:
+ * <ul>
+ * <li>If the request originates from the mobile site:
+ *     <ul>
+ *        <li>If the user prefers the normal site, then redirect the user to the normal site.</li>
+ *     </ul>
+ * </li>
+ * <li>Otherwise, the request originates from the normal site, so:</li>
+ *     <ul>
+ *        <li>If the user prefers the mobile site, or the user has no site preference and is on a mobile device, 
+ * redirect the user to the mobile site.</li>
+ *     </ul>
+ * </ul>
  * @author Keith Donald
  */
 public class SiteSwitcherHandlerInterceptor extends HandlerInterceptorAdapter {

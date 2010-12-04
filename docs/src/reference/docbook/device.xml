@@ -25,18 +25,18 @@
   </section>
 
   <section id="spring-mobile-device-resolving-interceptor">
-    <title>DeviceResolvingHandlerInterceptor</title>
+    <title>DeviceResolverHandlerInterceptor</title>
     <para>
-		The DeviceResolvingHandlerInterceptor detects the device that originated the web request before handler invocation.
+		The DeviceResolverHandlerInterceptor detects the device that originated the web request before handler invocation.
 		The detected Device is set as a request attribute named 'currentDevice' and made available to handlers during request processing.
 		This allows handlers to vary their controller and/or presentation logic by device type.
     </para>
 	<para>
-		To use, add the DeviceResolvingHandlerInterceptor to the list of interceptors defined in your DispatcherServlet context configuration:
+		To use, add the DeviceResolverHandlerInterceptor to the list of interceptors defined in your DispatcherServlet context configuration:
 		<programlisting language="xml"><![CDATA[
 <interceptors>
     <!-- On pre-handle, detect the device that originated the web request -->
-    <beans:bean class="org.springframework.mobile.device.mvc.DeviceResolvingHandlerInterceptor" />
+    <beans:bean class="org.springframework.mobile.device.mvc.DeviceResolverHandlerInterceptor" />
 </interceptors>]]>
 		</programlisting>
 	</para>
@@ -135,7 +135,7 @@ This resolver only detects the presence of a mobile device and does not detect s
 
     <interceptors>
         <!-- On pre-handle, use WURFL to detect the device that originated the web request -->
-        <beans:bean class="org.springframework.mobile.device.mvc.DeviceResolvingHandlerInterceptor">
+        <beans:bean class="org.springframework.mobile.device.mvc.DeviceResolverHandlerInterceptor">
             <beans:constructor-arg>
                 <device:wurfl-device-resolver root-location="/WEB-INF/wurfl/wurfl-2.0.25.zip" patch-locations="/WEB-INF/wurfl/web_browsers_patch.xml" />
             </beans:constructor-arg>		
@@ -156,27 +156,60 @@ This resolver only detects the presence of a mobile device and does not detect s
 	</para>
   </section>
 
-  <section id="spring-mobile-device-redirect-interceptor">
-    <title>MobileRedirectHandlerInterceptor</title>
+  <section id="spring-mobile-device-site-switcher-interceptor">
+    <title>SiteSwitcherHandlerInterceptor</title>
     <para>
-		Use the MobileRedirectHandlerInterceptor to redirect mobile users to a separate site:
-		<programlisting language="xml"><![CDATA[
+		Use the SiteSwitcherHandlerInterceptor to redirect mobile users to a dedicated mobile site.
+		Users may also indicate a site preference; for example, a mobile user may still wish to use 'normal' site.
+		Convenient static factory methods are provided that implement standard site switching conventions.
+	</para>
+	<section id="spring-mobile-site-switcher-interceptor-mdot">
+		<title>mDot SiteSwitcher</title>
+		<para>
+			Use the "mDot" factory method to construct a SiteSwitcher that redirects mobile users to m.${serverName}; for example, m.myapp.com:
+			<programlisting language="xml"><![CDATA[
 <interceptors>
 
-    <!-- On pre-handle, detect the device that originated the web request -->
-    <beans:bean class="org.springframework.mobile.device.mvc.DeviceResolvingHandlerInterceptor" />
-
-    <!-- Redirects mobile users to "m.myapp.com".  The order of this interceptor is significant (it must be declared after the DeviceResolvingHandlerInterceptor) -->
-    <beans:bean class="org.springframework.mobile.device.mvc.MobileRedirectHandlerInterceptor">
-        <beans:constructor-arg value="http://m.myapp.com" />
+    <!-- Redirects mobile users to "m.myapp.com".  The order of this interceptor is significant (it should be declared after the DeviceResolverHandlerInterceptor) -->
+    <beans:bean class="org.springframework.mobile.device.switcher.SiteSwitcherHandlerInterceptor" factory-method="mDot">
+        <beans:constructor-arg value="myapp.com" />
     </beans:bean>
 
 </interceptors>]]>
-		</programlisting>
-	</para>
+			</programlisting>
+		</para>
+	</section>
+	<section id="spring-mobile-site-switcher-interceptor-dotmobi">
+		<title>dotMobi SiteSwitcher</title>
+		<para>
+			Use the "dotMobi" factory method to construct a SiteSwitcher that redirects mobile users to ${serverName - lastDomain}.mobi; for example, myapp.mobi:
+			<programlisting language="xml"><![CDATA[
+<interceptors>
+
+    <!-- Redirects mobile users to "myapp.mobi".  The order of this interceptor is significant (it should be declared after the DeviceResolverHandlerInterceptor) -->
+    <beans:bean class="org.springframework.mobile.device.switcher.SiteSwitcherHandlerInterceptor" factory-method="dotMobi">
+        <beans:constructor-arg value="myapp.com" />
+    </beans:bean>
+
+</interceptors>]]>
+			</programlisting>
+		</para>
+	</section>
+	<section id="spring-mobile-site-switcher-site-preference">
+		<title>Indicating a site preference</title>
+		<para>
+			The user may indicate a site preference by submitting the site_preference query parameter:
+			<programlisting language="xml"><![CDATA[
+Site: <a href="${currentUrl}?site_preference=normal">Normal</a> | <a href="${currentUrl}?site_preference=mobile">Mobile</a>
+]]>
+			</programlisting>
+			The indicated site preference is saved for the user in a SitePreferenceRepository.
+			The default repository implementation used by the mDot and dotMobi SiteSwitcher factory methods is cookie-based.
+			The cookie value is shared across the normal and mobile site domains.
+		</para>
+	</section>
 	<para>
-		You may also perform application context-relative redirects by setting the contextRelative constructor argument value to true.
-		See the Javadoc API for more information.
+		See the spring-mobile <ulink url="http://git.springsource.org/spring-mobile/samples">samples</ulink> project for SiteSwitcher usage examples.
 	</para>
   </section>
 

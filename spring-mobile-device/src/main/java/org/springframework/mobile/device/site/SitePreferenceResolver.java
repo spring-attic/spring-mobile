@@ -24,7 +24,7 @@ import org.springframework.web.context.request.RequestAttributes;
 
 /**
  * A helper that resolves the user's site preference and makes it available as a request attribute.
- * Primarily used in support of the case where a user on a mobile device prefers to use the normal site.
+ * Primarily used to support the case where a user on a mobile device prefers to use the normal site.
  * The site preference may be changed on behalf of a user by submitting the 'site_preference' query parameter.
  * The preference value is saved in a repository so it can be remembered until the user decides to change it again.
  * If no site preference is specified, preference to the mobile site will be given if the current device is a mobile device.

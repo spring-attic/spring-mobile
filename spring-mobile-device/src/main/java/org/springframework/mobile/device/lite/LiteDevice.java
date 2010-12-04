@@ -18,7 +18,7 @@ package org.springframework.mobile.device.lite;
 import org.springframework.mobile.device.Device;
 
 /**
- * A general purpose Device implementation suitable for use as support code.
+ * A lightweight Device implementation suitable for use as support code.
  * Typically used to hold the output of a device resolution invocation.
  * @author Keith Donald
  */
@@ -43,7 +43,7 @@ class LiteDevice implements Device {
 	private final boolean mobile;
 
 	/**
-	 * Creates a GeneriDevice.
+	 * Creates a LiteDevice.
 	 */
 	private LiteDevice(boolean mobile) {
 		this.mobile = mobile;

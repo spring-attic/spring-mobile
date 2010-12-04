@@ -30,10 +30,18 @@ import org.springframework.web.util.WebUtils;
  */
 public class CookieSitePreferenceRepository extends CookieGenerator implements SitePreferenceRepository {
 
+	/**
+	 * Creates a cookie-based SitePreferenceRepository.
+	 * By default, the name of the cookie is <code>org.springframework.mobile.device.site.CookiteSitePreferenceRepository.SITE_PREFERENCE</code>
+	 */
 	public CookieSitePreferenceRepository() {
 		setCookieName(DEFAULT_COOKIE_NAME);
 	}
 
+	/**
+	 * Creates a cookie-based SitePreferenceRepository with a custom domain value.
+	 * Allows for convenient specification of to a shared domain such as <code>.app.com</code>.
+	 */
 	public CookieSitePreferenceRepository(String cookieDomain) {
 		setCookieName(DEFAULT_COOKIE_NAME);
 		setCookieDomain(cookieDomain);

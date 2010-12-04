@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * Site URL factory implementation that differentiates each site by the value of the server name field.
- * For example, your 'normal' site might be bound to 'myapp.com', while ypur mobile site might be bound to 'm.myapp.com'. 
+ * For example, your 'normal' site might be bound to 'myapp.com', while your mobile site might be bound to 'm.myapp.com'. 
  * @author Keith Donald
  */
 public class StandardSiteUrlFactory implements SiteUrlFactory {
