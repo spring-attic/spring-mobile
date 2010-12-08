@@ -90,7 +90,7 @@ public class DeviceResolverHandlerInterceptor extends HandlerInterceptorAdapter 
 	/**
 	 * Static utility method that extracts the current device from the request attributes map.
 	 * Encapsulates the {@link HttpServletRequest#getAttribute(String)} lookup.
-	 * @param request the request attributes
+	 * @param attributes the request attributes
 	 * @return the current device, or null if no device has been resolved for the request
 	 */
 	public static Device getCurrentDevice(RequestAttributes attributes) {
