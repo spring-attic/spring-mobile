@@ -1,6 +1,26 @@
 Spring Mobile Changelog
 =======================
 
+1.0.0.M2 (2010.12.08)
+=======================
+* Renamed MobileRedirectHandlerInterceptor to SiteSwitcherHandlerInterceptor and made it considerably more capable:
+    - In addition to switching from the "mobile" site to the "normal" site for mobile devices, the switcher is now capable of switching from the "mobile" site to the "normal" site for non-mobile devices.
+      The switcher now also preserves the original request path when performing a site switch.
+
+    - Users can indicate their site preference explicitly by submitting a site_preference query parameter. The indicated preference will be honored by the SiteSwitcher.
+      The preference value will be saved to a SitePreferenceRepository. A CookieSitePreferenceRepository strategy is provided.
+
+    - An indicated SitePreference is resolved to an Enum that is available as a 'currentSitePreference' request attribute and injectable to @Controller methods.
+      Its value can be used to vary controller logic by site preference.
+
+    - Added convenient factory methods for constructing site switchers that implement common scenarios:
+          Scenario #1: The mobile site is addressed at a "mDot" domain e.g. m.myapp.com.
+          Scenario #2: The mobile site is addressed at a "dotMobi" domain e.g. myapp.mobi.
+          For both of those scenarios, the SitePreferenceRepository is cookie-based and the cookie is shared across the site domains.
+          See http://git.springsource.org/spring-mobile/samples for sample projects that demonstrate the site switcher.
+
+* Renamed DeviceResolvingHandlerInterceptor to DeviceResolverHandlerInterceptor to make it more clear this class is a Spring MVC adapter wrapping a DeviceResolver.
+
 1.0.0.M1 (2010.11.16)
 =======================
 * Initial release

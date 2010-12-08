@@ -1,4 +1,4 @@
-Spring Mobile 1.0.0.M1 (Nov 16, 2010)
+Spring Mobile
 -----------------------------------------------------------
 The Spring Mobile project provides support for developing cross-platform mobile web applications.
 It contains extensions to Spring MVC that aim to simplify mobile application development.
