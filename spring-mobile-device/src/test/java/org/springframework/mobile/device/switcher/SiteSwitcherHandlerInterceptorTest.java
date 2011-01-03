@@ -12,6 +12,8 @@ import org.junit.Test;
 import org.springframework.mobile.device.mvc.DeviceResolverHandlerInterceptor;
 import org.springframework.mobile.device.mvc.StubDevice;
 import org.springframework.mobile.device.site.SitePreference;
+import org.springframework.mobile.device.site.SitePreferenceHandler;
+import org.springframework.mobile.device.site.StandardSitePreferenceHandler;
 import org.springframework.mobile.device.site.StubSitePreferenceRepository;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -47,7 +49,8 @@ public class SiteSwitcherHandlerInterceptorTest {
 				return "http://m.app.com";
 			}
 		};
-		siteSwitcher = new SiteSwitcherHandlerInterceptor(normalSiteUrlFactory, mobileSiteUrlFactory, sitePreferenceRepository);
+		SitePreferenceHandler sitePreferenceHandler = new StandardSitePreferenceHandler(sitePreferenceRepository);
+		siteSwitcher = new SiteSwitcherHandlerInterceptor(normalSiteUrlFactory, mobileSiteUrlFactory, sitePreferenceHandler);
 	}
 	
 	@Test

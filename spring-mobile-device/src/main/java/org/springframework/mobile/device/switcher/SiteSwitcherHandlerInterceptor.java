@@ -22,8 +22,8 @@ import org.springframework.mobile.device.Device;
 import org.springframework.mobile.device.mvc.DeviceResolverHandlerInterceptor;
 import org.springframework.mobile.device.site.CookieSitePreferenceRepository;
 import org.springframework.mobile.device.site.SitePreference;
-import org.springframework.mobile.device.site.SitePreferenceRepository;
-import org.springframework.mobile.device.site.SitePreferenceResolver;
+import org.springframework.mobile.device.site.SitePreferenceHandler;
+import org.springframework.mobile.device.site.StandardSitePreferenceHandler;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
@@ -45,29 +45,26 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  */
 public class SiteSwitcherHandlerInterceptor extends HandlerInterceptorAdapter {
 
-	public static final String CURRENT_SITE_PREFERENCE_ATTRIBUTE = "currentSitePreference";
-
 	private final SiteUrlFactory normalSiteUrlFactory;
 	
 	private final SiteUrlFactory mobileSiteUrlFactory;
 
-	private final SitePreferenceResolver sitePreferenceResolver;
+	private final SitePreferenceHandler sitePreferenceHandler;
 	
 	/**
 	 * Creates a new site switcher.
 	 * @param normalSiteUrlFactory the factory for a "normal" site URL e.g. http://app.com
 	 * @param mobileSiteUrlFactory the factory for a "mobile" site URL e.g. http://m.app.com
-	 * @param sitePreferenceRepository the store for resolving user site preference
+	 * @param sitePreferenceHandler the handler for the user site preference
 	 */
-	public SiteSwitcherHandlerInterceptor(SiteUrlFactory normalSiteUrlFactory, SiteUrlFactory mobileSiteUrlFactory,
-			SitePreferenceRepository sitePreferenceRepository) {
+	public SiteSwitcherHandlerInterceptor(SiteUrlFactory normalSiteUrlFactory, SiteUrlFactory mobileSiteUrlFactory, SitePreferenceHandler sitePreferenceHandler) {
 		this.normalSiteUrlFactory = normalSiteUrlFactory;
 		this.mobileSiteUrlFactory = mobileSiteUrlFactory;
-		this.sitePreferenceResolver = new SitePreferenceResolver(sitePreferenceRepository);
+		this.sitePreferenceHandler = sitePreferenceHandler;
 	}
 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		SitePreference sitePreference = sitePreferenceResolver.resolveSitePreference(request, response);
+		SitePreference sitePreference = sitePreferenceHandler.handleSitePreference(request, response);
 		if (mobileSiteUrlFactory.isRequestForSite(request)) {
 			if (sitePreference == SitePreference.NORMAL) {
 				response.sendRedirect(response.encodeRedirectURL(normalSiteUrlFactory.createSiteUrl(request)));
@@ -91,8 +88,7 @@ public class SiteSwitcherHandlerInterceptor extends HandlerInterceptorAdapter {
 	 * Uses a {@link CookieSitePreferenceRepository} that saves a cookie that is shared between the two domains.
 	 */
 	public static SiteSwitcherHandlerInterceptor mDot(String serverName) {
-		return new SiteSwitcherHandlerInterceptor(new StandardSiteUrlFactory(serverName),
-				new StandardSiteUrlFactory("m." + serverName), new CookieSitePreferenceRepository("." + serverName));
+		return new SiteSwitcherHandlerInterceptor(new StandardSiteUrlFactory(serverName), new StandardSiteUrlFactory("m." + serverName), new StandardSitePreferenceHandler(new CookieSitePreferenceRepository("." + serverName)));
 	}
 
 	/**
@@ -104,9 +100,7 @@ public class SiteSwitcherHandlerInterceptor extends HandlerInterceptorAdapter {
 	 */
 	public static SiteSwitcherHandlerInterceptor dotMobi(String serverName) {
 		int lastDot = serverName.lastIndexOf('.');
-		return new SiteSwitcherHandlerInterceptor(new StandardSiteUrlFactory(serverName),
-				new StandardSiteUrlFactory(serverName.substring(0, lastDot) + ".mobi"),
-				new CookieSitePreferenceRepository("." + serverName));		
+		return new SiteSwitcherHandlerInterceptor(new StandardSiteUrlFactory(serverName), new StandardSiteUrlFactory(serverName.substring(0, lastDot) + ".mobi"), new StandardSitePreferenceHandler(new CookieSitePreferenceRepository("." + serverName)));
 	}
 	
 }

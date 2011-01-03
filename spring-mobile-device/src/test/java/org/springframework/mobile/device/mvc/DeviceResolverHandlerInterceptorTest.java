@@ -11,7 +11,7 @@ import org.springframework.mobile.device.DeviceResolver;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-public class DeviceResolvingHandlerInterceptorTest {
+public class DeviceResolverHandlerInterceptorTest {
 	
 	private Device device = new StubDevice();
 

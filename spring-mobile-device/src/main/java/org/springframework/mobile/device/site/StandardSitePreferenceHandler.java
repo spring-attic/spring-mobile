@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.mobile.device.Device;
 import org.springframework.mobile.device.mvc.DeviceResolverHandlerInterceptor;
-import org.springframework.web.context.request.RequestAttributes;
 
 /**
  * A helper that resolves the user's site preference and makes it available as a request attribute.
@@ -32,21 +31,19 @@ import org.springframework.web.context.request.RequestAttributes;
  * This allows handler mappings and view resolvers further down the line to vary their logic by site preference.
  * @author Keith Donald
  */
-public class SitePreferenceResolver {
-
-	public static final String CURRENT_SITE_PREFERENCE_ATTRIBUTE = "currentSitePreference";
+public class StandardSitePreferenceHandler implements SitePreferenceHandler {
 
 	private final SitePreferenceRepository sitePreferenceRepository;
 
 	/**
-	 * Creates a new site preference interceptor.
+	 * Creates a new site preference handler.
 	 * @param sitePreferenceRepository the store for recording user site preference
 	 */
-	public SitePreferenceResolver(SitePreferenceRepository sitePreferenceRepository) {
+	public StandardSitePreferenceHandler(SitePreferenceRepository sitePreferenceRepository) {
 		this.sitePreferenceRepository = sitePreferenceRepository;
 	}
 
-	public SitePreference resolveSitePreference(HttpServletRequest request, HttpServletResponse response) {
+	public SitePreference handleSitePreference(HttpServletRequest request, HttpServletResponse response) {
 		SitePreference preference = getSitePreferenceQueryParameter(request);
 		if (preference != null) {
 			sitePreferenceRepository.saveSitePreference(preference, request, response);
@@ -62,22 +59,6 @@ public class SitePreferenceResolver {
 		return preference;
 	}
 
-	// static factory methods
-
-	/**
-	 * Get the current site preference for the user that originated this web request.
-	 */
-	public static SitePreference getCurrentSitePreference(HttpServletRequest request) {
-		return (SitePreference) request.getAttribute(CURRENT_SITE_PREFERENCE_ATTRIBUTE);
-	}
-
-	/**
-	 * Get the current site preference for the user from the request attributes map.
-	 */
-	public static SitePreference getCurrentSitePreference(RequestAttributes attributes) {
-		return (SitePreference) attributes.getAttribute(CURRENT_SITE_PREFERENCE_ATTRIBUTE, RequestAttributes.SCOPE_REQUEST);
-	}
-	
 	// internal helpers
 	
 	private SitePreference getSitePreferenceQueryParameter(HttpServletRequest request) {

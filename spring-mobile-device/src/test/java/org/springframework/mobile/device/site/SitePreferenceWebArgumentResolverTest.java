@@ -19,7 +19,7 @@ public class SitePreferenceWebArgumentResolverTest {
 
 	@Test
 	public void resolve() throws Exception {
-		request.setAttribute(SitePreferenceResolver.CURRENT_SITE_PREFERENCE_ATTRIBUTE, SitePreference.MOBILE, WebRequest.SCOPE_REQUEST);
+		request.setAttribute(SitePreferenceHandler.CURRENT_SITE_PREFERENCE_ATTRIBUTE, SitePreference.MOBILE, WebRequest.SCOPE_REQUEST);
 		MethodParameter parameter = new MethodParameter(getClass().getMethod("handlerMethod", SitePreference.class), 0);
 		Object resolved = resolver.resolveArgument(parameter, request);
 		assertEquals(SitePreference.MOBILE, resolved);
@@ -27,7 +27,7 @@ public class SitePreferenceWebArgumentResolverTest {
 
 	@Test
 	public void unresolved() throws Exception {
-		request.setAttribute(SitePreferenceResolver.CURRENT_SITE_PREFERENCE_ATTRIBUTE, SitePreference.MOBILE, WebRequest.SCOPE_REQUEST);
+		request.setAttribute(SitePreferenceHandler.CURRENT_SITE_PREFERENCE_ATTRIBUTE, SitePreference.MOBILE, WebRequest.SCOPE_REQUEST);
 		MethodParameter parameter = new MethodParameter(getClass().getMethod("handlerMethodUnresolved", String.class), 0);
 		Object resolved = resolver.resolveArgument(parameter, request);
 		assertSame(WebArgumentResolver.UNRESOLVED, resolved);

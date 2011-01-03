@@ -16,20 +16,19 @@
 package org.springframework.mobile.device.site;
 
 import org.springframework.core.MethodParameter;
-import org.springframework.mobile.device.switcher.SiteSwitcherHandlerInterceptor;
 import org.springframework.web.bind.support.WebArgumentResolver;
 import org.springframework.web.context.request.NativeWebRequest;
 
 /**
  * Spring MVC {@link WebArgumentResolver} that resolves @Controller MethodParameters of type {@link SitePreference}
- * to the value of the web request's {@link SiteSwitcherHandlerInterceptor#CURRENT_SITE_PREFERENCE_ATTRIBUTE current site preference} attribute.
+ * to the value of the web request's {@link SitePreferenceHandler#CURRENT_SITE_PREFERENCE_ATTRIBUTE current site preference attribute}.
  * @author Keith Donald
  */
 public class SitePreferenceWebArgumentResolver implements WebArgumentResolver {
 	
 	public Object resolveArgument(MethodParameter param, NativeWebRequest request) throws Exception {
 		if (SitePreference.class.isAssignableFrom(param.getParameterType())) {
-			return SitePreferenceResolver.getCurrentSitePreference(request);
+			return SitePreferenceUtils.getCurrentSitePreference(request);
 		} else {
 			return WebArgumentResolver.UNRESOLVED;
 		}
