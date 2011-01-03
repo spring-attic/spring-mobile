@@ -18,7 +18,6 @@ package org.springframework.mobile.device.site;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.mobile.device.switcher.SiteSwitcherHandlerInterceptor;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
@@ -26,8 +25,8 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  * The resolved SitePreference is exported as a request attribute under the well-known name of {@link SitePreferenceHandler#CURRENT_SITE_PREFERENCE_ATTRIBUTE}.
  * Request handlers such as @Controllers and views may then access the currentSitePreference to vary their control and rendering logic, respectively.
  * 
- * Note: do not use this interceptor with the {@link SiteSwitcherHandlerInterceptor}, as {@link SiteSwitcherHandlerInterceptor} internally delegates to a {@link SitePreferenceHandler} as part of its own workflow.
- * This interceptor should only be used when the SiteSwitcher is not needed but general site preference handling is desired.
+ * Note: do not use this interceptor in conjunction with the SiteSwitcherHandlerInterceptor, as the switcher internally delegates to a {@link SitePreferenceHandler} as part of its own workflow.
+ * This interceptor should only be used when site switching is not needed but site preference management is still desired.
  * 
  * @author Keith Donald
  */

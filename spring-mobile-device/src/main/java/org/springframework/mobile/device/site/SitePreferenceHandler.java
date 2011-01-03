@@ -5,10 +5,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.mobile.device.Device;
 
+/**
+ * Service interface for site preference management.
+ * @author Keith Donald
+ */
 public interface SitePreferenceHandler {
 
 	/**
-	 * Name of the request attribute that holds the current user's site preference value.
+	 * The name of the request attribute that holds the current user's site preference value.
 	 */
 	final String CURRENT_SITE_PREFERENCE_ATTRIBUTE = "currentSitePreference";
 

@@ -14,6 +14,7 @@ public class SitePreferenceUtils {
 
 	/**
 	 * Get the current site preference for the user that originated this web request.
+	 * @return the site preference, or null if none has been set
 	 */
 	public static SitePreference getCurrentSitePreference(HttpServletRequest request) {
 		return (SitePreference) request.getAttribute(CURRENT_SITE_PREFERENCE_ATTRIBUTE);		
@@ -21,6 +22,7 @@ public class SitePreferenceUtils {
 
 	/**
 	 * Get the current site preference for the user from the request attributes map.
+	 * @return the site preference, or null if none has been set
 	 */
 	public static SitePreference getCurrentSitePreference(RequestAttributes attributes) {
 		return (SitePreference) attributes.getAttribute(CURRENT_SITE_PREFERENCE_ATTRIBUTE, RequestAttributes.SCOPE_REQUEST);		
