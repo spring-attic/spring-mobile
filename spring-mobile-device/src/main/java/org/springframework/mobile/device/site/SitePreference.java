@@ -24,11 +24,23 @@ public enum SitePreference {
 	/**
 	 * The user prefers the 'normal' site.
 	 */
-	NORMAL, 
+	NORMAL,
 	
 	/**
 	 * The user prefers the 'mobile' site.
 	 */
-	MOBILE;
+	MOBILE {		
+		public boolean isMobile() {
+			return true;
+		}
+	};
+
+	/**
+	 * Tests if this is the 'mobile' SitePreference.
+	 * Designed to support concise SitePreference boolean expressions e.g. &lt;c:if test="${currentSitePreference.mobile}"&gt;&lt;/c:if&gt;.
+	 */
+	public boolean isMobile() {
+		return false;
+	}
 	
 }
