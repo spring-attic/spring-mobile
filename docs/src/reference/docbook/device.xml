@@ -243,7 +243,7 @@ public enum SitePreference {
     
     /**
      * Tests if this is the 'mobile' SitePreference.
-     * Designed to support concise SitePreference boolean expressions e.g. &lt;c:if test="${currentSitePreference.mobile}"&gt;&lt;/c:if&gt;.
+     * Designed to support concise SitePreference boolean expressions e.g. <c:if test="${currentSitePreference.mobile}"></c:if>.
      */
     public boolean isMobile() {
         return false;
