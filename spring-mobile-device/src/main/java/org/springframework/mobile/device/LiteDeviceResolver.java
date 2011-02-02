@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.mobile.device.lite;
+package org.springframework.mobile.device;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,8 +22,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.mobile.device.Device;
-import org.springframework.mobile.device.DeviceResolver;
 import org.springframework.mobile.device.wurfl.WurflDeviceResolver;
 
 /**

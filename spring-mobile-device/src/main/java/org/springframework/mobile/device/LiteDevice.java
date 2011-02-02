@@ -13,9 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.mobile.device.lite;
-
-import org.springframework.mobile.device.Device;
+package org.springframework.mobile.device;
 
 /**
  * A lightweight Device implementation suitable for use as support code.

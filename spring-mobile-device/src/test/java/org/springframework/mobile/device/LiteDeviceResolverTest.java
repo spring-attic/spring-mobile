@@ -1,10 +1,11 @@
-package org.springframework.mobile.device.lite;
+package org.springframework.mobile.device;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.springframework.mobile.device.Device;
+import org.springframework.mobile.device.LiteDeviceResolver;
 import org.springframework.mock.web.MockHttpServletRequest;
 
 public class LiteDeviceResolverTest {
