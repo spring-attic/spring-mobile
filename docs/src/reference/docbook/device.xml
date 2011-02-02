@@ -25,35 +25,41 @@
 		</para>
 	</section>
 
-	<section id="spring-mobile-device-resolver-interceptor">
-		<title>DeviceResolverHandlerInterceptor</title>
+	<section id="spring-mobile-device-resolution">
+		<title>Device resolution</title>
 		<para>
-			The DeviceResolverHandlerInterceptor detects the device that originated the web request before handler invocation.
-			The detected Device is set as a request attribute named 'currentDevice' and made available to handlers during request processing.
-			This allows handlers to vary their controller and/or presentation logic by device type.
-	    </para>
-		<para>
-			To use, add the DeviceResolverHandlerInterceptor to the list of interceptors defined in your DispatcherServlet context configuration:
-			<programlisting language="xml"><![CDATA[
+			The DeviceResolver interface is central the service API for device detection.
+			Spring Mobile provides two DeviceResolver implementations: LiteDeviceResolver and WurflDeviceResolver.
+			You may also implement your own.
+		</para>		
+		<section id="spring-mobile-device-resolver-interceptor">
+			<title>DeviceResolverHandlerInterceptor</title>
+			<para>
+				The DeviceResolverHandlerInterceptor detects the device that originated the web request before handler invocation.
+				The detected Device is set as a request attribute named 'currentDevice' and made available to handlers during request processing.
+				This allows handlers to vary their controller and/or presentation logic by device type.
+	    	</para>
+			<para>
+				To use, add the DeviceResolverHandlerInterceptor to the list of interceptors defined in your DispatcherServlet context configuration:
+				<programlisting language="xml"><![CDATA[
 <interceptors>
     <!-- On pre-handle, detect the device that originated the web request -->
     <beans:bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
 </interceptors>]]>
-			</programlisting>
-		</para>
-		<para>
-			By default, the interceptor will use a LiteDeviceResolver for device detection.
-			You may plug-in your own DeviceResolver by injecting a constructor argument.
-			See <xref linkend="spring-mobile-device-resolvers" /> for more information on the implementation options.
-		</para>
-	</section>
+				</programlisting>
+			</para>
+			<para>
+				By default, the interceptor will use a LiteDeviceResolver for device detection.
+				You may plug-in your own DeviceResolver by injecting a constructor argument.
+			</para>
+		</section>
 
-	<section id="spring-mobile-device-web-argument-resolver">
-		<title>DeviceWebArgumentResolver</title>
-		<para>
-			The DeviceWebArgumentResolver allows you to inject the detected Device into @Controller handler methods.
-			To use, register this resolver with your DispatcherServlet's AnnotationMethodHandlerAdapter infrastructure bean:
-			<programlisting language="java"><![CDATA[
+		<section id="spring-mobile-device-web-argument-resolver">
+			<title>DeviceWebArgumentResolver</title>
+			<para>
+				The DeviceWebArgumentResolver allows you to inject the detected Device into @Controller handler methods.
+				To use, register this resolver with your DispatcherServlet's AnnotationMethodHandlerAdapter infrastructure bean:
+				<programlisting language="java"><![CDATA[
 @Component
 public class CustomWebArgumentResolverInstaller {
 
@@ -65,11 +71,11 @@ public class CustomWebArgumentResolverInstaller {
         controllerInvoker.setCustomArgumentResolvers(resolvers);		
     }
 }]]>
-			</programlisting>
-		</para>
-		<para>
-			You can then inject the detect Device into your @Controllers as shown below:
-			<programlisting language="java"><![CDATA[
+				</programlisting>
+			</para>
+			<para>
+				You can then inject the detect Device into your @Controllers as shown below:
+				<programlisting language="java"><![CDATA[
 @Controller
 public class HomeController {
 
@@ -87,17 +93,9 @@ public class HomeController {
             logger.info("Hello desktop user!");			
         }
     }]]>
-			</programlisting>
-		</para>
-	</section>
-
-	<section id="spring-mobile-device-resolvers">
-		<title>Device resolvers</title>
-		<para>
-			The DeviceResolver interface is central the service API for device detection.
-			Spring Mobile provides two DeviceResolver implementations: LiteDeviceResolver and WurflDeviceResolver.
-			You may also implement your own.
-		</para>
+				</programlisting>
+			</para>
+		</section>
 		<section id="spring-mobile-device-resolvers-lite">
 			<title>LiteDeviceResolver</title>
 			<para>
@@ -111,7 +109,7 @@ public class HomeController {
 				A DeviceResolver implementation that delegates to WURFL for device detection.
 				WURFL provides a large database of devices and their capabilities.
 				It is useful when you need to know more about the Device that originated the request, such as its specific screen size, manufacturer, model, preferred markup, or other capabilities.
-		</para>
+			</para>
 			<para>
 				To use, first make sure WURFL is in your classpath:
 				<programlisting language="xml"><![CDATA[
