@@ -5,8 +5,8 @@ import static org.junit.Assert.assertNull;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.mobile.device.mvc.DeviceResolverHandlerInterceptor;
-import org.springframework.mobile.device.mvc.StubDevice;
+import org.springframework.mobile.device.DeviceUtils;
+import org.springframework.mobile.device.StubDevice;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
@@ -48,14 +48,14 @@ public class StandardSitePreferenceHandlerTest {
 
 	@Test
 	public void defaultSitePreferenceMobileDevice() throws Exception {
-		request.setAttribute(DeviceResolverHandlerInterceptor.CURRENT_DEVICE_ATTRIBUTE, new StubDevice());
+		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, new StubDevice());
 		assertEquals(SitePreference.MOBILE, sitePreferenceHandler.handleSitePreference(request, response));
 		assertEquals(SitePreference.MOBILE, SitePreferenceUtils.getCurrentSitePreference(request));
 	}
 
 	@Test
 	public void defaultSitePreferenceNormalDevice() throws Exception {
-		request.setAttribute(DeviceResolverHandlerInterceptor.CURRENT_DEVICE_ATTRIBUTE, new StubDevice(false));
+		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, new StubDevice(false));
 		assertEquals(SitePreference.NORMAL, sitePreferenceHandler.handleSitePreference(request, response));
 		assertEquals(SitePreference.NORMAL, SitePreferenceUtils.getCurrentSitePreference(request));
 	}

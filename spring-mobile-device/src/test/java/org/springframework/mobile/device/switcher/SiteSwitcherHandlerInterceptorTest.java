@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.mobile.device.mvc.DeviceResolverHandlerInterceptor;
-import org.springframework.mobile.device.mvc.StubDevice;
+import org.springframework.mobile.device.DeviceUtils;
+import org.springframework.mobile.device.StubDevice;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.mobile.device.site.SitePreferenceHandler;
 import org.springframework.mobile.device.site.StandardSitePreferenceHandler;
@@ -32,7 +32,7 @@ public class SiteSwitcherHandlerInterceptorTest {
 	
 	@Before
 	public void setup() throws Exception {
-		request.setAttribute(DeviceResolverHandlerInterceptor.CURRENT_DEVICE_ATTRIBUTE, device);
+		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
 		SiteUrlFactory normalSiteUrlFactory = new SiteUrlFactory() {
 			public boolean isRequestForSite(HttpServletRequest request) {
 				return request.getServerName().equals("app.com");

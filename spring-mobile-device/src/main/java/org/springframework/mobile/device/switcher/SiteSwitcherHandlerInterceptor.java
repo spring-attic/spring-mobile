@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 the original author or authors.
+ * Copyright 2010-2011 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.mobile.device.Device;
-import org.springframework.mobile.device.mvc.DeviceResolverHandlerInterceptor;
+import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.mobile.device.site.CookieSitePreferenceRepository;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.mobile.device.site.SitePreferenceHandler;
@@ -71,7 +71,7 @@ public class SiteSwitcherHandlerInterceptor extends HandlerInterceptorAdapter {
 				return false;				
 			}
 		} else {
-			Device device = DeviceResolverHandlerInterceptor.getRequiredCurrentDevice(request);
+			Device device = DeviceUtils.getRequiredCurrentDevice(request);
 			if (sitePreference == SitePreference.MOBILE || device.isMobile() && sitePreference == null) {
 				response.sendRedirect(response.encodeRedirectURL(mobileSiteUrlFactory.createSiteUrl(request)));				
 				return false;

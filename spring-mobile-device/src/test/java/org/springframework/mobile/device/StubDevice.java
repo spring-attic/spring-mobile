@@ -1,4 +1,4 @@
-package org.springframework.mobile.device.mvc;
+package org.springframework.mobile.device;
 
 import org.springframework.mobile.device.Device;
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 the original author or authors.
+ * Copyright 2010-2011 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,54 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.mobile.device.mvc;
+package org.springframework.mobile.device;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.mobile.device.Device;
-import org.springframework.mobile.device.DeviceResolver;
-import org.springframework.mobile.device.lite.LiteDeviceResolver;
 import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
- * A Spring MVC interceptor that resolves the Device that originated the web request <i>before</i> any request handler is invoked.
- * The resolved Device is exported as a request attribute under the well-known name of {@link #CURRENT_DEVICE_ATTRIBUTE}.
- * Request handlers such as @Controllers and views may then access the currentDevice to vary their control and rendering logic, respectively.
+ * Static helper for accessing request-scoped Device values.
  * @author Keith Donald
  */
-public class DeviceResolverHandlerInterceptor extends HandlerInterceptorAdapter {
+public class DeviceUtils {
 
 	/**
 	 * The name of the request attribute the current Device is indexed by.
 	 * The attribute name is 'currentDevice'.
 	 */
 	public static final String CURRENT_DEVICE_ATTRIBUTE = "currentDevice";
-
-	private final DeviceResolver deviceResolver;
-
-	/**
-	 * Create a device resolving {@link HandlerInterceptor} that defaults to a {@link LiteDeviceResolver} implementation.
-	 */
-	public DeviceResolverHandlerInterceptor() {
-		this(new LiteDeviceResolver());
-	}
-	
-	/**
-	 * Create a device resolving {@link HandlerInterceptor}.
-	 * @param deviceResolver the device resolver to delegate to in {@link #preHandle(HttpServletRequest, HttpServletResponse, Object)}.
-	 */
-	public DeviceResolverHandlerInterceptor(DeviceResolver deviceResolver) {
-		this.deviceResolver = deviceResolver;
-	}
-
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		Device device = deviceResolver.resolveDevice(request);
-		request.setAttribute(CURRENT_DEVICE_ATTRIBUTE, device);
-		return true;
-	}
 
 	/**
 	 * Static utility method that extracts the current device from the web request.
@@ -69,7 +38,7 @@ public class DeviceResolverHandlerInterceptor extends HandlerInterceptorAdapter 
 	 * @return the current device, or null if no device has been resolved for the request
 	 */
 	public static Device getCurrentDevice(HttpServletRequest request) {
-		return (Device) request.getAttribute(DeviceResolverHandlerInterceptor.CURRENT_DEVICE_ATTRIBUTE);
+		return (Device) request.getAttribute(CURRENT_DEVICE_ATTRIBUTE);
 	}
 
 	/**
@@ -94,7 +63,8 @@ public class DeviceResolverHandlerInterceptor extends HandlerInterceptorAdapter 
 	 * @return the current device, or null if no device has been resolved for the request
 	 */
 	public static Device getCurrentDevice(RequestAttributes attributes) {
-		return (Device) attributes.getAttribute(DeviceResolverHandlerInterceptor.CURRENT_DEVICE_ATTRIBUTE, RequestAttributes.SCOPE_REQUEST);
+		return (Device) attributes.getAttribute(CURRENT_DEVICE_ATTRIBUTE, RequestAttributes.SCOPE_REQUEST);
 	}
 	
+
 }

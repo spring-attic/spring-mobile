@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 the original author or authors.
+ * Copyright 2010-2011 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.mobile.device.mvc;
+package org.springframework.mobile.device;
 
 import org.springframework.core.MethodParameter;
-import org.springframework.mobile.device.Device;
 import org.springframework.web.bind.support.WebArgumentResolver;
 import org.springframework.web.context.request.NativeWebRequest;
 
@@ -29,7 +28,7 @@ public class DeviceWebArgumentResolver implements WebArgumentResolver {
 	
 	public Object resolveArgument(MethodParameter param, NativeWebRequest request) throws Exception {
 		if (Device.class.isAssignableFrom(param.getParameterType())) {
-			return DeviceResolverHandlerInterceptor.getCurrentDevice(request);
+			return DeviceUtils.getCurrentDevice(request);
 		} else {
 			return WebArgumentResolver.UNRESOLVED;
 		}

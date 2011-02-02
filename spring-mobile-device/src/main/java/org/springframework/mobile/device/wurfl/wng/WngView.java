@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 the original author or authors.
+ * Copyright 2010-2011 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ import net.sourceforge.wurfl.wng.style.StyleOptimizerVisitor;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.functors.InstanceofPredicate;
-import org.springframework.mobile.device.mvc.DeviceResolverHandlerInterceptor;
+import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.web.servlet.View;
 
 /**
@@ -74,7 +74,7 @@ public class WngView implements View {
 		target.render(model, request, buffered);
 		// logic adapted from WNGContextFilter which has the same responsibility
 		if (isWngDocumentCreated(request)) {
-			WNGDevice device = new WNGDevice((Device) DeviceResolverHandlerInterceptor.getCurrentDevice(request));
+			WNGDevice device = new WNGDevice((Device) DeviceUtils.getRequiredCurrentDevice(request));
 			Document document = resolveDocument(request);
 			StyleContainer styleContainer = (StyleContainer)CollectionUtils.find(document.getHead().getChildren(), new InstanceofPredicate(StyleContainer.class));
 			if (styleContainer == null) {
