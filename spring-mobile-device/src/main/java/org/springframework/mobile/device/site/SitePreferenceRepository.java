@@ -23,11 +23,6 @@ import javax.servlet.http.HttpServletResponse;
  * Supports allowing the user to explicitly choose which site they want e.g. 'normal' instead of 'mobile'.
  */
 public interface SitePreferenceRepository {
-	
-	/**
-	 * Save the user's site preference.
-	 */
-	void saveSitePreference(SitePreference preference, HttpServletRequest request, HttpServletResponse response);
 
 	/**
 	 * Load the user's site preference.
@@ -35,4 +30,9 @@ public interface SitePreferenceRepository {
 	 */
 	SitePreference loadSitePreference(HttpServletRequest request);
 	
+	/**
+	 * Save the user's site preference.
+	 */
+	void saveSitePreference(SitePreference preference, HttpServletRequest request, HttpServletResponse response);
+
 }
