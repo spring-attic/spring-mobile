@@ -217,7 +217,7 @@ public class HomeController {
 	</section>
 	
 	<section id="spring-mobile-device-site-switcher-interceptor">
-		<title>Site switcher</title>
+		<title>Site switching</title>
 		<para>
 			Use the SiteSwitcherHandlerInterceptor to redirect mobile users to a dedicated mobile site.
 			Users may also indicate a site preference; for example, a mobile user may still wish to use 'normal' site.

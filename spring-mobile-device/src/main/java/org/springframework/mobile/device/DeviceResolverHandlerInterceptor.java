@@ -23,7 +23,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
  * A Spring MVC interceptor that resolves the Device that originated the web request <i>before</i> any request handler is invoked.
- * The resolved Device is exported as a request attribute under the well-known name of {@link #CURRENT_DEVICE_ATTRIBUTE}.
+ * The resolved Device is exported as a request attribute under the well-known name of {@link DeviceUtils#CURRENT_DEVICE_ATTRIBUTE}.
  * Request handlers such as @Controllers and views may then access the currentDevice to vary their control and rendering logic, respectively.
  * @author Keith Donald
  */
