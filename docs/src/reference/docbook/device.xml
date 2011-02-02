@@ -1,58 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="device" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <title>Spring Mobile Device Module</title>
+<chapter xmlns="http://docbook.org/ns/docbook" version="5.0"
+	xml:id="device" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>Spring Mobile Device Module</title>
 
-  <section id="spring-mobile-device-introduction">
-    <title>Introduction</title>
-    <para>
-		Device detection is useful when requests by mobile devices need to be handled differently from requests made by desktop browsers.
-		The Spring Mobile Device module provides support for server-side device detection.
-    </para>
-  </section>
+	<section id="spring-mobile-device-introduction">
+		<title>Introduction</title>
+		<para>
+			Device detection is useful when requests by mobile devices need to be handled differently from requests made by desktop browsers.
+			The Spring Mobile Device module provides support for server-side device detection.
+	    </para>
+	</section>
 
-  <section id="spring-mobile-device-howtoget">
-    <title>How to get</title>
-	<para>
-		Add the spring-mobile-device artifact to your classpath:
-		<programlisting language="xml"><![CDATA[
+	<section id="spring-mobile-device-howtoget">
+		<title>How to get</title>
+		<para>
+			Add the spring-mobile-device artifact to your classpath:
+			<programlisting language="xml"><![CDATA[
 <dependency>
     <groupId>org.springframework.mobile</groupId>
     <artifactId>spring-mobile-device</artifactId>
     <version>${org.springframework.mobile-version}</version>
 </dependency>]]>
-		</programlisting>
-	</para>
-  </section>
+			</programlisting>
+		</para>
+	</section>
 
-  <section id="spring-mobile-device-resolving-interceptor">
-    <title>DeviceResolverHandlerInterceptor</title>
-    <para>
-		The DeviceResolverHandlerInterceptor detects the device that originated the web request before handler invocation.
-		The detected Device is set as a request attribute named 'currentDevice' and made available to handlers during request processing.
-		This allows handlers to vary their controller and/or presentation logic by device type.
-    </para>
-	<para>
-		To use, add the DeviceResolverHandlerInterceptor to the list of interceptors defined in your DispatcherServlet context configuration:
-		<programlisting language="xml"><![CDATA[
+	<section id="spring-mobile-device-resolver-interceptor">
+		<title>DeviceResolverHandlerInterceptor</title>
+		<para>
+			The DeviceResolverHandlerInterceptor detects the device that originated the web request before handler invocation.
+			The detected Device is set as a request attribute named 'currentDevice' and made available to handlers during request processing.
+			This allows handlers to vary their controller and/or presentation logic by device type.
+	    </para>
+		<para>
+			To use, add the DeviceResolverHandlerInterceptor to the list of interceptors defined in your DispatcherServlet context configuration:
+			<programlisting language="xml"><![CDATA[
 <interceptors>
     <!-- On pre-handle, detect the device that originated the web request -->
-    <beans:bean class="org.springframework.mobile.device.mvc.DeviceResolverHandlerInterceptor" />
+    <beans:bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
 </interceptors>]]>
-		</programlisting>
-	</para>
-	<para>
-		By default, the interceptor will use a LiteDeviceResolver for device detection.
-		You may plug-in your own DeviceResolver by injecting a constructor argument.
-		See <xref linkend="spring-mobile-device-resolvers"/> for more information on the implementation options.
-	</para>
-  </section>
+			</programlisting>
+		</para>
+		<para>
+			By default, the interceptor will use a LiteDeviceResolver for device detection.
+			You may plug-in your own DeviceResolver by injecting a constructor argument.
+			See <xref linkend="spring-mobile-device-resolvers" /> for more information on the implementation options.
+		</para>
+	</section>
 
-  <section id="spring-mobile-device-web-argument-resolver">
-    <title>DeviceWebArgumentResolver</title>
-    <para>
-		The DeviceWebArgumentResolver allows you to inject the detected Device into @Controller handler methods.
-		To use, register this resolver with your DispatcherServlet's AnnotationMethodHandlerAdapter infastructure bean:
-		<programlisting language="java"><![CDATA[
+	<section id="spring-mobile-device-web-argument-resolver">
+		<title>DeviceWebArgumentResolver</title>
+		<para>
+			The DeviceWebArgumentResolver allows you to inject the detected Device into @Controller handler methods.
+			To use, register this resolver with your DispatcherServlet's AnnotationMethodHandlerAdapter infrastructure bean:
+			<programlisting language="java"><![CDATA[
 @Component
 public class CustomWebArgumentResolverInstaller {
 
@@ -60,14 +61,15 @@ public class CustomWebArgumentResolverInstaller {
     public CustomWebArgumentResolverInstaller(AnnotationMethodHandlerAdapter controllerInvoker) {
         WebArgumentResolver[] resolvers = new WebArgumentResolver[1];
         resolvers[0] = new DeviceWebArgumentResolver();
+        // register any additional custom WebArgumentResolvers
         controllerInvoker.setCustomArgumentResolvers(resolvers);		
     }
 }]]>
-		</programlisting>
-	</para>
-	<para>
-		You can then inject the detect Device into your @Controllers as shown below:
-		<programlisting language="java"><![CDATA[
+			</programlisting>
+		</para>
+		<para>
+			You can then inject the detect Device into your @Controllers as shown below:
+			<programlisting language="java"><![CDATA[
 @Controller
 public class HomeController {
 
@@ -85,45 +87,45 @@ public class HomeController {
             logger.info("Hello desktop user!");			
         }
     }]]>
-		</programlisting>
-	</para>
-  </section>
-
-  <section id="spring-mobile-device-resolvers">
-    <title>Device resolvers</title>
-	<para>
-		The DeviceResolver interface is central the service API for device detection.
-		Spring Mobile provides two DeviceResolver implementations: LiteDeviceResolver and WurflDeviceResolver.
-		You may also implement your own.
-	</para>
-  	<section id="spring-mobile-device-resolvers-lite">
-		<title>LiteDeviceResolver</title>
-		<para>
-The default DeviceResolver implementation based on the "lite" <ulink url="http://plugins.trac.wordpress.org/browser/wordpress-mobile-pack/trunk/plugins/wpmp_switcher/lite_detection.php">detection algorithm</ulink>
-implemented as part of the <ulink url="http://wordpress.org/extend/plugins/wordpress-mobile-pack">Wordpress Mobile Pack</ulink>.
-This resolver only detects the presence of a mobile device and does not detect specific capabilities.
+			</programlisting>
 		</para>
 	</section>
-  	<section id="spring-mobile-device-resolvers-wurfl">
-		<title>WurflDeviceResolver</title>
+
+	<section id="spring-mobile-device-resolvers">
+		<title>Device resolvers</title>
 		<para>
-			A DeviceResolver implementation that delegates to WURFL for device detection.
-			WURFL provides a large database of devices and their capabilities.
-			It is useful when you need to know more about the Device that originated the request, such as its specific screen size, manufacturer, model, preferred markup, or other capabilities.
+			The DeviceResolver interface is central the service API for device detection.
+			Spring Mobile provides two DeviceResolver implementations: LiteDeviceResolver and WurflDeviceResolver.
+			You may also implement your own.
 		</para>
-		<para>
-			To use, first make sure WURFL is in your classpath:
-			<programlisting language="xml"><![CDATA[
+		<section id="spring-mobile-device-resolvers-lite">
+			<title>LiteDeviceResolver</title>
+			<para>
+				The default DeviceResolver implementation based on the "lite" <ulink url="http://plugins.trac.wordpress.org/browser/wordpress-mobile-pack/trunk/plugins/wpmp_switcher/lite_detection.php">detection algorithm</ulink> implemented as part of the <ulink url="http://wordpress.org/extend/plugins/wordpress-mobile-pack">Wordpress Mobile Pack</ulink>.
+				This resolver only detects the presence of a mobile device and does not detect specific capabilities.
+			</para>
+		</section>
+		<section id="spring-mobile-device-resolvers-wurfl">
+			<title>WurflDeviceResolver</title>
+			<para>
+				A DeviceResolver implementation that delegates to WURFL for device detection.
+				WURFL provides a large database of devices and their capabilities.
+				It is useful when you need to know more about the Device that originated the request, such as its specific screen size, manufacturer, model, preferred markup, or other capabilities.
+		</para>
+			<para>
+				To use, first make sure WURFL is in your classpath:
+				<programlisting language="xml"><![CDATA[
 <dependency>
     <groupId>net.sourceforge.wurfl</groupId>
     <artifactId>wurfl</artifactId>
     <version>${net.sourceforge.wurfl-version}</version>
 </dependency>]]>
-			</programlisting>
-		</para>
-		<para>
-			To enable the resolver, include the spring-mobile-device XML namespace and use the wurfl-device-resolver tag:
-			<programlisting language="xml"><![CDATA[
+				</programlisting>
+			</para>
+			<para>
+				To enable the resolver, include the spring-mobile-device XML
+				namespace and use the wurfl-device-resolver tag:
+				<programlisting language="xml"><![CDATA[
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns="http://www.springframework.org/schema/mvc"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -143,77 +145,40 @@ This resolver only detects the presence of a mobile device and does not detect s
     </interceptors>
 
 </beans:beans>]]>
-			</programlisting>
-		</para>
+				</programlisting>
+			</para>
+			<para>
+				Read more about WURFL at <ulink url="http://wurfl.sourceforge.net">http://wurfl.sourceforge.net</ulink>.
+				Checkout the <ulink url="http://git.springsource.org/spring-mobile/samples">wurfl-showcase</ulink> for a live demonstration.
+				This sample illustrates WURFL-based device detection as well as the use of the WNG tag library to perform multi-serving from common page markup.
+			</para>
+		</section>
 		<para>
-			Read more about WURFL at <ulink url="http://wurfl.sourceforge.net">http://wurfl.sourceforge.net</ulink>.
-			Checkout the <ulink url="http://git.springsource.org/spring-mobile/samples">wurfl-showcase</ulink> for a live demonstration.
-			This sample illustrates WURFL-based device detection as well as the use of the WNG tag library to perform multi-serving from common page markup.
-		</para>
-	</section>
-	<para>
-		If you implement your own DeviceResolver, please consider contributing your implementation back to the community at <ulink url="http://www.springsource.org/spring-mobile">http://www.springsource.org/spring-mobile</ulink>.
-	</para>
-  </section>
-
-  <section id="spring-mobile-device-site-switcher-interceptor">
-    <title>SiteSwitcherHandlerInterceptor</title>
-    <para>
-		Use the SiteSwitcherHandlerInterceptor to redirect mobile users to a dedicated mobile site.
-		Users may also indicate a site preference; for example, a mobile user may still wish to use 'normal' site.
-		Convenient static factory methods are provided that implement standard site switching conventions.
-	</para>
-	<section id="spring-mobile-site-switcher-interceptor-mdot">
-		<title>mDot SiteSwitcher</title>
-		<para>
-			Use the "mDot" factory method to construct a SiteSwitcher that redirects mobile users to m.${serverName}; for example, m.myapp.com:
-			<programlisting language="xml"><![CDATA[
-<interceptors>
-
-    <!-- Redirects mobile users to "m.myapp.com".  The order of this interceptor is significant (it should be declared after the DeviceResolverHandlerInterceptor) -->
-    <beans:bean class="org.springframework.mobile.device.switcher.SiteSwitcherHandlerInterceptor" factory-method="mDot">
-        <beans:constructor-arg value="myapp.com" />
-    </beans:bean>
-
-</interceptors>]]>
-			</programlisting>
+			If you implement your own DeviceResolver, please consider contributing your implementation back to the community at <ulink url="http://www.springsource.org/spring-mobile">http://www.springsource.org/spring-mobile</ulink>.
 		</para>
 	</section>
-	<section id="spring-mobile-site-switcher-interceptor-dotmobi">
-		<title>dotMobi SiteSwitcher</title>
-		<para>
-			Use the "dotMobi" factory method to construct a SiteSwitcher that redirects mobile users to ${serverName - lastDomain}.mobi; for example, myapp.mobi:
-			<programlisting language="xml"><![CDATA[
-<interceptors>
 
-    <!-- Redirects mobile users to "myapp.mobi".  The order of this interceptor is significant (it should be declared after the DeviceResolverHandlerInterceptor) -->
-    <beans:bean class="org.springframework.mobile.device.switcher.SiteSwitcherHandlerInterceptor" factory-method="dotMobi">
-        <beans:constructor-arg value="myapp.com" />
-    </beans:bean>
-
-</interceptors>]]>
-			</programlisting>
-		</para>
-	</section>
-	<section id="spring-mobile-site-switcher-site-preference">
-		<title>Indicating a site preference</title>
-		<para>
-			The user may indicate a site preference by submitting the site_preference query parameter:
-			<programlisting language="xml"><![CDATA[
+	<section id="spring-mobile-site-preference">
+		<title>Site preference management</title>
+		<section id="spring-mobile-site-preference-indicating">
+			<title>Indicating a site preference</title>
+			<para>
+				The user may indicate a site preference by submitting the site_preference query parameter:
+				<programlisting language="xml"><![CDATA[
 Site: <a href="${currentUrl}?site_preference=normal">Normal</a> | <a href="${currentUrl}?site_preference=mobile">Mobile</a>
 ]]>
-			</programlisting>
-			The indicated site preference is saved for the user in a SitePreferenceRepository, and also made available as a request attribute named 'currentSitePreference'.
-			The default SitePreferenceRepository implementation used by the mDot and dotMobi SiteSwitcher factory methods is cookie-based.
-			The cookie value is shared across the normal and mobile site domains.
-		</para>
-	</section>
-	<section id="spring-mobile-site-prefernce-argument-resolver">
-	    <title>SitePreferenceWebArgumentResolver</title>
-	    <para>
-			The SitePreferenceWebArgumentResolver allows you to inject the user's indicated SitePreference into @Controller handler methods.
-			To use, add this resolver to the list of custom WebArgumentResolvers registered with the DispatcherServlet's AnnotationMethodHandlerAdapter infastructure bean:
-			<programlisting language="java"><![CDATA[
+				</programlisting>
+				The indicated site preference is saved for the user in a SitePreferenceRepository, and also made available as a request attribute named 'currentSitePreference'.
+				The default SitePreferenceRepository implementation used by the mDot and dotMobi SiteSwitcher factory methods is cookie-based.
+				The cookie value is shared across the normal and mobile site domains.
+			</para>
+		</section>
+		<section id="spring-mobile-site-preference-argument-resolver">
+			<title>SitePreferenceWebArgumentResolver</title>
+			<para>
+				The SitePreferenceWebArgumentResolver allows you to inject the user's indicated SitePreference into @Controller handler methods.
+				To use, add this resolver to the list of custom WebArgumentResolvers registered with the DispatcherServlet's AnnotationMethodHandlerAdapter infastructure bean:
+				<programlisting language="java"><![CDATA[
 @Component
 public class CustomWebArgumentResolverInstaller {
 
@@ -226,11 +191,11 @@ public class CustomWebArgumentResolverInstaller {
     }
 	
 }]]>
-			</programlisting>
-		</para>
-		<para>
-			You can then inject the indicated SitePreference into your @Controllers as shown below:
-			<programlisting language="java"><![CDATA[
+				</programlisting>
+			</para>
+			<para>
+				You can then inject the indicated SitePreference into your @Controllers as shown below:
+				<programlisting language="java"><![CDATA[
 @Controller
 public class HomeController {
 
@@ -246,12 +211,54 @@ public class HomeController {
     }
 
 }]]>
-			</programlisting>
-		</para>
+				</programlisting>
+			</para>	
+		</section>
+	</section>
+	
+	<section id="spring-mobile-device-site-switcher-interceptor">
+		<title>Site switcher</title>
 		<para>
-			See the spring-mobile <ulink url="http://git.springsource.org/spring-mobile/samples">samples</ulink> repository for runnable SiteSwitcher examples.
-		</para>		
-	  </section>	
-  </section>
+			Use the SiteSwitcherHandlerInterceptor to redirect mobile users to a dedicated mobile site.
+			Users may also indicate a site preference; for example, a mobile user may still wish to use 'normal' site.
+			Convenient static factory methods are provided that implement standard site switching conventions.
+		</para>
+		<section id="spring-mobile-site-switcher-interceptor-mdot">
+			<title>mDot SiteSwitcher</title>
+			<para>
+				Use the "mDot" factory method to construct a SiteSwitcher that
+				redirects mobile users to m.${serverName}; for example, m.myapp.com:
+				<programlisting language="xml"><![CDATA[
+<interceptors>
+
+    <!-- Redirects mobile users to "m.myapp.com".  The order of this interceptor is significant (it should be declared after the DeviceResolverHandlerInterceptor) -->
+    <beans:bean class="org.springframework.mobile.device.switcher.SiteSwitcherHandlerInterceptor" factory-method="mDot">
+        <beans:constructor-arg value="myapp.com" />
+    </beans:bean>
+
+</interceptors>]]>
+				</programlisting>
+			</para>
+		</section>
+		<section id="spring-mobile-site-switcher-interceptor-dotmobi">
+			<title>dotMobi SiteSwitcher</title>
+			<para>
+				Use the "dotMobi" factory method to construct a SiteSwitcher that redirects mobile users to ${serverName - lastDomain}.mobi; for example, myapp.mobi:
+				<programlisting language="xml"><![CDATA[
+<interceptors>
+
+    <!-- Redirects mobile users to "myapp.mobi".  The order of this interceptor is significant (it should be declared after the DeviceResolverHandlerInterceptor) -->
+    <beans:bean class="org.springframework.mobile.device.switcher.SiteSwitcherHandlerInterceptor" factory-method="dotMobi">
+        <beans:constructor-arg value="myapp.com" />
+    </beans:bean>
+
+</interceptors>]]>
+				</programlisting>
+			</para>
+			<para>
+				See the spring-mobile <ulink url="http://git.springsource.org/spring-mobile/samples">samples</ulink> repository for runnable SiteSwitcher examples.
+			</para>				
+		</section>
+	</section>
 
 </chapter>
