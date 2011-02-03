@@ -9,4 +9,4 @@ Please consult the documentation located within the 'docs/reference' directory
 of this release and also visit the official Spring Mobile home at:
 http://www.springsource.org/spring-mobile
 
-There you will find links to the forum, issue tracker, and other resources.
+There you will find links to the forum, issue tracker, samples, and other resources.
