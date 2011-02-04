@@ -1,7 +1,7 @@
 Spring Mobile Changelog
 =======================
 
-1.0.0.M3 (2010.02.03)
+1.0.0.M3 (2011.02.03)
 =======================
 * Extracted SitePreferenceHandler from SiteSwitcher to allow for standalone site preference management independent of site switcher usage. See SitePreferenceHandlerInterceptor to enable in Spring MVC.
 * Added SitePreference.isMobile() for convenient testing of a mobile site preference value using a boolean expression. This is particularly useful for view templates e.g. ${currentSitePreference.mobile}
