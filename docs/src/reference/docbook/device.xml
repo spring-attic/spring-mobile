@@ -352,14 +352,14 @@ public class HomeController {
 			<para>
 				Use the "mDot" factory method to construct a SiteSwitcher that redirects mobile users to m.${serverName}; for example, m.myapp.com:
 				<programlisting language="xml"><![CDATA[
-<interceptors>
+<mvc:interceptors>
     <!-- On pre-handle, resolve the device that originated the web request -->
     <beans:bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
     <!-- On pre-handle, redirects mobile users to "m.myapp.com" (declare after DeviceResolverHandlerInterceptor) -->
     <beans:bean class="org.springframework.mobile.device.switcher.SiteSwitcherHandlerInterceptor" factory-method="mDot">
         <beans:constructor-arg value="myapp.com" />
     </beans:bean>
-</interceptors>]]>
+</mvc:interceptors>]]>
 				</programlisting>
 			</para>
 		</section>
@@ -368,14 +368,14 @@ public class HomeController {
 			<para>
 				Use the "dotMobi" factory method to construct a SiteSwitcher that redirects mobile users to ${serverName - lastDomain}.mobi; for example, myapp.mobi:
 				<programlisting language="xml"><![CDATA[
-<interceptors>
+<mvc:interceptors>
     <!-- On pre-handle, resolve the device that originated the web request -->
     <beans:bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
     <!-- On pre-handle, redirects mobile users to "myapp.mobi" (declare after DeviceResolverHandlerInterceptor) -->
     <beans:bean class="org.springframework.mobile.device.switcher.SiteSwitcherHandlerInterceptor" factory-method="dotMobi">
         <beans:constructor-arg value="myapp.com" />
     </beans:bean>
-</interceptors>]]>
+</mvc:interceptors>]]>
 				</programlisting>
 			</para>
 			<para>
