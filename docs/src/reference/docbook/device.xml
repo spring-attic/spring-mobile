@@ -189,7 +189,7 @@ public class HomeController {
         <beans:bean class="org.springframework.mobile.device.mvc.DeviceResolverHandlerInterceptor">
             <beans:constructor-arg>
             	<!-- Inject a WurflDeviceResolver that populates its device repository from the specified file locations -->
-                <device:wurfl-device-resolver root-location="/WEB-INF/wurfl/wurfl-2.0.25.zip" patch-locations="/WEB-INF/wurfl/web_browsers_patch.xml" />
+                <device:wurfl-device-resolver root-location="/WEB-INF/wurfl/wurfl-2.0.28.zip" patch-locations="/WEB-INF/wurfl/web_browsers_patch.xml" />
             </beans:constructor-arg>		
         </beans:bean>
     </interceptors>
