@@ -15,7 +15,7 @@
 	<section id="spring-mobile-device-howtoget">
 		<title>How to get</title>
 		<para>
-			Add the spring-mobile-device artifact to your classpath:
+			To get the module, add the spring-mobile-device artifact to your classpath:
 			<programlisting language="xml"><![CDATA[
 <dependency>
     <groupId>org.springframework.mobile</groupId>
@@ -24,6 +24,26 @@
 </dependency>]]>
 			</programlisting>
 		</para>
+		<para>
+			If you are developing against a milestone version, such as 1.0.0.M3, you will need to add the following repository in order to resolve the artifact:
+		</para>
+		<programlisting language="xml"><![CDATA[
+<repository>
+    <id>org.springframework.maven.milestone</id>
+    <name>Spring Maven Milestone Repository</name>
+    <url>http://maven.springframework.org/milestone</url>
+</repository>]]>
+		</programlisting>		
+		<para>
+			If you are testing out the latest nightly build version (e.g. 1.0.0.BUILD-SNAPSHOT), you will need to add the following repository:
+		</para>
+		<programlisting language="xml"><![CDATA[
+<repository>
+    <id>org.springframework.maven.snapshot</id>
+    <name>Spring Maven Snapshot Repository</name>
+    <url>http://maven.springframework.org/snapshot</url>
+</repository>]]>
+		</programlisting>
 	</section>
 
 	<section id="spring-mobile-device-resolution">
