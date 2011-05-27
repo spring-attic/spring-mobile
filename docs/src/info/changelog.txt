@@ -8,7 +8,7 @@ Spring Mobile Changelog
 * Added DeviceUtils and SitePreferenceUtils for convenient lookup of the 'currentDevice' and 'currentSitePreference', respectively.
 * Simplified packaging by collapsing the device.mvc and device.lite sub-packages into the device root package.  M2 users: DeviceResolverHandlerInterceptor now resides in the root device package.
 * Updated documentation to expand coverage of the feature set, and to demonstrate new MVC 3.1 features for enabling Mobile extensions such as the Device and SitePreference argument-resolvers.
-  (see the lite-showcase and wurfl-showcase samples at git.springsource.org/spring-mobile/samples.git for working examples of the latest Spring MVC + Spring Mobile feature set)
+  (see the lite-showcase and wurfl-showcase samples at git://github.com/SpringSource/spring-mobile-samples.git for working examples of the latest Spring MVC + Spring Mobile feature set)
 
 1.0.0.M2 (2010.12.08)
 =======================
@@ -26,7 +26,7 @@ Spring Mobile Changelog
           Scenario #1: The mobile site is addressed at a "mDot" domain e.g. m.myapp.com.
           Scenario #2: The mobile site is addressed at a "dotMobi" domain e.g. myapp.mobi.
           For both of those scenarios, the SitePreferenceRepository is cookie-based and the cookie is shared across the site domains.
-          See http://git.springsource.org/spring-mobile/samples for sample projects that demonstrate the site switcher.
+          See https://github.com/SpringSource/spring-mobile-samples for sample projects that demonstrate the site switcher.
 
 * Renamed DeviceResolvingHandlerInterceptor to DeviceResolverHandlerInterceptor to make it more clear this class is a Spring MVC adapter wrapping a DeviceResolver.
 

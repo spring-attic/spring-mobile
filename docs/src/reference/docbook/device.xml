@@ -199,7 +199,7 @@ public class HomeController {
 				</para>
 				<para>
 					Read more about WURFL at <ulink url="http://wurfl.sourceforge.net">http://wurfl.sourceforge.net</ulink>.
-					Checkout the <ulink url="http://git.springsource.org/spring-mobile/samples">wurfl-showcase</ulink> for a live demonstration.
+					Checkout the <ulink url="https://github.com/SpringSource/spring-mobile-samples">wurfl-showcase</ulink> for a live demonstration.
 					This sample illustrates WURFL-based device detection as well as the use of the WNG tag library to perform multi-serving from common page markup.
 				</para>
 			</section>	
@@ -405,7 +405,7 @@ public class HomeController {
 			</para>
 			<para>
 				See the JavaDoc of SiteSwitcherHandlerInterceptor for additional options when you need more control.			
-				See the spring-mobile <ulink url="http://git.springsource.org/spring-mobile/samples">samples</ulink> repository for runnable SiteSwitcher examples.
+				See the spring-mobile <ulink url="https://github.com/SpringSource/spring-mobile-samples">samples</ulink> repository for runnable SiteSwitcher examples.
 			</para>				
 		</section>
 	</section>
