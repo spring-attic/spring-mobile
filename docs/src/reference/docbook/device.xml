@@ -143,7 +143,7 @@ public class HomeController {
 		<section id="spring-mobile-device-resolvers">
 			<title>Supported DeviceResolver implementations</title>
 			<para>
-				Spring Mobile ships two distinct DeviceResolver implementations that offer varying levels of resolution capability.
+				Spring Mobile allows for the development of different DeviceResolver implementations that offer varying levels of resolution capability.
 				The first, and the default, is a <emphasis>LiteDeviceResolver</emphasis> that detects the presence of a mobile device but does not detect specific capabilities.
 			</para>
 			<section id="spring-mobile-device-resolvers-lite">
