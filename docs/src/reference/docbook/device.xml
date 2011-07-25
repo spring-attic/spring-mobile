@@ -25,7 +25,7 @@
 			</programlisting>
 		</para>
 		<para>
-			If you are developing against a milestone version, such as 1.0.0.M3, you will need to add the following repository in order to resolve the artifact:
+			If you are developing against a milestone version, such as 1.0.0.M4, you will need to add the following repository in order to resolve the artifact:
 		</para>
 		<programlisting language="xml"><![CDATA[
 <repository>
