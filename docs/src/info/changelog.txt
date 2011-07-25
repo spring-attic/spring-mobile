@@ -1,6 +1,10 @@
 Spring Mobile Changelog
 =======================
 
+1.0.0.M4 (2011.07.26)
+=======================
+* Split out Spring Mobile's WURFL integration into a separate project licensed under the same terms as the Wurfl Java API (AGPL3)
+
 1.0.0.M3 (2011.02.03)
 =======================
 * Extracted SitePreferenceHandler from SiteSwitcher to allow for standalone site preference management independent of site switcher usage. See SitePreferenceHandlerInterceptor to enable in Spring MVC.

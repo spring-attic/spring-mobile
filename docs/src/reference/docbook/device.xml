@@ -145,7 +145,6 @@ public class HomeController {
 			<para>
 				Spring Mobile ships two distinct DeviceResolver implementations that offer varying levels of resolution capability.
 				The first, and the default, is a <emphasis>LiteDeviceResolver</emphasis> that detects the presence of a mobile device but does not detect specific capabilities.
-				The second is a <emphasis>WurflDeviceResolver</emphasis> that uses the WURFL Java API and device repository to identify a wide range of device capabilities.
 			</para>
 			<section id="spring-mobile-device-resolvers-lite">
 				<title>LiteDeviceResolver</title>
@@ -155,54 +154,6 @@ public class HomeController {
 					No special configuration is required to enable this resolver, simply configure a default DeviceResolverHandlerInterceptor and it will be enabled for you.					
 				</para>
 			</section>
-			<section id="spring-mobile-device-resolvers-wurfl">
-				<title>WurflDeviceResolver</title>
-				<para>
-					Spring Mobile ships an alternative DeviceResolver implementation that delegates to WURFL.
-					WURFL provides a Java API as well as a large database of devices and their capabilities.
-					It is useful when you need to know more about the Device that originated the request, such as its specific screen size, manufacturer, model, preferred markup, or other capabilities.
-				</para>
-				<para>
-					To use, first make sure the WURFL Java API is in your classpath:
-					<programlisting language="xml"><![CDATA[
-<dependency>
-    <groupId>net.sourceforge.wurfl</groupId>
-    <artifactId>wurfl</artifactId>
-    <version>${net.sourceforge.wurfl-version}</version>
-</dependency>]]>
-					</programlisting>
-				</para>
-				<para>
-					Then include the spring-mobile-device XML namespace and use the wurfl-device-resolver tag:
-					<programlisting language="xml"><![CDATA[
-<?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns="http://www.springframework.org/schema/mvc"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:beans="http://www.springframework.org/schema/beans"
-    xmlns:device="http://www.springframework.org/schema/mobile/device"
-    xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-        http://www.springframework.org/schema/mobile/device http://www.springframework.org/schema/mobile/device/spring-mobile-device-1.0.xsd">
-
-    <interceptors>
-        <!-- On pre-handle, use WURFL to detect the device that originated the web request -->
-        <beans:bean class="org.springframework.mobile.device.mvc.DeviceResolverHandlerInterceptor">
-            <beans:constructor-arg>
-            	<!-- Inject a WurflDeviceResolver that populates its device repository from the specified file locations -->
-                <device:wurfl-device-resolver root-location="/WEB-INF/wurfl/wurfl-2.0.28.zip" patch-locations="/WEB-INF/wurfl/web_browsers_patch.xml" />
-            </beans:constructor-arg>		
-        </beans:bean>
-    </interceptors>
-
-</beans:beans>]]>
-					</programlisting>
-				</para>
-				<para>
-					Read more about WURFL at <ulink url="http://wurfl.sourceforge.net">http://wurfl.sourceforge.net</ulink>.
-					Checkout the <ulink url="https://github.com/SpringSource/spring-mobile-samples">wurfl-showcase</ulink> for a live demonstration.
-					This sample illustrates WURFL-based device detection as well as the use of the WNG tag library to perform multi-serving from common page markup.
-				</para>
-			</section>	
 		</section>
 	</section>
 

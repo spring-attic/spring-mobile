@@ -22,12 +22,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.mobile.device.wurfl.WurflDeviceResolver;
-
 /**
  * A "lightweight" device resolver algorithm based on Wordpress's Mobile pack.
  * Detects the presence of a mobile device and works for a large percentage of mobile browsers.
- * Does not perform any device capability mapping, if you need that consider {@link WurflDeviceResolver}.
+ * Does not perform any device capability mapping, if you need that consider WURFL.
  *  
  * The code is based primarily on a list of approximately 90 well-known mobile browser UA string snippets,
  * with a couple of special cases for Opera Mini, the W3C default delivery context and certain other Windows browsers.
