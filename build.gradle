@@ -96,9 +96,9 @@ configure(javaprojects) {
     // add tasks for finding and publishing .xsd files
     apply from: "$buildSrcDir/schema-publication.gradle"
 
-    junitVersion = '4.7'
+    junitVersion = '4.9'
     log4jVersion = '1.2.16'
-    springVersion = '3.0.5.RELEASE'
+    springVersion = '3.1.0.RELEASE'
 
     // dependencies that are common across all java projects
     dependencies {
