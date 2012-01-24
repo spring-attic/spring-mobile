@@ -26,6 +26,14 @@ public class StandardSitePreferenceHandlerTest {
 	}
 	
 	@Test
+	public void saveInvalidSitePreference() throws Exception {
+		request.addParameter("site_preference", "invalid");
+		assertEquals(null, sitePreferenceHandler.handleSitePreference(request, response));
+		assertEquals(null, sitePreferenceRepository.getSitePreference());
+		assertEquals(null, SitePreferenceUtils.getCurrentSitePreference(request));
+	}
+	
+	@Test
 	public void saveSitePreference() throws Exception {
 		request.addParameter("site_preference", "normal");
 		assertEquals(SitePreference.NORMAL, sitePreferenceHandler.handleSitePreference(request, response));
