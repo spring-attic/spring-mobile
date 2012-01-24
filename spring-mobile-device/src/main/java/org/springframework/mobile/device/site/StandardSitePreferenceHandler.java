@@ -63,7 +63,11 @@ public class StandardSitePreferenceHandler implements SitePreferenceHandler {
 	
 	private SitePreference getSitePreferenceQueryParameter(HttpServletRequest request) {
 		String string = request.getParameter(SITE_PREFERENCE_PARAMETER);
-		return string != null && string.length() > 0 ? SitePreference.valueOf(string.toUpperCase()) : null;
+		try {
+			return string != null && string.length() > 0 ? SitePreference.valueOf(string.toUpperCase()) : null;
+		} catch (IllegalArgumentException e) {
+			return null;
+		}
 	}
 
 	private SitePreference getDefaultSitePreferenceForDevice(Device device) {
