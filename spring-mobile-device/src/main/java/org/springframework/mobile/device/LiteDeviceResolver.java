@@ -137,7 +137,7 @@ public class LiteDeviceResolver implements DeviceResolver {
 					"wapr", "webc", "winw", "winw", "xda ", "xda-", };
 
 	private static final String[] KNOWN_USER_AGENT_KEYWORDS = 
-		new String[] { "android", "blackberry", "hiptop", "ipod",
+		new String[] { "android", "blackberry", "hiptop", "ipod", "ipad",
 					"lge vx", "midp", "maemo", "mmp", "netfront",
 					"nintendo DS", "novarra", "openweb", "opera mobi",
 					"opera mini", "palm", "psp", "phone", "smartphone",
