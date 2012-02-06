@@ -25,7 +25,7 @@
 			</programlisting>
 		</para>
 		<para>
-			If you are developing against a milestone version, such as 1.0.0.M4, you will need to add the following repository in order to resolve the artifact:
+			If you are developing against a milestone version, such as 1.0.0.RC1, you will need to add the following repository in order to resolve the artifact:
 		</para>
 		<programlisting language="xml"><![CDATA[
 <repository>
@@ -83,24 +83,44 @@ public interface Device {
 				Web applications should perform device resolution at the beginning of request processing, before any request handler is invoked.
 				This ensures the Device model can be made available in request scope before any processing occurs.
 				Request handlers can then obtain the Device instance and use it to respond differently based on its state.
-	    	</para>
-	    	<para>
-	    		Spring Mobile ships a HandlerInterceptor that, on preHandle, delegates to a DeviceResolver.
-				The resolved Device is indexed under a request attribute named 'currentDevice', making it available to handlers throughout request processing.
-	    	</para>
+			</para>
 			<para>
-				To enable, add the DeviceResolverHandlerInterceptor to the list of interceptors defined in your DispatcherServlet configuration:
-				<programlisting language="xml"><![CDATA[
+				By default, a LiteDeviceResolver is used for device resolution.
+				You may plug-in another DeviceResolver implementation by injecting a constructor argument.
+			</para>
+			<section>
+				<title>DeviceResolverHandlerInterceptor</title>
+				<para>
+					Spring Mobile ships a HandlerInterceptor that, on preHandle, delegates to a DeviceResolver.
+					The resolved Device is indexed under a request attribute named 'currentDevice', making it available to handlers throughout request processing.
+				</para>
+				<para>
+					To enable, add the DeviceResolverHandlerInterceptor to the list of interceptors defined in your DispatcherServlet configuration:
+					<programlisting language="xml"><![CDATA[
 <mvc:interceptors>
     <!-- On pre-handle, resolve the device that originated the web request -->
     <beans:bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
 </mvc:interceptors>]]>
-				</programlisting>
-			</para>
-			<para>
-				By default, the interceptor will use a LiteDeviceResolver for device resolution.
-				You may plug-in another DeviceResolver implementation by injecting a constructor argument.
-			</para>
+					</programlisting>
+				</para>
+			</section>
+			<section>
+				<title>DeviceResolverHandlerFilter</title>
+				<para>
+					Spring Mobile also ships with a Servlet Filter that delegates to the same DeviceResolver.
+					As with the HandlerInterceptor, the resolved Device is indexed under a request attribute named 'currentDevice', 
+					making it available to handlers throughout request processing.
+				</para>
+				<para>
+					To enable, add the DeviceResolverHandlerFilter to your web.xml:
+					<programlisting language="xml"><![CDATA[
+<filter>
+    <filter-name>deviceResolverHandlerFilter</filter-name>
+    <filter-class>org.springframework.mobile.device.DeviceResolverHandlerFilter</filter-class>
+</filter>]]>
+					</programlisting>
+				</para>
+			</section>
 		</section>
 		<section id="spring-mobile-device-web-argument-resolver">
 			<title>Obtaining a reference to the current device</title>

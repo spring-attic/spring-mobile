@@ -25,9 +25,13 @@
         <firstname>Keith</firstname>
         <surname>Donald</surname>
       </author>
+      <author>
+        <firstname>Roy</firstname>
+        <surname>Clarkson</surname>
+      </author>
     </authorgroup>
 
-    <legalnotice><para>© SpringSource Inc., 2010-2011</para></legalnotice>
+    <legalnotice><para>© SpringSource Inc., 2010-2012</para></legalnotice>
   </bookinfo>
 
   <toc></toc>
