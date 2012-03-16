@@ -213,7 +213,7 @@ configure(rootProject) {
 
     artifacts {
         archives docsZip
-        archives schemaZip
+//        archives schemaZip
         archives distZip
     }
 
