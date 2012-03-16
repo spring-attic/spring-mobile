@@ -12,7 +12,7 @@ configure(allprojects) {
     apply plugin: 'eclipse'
     apply plugin: 'idea'
 
-    group = 'org.springframework'
+    group = 'org.springframework.mobile'
 
     sourceCompatibility=1.5
     targetCompatibility=1.5
