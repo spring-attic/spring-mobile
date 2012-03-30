@@ -78,6 +78,44 @@ public class LiteDeviceResolverTest {
 	public void iPad() {
 		request.addHeader("User-Agent", UserAgent.iPad_iOS3_2);
 		Device device = resolver.resolveDevice(request);
+		assertTrue(device.isTablet());
+	}
+	
+	// Android
+	@Test
+	public void isGoogleNexusOne() {
+		request.addHeader("User-Agent", UserAgent.GoogleNexusOne_Android2_2);
+		Device device = resolver.resolveDevice(request);
+		assertTrue(device.isMobile());
+	}
+	
+	@Test
+	public void isMotorolaXoom() {
+		request.addHeader("User-Agent", UserAgent.MotorolaXoom_Android3_1);
+		Device device = resolver.resolveDevice(request);
+		assertTrue(device.isTablet());
+	}
+	
+	// HP
+	@Test
+	public void isHpTouchPad() {
+		request.addHeader("User-Agent", UserAgent.HPTouchPad_webOS3);
+		Device device = resolver.resolveDevice(request);
+		assertTrue(device.isTablet());
+	}
+	
+	// BlackBerry
+	@Test
+	public void isBlackBerryPlayBook() {
+		request.addHeader("User-Agent", UserAgent.BlackBerryPlaybook);
+		Device device = resolver.resolveDevice(request);
+		assertTrue(device.isTablet());
+	}
+	
+	@Test
+	public void isBlackBerry9850() {
+		request.addHeader("User-Agent", UserAgent.BlackBerry9850_OS7);
+		Device device = resolver.resolveDevice(request);
 		assertTrue(device.isMobile());
 	}
 

@@ -21,13 +21,21 @@ package org.springframework.mobile.device;
  * @author Keith Donald
  */
 class LiteDevice implements Device {
+	
+	private static enum DeviceType { MOBILE, TABLET, OTHER };
 
-	public static final LiteDevice MOBILE_INSTANCE = new LiteDevice(true);
+	public static final LiteDevice MOBILE_INSTANCE = new LiteDevice(DeviceType.MOBILE);
+	
+	public static final LiteDevice TABLET_INSTANCE = new LiteDevice(DeviceType.TABLET);
 
-	public static final LiteDevice NOT_MOBILE_INSTANCE = new LiteDevice(false);
+	public static final LiteDevice NOT_MOBILE_INSTANCE = new LiteDevice(DeviceType.OTHER);
 
 	public boolean isMobile() {
 		return mobile;
+	}
+
+	public boolean isTablet() {
+		return tablet;
 	}
 
 	public String toString() {
@@ -39,12 +47,26 @@ class LiteDevice implements Device {
 	}
 
 	private final boolean mobile;
+	private final boolean tablet;
 
 	/**
 	 * Creates a LiteDevice.
 	 */
-	private LiteDevice(boolean mobile) {
-		this.mobile = mobile;
+	private LiteDevice(DeviceType deviceType) {
+		
+		switch(deviceType) {
+			case MOBILE:
+				this.mobile = true;
+				this.tablet = false;
+				break;
+			case TABLET:
+				this.mobile = false;
+				this.tablet = true;
+				break;
+			default:
+				this.mobile = false;
+				this.tablet = false;
+		}
 	}
 	
 }

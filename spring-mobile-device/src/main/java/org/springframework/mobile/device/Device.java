@@ -28,5 +28,12 @@ public interface Device {
 	 * Could be used to apply a different page layout or stylesheet when the device is a mobile device.
 	 */
 	boolean isMobile();
+	
+	/**
+	 * True if this device is a tablet device such as an Apple iPad or an HP Playbook.
+	 * Could be used by a pre-handle interceptor to redirect the user to a dedicated tablet web site.
+	 * Could be used to apply a different page layout or stylesheet when the device is a tablet device.
+	 */
+	boolean isTablet();
 
 }

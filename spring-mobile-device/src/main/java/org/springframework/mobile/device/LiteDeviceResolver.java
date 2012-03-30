@@ -38,6 +38,8 @@ public class LiteDeviceResolver implements DeviceResolver {
 	private final List<String> userAgentPrefixes = new ArrayList<String>();
 
 	private final List<String> userAgentKeywords = new ArrayList<String>();
+	
+	private final List<String> userAgentTabletKeywords = new ArrayList<String>();
 
 	public LiteDeviceResolver() {
 		init();
@@ -60,6 +62,22 @@ public class LiteDeviceResolver implements DeviceResolver {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("wap")) {
 			return LiteDevice.MOBILE_INSTANCE;
+		}
+		// Tablet UserAgent keyword detection
+		if (userAgent != null) {
+			userAgent = userAgent.toLowerCase();
+			for (String keyword : userAgentTabletKeywords) {
+				if (userAgent.contains(keyword)){
+					return LiteDevice.TABLET_INSTANCE;					
+				}
+			}
+		}
+		// Android tablet special case
+		if (userAgent != null) {
+			userAgent = userAgent.toLowerCase();
+			if(userAgent.contains("android") && !userAgent.contains("mobile")) {
+				return LiteDevice.TABLET_INSTANCE;
+			}
 		}
 		// UserAgent keyword detection		
 		if (userAgent != null) {
@@ -99,6 +117,14 @@ public class LiteDeviceResolver implements DeviceResolver {
 	protected List<String> getUserAgentKeywords() {
 		return userAgentKeywords;
 	}
+	
+	/**
+	 * List of user agent keywords that identify tablet devices.
+	 * Used primarily to match by tablet platform or operating system.
+	 */
+	public List<String> getUserAgentTabletKeywords() {
+		return userAgentTabletKeywords;
+	}
 
 	/**
 	 * Initialize this device resolver implementation.
@@ -107,7 +133,8 @@ public class LiteDeviceResolver implements DeviceResolver {
 	 */
 	protected void init() {
 		getUserAgentPrefixes().addAll(Arrays.asList(KNOWN_USER_AGENT_PREFIXES));
-		getUserAgentKeywords().addAll(Arrays.asList(KNOWN_USER_AGENT_KEYWORDS));		
+		getUserAgentKeywords().addAll(Arrays.asList(KNOWN_USER_AGENT_KEYWORDS));	
+		getUserAgentTabletKeywords().addAll(Arrays.asList(KNOWN_TABLET_USER_AGENT_KEYWORDS));
 	}
 
 	/**
@@ -137,10 +164,13 @@ public class LiteDeviceResolver implements DeviceResolver {
 					"wapr", "webc", "winw", "winw", "xda ", "xda-", };
 
 	private static final String[] KNOWN_USER_AGENT_KEYWORDS = 
-		new String[] { "android", "blackberry", "webos", "ipod", "ipad",
+		new String[] { "android", "blackberry", "webos", "ipod",
 					"lge vx", "midp", "maemo", "mmp", "netfront", "hiptop",
 					"nintendo DS", "novarra", "openweb", "opera mobi",
 					"opera mini", "palm", "psp", "phone", "smartphone",
 					"symbian", "up.browser", "up.link", "wap", "windows ce", };
+	
+	private static final String[] KNOWN_TABLET_USER_AGENT_KEYWORDS = 
+			new String[] { "hp-tablet", "ipad", "playbook" };
 
 }
