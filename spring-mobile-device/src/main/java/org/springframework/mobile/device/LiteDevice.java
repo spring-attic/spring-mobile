@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 the original author or authors.
+ * Copyright 2010-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,32 +19,40 @@ package org.springframework.mobile.device;
  * A lightweight Device implementation suitable for use as support code.
  * Typically used to hold the output of a device resolution invocation.
  * @author Keith Donald
+ * @author Roy Clarkson
+ * @author Scott Rossillo
  */
 class LiteDevice implements Device {
 
-	public static final LiteDevice MOBILE_INSTANCE = new LiteDevice(true);
+	public static final LiteDevice MOBILE_INSTANCE = new LiteDevice(DeviceType.MOBILE);
 
-	public static final LiteDevice NOT_MOBILE_INSTANCE = new LiteDevice(false);
+	public static final LiteDevice TABLET_INSTANCE = new LiteDevice(DeviceType.TABLET);
+
+	public static final LiteDevice STANDARD_INSTANCE = new LiteDevice(DeviceType.NORMAL);
 
 	public boolean isMobile() {
-		return mobile;
+		return deviceType == DeviceType.MOBILE;
+	}
+
+	public boolean isTablet() {
+		return deviceType == DeviceType.TABLET;
 	}
 
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("[LiteDevice ");
-		builder.append("mobile").append("=").append(isMobile());
+		builder.append("type").append("=").append(this.deviceType);
 		builder.append("]");
 		return builder.toString();
 	}
 
-	private final boolean mobile;
+	private final DeviceType deviceType;
 
 	/**
 	 * Creates a LiteDevice.
 	 */
-	private LiteDevice(boolean mobile) {
-		this.mobile = mobile;
+	private LiteDevice(DeviceType deviceType) {
+		this.deviceType = deviceType;
 	}
-	
+
 }

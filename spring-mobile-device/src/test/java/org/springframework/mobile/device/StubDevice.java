@@ -4,21 +4,26 @@ import org.springframework.mobile.device.Device;
 
 public class StubDevice implements Device {
 
-	private boolean mobile;
+	private DeviceType deviceType;
 	
 	public StubDevice() {
-		this.mobile = true;
+		this.deviceType = DeviceType.MOBILE;
 	}
 
-	public StubDevice(boolean mobile) {
-		this.mobile = mobile;
+	public StubDevice(DeviceType deviceType) {
+		this.deviceType = deviceType;
 	}
 
 	public boolean isMobile() {
-		return mobile;
+		return deviceType == DeviceType.MOBILE;
+	}
+	
+	public boolean isTablet() {
+		return deviceType == DeviceType.TABLET;
 	}
 	
 	public void setMobile(boolean mobile) {
-		this.mobile = mobile;
+		deviceType = mobile ? DeviceType.MOBILE : DeviceType.NORMAL;
 	}
+	
 }

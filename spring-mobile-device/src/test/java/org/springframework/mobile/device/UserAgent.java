@@ -7,13 +7,15 @@ package org.springframework.mobile.device;
  */
 public class UserAgent {
 	
-	// Firefox
+	// Browsers
 	
 	public static final String FireFox3_6_Mac10_6 = "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.12) Gecko/20101026 Firefox/3.6.12";
+	
+	public static final String Safari5_1_5_Mac10_7_3 = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/534.55.3 (KHTML, like Gecko) Version/5.1.5 Safari/534.55.3";
 
 	// iOS
 
-	public static final String iPod_iOS1_1_3 = "Mozilla/5.0 (iPod; U; CPU like Mac OS X; en) AppleWebKit/420.1 (KHTML, like Gecko) Version/3.0 Mobile/4A93 Safari/419.3";
+	public static final String iPodTouch_iOS1_1_3 = "Mozilla/5.0 (iPod; U; CPU like Mac OS X; en) AppleWebKit/420.1 (KHTML, like Gecko) Version/3.0 Mobile/4A93 Safari/419.3";
 
 	public static final String iPhone_iOS1 = "Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420+ (KHTML, like Gecko) Version/3.0 Mobile/1A543 Safari/419.3";
 
@@ -61,7 +63,9 @@ public class UserAgent {
 
 	public static final String SamsungGalaxyTab_Android2_2 = "Mozilla/5.0 (Linux; U; Android 2.2; en-gb; GT-P1000 Build/FROYO) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1";
 
-	public static final String SamsungGalaxyTab10_1_Android3_1 = "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_3; en-us) AppleWebKit/533.16 (KHTML, like Gecko) Version/5.0 Safari/533.16";
+	public static final String SamsungGalaxyTab10_1V_Android3_0 = "Mozilla/5.0 (Linux; U; Android 3.0; xx-xx; GT-P7100 Build/HRI83) AppleWebkit/534.13 (KHTML, like Gecko) Version/4.0 Safari/534.13";
+	
+	public static final String SamsungGalaxyTab10_1_Android3_1 = "Mozilla/5.0 (Linux; U; Android 3.1; xx-xx; GT-P7510 Build/HMJ37) AppleWebKit/534.13 (KHTML, like Gecko) Version/4.0 Safari/534.13";
 
 	public static final String MotorolaDroid_Android2_1 = "Mozilla/5.0 (Linux; U; Android 2.1-update1; en-us; Droid Build/ESE81) AppleWebKit/530.17 (KHTML, like Gecko) Version/4.0 Mobile Safari/530.17";
 
