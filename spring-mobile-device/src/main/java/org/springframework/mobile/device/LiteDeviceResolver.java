@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 the original author or authors.
+ * Copyright 2010-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,18 +31,25 @@ import javax.servlet.http.HttpServletRequest;
  * with a couple of special cases for Opera Mini, the W3C default delivery context and certain other Windows browsers.
  * The code also looks to see if the browser advertises WAP capabilities as a hint.
  * 
+ * Tablet resolution is also performed based on known tablet browser UA strings. Android tablets are detected based on 
+ * <a href="http://googlewebmastercentral.blogspot.com/2011/03/mo-better-to-also-detect-mobile-user.html">Google's recommendations</a>. 
+ * 
  * @author Keith Donald
+ * @author Roy Clarkson
+ * @author Scott Rossillo
  */
 public class LiteDeviceResolver implements DeviceResolver {
 
-	private final List<String> userAgentPrefixes = new ArrayList<String>();
+	private final List<String> mobileUserAgentPrefixes = new ArrayList<String>();
 
-	private final List<String> userAgentKeywords = new ArrayList<String>();
+	private final List<String> mobileUserAgentKeywords = new ArrayList<String>();
+
+	private final List<String> tabletUserAgentKeywords = new ArrayList<String>();
 
 	public LiteDeviceResolver() {
 		init();
 	}
-	
+
 	public Device resolveDevice(HttpServletRequest request) {
 		// UAProf detection
 		if (request.getHeader("x-wap-profile") != null || request.getHeader("Profile") != null) {
@@ -52,7 +59,7 @@ public class LiteDeviceResolver implements DeviceResolver {
 		String userAgent = request.getHeader("User-Agent");
 		if (userAgent != null && userAgent.length() >= 4) {
 			String prefix = userAgent.substring(0, 4).toLowerCase();
-			if (userAgentPrefixes.contains(prefix)) {
+			if (mobileUserAgentPrefixes.contains(prefix)) {
 				return LiteDevice.MOBILE_INSTANCE;
 			}
 		}
@@ -64,10 +71,21 @@ public class LiteDeviceResolver implements DeviceResolver {
 		// UserAgent keyword detection		
 		if (userAgent != null) {
 			userAgent = userAgent.toLowerCase();
-			for (String keyword : userAgentKeywords) {
-				if (userAgent.contains(keyword)){
-					return LiteDevice.MOBILE_INSTANCE;					
+			for (String keyword : mobileUserAgentKeywords) {
+				if (userAgent.contains(keyword)) {
+					return LiteDevice.MOBILE_INSTANCE;
 				}
+			}
+			for (String keyword : tabletUserAgentKeywords) {
+				if (userAgent.contains(keyword)) {
+					return LiteDevice.TABLET_INSTANCE;
+				}
+			}
+			// Android special case
+			if (userAgent.contains("android") && userAgent.contains("mobile")) {
+				return LiteDevice.MOBILE_INSTANCE;
+			} else if (userAgent.contains("android") && !userAgent.contains("mobile")) {
+				return LiteDevice.TABLET_INSTANCE;
 			}
 		}
 		// OperaMini special case
@@ -83,21 +101,29 @@ public class LiteDeviceResolver implements DeviceResolver {
 	}
 
 	// subclassing hooks
-	
+
 	/**
 	 * List of user agent prefixes that identify mobile devices.
 	 * Used primarily to match by operator or handset manufacturer.
 	 */
-	protected List<String> getUserAgentPrefixes() {
-		return userAgentPrefixes;
+	protected List<String> getMobileUserAgentPrefixes() {
+		return mobileUserAgentPrefixes;
 	}
 
 	/**
 	 * List of user agent keywords that identify mobile devices.
 	 * Used primarily to match by mobile platform or operating system.
 	 */
-	protected List<String> getUserAgentKeywords() {
-		return userAgentKeywords;
+	protected List<String> getMobileUserAgentKeywords() {
+		return mobileUserAgentKeywords;
+	}
+
+	/**
+	 * List of user agent keywords that identify mobile devices.
+	 * Used primarily to match by mobile platform or operating system.
+	 */
+	protected List<String> getTabletUserAgentKeywords() {
+		return tabletUserAgentKeywords;
 	}
 
 	/**
@@ -106,8 +132,9 @@ public class LiteDeviceResolver implements DeviceResolver {
 	 * Subclasses may override to register additional strings.
 	 */
 	protected void init() {
-		getUserAgentPrefixes().addAll(Arrays.asList(KNOWN_USER_AGENT_PREFIXES));
-		getUserAgentKeywords().addAll(Arrays.asList(KNOWN_USER_AGENT_KEYWORDS));		
+		getMobileUserAgentPrefixes().addAll(Arrays.asList(KNOWN_MOBILE_USER_AGENT_PREFIXES));
+		getMobileUserAgentKeywords().addAll(Arrays.asList(KNOWN_MOBILE_USER_AGENT_KEYWORDS));
+		getTabletUserAgentKeywords().addAll(Arrays.asList(KNOWN_TABLET_USER_AGENT_KEYWORDS));
 	}
 
 	/**
@@ -116,31 +143,24 @@ public class LiteDeviceResolver implements DeviceResolver {
 	 * Subclasses may override to try additional mobile device matching before falling back to a "not mobile" device.
 	 */
 	protected Device resolveFallback(HttpServletRequest request) {
-		return LiteDevice.NOT_MOBILE_INSTANCE;
+		return LiteDevice.STANDARD_INSTANCE;
 	}
 
 	// internal helpers
-	
-	private static final String[] KNOWN_USER_AGENT_PREFIXES =
-		new String[] { "w3c ", "w3c-", "acs-", "alav", "alca",
-					"amoi", "audi", "avan", "benq", "bird", "blac", "blaz",
-					"brew", "cell", "cldc", "cmd-", "dang", "doco", "eric",
-					"hipt", "htc_", "inno", "ipaq", "ipod", "jigs", "kddi",
-					"keji", "leno", "lg-c", "lg-d", "lg-g", "lge-", "lg/u",
-					"maui", "maxo", "midp", "mits", "mmef", "mobi", "mot-",
-					"moto", "mwbp", "nec-", "newt", "noki", "palm", "pana",
-					"pant", "phil", "play", "port", "prox", "qwap", "sage",
-					"sams", "sany", "sch-", "sec-", "send", "seri", "sgh-",
-					"shar", "sie-", "siem", "smal", "smar", "sony", "sph-",
-					"symb", "t-mo", "teli", "tim-", "tosh", "tsm-", "upg1",
-					"upsi", "vk-v", "voda", "wap-", "wapa", "wapi", "wapp",
-					"wapr", "webc", "winw", "winw", "xda ", "xda-", };
 
-	private static final String[] KNOWN_USER_AGENT_KEYWORDS = 
-		new String[] { "android", "blackberry", "webos", "ipod", "ipad",
-					"lge vx", "midp", "maemo", "mmp", "netfront", "hiptop",
-					"nintendo DS", "novarra", "openweb", "opera mobi",
-					"opera mini", "palm", "psp", "phone", "smartphone",
-					"symbian", "up.browser", "up.link", "wap", "windows ce", };
+	private static final String[] KNOWN_MOBILE_USER_AGENT_PREFIXES = new String[] { "w3c ", "w3c-", "acs-", "alav",
+			"alca", "amoi", "audi", "avan", "benq", "bird", "blac", "blaz", "brew", "cell", "cldc", "cmd-", "dang",
+			"doco", "eric", "hipt", "htc_", "inno", "ipaq", "ipod", "jigs", "kddi", "keji", "leno", "lg-c", "lg-d",
+			"lg-g", "lge-", "lg/u", "maui", "maxo", "midp", "mits", "mmef", "mobi", "mot-", "moto", "mwbp", "nec-",
+			"newt", "noki", "palm", "pana", "pant", "phil", "play", "port", "prox", "qwap", "sage", "sams", "sany",
+			"sch-", "sec-", "send", "seri", "sgh-", "shar", "sie-", "siem", "smal", "smar", "sony", "sph-", "symb",
+			"t-mo", "teli", "tim-", "tosh", "tsm-", "upg1", "upsi", "vk-v", "voda", "wap-", "wapa", "wapi", "wapp",
+			"wapr", "webc", "winw", "winw", "xda ", "xda-" };
+
+	private static final String[] KNOWN_MOBILE_USER_AGENT_KEYWORDS = new String[] { "blackberry", "webos", "ipod",
+			"lge vx", "midp", "maemo", "mmp", "netfront", "hiptop", "nintendo DS", "novarra", "openweb", "opera mobi",
+			"opera mini", "palm", "psp", "phone", "smartphone", "symbian", "up.browser", "up.link", "wap", "windows ce" };
+
+	private static final String[] KNOWN_TABLET_USER_AGENT_KEYWORDS = new String[] { "ipad", "playbook", "hp-tablet" };
 
 }

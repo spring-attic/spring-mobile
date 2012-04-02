@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 the original author or authors.
+ * Copyright 2010-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,8 @@ package org.springframework.mobile.device;
  * A model for the user agent or device that submitted the current request.
  * Callers may introspect this model to vary UI control or rendering logic by device type.
  * @author Keith Donald
+ * @author Roy Clarkson
+ * @author Scott Rossillo
  */
 public interface Device {
 
@@ -28,5 +30,12 @@ public interface Device {
 	 * Could be used to apply a different page layout or stylesheet when the device is a mobile device.
 	 */
 	boolean isMobile();
+	
+	/**
+	 * True if this device is a tablet device such as an Apple iPad or a Motorola Xoom.
+	 * Could be used by a pre-handle interceptor to redirect the user to a dedicated tablet web site.
+	 * Could be used to apply a different page layout or stylesheet when the device is a tablet device.
+	 */
+	boolean isTablet();
 
 }
