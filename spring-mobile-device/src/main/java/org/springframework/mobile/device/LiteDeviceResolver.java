@@ -119,8 +119,8 @@ public class LiteDeviceResolver implements DeviceResolver {
 	}
 
 	/**
-	 * List of user agent keywords that identify mobile devices.
-	 * Used primarily to match by mobile platform or operating system.
+	 * List of user agent keywords that identify tablet devices.
+	 * Used primarily to match by tablet platform or operating system.
 	 */
 	protected List<String> getTabletUserAgentKeywords() {
 		return tabletUserAgentKeywords;
@@ -139,8 +139,8 @@ public class LiteDeviceResolver implements DeviceResolver {
 
 	/**
 	 * Fallback called if no mobile device is matched by this resolver.
-	 * The default implementation of this method returns a "not mobile" {@link Device} with the mobile property set to false.
-	 * Subclasses may override to try additional mobile device matching before falling back to a "not mobile" device.
+	 * The default implementation of this method returns a "standard" {@link Device} that is neither mobile or a tablet.
+	 * Subclasses may override to try additional mobile or tablet device matching before falling back to a "standard" device.
 	 */
 	protected Device resolveFallback(HttpServletRequest request) {
 		return LiteDevice.STANDARD_INSTANCE;
