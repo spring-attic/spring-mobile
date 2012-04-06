@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
  * For example, your 'normal' site might be bound to 'myapp.com', while your mobile site might be bound to 'm.myapp.com'. 
  * @author Keith Donald
  */
-public class StandardSiteUrlFactory implements SiteUrlFactory {
+public class StandardSiteUrlFactory extends AbstractSiteUrlFactory implements SiteUrlFactory {
 	
 	private final String serverName;
 
@@ -47,16 +47,6 @@ public class StandardSiteUrlFactory implements SiteUrlFactory {
 		}
 		builder.append(request.getRequestURI());
 		return builder.toString();
-	}
-	
-	// internal helpers
-	
-	private String optionalPort(HttpServletRequest request) {
-        if ("http".equals(request.getScheme()) && request.getServerPort() != 80 || "https".equals(request.getScheme()) && request.getServerPort() != 443) {
-            return ":" + request.getServerPort();
-        } else {
-        	return null;
-        }
 	}
 	
 }
