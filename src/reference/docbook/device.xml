@@ -368,16 +368,32 @@ public class HomeController {
     </beans:bean>
 </mvc:interceptors>]]>
 				</programlisting>
+			</para>			
+		</section>
+		<section id="spring-mobile-site-switcher-interceptor-urlpath">
+			<title>urlPath SiteSwitcher</title>
+			<para>
+				Use the "urlPath" factory method to construct a SiteSwitcher that redirects mobile users to ${serverName}/${mobilePath}; for example, myapp.com/m/:
+				<programlisting language="xml"><![CDATA[
+<mvc:interceptors>
+    <!-- On pre-handle, resolve the device that originated the web request -->
+    <beans:bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
+    <!-- On pre-handle, redirects mobile users to "myapp.mobi" (declare after DeviceResolverHandlerInterceptor) -->
+    <beans:bean class="org.springframework.mobile.device.switcher.SiteSwitcherHandlerInterceptor" factory-method="urlPath">
+        <beans:constructor-arg value="/m" />
+    </beans:bean>
+</mvc:interceptors>]]>
+				</programlisting>
 			</para>
 			<para>
-				Both the "mDot" and "dotMobi" factory methods configure cookie-based SitePreference storage.
+				The "mDot", "dotMobi" and "urlPath" factory methods configure cookie-based SitePreference storage.
 				The cookie value will be shared across the mobile and normal site domains.
 				Internally, the interceptor delegates to a SitePreferenceHandler, so there is no need to register a SitePreferenceHandlerInterceptor when using the switcher.
 			</para>
 			<para>
 				See the JavaDoc of SiteSwitcherHandlerInterceptor for additional options when you need more control.			
 				See the spring-mobile <ulink url="https://github.com/SpringSource/spring-mobile-samples">samples</ulink> repository for runnable SiteSwitcher examples.
-			</para>				
+			</para>
 		</section>
 	</section>
 

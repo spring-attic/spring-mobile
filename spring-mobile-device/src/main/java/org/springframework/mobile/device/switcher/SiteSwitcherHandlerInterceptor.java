@@ -103,4 +103,13 @@ public class SiteSwitcherHandlerInterceptor extends HandlerInterceptorAdapter {
 		return new SiteSwitcherHandlerInterceptor(new StandardSiteUrlFactory(serverName), new StandardSiteUrlFactory(serverName.substring(0, lastDot) + ".mobi"), new StandardSitePreferenceHandler(new CookieSitePreferenceRepository("." + serverName)));
 	}
 	
+	/**
+	 * Creates a site switcher that redirects to a path on the current domain for normal site requests that either
+	 * originate from a mobile device or indicate a mobile site preference.
+	 * Uses a {@link CookieSitePreferenceRepository} that saves a cookie that is stored on the root path.
+	 */
+	public static SiteSwitcherHandlerInterceptor urlPath(String mobilePath) {
+		return new SiteSwitcherHandlerInterceptor(new NormalSitePathUrlFactory(mobilePath), new MobileSitePathUrlFactory(mobilePath), new StandardSitePreferenceHandler(new CookieSitePreferenceRepository()));		
+	}
+	
 }
