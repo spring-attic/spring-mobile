@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 the original author or authors.
+ * Copyright 2010-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,8 +21,9 @@ import javax.servlet.http.HttpServletRequest;
  * Site URL factory implementation that differentiates each site by the value of the server name field.
  * For example, your 'normal' site might be bound to 'myapp.com', while your mobile site might be bound to 'm.myapp.com'. 
  * @author Keith Donald
+ * @author Roy Clarkson
  */
-public class StandardSiteUrlFactory implements SiteUrlFactory {
+public class StandardSiteUrlFactory extends AbstractSiteUrlFactory implements SiteUrlFactory {
 	
 	private final String serverName;
 
@@ -39,24 +40,7 @@ public class StandardSiteUrlFactory implements SiteUrlFactory {
 	}
 
 	public String createSiteUrl(HttpServletRequest request) {
-		StringBuilder builder = new StringBuilder();
-		builder.append(request.getScheme()).append("://").append(serverName);
-		String optionalPort = optionalPort(request);
-		if (optionalPort != null) {
-			builder.append(optionalPort);
-		}
-		builder.append(request.getRequestURI());
-		return builder.toString();
-	}
-	
-	// internal helpers
-	
-	private String optionalPort(HttpServletRequest request) {
-        if ("http".equals(request.getScheme()) && request.getServerPort() != 80 || "https".equals(request.getScheme()) && request.getServerPort() != 443) {
-            return ":" + request.getServerPort();
-        } else {
-        	return null;
-        }
+		return createSiteUrlInternal(request, this.serverName, request.getRequestURI());
 	}
 	
 }

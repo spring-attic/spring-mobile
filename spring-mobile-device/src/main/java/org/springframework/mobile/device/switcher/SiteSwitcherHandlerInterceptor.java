@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 the original author or authors.
+ * Copyright 2010-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,6 +42,8 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  *     </ul>
  * </ul>
  * @author Keith Donald
+ * @author Scott Rossillo
+ * @author Roy Clarkson
  */
 public class SiteSwitcherHandlerInterceptor extends HandlerInterceptorAdapter {
 
@@ -101,6 +103,26 @@ public class SiteSwitcherHandlerInterceptor extends HandlerInterceptorAdapter {
 	public static SiteSwitcherHandlerInterceptor dotMobi(String serverName) {
 		int lastDot = serverName.lastIndexOf('.');
 		return new SiteSwitcherHandlerInterceptor(new StandardSiteUrlFactory(serverName), new StandardSiteUrlFactory(serverName.substring(0, lastDot) + ".mobi"), new StandardSitePreferenceHandler(new CookieSitePreferenceRepository("." + serverName)));
+	}
+	
+	/**
+	 * Creates a site switcher that redirects to a path on the current domain for normal site requests that either
+	 * originate from a mobile device or indicate a mobile site preference.
+	 * Uses a {@link CookieSitePreferenceRepository} that saves a cookie that is stored on the root path.
+	 */
+	public static SiteSwitcherHandlerInterceptor urlPath(String mobilePath) {
+		return new SiteSwitcherHandlerInterceptor(new NormalSitePathUrlFactory(mobilePath), new MobileSitePathUrlFactory(mobilePath), new StandardSitePreferenceHandler(new CookieSitePreferenceRepository()));
+	}
+	
+	/**
+	 * Creates a site switcher that redirects to a path on the current domain for normal site requests that either
+	 * originate from a mobile device or indicate a mobile site preference.
+	 * Allows you to configure a root path for an application. For example, if your app is running at "http://www.app.com/demoapp",
+	 * then the root path is "/demoapp".
+	 * Uses a {@link CookieSitePreferenceRepository} that saves a cookie that is stored on the root path.
+	 */
+	public static SiteSwitcherHandlerInterceptor urlPath(String mobilePath, String rootPath) {
+		return new SiteSwitcherHandlerInterceptor(new NormalSitePathUrlFactory(mobilePath, rootPath), new MobileSitePathUrlFactory(mobilePath, rootPath), new StandardSitePreferenceHandler(new CookieSitePreferenceRepository()));
 	}
 	
 }
