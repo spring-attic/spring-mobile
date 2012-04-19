@@ -126,6 +126,15 @@ public class LiteDeviceResolverTest {
 		assertFalse(device.isTablet());
 	}
 	
+	@Test
+	public void constructor() {
+		String[] normalDevices = new String[] { "android", "iphone" };
+		LiteDeviceResolver resolver2  = new LiteDeviceResolver(Arrays.asList(normalDevices));
+		request.addHeader("User-Agent", UserAgent.iPhone_iOS5);
+		Device device = resolver2.resolveDevice(request);
+		assertFalse(device.isMobile());
+	}
+	
 	// Mobile device User-Agent tests
 
 	@Test
