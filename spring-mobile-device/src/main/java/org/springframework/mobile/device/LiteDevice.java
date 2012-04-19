@@ -28,7 +28,7 @@ class LiteDevice implements Device {
 
 	public static final LiteDevice TABLET_INSTANCE = new LiteDevice(DeviceType.TABLET);
 
-	public static final LiteDevice STANDARD_INSTANCE = new LiteDevice(DeviceType.NORMAL);
+	public static final LiteDevice NORMAL_INSTANCE = new LiteDevice(DeviceType.NORMAL);
 
 	public boolean isMobile() {
 		return deviceType == DeviceType.MOBILE;

@@ -46,17 +46,33 @@ public class LiteDeviceResolver implements DeviceResolver {
 
 	private final List<String> tabletUserAgentKeywords = new ArrayList<String>();
 
+	private final List<String> normalUserAgentKeywords = new ArrayList<String>();
+
 	public LiteDeviceResolver() {
 		init();
 	}
 
+	public LiteDeviceResolver(List<String> normalUserAgentKeywords) {
+		init();
+		this.normalUserAgentKeywords.addAll(normalUserAgentKeywords);
+	}
+
 	public Device resolveDevice(HttpServletRequest request) {
+		String userAgent = request.getHeader("User-Agent");
+		// UserAgent keyword detection of Normal devices
+		if (userAgent != null) {
+			userAgent = userAgent.toLowerCase();
+			for (String keyword : normalUserAgentKeywords) {
+				if (userAgent.contains(keyword)) {
+					return resolveFallback(request);
+				}
+			}
+		}
 		// UAProf detection
 		if (request.getHeader("x-wap-profile") != null || request.getHeader("Profile") != null) {
 			return LiteDevice.MOBILE_INSTANCE;
 		}
 		// User-Agent prefix detection
-		String userAgent = request.getHeader("User-Agent");
 		if (userAgent != null && userAgent.length() >= 4) {
 			String prefix = userAgent.substring(0, 4).toLowerCase();
 			if (mobileUserAgentPrefixes.contains(prefix)) {
@@ -68,7 +84,7 @@ public class LiteDeviceResolver implements DeviceResolver {
 		if (accept != null && accept.contains("wap")) {
 			return LiteDevice.MOBILE_INSTANCE;
 		}
-		// UserAgent keyword detection		
+		// UserAgent keyword detection for Mobile and Tablet devices
 		if (userAgent != null) {
 			userAgent = userAgent.toLowerCase();
 			for (String keyword : mobileUserAgentKeywords) {
@@ -127,6 +143,15 @@ public class LiteDeviceResolver implements DeviceResolver {
 	}
 
 	/**
+	 * List of user agent keywords that identify normal devices.
+	 * Any items in this list take precedence over the mobile and
+	 * tablet user agent keywords, effectively overriding those. 
+	 */
+	protected List<String> getNormalUserAgentKeywords() {
+		return normalUserAgentKeywords;
+	}
+
+	/**
 	 * Initialize this device resolver implementation.
 	 * Registers the known set of device signature strings.
 	 * Subclasses may override to register additional strings.
@@ -139,11 +164,11 @@ public class LiteDeviceResolver implements DeviceResolver {
 
 	/**
 	 * Fallback called if no mobile device is matched by this resolver.
-	 * The default implementation of this method returns a "not mobile" {@link Device} with the mobile property set to false.
-	 * Subclasses may override to try additional mobile device matching before falling back to a "not mobile" device.
+	 * The default implementation of this method returns a "normal" {@link Device} that is neither mobile or a tablet.
+	 * Subclasses may override to try additional mobile or tablet device matching before falling back to a "normal" device.
 	 */
 	protected Device resolveFallback(HttpServletRequest request) {
-		return LiteDevice.STANDARD_INSTANCE;
+		return LiteDevice.NORMAL_INSTANCE;
 	}
 
 	// internal helpers
