@@ -1,9 +1,12 @@
 package org.springframework.mobile.device;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
 
+import java.util.Arrays;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 
@@ -12,6 +15,11 @@ public class LiteDeviceResolverTest {
 	private LiteDeviceResolver resolver = new LiteDeviceResolver();
 
 	private MockHttpServletRequest request = new MockHttpServletRequest();
+	
+	@Before
+	public void setUp() {
+		resolver.getNormalUserAgentKeywords().clear();
+	}
 
 	@Test
 	public void wapProfileHeader() {
@@ -99,8 +107,26 @@ public class LiteDeviceResolverTest {
 		Device device = resolver.resolveDevice(request);
 		assertEquals(device.toString(), NORMAL_TO_STRING);
 	}
-
-	// Mobile
+	
+	@Test
+	public void normalDeviceMobileOverride() {
+		String[] normalDevices = new String[] { "android", "iphone" };
+		resolver.getNormalUserAgentKeywords().addAll(Arrays.asList(normalDevices));
+		request.addHeader("User-Agent", UserAgent.iPhone_iOS5);
+		Device device = resolver.resolveDevice(request);
+		assertFalse(device.isMobile());
+	}
+	
+	@Test
+	public void normalDeviceTabletOverride() {
+		String[] normalDevices = new String[] { "ipad" };
+		resolver.getNormalUserAgentKeywords().addAll(Arrays.asList(normalDevices));
+		request.addHeader("User-Agent", UserAgent.iPad_iOS5);
+		Device device = resolver.resolveDevice(request);
+		assertFalse(device.isTablet());
+	}
+	
+	// Mobile device User-Agent tests
 
 	@Test
 	public void iPodTouch() {
@@ -191,7 +217,7 @@ public class LiteDeviceResolverTest {
 		assertFalse(device.isTablet());
 	}
 
-	// Tablet
+	// Tablet device User-Agent tests
 
 	@Test
 	public void iPad() {
