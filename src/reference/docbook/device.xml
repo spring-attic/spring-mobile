@@ -1,149 +1,185 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="device" xmlns:xlink="http://www.w3.org/1999/xlink">
-	
-	<title>Spring Mobile Device Module</title>
-	
-	<section id="spring-mobile-device-introduction">
-		<title>Introduction</title>
-		<para>
-			Device detection is useful when requests by mobile devices need to be handled differently from requests made by desktop browsers.
-			The Spring Mobile Device module provides support for server-side device detection.
-			This support consists of a device resolution framework, site preference management, and site switcher.
-	    </para>
-	</section>
+    
+    <title>Spring Mobile Device Module</title>
+    
+    <section id="spring-mobile-device-introduction">
+    
+        <title>Introduction</title>
+        
+        <para>Device detection is useful when requests by mobile devices need to be handled differently from requests made by desktop browsers. The Spring Mobile Device module provides support for server-side device detection. This support consists of a device resolution framework, site preference management, and site switcher.</para>
+        
+    </section>
 
-	<section id="spring-mobile-device-howtoget">
-		<title>How to get</title>
-		<para>
-			To get the module, add the spring-mobile-device artifact to your classpath:
-			<programlisting language="xml"><![CDATA[
+    <section id="spring-mobile-device-howtoget">
+    
+        <title>How to get</title>
+        
+        <para>To get the module, add the spring-mobile-device artifact to your classpath:
+        
+            <programlisting language="xml"><![CDATA[
 <dependency>
     <groupId>org.springframework.mobile</groupId>
     <artifactId>spring-mobile-device</artifactId>
     <version>${org.springframework.mobile-version}</version>
 </dependency>]]>
-			</programlisting>
-		</para>
-		<para>
-			If you are developing against a milestone version, such as 1.0.0.RC1, you will need to add the following repository in order to resolve the artifact:
-		</para>
-		<programlisting language="xml"><![CDATA[
+            </programlisting>
+            
+        </para>
+        
+        <para>If you are developing against a milestone version, such as 1.0.0.RC1, you will need to add the following repository in order to resolve the artifact:
+        
+            <programlisting language="xml"><![CDATA[
 <repository>
-    <id>org.springframework.maven.milestone</id>
-    <name>Spring Maven Milestone Repository</name>
-    <url>http://maven.springframework.org/milestone</url>
+    <id>springsource-milestone</id>
+    <name>SpringSource Milestone Repository</name>
+    <url>http://repo.springsource.org/milestone</url>
 </repository>]]>
-		</programlisting>		
-		<para>
-			If you are testing out the latest nightly build version (e.g. 1.0.0.BUILD-SNAPSHOT), you will need to add the following repository:
-		</para>
-		<programlisting language="xml"><![CDATA[
+            </programlisting>
+            
+        </para>
+        
+        <para>If you are testing out the latest nightly build version (e.g. 1.0.0.BUILD-SNAPSHOT), you will need to add the following repository:
+        
+            <programlisting language="xml"><![CDATA[
 <repository>
-    <id>org.springframework.maven.snapshot</id>
-    <name>Spring Maven Snapshot Repository</name>
-    <url>http://maven.springframework.org/snapshot</url>
+    <id>springsource-snapshot</id>
+    <name>SpringSource Snapshot Repository</name>
+    <url>http://repo.springsource.org/snapshot</url>
 </repository>]]>
-		</programlisting>
-	</section>
+            </programlisting>
+            
+        </para>
+        
+    </section>
 
-	<section id="spring-mobile-device-resolution">
-		<title>Device resolution</title>
-		<para>
-			Device resolution is the process of introspecting a HTTP request to determine the device that originated the request.
-			It is typically achieved by analyzing the User-Agent header and other request headers.
-		</para>
-		<para>
-			At the most basic level, device resolution answers the question: "Is the client using a mobile device?".
-			This answer enables your application to respond differently to mobile devices that have small screens.
-			More sophisticated device resolvers are also capable of identifying specific device capabilities, such as screen size, manufacturer, model, or preferred markup.
-		</para>
-		<para>
-			In Spring Mobile, the DeviceResolver interface defines the API for device resolution:
-			<programlisting language="java"><![CDATA[
+    <section id="spring-mobile-device-resolution">
+
+        <title>Device resolution</title>
+        
+        <para>Device resolution is the process of introspecting a HTTP request to determine the device that originated the request. It is typically achieved by analyzing the User-Agent header and other request headers.</para>
+        
+        <para>At the most basic level, device resolution answers the question: "Is the client using a mobile or tablet device?". This answer enables your application to respond differently to mobile devices that have small screens, or tablet device that has a touch interface. More sophisticated device resolvers are also capable of identifying specific device capabilities, such as screen size, manufacturer, model, or preferred markup.</para>
+        
+        <para>In Spring Mobile, the DeviceResolver interface defines the API for device resolution:
+        
+            <programlisting language="java"><![CDATA[
 public interface DeviceResolver {
 
     Device resolveDevice(HttpServletRequest request);
-	
+    
 }]]>
-			</programlisting>
-			The returned Device models the result of device resolution:
-			<programlisting language="java"><![CDATA[
+            </programlisting>
+            
+        </para>
+            
+        <para>The returned Device models the result of device resolution:
+            
+            <programlisting language="java"><![CDATA[
 public interface Device {
+    
+    /**
+     * True if this device is not a mobile or tablet device.
+     */
+    boolean isNormal();
 
+    /**
+     * True if this device is a mobile device such as an Apple iPhone or an Nexus One Android.
+     * Could be used by a pre-handle interceptor to redirect the user to a dedicated mobile web site.
+     * Could be used to apply a different page layout or stylesheet when the device is a mobile device.
+     */
     boolean isMobile();
+    
+    /**
+     * True if this device is a tablet device such as an Apple iPad or a Motorola Xoom.
+     * Could be used by a pre-handle interceptor to redirect the user to a dedicated tablet web site.
+     * Could be used to apply a different page layout or stylesheet when the device is a tablet device.
+     */
+    boolean isTablet();
 
+}
 }]]>
-			</programlisting>
-			As shown above, Device.isMobile() can be used to determine if the client is using a mobile device, such as a smart phone.
-			Depending on the DeviceResolver in use, a Device may support being downcast to access additional properties.
-		</para>
-		<section id="spring-mobile-device-resolver-interceptor">
-			<title>When to perform</title>
-			<para>
-				Web applications should perform device resolution at the beginning of request processing, before any request handler is invoked.
-				This ensures the Device model can be made available in request scope before any processing occurs.
-				Request handlers can then obtain the Device instance and use it to respond differently based on its state.
-			</para>
-			<para>
-				By default, a LiteDeviceResolver is used for device resolution.
-				You may plug-in another DeviceResolver implementation by injecting a constructor argument.
-			</para>
-			<section>
-				<title>DeviceResolverHandlerInterceptor</title>
-				<para>
-					Spring Mobile ships a HandlerInterceptor that, on preHandle, delegates to a DeviceResolver.
-					The resolved Device is indexed under a request attribute named 'currentDevice', making it available to handlers throughout request processing.
-				</para>
-				<para>
-					To enable, add the DeviceResolverHandlerInterceptor to the list of interceptors defined in your DispatcherServlet configuration:
-					<programlisting language="xml"><![CDATA[
+            </programlisting>
+            
+        </para>
+            
+        <para>As shown above, Device.isMobile() can be used to determine if the client is using a mobile device, such as a smart phone. Similarly, Device.isTablet() can be used to determine if the client is running on a tablet device.  Depending on the DeviceResolver in use, a Device may support being downcast to access additional properties.</para>
+        
+        <section id="spring-mobile-device-request-handling">
+        
+            <title>When to perform</title>
+            
+            <para>Web applications should perform device resolution at the beginning of request processing, before any request handler is invoked. This ensures the Device model can be made available in request scope before any processing occurs. Request handlers can then obtain the Device instance and use it to respond differently based on its state.</para>
+            
+            <para>By default, a LiteDeviceResolver is used for device resolution. You may plug-in another DeviceResolver implementation by injecting a constructor argument.</para>
+            
+            <section id="spring-mobile-device-resolver-interceptor">
+            
+                <title>DeviceResolverHandlerInterceptor</title>
+                
+                <para>Spring Mobile ships a HandlerInterceptor that, on preHandle, delegates to a DeviceResolver. The resolved Device is indexed under a request attribute named 'currentDevice', making it available to handlers throughout request processing.</para>
+                
+                <para>To enable, add the DeviceResolverHandlerInterceptor to the list of interceptors defined in your DispatcherServlet configuration:
+                
+                    <programlisting language="xml"><![CDATA[
 <mvc:interceptors>
     <!-- On pre-handle, resolve the device that originated the web request -->
     <beans:bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
 </mvc:interceptors>]]>
-					</programlisting>
-				</para>
-			</section>
-			<section>
-				<title>DeviceResolverHandlerFilter</title>
-				<para>
-					Spring Mobile also ships with a Servlet Filter that delegates to the same DeviceResolver.
-					As with the HandlerInterceptor, the resolved Device is indexed under a request attribute named 'currentDevice', 
-					making it available to handlers throughout request processing.
-				</para>
-				<para>
-					To enable, add the DeviceResolverHandlerFilter to your web.xml:
-					<programlisting language="xml"><![CDATA[
+                    </programlisting>
+                    
+                </para>
+                
+            </section>
+            
+            <section id="spring-mobile-device-resolver-filter">
+            
+                <title>DeviceResolverHandlerFilter</title>
+                
+                <para>Spring Mobile also ships with a Servlet Filter that delegates to the same DeviceResolver. As with the HandlerInterceptor, the resolved Device is indexed under a request attribute named 'currentDevice', making it available to handlers throughout request processing.</para>
+                
+                <para>To enable, add the DeviceResolverHandlerFilter to your web.xml:
+                
+                    <programlisting language="xml"><![CDATA[
 <filter>
     <filter-name>deviceResolverHandlerFilter</filter-name>
     <filter-class>org.springframework.mobile.device.DeviceResolverHandlerFilter</filter-class>
 </filter>]]>
-					</programlisting>
-				</para>
-			</section>
-		</section>
-		<section id="spring-mobile-device-web-argument-resolver">
-			<title>Obtaining a reference to the current device</title>
-			<para>
-				When you need to lookup the current Device in your code, you can do so in several ways.
-				If you already have a reference to a ServletRequest or Spring WebRequest, simply use DeviceUtils:
-			</para>
-			<programlisting language="java"><![CDATA[
+                    </programlisting>
+                    
+                </para>
+                
+            </section>
+            
+        </section>
+        
+        <section id="spring-mobile-device-web-argument-resolver">
+        
+            <title>Obtaining a reference to the current device</title>
+            
+            <para>When you need to lookup the current Device in your code, you can do so in several ways. If you already have a reference to a ServletRequest or Spring WebRequest, simply use DeviceUtils:
+            
+                <programlisting language="java"><![CDATA[
 Device currentDevice = DeviceUtils.getCurrentDevice(servletRequest);]]>
-			</programlisting>
-			<para>
-				If you'd like to pass the current Device as an argument to one of your @Controller methods, configure a DeviceWebArgumentResolver:
-				<programlisting language="xml"><![CDATA[
+                </programlisting>
+                
+            </para>
+            
+            <para>If you'd like to pass the current Device as an argument to one of your @Controller methods, configure a DeviceWebArgumentResolver:
+            
+                <programlisting language="xml"><![CDATA[
 <mvc:annotation-driven>
     <mvc:argument-resolvers>
         <beans:bean class="org.springframework.mobile.device.DeviceWebArgumentResolver" />
     </mvc:argument-resolvers>
 </mvc:annotation-driven>]]>
-				</programlisting>
-			</para>
-			<para>
-				You can then inject the Device into your @Controllers as shown below:
-				<programlisting language="java"><![CDATA[
+                </programlisting>
+                
+            </para>
+            
+            <para>You can then inject the Device into your @Controllers as shown below:
+            
+                <programlisting language="java"><![CDATA[
 @Controller
 public class HomeController {
 
@@ -152,50 +188,78 @@ public class HomeController {
     @RequestMapping("/")
     public void home(Device device) {
         if (device.isMobile()) {
-            logger.info("Hello mobile user!");		
+            logger.info("Hello mobile user!");      
         } else {
-            logger.info("Hello desktop user!");			
+            logger.info("Hello desktop user!");         
         }
     }]]>
-				</programlisting>
-			</para>
-		</section>
-		<section id="spring-mobile-device-resolvers">
-			<title>Supported DeviceResolver implementations</title>
-			<para>
-				Spring Mobile allows for the development of different DeviceResolver implementations that offer varying levels of resolution capability.
-				The first, and the default, is a <emphasis>LiteDeviceResolver</emphasis> that detects the presence of a mobile device but does not detect specific capabilities.
-			</para>
-			<section id="spring-mobile-device-resolvers-lite">
-				<title>LiteDeviceResolver</title>
-				<para>
-					The default DeviceResolver implementation is based on the "lite" <ulink url="http://plugins.trac.wordpress.org/browser/wordpress-mobile-pack/trunk/plugins/wpmp_switcher/lite_detection.php">detection algorithm</ulink> implemented as part of the <ulink url="http://wordpress.org/extend/plugins/wordpress-mobile-pack">Wordpress Mobile Pack</ulink>.
-					This resolver only detects the presence of a mobile device and does not detect specific capabilities.
-					No special configuration is required to enable this resolver, simply configure a default DeviceResolverHandlerInterceptor and it will be enabled for you.					
-				</para>
-			</section>
-		</section>
-	</section>
+                </programlisting>
+                
+            </para>
+            
+        </section>
+        
+        <section id="spring-mobile-device-resolvers">
+        
+            <title>Supported DeviceResolver implementations</title>
+            
+            <para>Spring Mobile allows for the development of different DeviceResolver implementations that offer varying levels of resolution capability. The first, and the default, is a <emphasis>LiteDeviceResolver</emphasis> that detects the presence of a mobile device but does not detect specific capabilities.</para>
+            
+            <section id="spring-mobile-device-resolvers-lite">
+            
+                <title>LiteDeviceResolver</title>
+                
+                <para>The default DeviceResolver implementation is based on the "lite" <ulink url="http://plugins.trac.wordpress.org/browser/wordpress-mobile-pack/trunk/plugins/wpmp_switcher/lite_detection.php">detection algorithm</ulink> implemented as part of the <ulink url="http://wordpress.org/extend/plugins/wordpress-mobile-pack">Wordpress Mobile Pack</ulink>. This resolver only detects the presence of a mobile or tablet device, and does not detect specific capabilities. No special configuration is required to enable this resolver, simply configure a default DeviceResolverHandlerInterceptor and it will be enabled for you.</para>
+                
+                <para>It is possible that the LiteDeviceResolver incorrectly identifies a User-Agent as a mobile device. The LiteDeviceResolver provides a configuration option for setting a list of User-Agent keywords that should resolve to a "normal" device, effectively overriding the default behavior. These keywords take precedence over the mobile and tablet device detection keywords. The following example illustrates how to set the normal keywords in the configuration of the DeviceResolverHandlerInterceptor by injecting a constructor argument. In this case, User-Agents that contain "iphone" and "android" would no longer resolve to a mobile device.
+                
+                    <programlisting language="xml"><![CDATA[
+<mvc:interceptors>
+        <!-- Detects the client's Device -->
+        <beans:bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor">
+            <beans:constructor-arg>
+                <beans:bean class="org.springframework.mobile.device.LiteDeviceResolver">
+                    <beans:constructor-arg>
+                        <beans:list>
+                            <beans:value>iphone</beans:value>
+                            <beans:value>android</beans:value>
+                        </beans:list>
+                    </beans:constructor-arg>
+                </beans:bean>
+            </beans:constructor-arg>
+        </beans:bean>
+</mvc:interceptors>]]>
+                    </programlisting>
+                    
+                </para>
+                
+                <para>Alternatively, you may subclass the LiteDeviceResolver, and either set these values in the constructor, or by calling the  getNormalUserAgentKeywords() method.</para>
+                
+            </section>
+            
+        </section>
+        
+    </section>
 
-	<section id="spring-mobile-site-preference">
-		<title>Site preference management</title>
-		<para>
-			Device resolution is often used to determine which "site" will be served to the user.
-			For example, a mobile user may be served a "mobile site" that contains content optimized for display on a small screen, while a desktop user would be served the "normal site".
-			Support for multiple sites can be achieved by introspecting Device.isMobile() and varying controller and view rendering logic based on its value.
-		</para>
-		<para>
-			However, when an application supports multiple sites, allowing the user to switch between them, if desired, is considered a good usability practice.
-			For example, a mobile user currently viewing the mobile site may wish to access the normal site instead, perhaps because some content he or she would like to access is not available through the mobile UI.
-		</para>
-		<para>
-			Building on the device resolution system is a facility for this kind of "user site preference management".
-			This facility allows the user to indicate if he or she prefers the mobile site or the normal site.
-			The indicated SitePreference may then be used to vary control and view rendering logic.
-		</para>
-		<para>
-			The SitePreferenceHandler interface defines the core service API for site preference management:
-			<programlisting language="java"><![CDATA[
+    <section id="spring-mobile-site-preference">
+        <title>Site preference management</title>
+        <para>
+            Device resolution is often used to determine which "site" will be served to the user.
+            For example, a mobile user may be served a "mobile site" that contains content optimized for display on a small screen, while a desktop user would be served the "normal site".
+            Support for multiple sites can be achieved by introspecting Device.isMobile() and varying controller and view rendering logic based on its value.
+        </para>
+        <para>
+            However, when an application supports multiple sites, allowing the user to switch between them, if desired, is considered a good usability practice.
+            For example, a mobile user currently viewing the mobile site may wish to access the normal site instead, perhaps because some content he or she would like to access is not available through the mobile UI.
+        </para>
+        <para>
+            Building on the device resolution system is a facility for this kind of "user site preference management".
+            This facility allows the user to indicate if he or she prefers the mobile site or the normal site.
+            The indicated SitePreference may then be used to vary control and view rendering logic.
+        </para>
+        <para>
+            The SitePreferenceHandler interface defines the core service API for site preference management:
+            <programlisting language="java"><![CDATA[
 public interface SitePreferenceHandler {
 
     /**
@@ -213,9 +277,9 @@ public interface SitePreferenceHandler {
      SitePreference handleSitePreference(HttpServletRequest request, HttpServletResponse response);
 
 }]]>
-			</programlisting>
-			The resolved SitePreference is an enum value:
-			<programlisting language="java"><![CDATA[
+            </programlisting>
+            The resolved SitePreference is an enum value:
+            <programlisting language="java"><![CDATA[
 public enum SitePreference {
 
     /**
@@ -226,7 +290,7 @@ public enum SitePreference {
     /**
      * The user prefers the 'mobile' site.
      */
-    MOBILE {		
+    MOBILE {        
         public boolean isMobile() {
             return true;
         }
@@ -239,74 +303,74 @@ public enum SitePreference {
     public boolean isMobile() {
         return false;
     }
-	
+    
 }]]>
-			</programlisting>
-		</para>
-		<para>
-			Spring Mobile provides a single SitePreferenceHandler implementation named StandardSitePreferenceHandler, which should be suitable for most needs.
-			It supports query-parameter-based site preference indication, pluggable SitePreference storage, and may be enabled in a Spring MVC application using a HandlerIntercepor.
-			In addition, if no SitePreference has been explcitly indicated by the user, a default will be derived based on the user's Device (MOBILE for mobile devices, and NORMAL otherwise). 
-		</para>
-		<section id="spring-mobile-site-preference-indicating">
-			<title>Indicating a site preference</title>
-			<para>
-				The user may indicate a site preference by activating a link that submits the site_preference query parameter:
-				<programlisting language="xml"><![CDATA[
+            </programlisting>
+        </para>
+        <para>
+            Spring Mobile provides a single SitePreferenceHandler implementation named StandardSitePreferenceHandler, which should be suitable for most needs.
+            It supports query-parameter-based site preference indication, pluggable SitePreference storage, and may be enabled in a Spring MVC application using a HandlerIntercepor.
+            In addition, if no SitePreference has been explcitly indicated by the user, a default will be derived based on the user's Device (MOBILE for mobile devices, and NORMAL otherwise). 
+        </para>
+        <section id="spring-mobile-site-preference-indicating">
+            <title>Indicating a site preference</title>
+            <para>
+                The user may indicate a site preference by activating a link that submits the site_preference query parameter:
+                <programlisting language="xml"><![CDATA[
 Site: <a href="${currentUrl}?site_preference=normal">Normal</a> | <a href="${currentUrl}?site_preference=mobile">Mobile</a>]]>
-				</programlisting>
-				The indicated site preference is saved for the user in a SitePreferenceRepository, and made available as a request attribute named 'currentSitePreference'.
-			</para>
-		</section>
-		<section id="spring-mobile-site-preference-storage">
-			<title>Site preference storage</title>
-			<para>
-				Indicated site preferences are stored in a SitePreferenceRepository so they are remembered in future requests made by the user.
-				CookieSitePreferenceRepository is the default implementation and stores the user's' preference in a client-side cookie.
-			</para>
-		</section>
-		<section id="spring-mobile-site-preference-interceptor">
-			<title>Enabling site preference management</title>
-			<para>
-				To enable SitePreference management before requests are processed, add the SitePreferenceHandlerInterceptor to your DispatcherServlet configuration:
-			</para>
-			<programlisting language="xml"><![CDATA[
+                </programlisting>
+                The indicated site preference is saved for the user in a SitePreferenceRepository, and made available as a request attribute named 'currentSitePreference'.
+            </para>
+        </section>
+        <section id="spring-mobile-site-preference-storage">
+            <title>Site preference storage</title>
+            <para>
+                Indicated site preferences are stored in a SitePreferenceRepository so they are remembered in future requests made by the user.
+                CookieSitePreferenceRepository is the default implementation and stores the user's' preference in a client-side cookie.
+            </para>
+        </section>
+        <section id="spring-mobile-site-preference-interceptor">
+            <title>Enabling site preference management</title>
+            <para>
+                To enable SitePreference management before requests are processed, add the SitePreferenceHandlerInterceptor to your DispatcherServlet configuration:
+            </para>
+            <programlisting language="xml"><![CDATA[
 <mvc:interceptors>
     <!-- On pre-handle, resolve the device that originated the web request -->
     <beans:bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
     <!-- On pre-handle, manage the user's site preference (declare after DeviceResolverHandlerInterceptor) -->
     <beans:bean class="org.springframework.mobile.device.site.SitePreferenceHandlerInterceptor" />
 </mvc:interceptors>]]>
-			</programlisting>
-			<para>
-				By default, the interceptor will delegate to a StandardSitePreferenceHandler configured with a CookieSitePreferenceRepository.
-				You may plug-in another SitePreferenceHandler by injecting a constructor argument.
-				After the interceptor is invoked, the SitePreference will be available as a request attribute named 'currentSitePreference'.
-			</para>		
-		</section>
-		<section id="spring-mobile-site-preference-argument-resolver">
-			<title>Obtaining a reference to the current site preference</title>
-			<para>
-				When you need to lookup the current SitePreference in your code, you can do so in several ways.
-				If you already have a reference to a ServletRequest or Spring WebRequest, simply use SitePreferenceUtils:
-			</para>
-			<programlisting language="java"><![CDATA[
+            </programlisting>
+            <para>
+                By default, the interceptor will delegate to a StandardSitePreferenceHandler configured with a CookieSitePreferenceRepository.
+                You may plug-in another SitePreferenceHandler by injecting a constructor argument.
+                After the interceptor is invoked, the SitePreference will be available as a request attribute named 'currentSitePreference'.
+            </para>     
+        </section>
+        <section id="spring-mobile-site-preference-argument-resolver">
+            <title>Obtaining a reference to the current site preference</title>
+            <para>
+                When you need to lookup the current SitePreference in your code, you can do so in several ways.
+                If you already have a reference to a ServletRequest or Spring WebRequest, simply use SitePreferenceUtils:
+            </para>
+            <programlisting language="java"><![CDATA[
 SitePreference sitePreference = SitePreferenceUtils.getCurrentSitePreference(servletRequest);]]>
-			</programlisting>
-			<para>
-				If you'd like to pass the current SitePreference as an argument to one of your @Controller methods, configure a SitePreferenceWebArgumentResolver:			
-				<programlisting language="java"><![CDATA[
+            </programlisting>
+            <para>
+                If you'd like to pass the current SitePreference as an argument to one of your @Controller methods, configure a SitePreferenceWebArgumentResolver:          
+                <programlisting language="java"><![CDATA[
 <mvc:annotation-driven>
     <mvc:argument-resolvers>
         <beans:bean class="org.springframework.mobile.device.DeviceWebArgumentResolver" />
         <beans:bean class="org.springframework.mobile.device.site.SitePreferenceWebArgumentResolver" />        
     </mvc:argument-resolvers>
 </mvc:annotation-driven>]]>
-				</programlisting>
-			</para>
-			<para>
-				You can then inject the indicated SitePreference into your @Controllers as shown below:
-				<programlisting language="java"><![CDATA[
+                </programlisting>
+            </para>
+            <para>
+                You can then inject the indicated SitePreference into your @Controllers as shown below:
+                <programlisting language="java"><![CDATA[
 @Controller
 public class HomeController {
 
@@ -322,27 +386,26 @@ public class HomeController {
     }
 
 }]]>
-				</programlisting>
-			</para>	
-		</section>
-	</section>
-	
-	<section id="spring-mobile-device-site-switcher-interceptor">
-		<title>Site switching</title>
-		<para>
-			Some applications may wish to host their "mobile site" at a different domain from their "normal site".
-			For example, Google will switch you to m.google.com if you access google.com from your mobile phone.
-		</para>
-		<para>
-			In Spring Mobile, you may use the SiteSwitcherHandlerInterceptor to redirect mobile users to a dedicated mobile site.
-			Users may also indicate a site preference; for example, a mobile user may still wish to use 'normal' site.
-			Convenient static factory methods are provided that implement standard site switching conventions.
-		</para>
-		<section id="spring-mobile-site-switcher-interceptor-mdot">
-			<title>mDot SiteSwitcher</title>
-			<para>
-				Use the "mDot" factory method to construct a SiteSwitcher that redirects mobile users to m.${serverName}; for example, m.myapp.com:
-				<programlisting language="xml"><![CDATA[
+                </programlisting>
+            </para> 
+        </section>
+    </section>
+    
+    <section id="spring-mobile-device-site-switcher-interceptor">
+    
+        <title>Site switching</title>
+        
+        <para>Some applications may wish to host their "mobile site" at a different domain from their "normal site". For example, Google will switch you to m.google.com if you access google.com from your mobile phone.</para>
+        
+        <para>In Spring Mobile, you may use the SiteSwitcherHandlerInterceptor to redirect mobile users to a dedicated mobile site. Users may also indicate a site preference; for example, a mobile user may still wish to use 'normal' site. Convenient static factory methods are provided that implement standard site switching conventions.</para>
+        
+        <section id="spring-mobile-site-switcher-interceptor-mdot">
+        
+            <title>mDot SiteSwitcher</title>
+            
+            <para>Use the "mDot" factory method to construct a SiteSwitcher that redirects mobile users to m.${serverName}; for example, m.myapp.com:
+            
+                <programlisting language="xml"><![CDATA[
 <mvc:interceptors>
     <!-- On pre-handle, resolve the device that originated the web request -->
     <beans:bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
@@ -351,14 +414,19 @@ public class HomeController {
         <beans:constructor-arg value="myapp.com" />
     </beans:bean>
 </mvc:interceptors>]]>
-				</programlisting>
-			</para>
-		</section>
-		<section id="spring-mobile-site-switcher-interceptor-dotmobi">
-			<title>dotMobi SiteSwitcher</title>
-			<para>
-				Use the "dotMobi" factory method to construct a SiteSwitcher that redirects mobile users to ${serverName - lastDomain}.mobi; for example, myapp.mobi:
-				<programlisting language="xml"><![CDATA[
+                </programlisting>
+                
+            </para>
+            
+        </section>
+        
+        <section id="spring-mobile-site-switcher-interceptor-dotmobi">
+        
+            <title>dotMobi SiteSwitcher</title>
+            
+            <para>
+                Use the "dotMobi" factory method to construct a SiteSwitcher that redirects mobile users to ${serverName - lastDomain}.mobi; for example, myapp.mobi:
+                <programlisting language="xml"><![CDATA[
 <mvc:interceptors>
     <!-- On pre-handle, resolve the device that originated the web request -->
     <beans:bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
@@ -367,14 +435,20 @@ public class HomeController {
         <beans:constructor-arg value="myapp.com" />
     </beans:bean>
 </mvc:interceptors>]]>
-				</programlisting>
-			</para>			
-		</section>
-		<section id="spring-mobile-site-switcher-interceptor-urlpath">
-			<title>urlPath SiteSwitcher</title>
-			<para>
-				Use the "urlPath" factory method to construct a SiteSwitcher that redirects mobile users to ${serverName}/${mobilePath}; for example, myapp.com/m/:
-				<programlisting language="xml"><![CDATA[
+                
+                </programlisting>
+                
+            </para>
+            
+        </section>
+
+        <section id="spring-mobile-site-switcher-interceptor-urlpath">
+            
+            <title>urlPath SiteSwitcher</title>
+            
+            <para>Use the "urlPath" factory method to construct a SiteSwitcher that redirects mobile users to ${serverName}/${mobilePath}; for example, myapp.com/m/:
+                
+                <programlisting language="xml"><![CDATA[
 <mvc:interceptors>
     <!-- On pre-handle, resolve the device that originated the web request -->
     <beans:bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
@@ -383,18 +457,34 @@ public class HomeController {
         <beans:constructor-arg value="/m" />
     </beans:bean>
 </mvc:interceptors>]]>
-				</programlisting>
-			</para>
-			<para>
-				The "mDot", "dotMobi" and "urlPath" factory methods configure cookie-based SitePreference storage.
-				The cookie value will be shared across the mobile and normal site domains.
-				Internally, the interceptor delegates to a SitePreferenceHandler, so there is no need to register a SitePreferenceHandlerInterceptor when using the switcher.
-			</para>
-			<para>
-				See the JavaDoc of SiteSwitcherHandlerInterceptor for additional options when you need more control.			
-				See the spring-mobile <ulink url="https://github.com/SpringSource/spring-mobile-samples">samples</ulink> repository for runnable SiteSwitcher examples.
-			</para>
-		</section>
-	</section>
+                </programlisting>
+                
+            </para>
+            
+            <para>You can also specify the root path of the application in the "urlPath" factory method. The following sample constructs a SiteSwitcher that redirects mobile users to ${serverName}/${rootPath}/${mobilePath}; 
+            
+            for example, myapp.com/showcase/m/:
+                
+                <programlisting language="xml"><![CDATA[
+<mvc:interceptors>
+    <!-- On pre-handle, resolve the device that originated the web request -->
+    <beans:bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
+    <!-- On pre-handle, redirects mobile users to "myapp.mobi" (declare after DeviceResolverHandlerInterceptor) -->
+    <beans:bean class="org.springframework.mobile.device.switcher.SiteSwitcherHandlerInterceptor" factory-method="urlPath">
+        <beans:constructor-arg value="/m" />
+        <beans:constructor-arg value="/showcase" />
+    </beans:bean>
+</mvc:interceptors>]]>
+                </programlisting>
+                
+            </para>
+            
+            <para>The "mDot", "dotMobi" and "urlPath" factory methods configure cookie-based SitePreference storage. The cookie value will be shared across the mobile and normal site domains. Internally, the interceptor delegates to a SitePreferenceHandler, so there is no need to register a SitePreferenceHandlerInterceptor when using the switcher.</para>
+            
+            <para>See the JavaDoc of SiteSwitcherHandlerInterceptor for additional options when you need more control. See the spring-mobile <ulink url="https://github.com/SpringSource/spring-mobile-samples">samples</ulink> repository for runnable SiteSwitcher examples.</para>
+            
+        </section>
+        
+    </section>
 
 </chapter>
