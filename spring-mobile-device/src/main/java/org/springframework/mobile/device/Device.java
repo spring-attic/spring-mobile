@@ -23,6 +23,11 @@ package org.springframework.mobile.device;
  * @author Scott Rossillo
  */
 public interface Device {
+	
+	/**
+	 * True if this device is not a mobile or tablet device.
+	 */
+	boolean isNormal();
 
 	/**
 	 * True if this device is a mobile device such as an Apple iPhone or an Nexus One Android.

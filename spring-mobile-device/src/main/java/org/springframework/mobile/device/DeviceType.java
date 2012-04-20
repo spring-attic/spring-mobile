@@ -27,12 +27,12 @@ public enum DeviceType {
 	NORMAL, 
 	
 	/**
-	 * Represents a mobile sized device, such as an iPhone
+	 * Represents a mobile device, such as an iPhone
 	 */
 	MOBILE, 
 	
 	/**
-	 * Represents a tablet sized device, such as an iPad
+	 * Represents a tablet device, such as an iPad
 	 */
 	TABLET
 }

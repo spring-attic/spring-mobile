@@ -13,13 +13,17 @@ public class StubDevice implements Device {
 	public StubDevice(DeviceType deviceType) {
 		this.deviceType = deviceType;
 	}
+	
+	public boolean isNormal() {
+		return this.deviceType == DeviceType.NORMAL;
+	}
 
 	public boolean isMobile() {
-		return deviceType == DeviceType.MOBILE;
+		return this.deviceType == DeviceType.MOBILE;
 	}
 	
 	public boolean isTablet() {
-		return deviceType == DeviceType.TABLET;
+		return this.deviceType == DeviceType.TABLET;
 	}
 	
 	public void setMobile(boolean mobile) {
