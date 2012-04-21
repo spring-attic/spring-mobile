@@ -27,7 +27,7 @@
             
         </para>
         
-        <para>If you are developing against a milestone version, such as 1.0.0.RC1, you will need to add the following repository in order to resolve the artifact:
+        <para>If you are developing against a milestone version, such as 1.0.0.RC2, you will need to add the following repository in order to resolve the artifact:
         
             <programlisting language="xml"><![CDATA[
 <repository>
