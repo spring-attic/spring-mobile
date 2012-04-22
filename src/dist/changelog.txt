@@ -9,7 +9,7 @@ Spring Mobile Changelog
     - If "android" is found, an additional check for whether the User-Agent contains "mobile" is performed. If it does include "mobile", then the device is resolved as a mobile device. If not, then it is resolved as a tablet.
     
 * Added a new DeviceType enumeration consisting of NORMAL, MOBILE, and TABLET values.
-* The Device interface now includes getDeviceType(), isNormal(), and isTablet() methods in addition to the existing isMobile() method.
+* The Device interface now includes isNormal(), and isTablet() methods in addition to the existing isMobile() method.
 * WebOS devices are now recognized as a mobile device in LiteDeviceResolver
 * Improved the SiteSwitcherHandlerInterceptor by adding an URL path alternative to "dotMobi" and "mDot" for site switching. The switcher is now capable of switching between "normal" and "mobile" URL paths within the same domain. For example an about page for a normal site may be "http://www.domain.com/about", and the mobile site may be "http://www.domain.com/m/about"
     - The mobile path is configurable and is specified in the Spring configuration.
