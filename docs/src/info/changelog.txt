@@ -1,18 +1,34 @@
 Spring Mobile Changelog
 =======================
 
+1.0.0.RC2 (2012.04.20)
+======================
+* Tablets, and specifically iPads are no longer recognized as mobile devices
+* Added support for resolving tablet devices in LiteDeviceResolver. 
+    - The User-Agent is searched for the keywords "ipad", "playbook", and "hp-tablet"
+    - If "android" is found, an additional check for whether the User-Agent contains "mobile" is performed. If it does include "mobile", then the device is resolved as a mobile device. If not, then it is resolved as a tablet.
+    
+* Added a new DeviceType enumeration consisting of NORMAL, MOBILE, and TABLET values.
+* The Device interface now includes isNormal(), and isTablet() methods in addition to the existing isMobile() method.
+* WebOS devices are now recognized as a mobile device in LiteDeviceResolver
+* Improved the SiteSwitcherHandlerInterceptor by adding an URL path alternative to "dotMobi" and "mDot" for site switching. The switcher is now capable of switching between "normal" and "mobile" URL paths within the same domain. For example an about page for a normal site may be "http://www.domain.com/about", and the mobile site may be "http://www.domain.com/m/about"
+    - The mobile path is configurable and is specified in the Spring configuration.
+    - Additionally, the root path is also configurable, but not required. For example if your application exists at "http://demo.com/showcase", then "/showcase" is the root path.
+
+* You can now configure a list of "normal" User-Agent keywords in the LiteDeviceResolver. It may happen that a device is falsely identified as mobile. This list of keywords takes precedence over the mobile and tablet keywords, effectively overriding the default behavior.
+
 1.0.0.RC1 (2012.02.06)
-=======================
+======================
 * Added DeviceResolverHandlerFilter as an alternative to DeviceResolverHandlerInterceptor to support web.xml configurations.
 * iPad is now recognized as a mobile device in LiteDeviceResolver.
 * Better exception handling of invalid site_preference parameter in StandardSitePreferenceHandler.
 
 1.0.0.M4 (2011.07.26)
-=======================
+=====================
 * Split out Spring Mobile's WURFL integration into a separate project licensed under the same terms as the Wurfl Java API (AGPL3)
 
 1.0.0.M3 (2011.02.03)
-=======================
+=====================
 * Extracted SitePreferenceHandler from SiteSwitcher to allow for standalone site preference management independent of site switcher usage. See SitePreferenceHandlerInterceptor to enable in Spring MVC.
 * Added SitePreference.isMobile() for convenient testing of a mobile site preference value using a boolean expression. This is particularly useful for view templates e.g. ${currentSitePreference.mobile}
 * Added DeviceUtils and SitePreferenceUtils for convenient lookup of the 'currentDevice' and 'currentSitePreference', respectively.
@@ -21,7 +37,7 @@ Spring Mobile Changelog
   (see the lite-showcase and wurfl-showcase samples at git://github.com/SpringSource/spring-mobile-samples.git for working examples of the latest Spring MVC + Spring Mobile feature set)
 
 1.0.0.M2 (2010.12.08)
-=======================
+=====================
 * Renamed MobileRedirectHandlerInterceptor to SiteSwitcherHandlerInterceptor and made it considerably more capable:
     - In addition to switching from the "mobile" site to the "normal" site for mobile devices, the switcher is now capable of switching from the "mobile" site to the "normal" site for non-mobile devices.
       The switcher now also preserves the original request path when performing a site switch.
@@ -41,7 +57,7 @@ Spring Mobile Changelog
 * Renamed DeviceResolvingHandlerInterceptor to DeviceResolverHandlerInterceptor to make it more clear this class is a Spring MVC adapter wrapping a DeviceResolver.
 
 1.0.0.M1 (2010.11.16)
-=======================
+=====================
 * Initial release
 * Added 'spring-mobile-device' module for mobile device detection.
 * Added LiteDeviceResolver that detects mobile device presence but not capabilities.
