@@ -1,4 +1,4 @@
-Spring Mobile 1.0.0.BUILD-SNAPSHOT
+Spring Mobile 1.0.0.RC2
 -----------------------------------------------------------
 The Spring Mobile project provides support for developing cross-platform mobile 
 web applications. It contains extensions to Spring MVC that aim to simplify mobile 
