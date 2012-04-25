@@ -135,8 +135,8 @@ public class LiteDeviceResolver implements DeviceResolver {
 	}
 
 	/**
-	 * List of user agent keywords that identify mobile devices.
-	 * Used primarily to match by mobile platform or operating system.
+	 * List of user agent keywords that identify tablet devices.
+	 * Used primarily to match by tablet platform or operating system.
 	 */
 	protected List<String> getTabletUserAgentKeywords() {
 		return tabletUserAgentKeywords;
