@@ -134,16 +134,16 @@ public interface Device {
             
             <section id="spring-mobile-device-resolver-filter">
             
-                <title>DeviceResolverHandlerFilter</title>
+                <title>DeviceResolverRequestFilter</title>
                 
                 <para>Spring Mobile also ships with a Servlet Filter that delegates to the same DeviceResolver. As with the HandlerInterceptor, the resolved Device is indexed under a request attribute named 'currentDevice', making it available to handlers throughout request processing.</para>
                 
-                <para>To enable, add the DeviceResolverHandlerFilter to your web.xml:
+                <para>To enable, add the DeviceResolverRequestFilter to your web.xml:
                 
                     <programlisting language="xml"><![CDATA[
 <filter>
-    <filter-name>deviceResolverHandlerFilter</filter-name>
-    <filter-class>org.springframework.mobile.device.DeviceResolverHandlerFilter</filter-class>
+    <filter-name>deviceResolverRequestFilter</filter-name>
+    <filter-class>org.springframework.mobile.device.DeviceResolverRequestFilter</filter-class>
 </filter>]]>
                     </programlisting>
                     
