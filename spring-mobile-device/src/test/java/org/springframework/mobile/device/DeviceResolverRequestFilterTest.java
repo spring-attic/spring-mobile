@@ -10,11 +10,11 @@ import org.springframework.mock.web.MockFilterChain;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-public class DeviceResolverHandlerFilterTest {
+public class DeviceResolverRequestFilterTest {
 	
 	private Device device = new StubDevice();
 
-	private DeviceResolverHandlerFilter filter = new DeviceResolverHandlerFilter(new DeviceResolver() {
+	private DeviceResolverRequestFilter filter = new DeviceResolverRequestFilter(new DeviceResolver() {
 		public Device resolveDevice(HttpServletRequest request) {
 			return device;
 		}
@@ -34,7 +34,7 @@ public class DeviceResolverHandlerFilterTest {
 
 	@Test
 	public void resolveDefaultResolver() throws Exception {
-		filter = new DeviceResolverHandlerFilter();
+		filter = new DeviceResolverRequestFilter();
 		request.addHeader("User-Agent", "Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_0 like Mac OS X; en-us) AppleWebKit/532.9 (KHTML, like Gecko) Version/4.0.5 Mobile/8A293 Safari/6531.22.7");
 		filter.doFilterInternal(request, response, filterChain);
 		Device device = DeviceUtils.getCurrentDevice(request);
