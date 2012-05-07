@@ -452,7 +452,7 @@ public class HomeController {
 <mvc:interceptors>
     <!-- On pre-handle, resolve the device that originated the web request -->
     <beans:bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
-    <!-- On pre-handle, redirects mobile users to "myapp.mobi" (declare after DeviceResolverHandlerInterceptor) -->
+    <!-- On pre-handle, redirects mobile users to "myapp.com/m" (declare after DeviceResolverHandlerInterceptor) -->
     <beans:bean class="org.springframework.mobile.device.switcher.SiteSwitcherHandlerInterceptor" factory-method="urlPath">
         <beans:constructor-arg value="/m" />
     </beans:bean>
@@ -469,7 +469,7 @@ public class HomeController {
 <mvc:interceptors>
     <!-- On pre-handle, resolve the device that originated the web request -->
     <beans:bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
-    <!-- On pre-handle, redirects mobile users to "myapp.mobi" (declare after DeviceResolverHandlerInterceptor) -->
+    <!-- On pre-handle, redirects mobile users to "myapp.com/showcase/m" (declare after DeviceResolverHandlerInterceptor) -->
     <beans:bean class="org.springframework.mobile.device.switcher.SiteSwitcherHandlerInterceptor" factory-method="urlPath">
         <beans:constructor-arg value="/m" />
         <beans:constructor-arg value="/showcase" />
