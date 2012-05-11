@@ -1,6 +1,11 @@
 Spring Mobile Changelog
 =======================
 
+1.0.0.RELEASE (TBD)
+===================
+* Renamed DeviceResolverHandlerFilter to DeviceResolverRequestFilter
+* Documentation updates
+
 1.0.0.RC2 (2012.04.20)
 ======================
 * Tablets, and specifically iPads are no longer recognized as mobile devices
