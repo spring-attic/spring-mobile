@@ -190,9 +190,9 @@ configure(rootProject) {
             into "${baseDir}/docs"
         }
 
-        from(zipTree(schemaZip.archivePath)) {
-            into "${baseDir}/schema"
-        }
+//        from(zipTree(schemaZip.archivePath)) {
+//            into "${baseDir}/schema"
+//        }
 
         subprojects.each { subproject ->
             into ("${baseDir}/libs") {
