@@ -1,8 +1,8 @@
 Spring Mobile Changelog
 =======================
 
-1.0.0.RELEASE (TBD)
-===================
+1.0.0.RELEASE (2012.05.14)
+==========================
 * Renamed DeviceResolverHandlerFilter to DeviceResolverRequestFilter
 * Documentation updates
 
