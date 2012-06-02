@@ -114,7 +114,7 @@ public class DeviceAwareViewResolver extends UrlBasedViewResolver implements Vie
 	}
 
 	/**
-	 * This implementation returns onyl the device aware view name, 
+	 * This implementation returns only the device aware view name, 
 	 * as this view resolver doesn't support localized resolution.
 	 * 
 	 * @see org.springframework.web.servlet.view.UrlBasedViewResolver#getCacheKey(java.lang.String, java.util.Locale)
@@ -126,7 +126,7 @@ public class DeviceAwareViewResolver extends UrlBasedViewResolver implements Vie
 	}
 
 	/**
-	 * Returns the given prefix without a trailing slash.
+	 * Returns the given prefix without a leading or trailing slash.
 	 * 
 	 * @param prefix the prefix to normalize
 	 * 
