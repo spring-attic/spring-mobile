@@ -1,20 +1,12 @@
 package org.springframework.mobile.device.switcher;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.mobile.device.StubDevice;
-import org.springframework.mobile.device.site.SitePreference;
-import org.springframework.mobile.device.site.SitePreferenceHandler;
-import org.springframework.mobile.device.site.StandardSitePreferenceHandler;
-import org.springframework.mobile.device.site.StubSitePreferenceRepository;
 import org.springframework.mock.web.MockFilterChain;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
