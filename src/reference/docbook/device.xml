@@ -487,4 +487,51 @@ public class HomeController {
         
     </section>
 
+    <section id="spring-mobile-device-aware-view-resolver">
+    
+        <title>Device Aware View Resolution</title>
+        
+        <para>While site switching allows applications to host their "mobile site" at a different domain from their "normal site," some applications may prefer to use the same URL and controller methods to process requests and simply render a different view depending on the device type and site preference.</para>
+
+        <para>Using this approach, controllers do not need to be aware of the device type for which they are providing a data model.  This is particularly useful if the controller logic is the same for both the normal site and the mobile site.</para>
+
+        <section id="spring-mobile-device-aware-view-resolver-config">
+            
+            <title>Configuring Device Aware View Resolution</title>
+            
+            <para>Spring Mobile supports device aware view resolution by extending Spring MVC's <code>UrlBasedViewResolver</code> with a <code>DeviceAwareViewResolver</code>.  This view resolver supports all the features of <code>UrlBasedViewResolver</code>, such as redirect URLs and forward URLs specified via the <code>redirect:</code> and <code>forward:</code> prefixes.</para>
+            
+            <para>To add support for device aware view resolution to your application context, configure a device aware view resolver bean in place of your internal resource view resolver:</para>
+            
+            <programlisting language="xml"><![CDATA[
+<bean class="org.springframework.mobile.device.web.servlet.view.DeviceAwareViewResolver">
+    <property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView" />
+    <property name="prefix" value="/WEB-INF/views/" />        
+    <property name="suffix" value=".jsp" />
+    <property name="mobilePrefix" value="mobile" />
+    <property name="normalPrefix" value="normal" />
+    <property name="cache" value="true" />
+</bean>]]>
+            </programlisting>
+
+            <note>
+                <para>For applications that already have their "normal site" views residing in the <code>prefix</code> path, the <code>normalPrefix</code> property may be omitted, allowing the normal site's views to remain in their current location.  In this case, the device aware view resolver will only insert the <code>mobilePrefix</code> for mobile views.</para>
+            </note>
+            
+            <para>The device aware view resolver depends on two handler interceptors to detect the client device type and site preference.  These interceptors should be added to your interceptor configuration:</para>
+
+            <programlisting language="xml"><![CDATA[            
+<mvc:interceptors>
+    <!-- Detect the client's Device -->
+    <bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
+    <!-- Detect the client's Site Preference -->
+    <bean class="org.springframework.mobile.device.site.SitePreferenceHandlerInterceptor" />
+</mvc:interceptors> ]]>
+            </programlisting>
+            
+            <para>The site preference handler interceptor is only required for applications that wish to support site preference management.  Only the device resolver handler interceptor is required for view resolution.  For more information, refer to <xref linkend="spring-mobile-site-preference"/>.</para>
+            
+        </section>
+
+    </section>
 </chapter>
