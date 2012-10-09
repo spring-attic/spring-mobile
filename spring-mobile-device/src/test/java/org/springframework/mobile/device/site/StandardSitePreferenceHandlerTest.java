@@ -57,7 +57,7 @@ public class StandardSitePreferenceHandlerTest {
 
 	@Test
 	public void defaultSitePreferenceMobileDevice() throws Exception {
-		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, new StubDevice());
+		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, new StubDevice(DeviceType.MOBILE));
 		assertEquals(SitePreference.MOBILE, sitePreferenceHandler.handleSitePreference(request, response));
 		assertEquals(SitePreference.MOBILE, SitePreferenceUtils.getCurrentSitePreference(request));
 	}
