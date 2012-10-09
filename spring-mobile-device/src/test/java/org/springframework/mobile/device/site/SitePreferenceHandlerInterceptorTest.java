@@ -24,9 +24,23 @@ public class SitePreferenceHandlerInterceptorTest {
 		assertNull(SitePreferenceUtils.getCurrentSitePreference(request));
 		assertTrue(result);
 	}
+	
+	@Test
+	public void preHandleCustomNormal() throws Exception {
+		SitePreferenceHandler handler = new SitePreferenceHandler() {
+			public SitePreference handleSitePreference(HttpServletRequest request, HttpServletResponse response) {
+				request.setAttribute("currentSitePreference", SitePreference.NORMAL);
+				return SitePreference.NORMAL;
+			}
+		};
+		SitePreferenceHandlerInterceptor interceptor = new SitePreferenceHandlerInterceptor(handler);
+		boolean result = interceptor.preHandle(request, response, null);
+		assertEquals(SitePreference.NORMAL, request.getAttribute("currentSitePreference"));
+		assertTrue(result);
+	}
 
 	@Test
-	public void preHandleCustom() throws Exception {
+	public void preHandleCustomMobile() throws Exception {
 		SitePreferenceHandler handler = new SitePreferenceHandler() {
 			public SitePreference handleSitePreference(HttpServletRequest request, HttpServletResponse response) {
 				request.setAttribute("currentSitePreference", SitePreference.MOBILE);
@@ -36,6 +50,20 @@ public class SitePreferenceHandlerInterceptorTest {
 		SitePreferenceHandlerInterceptor interceptor = new SitePreferenceHandlerInterceptor(handler);
 		boolean result = interceptor.preHandle(request, response, null);
 		assertEquals(SitePreference.MOBILE, request.getAttribute("currentSitePreference"));
+		assertTrue(result);
+	}
+	
+	@Test
+	public void preHandleCustomTablet() throws Exception {
+		SitePreferenceHandler handler = new SitePreferenceHandler() {
+			public SitePreference handleSitePreference(HttpServletRequest request, HttpServletResponse response) {
+				request.setAttribute("currentSitePreference", SitePreference.TABLET);
+				return SitePreference.TABLET;
+			}
+		};
+		SitePreferenceHandlerInterceptor interceptor = new SitePreferenceHandlerInterceptor(handler);
+		boolean result = interceptor.preHandle(request, response, null);
+		assertEquals(SitePreference.TABLET, request.getAttribute("currentSitePreference"));
 		assertTrue(result);
 	}
 

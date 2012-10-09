@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 the original author or authors.
+ * Copyright 2010-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +18,18 @@ package org.springframework.mobile.device.site;
 /**
  * Possible site preference values.
  * @author Keith Donald
+ * @author Roy Clarkson
  */
 public enum SitePreference {
 	
 	/**
 	 * The user prefers the 'normal' site.
 	 */
-	NORMAL,
+	NORMAL {
+		public boolean isNormal() {
+			return true;
+		}
+	},
 	
 	/**
 	 * The user prefers the 'mobile' site.
@@ -33,13 +38,38 @@ public enum SitePreference {
 		public boolean isMobile() {
 			return true;
 		}
+	},
+	
+	/**
+	 * The user prefers the 'tablet' site.
+	 */
+	TABLET {		
+		public boolean isTablet() {
+			return true;
+		}
 	};
+	
+	/**
+	 * Tests if this is the 'normal' SitePreference.
+	 * Designed to support concise SitePreference boolean expressions e.g. &lt;c:if test="${currentSitePreference.normal}"&gt;&lt;/c:if&gt;.
+	 */
+	public boolean isNormal() {
+		return false;
+	}
 
 	/**
 	 * Tests if this is the 'mobile' SitePreference.
 	 * Designed to support concise SitePreference boolean expressions e.g. &lt;c:if test="${currentSitePreference.mobile}"&gt;&lt;/c:if&gt;.
 	 */
 	public boolean isMobile() {
+		return false;
+	}
+	
+	/**
+	 * Tests if this is the 'tablet' SitePreference.
+	 * Designed to support concise SitePreference boolean expressions e.g. &lt;c:if test="${currentSitePreference.tablet}"&gt;&lt;/c:if&gt;.
+	 */
+	public boolean isTablet() {
 		return false;
 	}
 	

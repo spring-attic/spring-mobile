@@ -9,12 +9,23 @@ public class SitePreferenceTest {
 
 	@Test
 	public void normal() {
-		assertFalse(SitePreference.NORMAL.isMobile());		
+		assertTrue(SitePreference.NORMAL.isNormal());
+		assertFalse(SitePreference.NORMAL.isMobile());
+		assertFalse(SitePreference.NORMAL.isTablet());
 	}
 
 	@Test
 	public void mobile() {
+		assertFalse(SitePreference.MOBILE.isNormal());
 		assertTrue(SitePreference.MOBILE.isMobile());
+		assertFalse(SitePreference.MOBILE.isTablet());
+	}
+	
+	@Test
+	public void tablet() {
+		assertFalse(SitePreference.TABLET.isNormal());
+		assertFalse(SitePreference.TABLET.isMobile());
+		assertTrue(SitePreference.TABLET.isTablet());
 	}
 
 }
