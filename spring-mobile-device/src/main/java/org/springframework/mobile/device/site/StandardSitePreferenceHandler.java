@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 the original author or authors.
+ * Copyright 2010-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ import org.springframework.mobile.device.DeviceUtils;
  * The current user SitePreference is exported as a request attribute with the name {@link #CURRENT_SITE_PREFERENCE_ATTRIBUTE}.
  * This allows handler mappings and view resolvers further down the line to vary their logic by site preference.
  * @author Keith Donald
+ * @author Roy Clarkson
  */
 public class StandardSitePreferenceHandler implements SitePreferenceHandler {
 
@@ -74,7 +75,16 @@ public class StandardSitePreferenceHandler implements SitePreferenceHandler {
 		if (device == null) {
 			return null;
 		}
-		return device.isMobile() ? SitePreference.MOBILE : SitePreference.NORMAL;
+		if (device.isMobile()) {
+			return SitePreference.MOBILE;
+		}
+		else if (device.isTablet()) {
+			return SitePreference.TABLET;
+		}
+		else {
+			return SitePreference.NORMAL;
+		}
+		
 	}
 	
 	private static final String SITE_PREFERENCE_PARAMETER = "site_preference";

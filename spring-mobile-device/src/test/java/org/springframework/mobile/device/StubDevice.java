@@ -6,10 +6,17 @@ public class StubDevice implements Device {
 
 	private DeviceType deviceType;
 
+	/**
+	 * @return new 'normal' device
+	 */
 	public StubDevice() {
 		this.deviceType = DeviceType.NORMAL;
 	}
 
+	/**
+	 * @param deviceType
+	 * @return new device based deviceType
+	 */
 	public StubDevice(DeviceType deviceType) {
 		this.deviceType = deviceType;
 	}
