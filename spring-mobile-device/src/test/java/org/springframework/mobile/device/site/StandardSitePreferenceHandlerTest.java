@@ -35,24 +35,61 @@ public class StandardSitePreferenceHandlerTest {
 	}
 	
 	@Test
-	public void saveSitePreference() throws Exception {
+	public void saveSitePreferenceNormal() throws Exception {
 		request.addParameter("site_preference", "normal");
 		assertEquals(SitePreference.NORMAL, sitePreferenceHandler.handleSitePreference(request, response));
 		assertEquals(SitePreference.NORMAL, sitePreferenceRepository.getSitePreference());
 		assertEquals(SitePreference.NORMAL, SitePreferenceUtils.getCurrentSitePreference(request));
 	}
+	
+	@Test
+	public void saveSitePreferenceMobile() throws Exception {
+		request.addParameter("site_preference", "mobile");
+		assertEquals(SitePreference.MOBILE, sitePreferenceHandler.handleSitePreference(request, response));
+		assertEquals(SitePreference.MOBILE, sitePreferenceRepository.getSitePreference());
+		assertEquals(SitePreference.MOBILE, SitePreferenceUtils.getCurrentSitePreference(request));
+	}
+	
+	@Test
+	public void saveSitePreferenceTablet() throws Exception {
+		request.addParameter("site_preference", "tablet");
+		assertEquals(SitePreference.TABLET, sitePreferenceHandler.handleSitePreference(request, response));
+		assertEquals(SitePreference.TABLET, sitePreferenceRepository.getSitePreference());
+		assertEquals(SitePreference.TABLET, SitePreferenceUtils.getCurrentSitePreference(request));
+	}
 
 	@Test
-	public void loadSitePreference() throws Exception {
+	public void loadSitePreferenceNormal() throws Exception {
+		sitePreferenceRepository.setSitePreference(SitePreference.NORMAL);
+		assertEquals(SitePreference.NORMAL, sitePreferenceHandler.handleSitePreference(request, response));
+		assertEquals(SitePreference.NORMAL, SitePreferenceUtils.getCurrentSitePreference(request));
+	}
+	
+	@Test
+	public void loadSitePreferenceMobile() throws Exception {
 		sitePreferenceRepository.setSitePreference(SitePreference.MOBILE);
 		assertEquals(SitePreference.MOBILE, sitePreferenceHandler.handleSitePreference(request, response));
 		assertEquals(SitePreference.MOBILE, SitePreferenceUtils.getCurrentSitePreference(request));
+	}
+	
+	@Test
+	public void loadSitePreferenceTablet() throws Exception {
+		sitePreferenceRepository.setSitePreference(SitePreference.TABLET);
+		assertEquals(SitePreference.TABLET, sitePreferenceHandler.handleSitePreference(request, response));
+		assertEquals(SitePreference.TABLET, SitePreferenceUtils.getCurrentSitePreference(request));
 	}
 
 	@Test
 	public void defaultSitePreference() throws Exception {
 		assertNull(sitePreferenceHandler.handleSitePreference(request, response));
 		assertNull(SitePreferenceUtils.getCurrentSitePreference(request));
+	}
+	
+	@Test
+	public void defaultSitePreferenceNormalDevice() throws Exception {
+		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, new StubDevice(DeviceType.NORMAL));
+		assertEquals(SitePreference.NORMAL, sitePreferenceHandler.handleSitePreference(request, response));
+		assertEquals(SitePreference.NORMAL, SitePreferenceUtils.getCurrentSitePreference(request));
 	}
 
 	@Test
@@ -63,10 +100,10 @@ public class StandardSitePreferenceHandlerTest {
 	}
 
 	@Test
-	public void defaultSitePreferenceNormalDevice() throws Exception {
-		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, new StubDevice(DeviceType.NORMAL));
-		assertEquals(SitePreference.NORMAL, sitePreferenceHandler.handleSitePreference(request, response));
-		assertEquals(SitePreference.NORMAL, SitePreferenceUtils.getCurrentSitePreference(request));
+	public void defaultSitePreferenceTabletDevice() throws Exception {
+		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, new StubDevice(DeviceType.TABLET));
+		assertEquals(SitePreference.TABLET, sitePreferenceHandler.handleSitePreference(request, response));
+		assertEquals(SitePreference.TABLET, SitePreferenceUtils.getCurrentSitePreference(request));
 	}
 
 }
