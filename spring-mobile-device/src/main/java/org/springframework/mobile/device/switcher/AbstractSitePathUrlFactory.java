@@ -15,7 +15,6 @@
  */
 package org.springframework.mobile.device.switcher;
 
-import org.springframework.util.Assert;
 
 /**
  * Abstract {@link SiteUrlFactory} implementation that differentiates each site by the 
@@ -26,23 +25,18 @@ import org.springframework.util.Assert;
 public abstract class AbstractSitePathUrlFactory extends AbstractSiteUrlFactory implements SiteUrlFactory {
 
 	private final String mobilePath;
+	
+	private final String tabletPath;
 
 	private final String rootPath;
-
-	/**
-	 * Creates a new abstract site path URL factory for the given mobile path.
-	 */
-	public AbstractSitePathUrlFactory(final String mobilePath) {
-		this(mobilePath, null);
-	}
 
 	/**
 	 * Creates a new abstract site path URL factory for the given mobile path
 	 * and root application path.
 	 */
-	public AbstractSitePathUrlFactory(final String mobilePath, final String rootPath) {
-		Assert.notNull(mobilePath, "mobilePath is required");
+	public AbstractSitePathUrlFactory(final String mobilePath, final String tabletPath, final String rootPath) {
 		this.mobilePath = formatPath(mobilePath);
+		this.tabletPath = formatPath(tabletPath);
 		this.rootPath = formatPath(rootPath);
 	}
 
@@ -58,6 +52,19 @@ public abstract class AbstractSitePathUrlFactory extends AbstractSiteUrlFactory 
 	public String getMobilePath() {
 		return this.mobilePath;
 	}
+	
+	/**
+	 * The tablet path with a trailing slash.
+	 * <p>Examples:</p>
+	 * <pre>
+	 *  "/t/"
+	 *  "/tablet/"
+	 * </pre>
+	 * @return the mobile path
+	 */
+	public String getTabletPath() {
+		return this.tabletPath;
+	}
 
 	/**
 	 * The root path of the application with a trailing slash.
@@ -71,6 +78,10 @@ public abstract class AbstractSitePathUrlFactory extends AbstractSiteUrlFactory 
 	public String getRootPath() {
 		return this.rootPath;
 	}
+	
+	public String getFullNormalPath() {
+		return (this.rootPath == null ? "/" : getCleanPath(this.rootPath) + "/");
+	}
 
 	/**
 	 * The full path of the mobile site. 
@@ -82,14 +93,49 @@ public abstract class AbstractSitePathUrlFactory extends AbstractSiteUrlFactory 
 	 * @return the full path of the mobile site
 	 */
 	public String getFullMobilePath() {
-		return (this.rootPath == null ? this.mobilePath : getCleanPath(getRootPath()) + this.mobilePath);
+		String path = null;
+		if (this.mobilePath != null) {
+			path = (this.rootPath == null ? this.mobilePath : getCleanPath(this.rootPath) + this.mobilePath);
+		}
+		return path;
+	}
+	
+	/**
+	 * The full path of the mobile site. 
+	 * <p>Examples:</p>
+	 * <pre>
+	 *  "/showcase/t/"
+	 *  "/demo/tablet/"
+	 * </pre>
+	 * @return the full path of the mobile site
+	 */
+	public String getFullTabletPath() {
+		String path = null;
+		if (this.tabletPath != null) {
+			path = (this.rootPath == null ? this.tabletPath : getCleanPath(this.rootPath) + this.tabletPath);
+		}
+		return path;
 	}
 
+	/**
+	 * Returns the full normal path without a trailing slash.
+	 */
+	protected String getCleanNormalPath() {
+		return getCleanPath(getFullNormalPath());
+	}
+	
 	/**
 	 * Returns the full mobile path without a trailing slash.
 	 */
 	protected String getCleanMobilePath() {
 		return getCleanPath(getFullMobilePath());
+	}
+	
+	/**
+	 * Returns the full tablet path without a trailing slash.
+	 */
+	protected String getCleanTabletPath() {
+		return getCleanPath(getFullTabletPath());
 	}
 
 	// helpers
@@ -104,7 +150,11 @@ public abstract class AbstractSitePathUrlFactory extends AbstractSiteUrlFactory 
 	}
 
 	private String getCleanPath(String path) {
-		return path.substring(0, path.length() - 1);
+		String cleanPath = null;
+		if (path != null) {
+			cleanPath = path.endsWith("/") ? path.substring(0, path.length() - 1) : path;
+		}
+		return cleanPath;
 	}
 
 }

@@ -18,42 +18,38 @@ package org.springframework.mobile.device.switcher;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Path based site URL factory implementation that handles requests for the "mobile" site.
- * @author Scott Rossillo
+ * Path based site URL factory implementation that handles requests for the "tablet" site.
  * @author Roy Clarkson
  */
-public class MobileSitePathUrlFactory extends AbstractSitePathUrlFactory implements SiteUrlFactory {
+public class TabletSitePathUrlFactory extends AbstractSitePathUrlFactory implements SiteUrlFactory {
 
 	/**
-	 * Creates a new mobile site path URL factory.
-	 * @param mobilePath the path to the mobile site
+	 * Creates a new tablet site path URL factory.
+	 * @param tabletPath the path to the tablet site
 	 */
-	public MobileSitePathUrlFactory(final String mobilePath) {
-		this(mobilePath, null);
+	public TabletSitePathUrlFactory(final String tabletPath) {
+		this(tabletPath, null);
 	}
 	
 	/**
-	 * Creates a new mobile site path URL factory
-	 * @param mobilePath the path to the mobile site
+	 * Creates a new tablet site path URL factory.
+	 * @param tabletPath the path to the tablet site
 	 * @param rootPath the root path of the application
 	 */
-	public MobileSitePathUrlFactory(final String mobilePath, final String rootPath) {
-		super(mobilePath, null, rootPath);
+	public TabletSitePathUrlFactory(final String tabletPath, final String rootPath) {
+		super(null, tabletPath, rootPath);
 	}
 
 	public boolean isRequestForSite(HttpServletRequest request) {
-//		if (getFullMobilePath() == null) {
-//			return false;
-//		}
-		return request.getRequestURI().startsWith(this.getFullMobilePath());
+		return request.getRequestURI().startsWith(this.getFullTabletPath());
 	}
 
 	public String createSiteUrl(HttpServletRequest request) {
 		String adjustedRequestURI;
 		if (getRootPath() != null && request.getRequestURI().startsWith(getRootPath())) {
-			adjustedRequestURI = getFullMobilePath() + request.getRequestURI().substring(getRootPath().length());
+			adjustedRequestURI = getFullTabletPath() + request.getRequestURI().substring(getRootPath().length());
 		} else {
-			adjustedRequestURI = this.getCleanMobilePath() + request.getRequestURI();
+			adjustedRequestURI = this.getCleanTabletPath() + request.getRequestURI();
 		}
 		return createSiteUrlInternal(request, request.getServerName(), adjustedRequestURI);
 	}
