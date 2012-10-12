@@ -28,26 +28,44 @@ public class NormalSitePathUrlFactory extends AbstractSitePathUrlFactory impleme
 	 * Creates a new normal site path URL factory.
 	 */
 	public NormalSitePathUrlFactory(final String mobilePath) {
-		super(mobilePath);
+		this(mobilePath, null, null);
 	}
-
+	
 	/**
 	 * Creates a new normal site path URL factory.
 	 */
 	public NormalSitePathUrlFactory(final String mobilePath, final String rootPath) {
-		super(mobilePath, rootPath);
+		this(mobilePath, null, rootPath);
+	}
+	
+	/**
+	 * Creates a new normal site path URL factory.
+	 */
+	public NormalSitePathUrlFactory(final String mobilePath, final String tabletPath, final String rootPath) {
+		super(mobilePath, tabletPath, rootPath);
 	}
 
 	public boolean isRequestForSite(HttpServletRequest request) {
-		return !request.getRequestURI().startsWith(this.getFullMobilePath());
+		if (request.getRequestURI().startsWith(getFullMobilePath())) {
+			return false;
+		} else if (getFullTabletPath() != null && request.getRequestURI().startsWith(getFullTabletPath())) {
+			return false;
+		}
+		return true;
 	}
 
 	public String createSiteUrl(HttpServletRequest request) {
 		String adjustedRequestURI;
+		int beginIndex = 0;
+		if (getFullMobilePath() != null && request.getRequestURI().startsWith(getCleanMobilePath())) {
+			beginIndex = getRootPath() == null ? getCleanMobilePath().length() : getFullMobilePath().length();
+		} else if (getFullTabletPath() != null && request.getRequestURI().startsWith(getFullTabletPath())) {
+			beginIndex = getRootPath() == null ? getCleanTabletPath().length() : getFullTabletPath().length();
+		}		
 		if (getRootPath() != null && request.getRequestURI().startsWith(getRootPath())) {
-			adjustedRequestURI = getRootPath() + request.getRequestURI().substring(getFullMobilePath().length());
+			adjustedRequestURI = getRootPath() + request.getRequestURI().substring(beginIndex);
 		} else {
-			adjustedRequestURI = request.getRequestURI().substring(getCleanMobilePath().length());
+			adjustedRequestURI = request.getRequestURI().substring(beginIndex);
 		}
 		return createSiteUrlInternal(request, request.getServerName(), adjustedRequestURI);
 	}

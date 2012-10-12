@@ -55,50 +55,29 @@ public class SiteSwitcherRequestFilterTest {
 				return "http://m.app.com";
 			}
 		};
+		SiteUrlFactory tabletSiteUrlFactory = new SiteUrlFactory() {
+			public boolean isRequestForSite(HttpServletRequest request) {
+				return request.getServerName().equals("app.com/t");
+			}
+
+			public String createSiteUrl(HttpServletRequest request) {
+				return "http://app.com/t";
+			}
+		};
 		SitePreferenceHandler sitePreferenceHandler = new StandardSitePreferenceHandler(sitePreferenceRepository);
-		siteSwitcher = new SiteSwitcherRequestFilter(normalSiteUrlFactory, mobileSiteUrlFactory, sitePreferenceHandler);
+		siteSwitcher = new SiteSwitcherRequestFilter(normalSiteUrlFactory, mobileSiteUrlFactory, tabletSiteUrlFactory,
+				sitePreferenceHandler);
 	}
 
 	@Test
-	public void mobileDeviceNormalSiteNoPreference() throws Exception {
-		device.setDeviceType(DeviceType.MOBILE);
-		siteSwitcher.doFilter(request, response, filterChain);
-		assertEquals("http://m.app.com", response.getRedirectedUrl());
-	}
-
-	@Test
-	public void mobileDeviceNormalSiteMobilePreference() throws Exception {
-		device.setDeviceType(DeviceType.MOBILE);
-		sitePreferenceRepository.setSitePreference(SitePreference.MOBILE);
-		siteSwitcher.doFilter(request, response, filterChain);
-		assertEquals("http://m.app.com", response.getRedirectedUrl());
-	}
-
-	@Test
-	public void mobileDeviceNormalSiteNormalPreference() throws Exception {
-		device.setDeviceType(DeviceType.MOBILE);
-		sitePreferenceRepository.setSitePreference(SitePreference.NORMAL);
-		siteSwitcher.doFilter(request, response, filterChain);
-		assertNull(response.getRedirectedUrl());
-	}
-
-	@Test
-	public void normalDeviceNormalSiteNoPreference() throws Exception {
+	public void normalDeviceNoPreference() throws Exception {
 		device.setDeviceType(DeviceType.NORMAL);
 		siteSwitcher.doFilter(request, response, filterChain);
 		assertNull(response.getRedirectedUrl());
 	}
 
 	@Test
-	public void normalDeviceNormalSiteMobilePreference() throws Exception {
-		device.setDeviceType(DeviceType.NORMAL);
-		sitePreferenceRepository.setSitePreference(SitePreference.MOBILE);
-		siteSwitcher.doFilter(request, response, filterChain);
-		assertEquals("http://m.app.com", response.getRedirectedUrl());
-	}
-
-	@Test
-	public void normalDeviceNormalSiteNormalPreference() throws Exception {
+	public void normalDeviceNormalPreference() throws Exception {
 		device.setDeviceType(DeviceType.NORMAL);
 		sitePreferenceRepository.setSitePreference(SitePreference.NORMAL);
 		siteSwitcher.doFilter(request, response, filterChain);
@@ -106,16 +85,95 @@ public class SiteSwitcherRequestFilterTest {
 	}
 
 	@Test
+	public void normalDeviceMobilePreference() throws Exception {
+		device.setDeviceType(DeviceType.NORMAL);
+		sitePreferenceRepository.setSitePreference(SitePreference.MOBILE);
+		siteSwitcher.doFilter(request, response, filterChain);
+		assertEquals("http://m.app.com", response.getRedirectedUrl());
+	}
+
+	@Test
+	public void normalDeviceTabletPreference() throws Exception {
+		device.setDeviceType(DeviceType.NORMAL);
+		sitePreferenceRepository.setSitePreference(SitePreference.TABLET);
+		siteSwitcher.doFilter(request, response, filterChain);
+		assertEquals("http://app.com/t", response.getRedirectedUrl());
+	}
+
+	@Test
+	public void mobileDeviceNoPreference() throws Exception {
+		device.setDeviceType(DeviceType.MOBILE);
+		siteSwitcher.doFilter(request, response, filterChain);
+		assertEquals("http://m.app.com", response.getRedirectedUrl());
+	}
+
+	@Test
+	public void mobileDeviceNormalPreference() throws Exception {
+		device.setDeviceType(DeviceType.MOBILE);
+		sitePreferenceRepository.setSitePreference(SitePreference.NORMAL);
+		siteSwitcher.doFilter(request, response, filterChain);
+		assertNull(response.getRedirectedUrl());
+	}
+
+	@Test
+	public void mobileDeviceMobilePreference() throws Exception {
+		device.setDeviceType(DeviceType.MOBILE);
+		sitePreferenceRepository.setSitePreference(SitePreference.MOBILE);
+		siteSwitcher.doFilter(request, response, filterChain);
+		assertEquals("http://m.app.com", response.getRedirectedUrl());
+	}
+
+	@Test
+	public void mobileDeviceTabletPreference() throws Exception {
+		device.setDeviceType(DeviceType.MOBILE);
+		sitePreferenceRepository.setSitePreference(SitePreference.TABLET);
+		siteSwitcher.doFilter(request, response, filterChain);
+		assertEquals("http://app.com/t", response.getRedirectedUrl());
+	}
+
+	@Test
+	public void tabletDeviceNoPreference() throws Exception {
+		device.setDeviceType(DeviceType.TABLET);
+		siteSwitcher.doFilter(request, response, filterChain);
+		assertEquals("http://app.com/t", response.getRedirectedUrl());
+	}
+
+	@Test
+	public void tabletDeviceNormalPreference() throws Exception {
+		device.setDeviceType(DeviceType.TABLET);
+		sitePreferenceRepository.setSitePreference(SitePreference.NORMAL);
+		siteSwitcher.doFilter(request, response, filterChain);
+		assertNull(response.getRedirectedUrl());
+	}
+
+	@Test
+	public void tabletDeviceMobilePreference() throws Exception {
+		device.setDeviceType(DeviceType.TABLET);
+		sitePreferenceRepository.setSitePreference(SitePreference.MOBILE);
+		siteSwitcher.doFilter(request, response, filterChain);
+		assertEquals("http://m.app.com", response.getRedirectedUrl());
+	}
+
+	@Test
+	public void tabletDeviceTabletPreference() throws Exception {
+		device.setDeviceType(DeviceType.TABLET);
+		sitePreferenceRepository.setSitePreference(SitePreference.TABLET);
+		siteSwitcher.doFilter(request, response, filterChain);
+		assertEquals("http://app.com/t", response.getRedirectedUrl());
+	}
+
+	@Test(expected = ServletException.class)
 	public void missingSwitcherModeInitParameter() throws Exception {
 		SiteSwitcherRequestFilter filter = new SiteSwitcherRequestFilter();
 		try {
 			filter.init(new MockFilterConfig());
 		} catch (ServletException ex) {
 			assertEquals("switcherMode init parameter not found", ex.getLocalizedMessage());
+			throw ex;
 		}
 	}
 
-	@Test
+	@Test(expected = ServletException.class)
 	public void invalidSwitcherModeInitParameter() throws Exception {
 		SiteSwitcherRequestFilter filter = new SiteSwitcherRequestFilter();
 		MockFilterConfig filterConfig = new MockFilterConfig();
@@ -124,10 +182,11 @@ public class SiteSwitcherRequestFilterTest {
 			filter.init(filterConfig);
 		} catch (ServletException ex) {
 			assertEquals("Invalid switcherMode init parameter", ex.getLocalizedMessage());
+			throw ex;
 		}
 	}
 
-	@Test
+	@Test(expected = ServletException.class)
 	public void missingServerNameInitParameter() throws Exception {
 		SiteSwitcherRequestFilter filter = new SiteSwitcherRequestFilter();
 		MockFilterConfig filterConfig = new MockFilterConfig();
@@ -136,30 +195,22 @@ public class SiteSwitcherRequestFilterTest {
 			filter.init(filterConfig);
 		} catch (ServletException ex) {
 			assertEquals("serverName init parameter not found", ex.getLocalizedMessage());
+			throw ex;
 		}
 	}
 
-	@Test
-	public void missingMobilePathInitParameter() throws Exception {
-		SiteSwitcherRequestFilter filter = new SiteSwitcherRequestFilter();
-		MockFilterConfig filterConfig = new MockFilterConfig();
-		filterConfig.addInitParameter("switcherMode", "urlPath");
-		try {
-			filter.init(filterConfig);
-		} catch (ServletException ex) {
-			assertEquals("mobilePath init parameter not found", ex.getLocalizedMessage());
-		}
-	}
+	//	@Test(expected=ServletException.class)
+	//	public void missingMobilePathInitParameter() throws Exception {
+	//		SiteSwitcherRequestFilter filter = new SiteSwitcherRequestFilter();
+	//		MockFilterConfig filterConfig = new MockFilterConfig();
+	//		filterConfig.addInitParameter("switcherMode", "urlPath");
+	//		filter.init(filterConfig);
+	//	}
 
 	@Test
 	public void mDotNormalDeviceNoPreference() throws Exception {
 		device.setDeviceType(DeviceType.NORMAL);
-		SiteSwitcherRequestFilter mDot = new SiteSwitcherRequestFilter();
-		MockFilterConfig filterConfig = new MockFilterConfig();
-		filterConfig.addInitParameter("switcherMode", "mDot");
-		filterConfig.addInitParameter("serverName", "app.com");
-		mDot.init(filterConfig);
-		mDot.doFilter(request, response, filterChain);
+		filterTest("mDot");
 		assertEquals(0, response.getCookies().length);
 		assertNull(response.getRedirectedUrl());
 	}
@@ -167,13 +218,8 @@ public class SiteSwitcherRequestFilterTest {
 	@Test
 	public void mDotNormalDeviceNormalPreference() throws Exception {
 		device.setDeviceType(DeviceType.NORMAL);
-		SiteSwitcherRequestFilter mDot = new SiteSwitcherRequestFilter();
-		MockFilterConfig filterConfig = new MockFilterConfig();
-		filterConfig.addInitParameter("switcherMode", "mDot");
-		filterConfig.addInitParameter("serverName", "app.com");
-		mDot.init(filterConfig);
 		request.addParameter("site_preference", "normal");
-		mDot.doFilter(request, response, filterChain);
+		filterTest("mDot");
 		assertEquals(1, response.getCookies().length);
 		assertEquals(".app.com", response.getCookies()[0].getDomain());
 		assertEquals("NORMAL", response.getCookies()[0].getValue());
@@ -183,13 +229,8 @@ public class SiteSwitcherRequestFilterTest {
 	@Test
 	public void mDotNormalDeviceMobilePreference() throws Exception {
 		device.setDeviceType(DeviceType.NORMAL);
-		SiteSwitcherRequestFilter mDot = new SiteSwitcherRequestFilter();
-		MockFilterConfig filterConfig = new MockFilterConfig();
-		filterConfig.addInitParameter("switcherMode", "mDot");
-		filterConfig.addInitParameter("serverName", "app.com");
-		mDot.init(filterConfig);
 		request.addParameter("site_preference", "mobile");
-		mDot.doFilter(request, response, filterChain);
+		filterTest("mDot");
 		assertEquals(1, response.getCookies().length);
 		assertEquals(".app.com", response.getCookies()[0].getDomain());
 		assertEquals("MOBILE", response.getCookies()[0].getValue());
@@ -197,14 +238,20 @@ public class SiteSwitcherRequestFilterTest {
 	}
 
 	@Test
+	public void mDotNormalDeviceTabletPreference() throws Exception {
+		device.setDeviceType(DeviceType.NORMAL);
+		request.addParameter("site_preference", "tablet");
+		filterTest("mDot");
+		assertEquals(1, response.getCookies().length);
+		assertEquals(".app.com", response.getCookies()[0].getDomain());
+		assertEquals("TABLET", response.getCookies()[0].getValue());
+		assertNull(response.getRedirectedUrl());
+	}
+
+	@Test
 	public void mDotMobileDeviceNoPreference() throws Exception {
 		device.setDeviceType(DeviceType.MOBILE);
-		SiteSwitcherRequestFilter mDot = new SiteSwitcherRequestFilter();
-		MockFilterConfig filterConfig = new MockFilterConfig();
-		filterConfig.addInitParameter("switcherMode", "mDot");
-		filterConfig.addInitParameter("serverName", "app.com");
-		mDot.init(filterConfig);
-		mDot.doFilter(request, response, filterChain);
+		filterTest("mDot");
 		assertEquals(0, response.getCookies().length);
 		assertEquals("http://m.app.com", response.getRedirectedUrl());
 	}
@@ -212,13 +259,8 @@ public class SiteSwitcherRequestFilterTest {
 	@Test
 	public void mDotMobileDeviceNormalPreference() throws Exception {
 		device.setDeviceType(DeviceType.MOBILE);
-		SiteSwitcherRequestFilter mDot = new SiteSwitcherRequestFilter();
-		MockFilterConfig filterConfig = new MockFilterConfig();
-		filterConfig.addInitParameter("switcherMode", "mDot");
-		filterConfig.addInitParameter("serverName", "app.com");
-		mDot.init(filterConfig);
 		request.addParameter("site_preference", "normal");
-		mDot.doFilter(request, response, filterChain);
+		filterTest("mDot");
 		assertEquals(1, response.getCookies().length);
 		assertEquals(".app.com", response.getCookies()[0].getDomain());
 		assertEquals("NORMAL", response.getCookies()[0].getValue());
@@ -228,13 +270,8 @@ public class SiteSwitcherRequestFilterTest {
 	@Test
 	public void mDotMobileDeviceMobilePreference() throws Exception {
 		device.setDeviceType(DeviceType.MOBILE);
-		SiteSwitcherRequestFilter mDot = new SiteSwitcherRequestFilter();
-		MockFilterConfig filterConfig = new MockFilterConfig();
-		filterConfig.addInitParameter("switcherMode", "mDot");
-		filterConfig.addInitParameter("serverName", "app.com");
-		mDot.init(filterConfig);
 		request.addParameter("site_preference", "mobile");
-		mDot.doFilter(request, response, filterChain);
+		filterTest("mDot");
 		assertEquals(1, response.getCookies().length);
 		assertEquals(".app.com", response.getCookies()[0].getDomain());
 		assertEquals("MOBILE", response.getCookies()[0].getValue());
@@ -242,12 +279,65 @@ public class SiteSwitcherRequestFilterTest {
 	}
 
 	@Test
-	public void dotMobiNormalDeviceNoPreference() throws Exception {
+	public void mDotMobileDeviceTabletPreference() throws Exception {
+		device.setDeviceType(DeviceType.MOBILE);
+		request.addParameter("site_preference", "tablet");
+		filterTest("mDot");
+		assertEquals(1, response.getCookies().length);
+		assertEquals(".app.com", response.getCookies()[0].getDomain());
+		assertEquals("TABLET", response.getCookies()[0].getValue());
+		assertNull(response.getRedirectedUrl());
+	}
+
+	@Test
+	public void mDotTabletDeviceNoPreference() throws Exception {
+		device.setDeviceType(DeviceType.TABLET);
+		filterTest("mDot");
+		assertEquals(0, response.getCookies().length);
+		assertNull(response.getRedirectedUrl());
+	}
+
+	@Test
+	public void mDotTabletDeviceNormalPreference() throws Exception {
+		device.setDeviceType(DeviceType.TABLET);
+		request.addParameter("site_preference", "normal");
+		filterTest("mDot");
+		assertEquals(1, response.getCookies().length);
+		assertEquals(".app.com", response.getCookies()[0].getDomain());
+		assertEquals("NORMAL", response.getCookies()[0].getValue());
+		assertNull(response.getRedirectedUrl());
+	}
+
+	@Test
+	public void mDotTabletDeviceMobilePreference() throws Exception {
+		device.setDeviceType(DeviceType.TABLET);
+		request.addParameter("site_preference", "mobile");
+		filterTest("mDot");
+		assertEquals(1, response.getCookies().length);
+		assertEquals(".app.com", response.getCookies()[0].getDomain());
+		assertEquals("MOBILE", response.getCookies()[0].getValue());
+		assertEquals("http://m.app.com", response.getRedirectedUrl());
+	}
+
+	@Test
+	public void mDotTabletDeviceTabletPreference() throws Exception {
+		device.setDeviceType(DeviceType.TABLET);
+		request.addParameter("site_preference", "tablet");
+		filterTest("mDot");
+		assertEquals(1, response.getCookies().length);
+		assertEquals(".app.com", response.getCookies()[0].getDomain());
+		assertEquals("TABLET", response.getCookies()[0].getValue());
+		assertNull(response.getRedirectedUrl());
+	}
+
+	@Test
+	public void mDotNormalDeviceNoPreferenceTabletIsMobile() throws Exception {
 		device.setDeviceType(DeviceType.NORMAL);
 		SiteSwitcherRequestFilter mDot = new SiteSwitcherRequestFilter();
 		MockFilterConfig filterConfig = new MockFilterConfig();
-		filterConfig.addInitParameter("switcherMode", "dotMobi");
+		filterConfig.addInitParameter("switcherMode", "mDot");
 		filterConfig.addInitParameter("serverName", "app.com");
+		filterConfig.addInitParameter("tabletIsMobile", "true");
 		mDot.init(filterConfig);
 		mDot.doFilter(request, response, filterChain);
 		assertEquals(0, response.getCookies().length);
@@ -255,15 +345,48 @@ public class SiteSwitcherRequestFilterTest {
 	}
 
 	@Test
-	public void dotMobiNormalDeviceNormalPreference() throws Exception {
-		device.setDeviceType(DeviceType.NORMAL);
+	public void mDotMobileDeviceNoPreferenceTabletIsMobile() throws Exception {
+		device.setDeviceType(DeviceType.MOBILE);
 		SiteSwitcherRequestFilter mDot = new SiteSwitcherRequestFilter();
 		MockFilterConfig filterConfig = new MockFilterConfig();
-		filterConfig.addInitParameter("switcherMode", "dotMobi");
+		filterConfig.addInitParameter("switcherMode", "mDot");
 		filterConfig.addInitParameter("serverName", "app.com");
+		filterConfig.addInitParameter("tabletIsMobile", "true");
 		mDot.init(filterConfig);
-		request.addParameter("site_preference", "normal");
 		mDot.doFilter(request, response, filterChain);
+		assertEquals(0, response.getCookies().length);
+		assertEquals("http://m.app.com", response.getRedirectedUrl());
+	}
+
+	@Test
+	public void mDotTabletDeviceNoPreferenceTabletIsMobile() throws Exception {
+		device.setDeviceType(DeviceType.TABLET);
+		SiteSwitcherRequestFilter mDot = new SiteSwitcherRequestFilter();
+		MockFilterConfig filterConfig = new MockFilterConfig();
+		filterConfig.addInitParameter("switcherMode", "mDot");
+		filterConfig.addInitParameter("serverName", "app.com");
+		filterConfig.addInitParameter("tabletIsMobile", "true");
+		mDot.init(filterConfig);
+		mDot.doFilter(request, response, filterChain);
+		assertEquals(0, response.getCookies().length);
+		assertEquals("http://m.app.com", response.getRedirectedUrl());
+	}
+
+	// dotMobi tests
+
+	@Test
+	public void dotMobiNormalDeviceNoPreference() throws Exception {
+		device.setDeviceType(DeviceType.NORMAL);
+		filterTest("dotMobi");
+		assertEquals(0, response.getCookies().length);
+		assertNull(response.getRedirectedUrl());
+	}
+
+	@Test
+	public void dotMobiNormalDeviceNormalPreference() throws Exception {
+		device.setDeviceType(DeviceType.NORMAL);
+		request.addParameter("site_preference", "normal");
+		filterTest("dotMobi");
 		assertEquals(1, response.getCookies().length);
 		assertEquals(".app.com", response.getCookies()[0].getDomain());
 		assertEquals("NORMAL", response.getCookies()[0].getValue());
@@ -273,13 +396,8 @@ public class SiteSwitcherRequestFilterTest {
 	@Test
 	public void dotMobiNormalDeviceMobilePreference() throws Exception {
 		device.setDeviceType(DeviceType.NORMAL);
-		SiteSwitcherRequestFilter mDot = new SiteSwitcherRequestFilter();
-		MockFilterConfig filterConfig = new MockFilterConfig();
-		filterConfig.addInitParameter("switcherMode", "dotMobi");
-		filterConfig.addInitParameter("serverName", "app.com");
-		mDot.init(filterConfig);
 		request.addParameter("site_preference", "mobile");
-		mDot.doFilter(request, response, filterChain);
+		filterTest("dotMobi");
 		assertEquals(1, response.getCookies().length);
 		assertEquals(".app.com", response.getCookies()[0].getDomain());
 		assertEquals("MOBILE", response.getCookies()[0].getValue());
@@ -287,14 +405,20 @@ public class SiteSwitcherRequestFilterTest {
 	}
 
 	@Test
+	public void dotMobiNormalDeviceTabletPreference() throws Exception {
+		device.setDeviceType(DeviceType.NORMAL);
+		request.addParameter("site_preference", "tablet");
+		filterTest("dotMobi");
+		assertEquals(1, response.getCookies().length);
+		assertEquals(".app.com", response.getCookies()[0].getDomain());
+		assertEquals("TABLET", response.getCookies()[0].getValue());
+		assertNull(response.getRedirectedUrl());
+	}
+
+	@Test
 	public void dotMobiMobileDeviceNoPreference() throws Exception {
 		device.setDeviceType(DeviceType.MOBILE);
-		SiteSwitcherRequestFilter mDot = new SiteSwitcherRequestFilter();
-		MockFilterConfig filterConfig = new MockFilterConfig();
-		filterConfig.addInitParameter("switcherMode", "dotMobi");
-		filterConfig.addInitParameter("serverName", "app.com");
-		mDot.init(filterConfig);
-		mDot.doFilter(request, response, filterChain);
+		filterTest("dotMobi");
 		assertEquals(0, response.getCookies().length);
 		assertEquals("http://app.mobi", response.getRedirectedUrl());
 	}
@@ -302,13 +426,8 @@ public class SiteSwitcherRequestFilterTest {
 	@Test
 	public void dotMobiMobileDeviceNormalPreference() throws Exception {
 		device.setDeviceType(DeviceType.MOBILE);
-		SiteSwitcherRequestFilter mDot = new SiteSwitcherRequestFilter();
-		MockFilterConfig filterConfig = new MockFilterConfig();
-		filterConfig.addInitParameter("switcherMode", "dotMobi");
-		filterConfig.addInitParameter("serverName", "app.com");
-		mDot.init(filterConfig);
 		request.addParameter("site_preference", "normal");
-		mDot.doFilter(request, response, filterChain);
+		filterTest("dotMobi");
 		assertEquals(1, response.getCookies().length);
 		assertEquals(".app.com", response.getCookies()[0].getDomain());
 		assertEquals("NORMAL", response.getCookies()[0].getValue());
@@ -318,18 +437,118 @@ public class SiteSwitcherRequestFilterTest {
 	@Test
 	public void dotMobiMobileDeviceMobilePreference() throws Exception {
 		device.setDeviceType(DeviceType.MOBILE);
-		SiteSwitcherRequestFilter mDot = new SiteSwitcherRequestFilter();
-		MockFilterConfig filterConfig = new MockFilterConfig();
-		filterConfig.addInitParameter("switcherMode", "dotMobi");
-		filterConfig.addInitParameter("serverName", "app.com");
-		mDot.init(filterConfig);
 		request.addParameter("site_preference", "mobile");
-		mDot.doFilter(request, response, filterChain);
+		filterTest("dotMobi");
 		assertEquals(1, response.getCookies().length);
 		assertEquals(".app.com", response.getCookies()[0].getDomain());
 		assertEquals("MOBILE", response.getCookies()[0].getValue());
 		assertEquals("http://app.mobi", response.getRedirectedUrl());
 	}
+
+	@Test
+	public void dotMobiMobileDeviceTabletPreference() throws Exception {
+		device.setDeviceType(DeviceType.MOBILE);
+		request.addParameter("site_preference", "tablet");
+		filterTest("dotMobi");
+		assertEquals(1, response.getCookies().length);
+		assertEquals(".app.com", response.getCookies()[0].getDomain());
+		assertEquals("TABLET", response.getCookies()[0].getValue());
+		assertNull(response.getRedirectedUrl());
+	}
+
+	@Test
+	public void dotMobiTabletDeviceNoPreference() throws Exception {
+		device.setDeviceType(DeviceType.TABLET);
+		filterTest("dotMobi");
+		assertEquals(0, response.getCookies().length);
+		assertNull(response.getRedirectedUrl());
+	}
+
+	@Test
+	public void dotMobiTabletDeviceNormalPreference() throws Exception {
+		device.setDeviceType(DeviceType.TABLET);
+		request.addParameter("site_preference", "normal");
+		filterTest("dotMobi");
+		assertEquals(1, response.getCookies().length);
+		assertEquals(".app.com", response.getCookies()[0].getDomain());
+		assertEquals("NORMAL", response.getCookies()[0].getValue());
+		assertNull(response.getRedirectedUrl());
+	}
+
+	@Test
+	public void dotMobiTabletDeviceMobilePreference() throws Exception {
+		device.setDeviceType(DeviceType.TABLET);
+		request.addParameter("site_preference", "mobile");
+		filterTest("dotMobi");
+		assertEquals(1, response.getCookies().length);
+		assertEquals(".app.com", response.getCookies()[0].getDomain());
+		assertEquals("MOBILE", response.getCookies()[0].getValue());
+		assertEquals("http://app.mobi", response.getRedirectedUrl());
+	}
+
+	@Test
+	public void dotMobiTabletDeviceTabletPreference() throws Exception {
+		device.setDeviceType(DeviceType.TABLET);
+		request.addParameter("site_preference", "tablet");
+		filterTest("dotMobi");
+		assertEquals(1, response.getCookies().length);
+		assertEquals(".app.com", response.getCookies()[0].getDomain());
+		assertEquals("TABLET", response.getCookies()[0].getValue());
+		assertNull(response.getRedirectedUrl());
+	}
+
+	@Test
+	public void dotMobiNormalDeviceNoPreferenceTabletIsMobile() throws Exception {
+		device.setDeviceType(DeviceType.NORMAL);
+		SiteSwitcherRequestFilter mDot = new SiteSwitcherRequestFilter();
+		MockFilterConfig filterConfig = new MockFilterConfig();
+		filterConfig.addInitParameter("switcherMode", "mDot");
+		filterConfig.addInitParameter("serverName", "app.com");
+		filterConfig.addInitParameter("tabletIsMobile", "true");
+		mDot.init(filterConfig);
+		mDot.doFilter(request, response, filterChain);
+		assertEquals(0, response.getCookies().length);
+		assertNull(response.getRedirectedUrl());
+	}
+
+	@Test
+	public void dotMobiMobileDeviceNoPreferenceTabletIsMobile() throws Exception {
+		device.setDeviceType(DeviceType.MOBILE);
+		SiteSwitcherRequestFilter mDot = new SiteSwitcherRequestFilter();
+		MockFilterConfig filterConfig = new MockFilterConfig();
+		filterConfig.addInitParameter("switcherMode", "dotMobi");
+		filterConfig.addInitParameter("serverName", "app.com");
+		filterConfig.addInitParameter("tabletIsMobile", "true");
+		mDot.init(filterConfig);
+		mDot.doFilter(request, response, filterChain);
+		assertEquals(0, response.getCookies().length);
+		assertEquals("http://app.mobi", response.getRedirectedUrl());
+	}
+
+	@Test
+	public void dotMobiTabletDeviceNoPreferenceTabletIsMobile() throws Exception {
+		device.setDeviceType(DeviceType.TABLET);
+		SiteSwitcherRequestFilter mDot = new SiteSwitcherRequestFilter();
+		MockFilterConfig filterConfig = new MockFilterConfig();
+		filterConfig.addInitParameter("switcherMode", "dotMobi");
+		filterConfig.addInitParameter("serverName", "app.com");
+		filterConfig.addInitParameter("tabletIsMobile", "true");
+		mDot.init(filterConfig);
+		mDot.doFilter(request, response, filterChain);
+		assertEquals(0, response.getCookies().length);
+		assertEquals("http://app.mobi", response.getRedirectedUrl());
+	}
+
+	private void filterTest(String switcherMode) throws Exception {
+		SiteSwitcherRequestFilter mDot = new SiteSwitcherRequestFilter();
+		MockFilterConfig filterConfig = new MockFilterConfig();
+		filterConfig.addInitParameter("switcherMode", switcherMode);
+		filterConfig.addInitParameter("serverName", "app.com");
+		mDot.init(filterConfig);
+		mDot.doFilter(request, response, filterChain);
+	}
+
+	// urlPath Tests
 
 	@Test
 	public void urlPathNormalDeviceNoPreference() throws Exception {
@@ -356,68 +575,6 @@ public class SiteSwitcherRequestFilterTest {
 		urlPath.doFilter(request, response, filterChain);
 		assertEquals(0, response.getCookies().length);
 		assertNull(response.getRedirectedUrl());
-	}
-
-	@Test
-	public void urlPathNormalDeviceNormalPreference() throws Exception {
-		device.setDeviceType(DeviceType.NORMAL);
-		SiteSwitcherRequestFilter urlPath = new SiteSwitcherRequestFilter();
-		MockFilterConfig filterConfig = new MockFilterConfig();
-		filterConfig.addInitParameter("switcherMode", "urlPath");
-		filterConfig.addInitParameter("mobilePath", "/mob");
-		urlPath.init(filterConfig);
-		request.addParameter("site_preference", "normal");
-		urlPath.doFilter(request, response, filterChain);
-		assertEquals(1, response.getCookies().length);
-		assertEquals("NORMAL", response.getCookies()[0].getValue());
-		assertNull(response.getRedirectedUrl());
-	}
-
-	@Test
-	public void urlPathRootPathNormalDeviceNormalPreference() throws Exception {
-		device.setDeviceType(DeviceType.NORMAL);
-		SiteSwitcherRequestFilter urlPath = new SiteSwitcherRequestFilter();
-		MockFilterConfig filterConfig = new MockFilterConfig();
-		filterConfig.addInitParameter("switcherMode", "urlPath");
-		filterConfig.addInitParameter("mobilePath", "/mob");
-		filterConfig.addInitParameter("rootPath", "/app");
-		urlPath.init(filterConfig);
-		request.addParameter("site_preference", "normal");
-		urlPath.doFilter(request, response, filterChain);
-		assertEquals(1, response.getCookies().length);
-		assertEquals("NORMAL", response.getCookies()[0].getValue());
-		assertNull(response.getRedirectedUrl());
-	}
-
-	@Test
-	public void urlPathNormalDeviceMobilePreference() throws Exception {
-		device.setDeviceType(DeviceType.NORMAL);
-		SiteSwitcherRequestFilter urlPath = new SiteSwitcherRequestFilter();
-		MockFilterConfig filterConfig = new MockFilterConfig();
-		filterConfig.addInitParameter("switcherMode", "urlPath");
-		filterConfig.addInitParameter("mobilePath", "/mob");
-		urlPath.init(filterConfig);
-		request.addParameter("site_preference", "mobile");
-		urlPath.doFilter(request, response, filterChain);
-		assertEquals(1, response.getCookies().length);
-		assertEquals("MOBILE", response.getCookies()[0].getValue());
-		assertEquals("http://" + request.getServerName() + "/mob", response.getRedirectedUrl());
-	}
-
-	@Test
-	public void urlPathRootPathNormalDeviceMobilePreference() throws Exception {
-		device.setDeviceType(DeviceType.NORMAL);
-		SiteSwitcherRequestFilter urlPath = new SiteSwitcherRequestFilter();
-		MockFilterConfig filterConfig = new MockFilterConfig();
-		filterConfig.addInitParameter("switcherMode", "urlPath");
-		filterConfig.addInitParameter("mobilePath", "/mob");
-		filterConfig.addInitParameter("rootPath", "/app");
-		urlPath.init(filterConfig);
-		request.addParameter("site_preference", "mobile");
-		urlPath.doFilter(request, response, filterChain);
-		assertEquals(1, response.getCookies().length);
-		assertEquals("MOBILE", response.getCookies()[0].getValue());
-		assertEquals("http://" + request.getServerName() + "/app/mob", response.getRedirectedUrl());
 	}
 
 	@Test
@@ -448,12 +605,53 @@ public class SiteSwitcherRequestFilterTest {
 	}
 
 	@Test
-	public void urlPathMobileDeviceNormalPreference() throws Exception {
-		device.setDeviceType(DeviceType.MOBILE);
+	public void urlPathTabletDeviceNoPreference() throws Exception {
+		device.setDeviceType(DeviceType.TABLET);
 		SiteSwitcherRequestFilter urlPath = new SiteSwitcherRequestFilter();
 		MockFilterConfig filterConfig = new MockFilterConfig();
 		filterConfig.addInitParameter("switcherMode", "urlPath");
-		filterConfig.addInitParameter("mobilePath", "/mob");
+		filterConfig.addInitParameter("tabletPath", "/tab");
+		urlPath.init(filterConfig);
+		urlPath.doFilter(request, response, filterChain);
+		assertEquals(0, response.getCookies().length);
+		assertEquals("http://" + request.getServerName() + "/tab", response.getRedirectedUrl());
+	}
+
+	@Test
+	public void urlPathRootPathTabletDeviceNoPreference() throws Exception {
+		device.setDeviceType(DeviceType.TABLET);
+		SiteSwitcherRequestFilter urlPath = new SiteSwitcherRequestFilter();
+		MockFilterConfig filterConfig = new MockFilterConfig();
+		filterConfig.addInitParameter("switcherMode", "urlPath");
+		filterConfig.addInitParameter("tabletPath", "/tab");
+		filterConfig.addInitParameter("rootPath", "/app");
+		urlPath.init(filterConfig);
+		urlPath.doFilter(request, response, filterChain);
+		assertEquals(0, response.getCookies().length);
+		assertEquals("http://" + request.getServerName() + "/app/tab", response.getRedirectedUrl());
+	}
+
+	@Test
+	public void urlPathNormalDeviceNormalPreference() throws Exception {
+		urlPathDeviceNormalPreference(DeviceType.NORMAL);
+	}
+
+	@Test
+	public void urlPathMobileDeviceNormalPreference() throws Exception {
+		urlPathDeviceNormalPreference(DeviceType.MOBILE);
+	}
+
+	@Test
+	public void urlPathTabletDeviceNormalPreference() throws Exception {
+		urlPathDeviceNormalPreference(DeviceType.TABLET);
+	}
+
+	private void urlPathDeviceNormalPreference(DeviceType deviceType) throws Exception {
+		device.setDeviceType(deviceType);
+		SiteSwitcherRequestFilter urlPath = new SiteSwitcherRequestFilter();
+		MockFilterConfig filterConfig = new MockFilterConfig();
+		filterConfig.addInitParameter("switcherMode", "urlPath");
+		filterConfig.addInitParameter("tabletPath", "/tab");
 		urlPath.init(filterConfig);
 		request.addParameter("site_preference", "normal");
 		urlPath.doFilter(request, response, filterChain);
@@ -463,12 +661,26 @@ public class SiteSwitcherRequestFilterTest {
 	}
 
 	@Test
+	public void urlPathRootPathNormalDeviceNormalPreference() throws Exception {
+		urlPathRootPathDeviceNormalPreference(DeviceType.NORMAL);
+	}
+
+	@Test
 	public void urlPathRootPathMobileDeviceNormalPreference() throws Exception {
-		device.setDeviceType(DeviceType.MOBILE);
+		urlPathRootPathDeviceNormalPreference(DeviceType.MOBILE);
+	}
+
+	@Test
+	public void urlPathRootPathTabletDeviceNormalPreference() throws Exception {
+		urlPathRootPathDeviceNormalPreference(DeviceType.TABLET);
+	}
+
+	private void urlPathRootPathDeviceNormalPreference(DeviceType deviceType) throws Exception {
+		device.setDeviceType(deviceType);
 		SiteSwitcherRequestFilter urlPath = new SiteSwitcherRequestFilter();
 		MockFilterConfig filterConfig = new MockFilterConfig();
 		filterConfig.addInitParameter("switcherMode", "urlPath");
-		filterConfig.addInitParameter("mobilePath", "/mob");
+		filterConfig.addInitParameter("tablet", "/tab");
 		filterConfig.addInitParameter("rootPath", "/app");
 		urlPath.init(filterConfig);
 		request.addParameter("site_preference", "normal");
@@ -479,12 +691,27 @@ public class SiteSwitcherRequestFilterTest {
 	}
 
 	@Test
+	public void urlPathNormalDeviceMobilePreference() throws Exception {
+		urlPathDeviceMobilePreference(DeviceType.NORMAL);
+	}
+
+	@Test
 	public void urlPathMobileDeviceMobilePreference() throws Exception {
-		device.setDeviceType(DeviceType.MOBILE);
+		urlPathDeviceMobilePreference(DeviceType.MOBILE);
+	}
+
+	@Test
+	public void urlPathTabletDeviceMobilePreference() throws Exception {
+		urlPathDeviceMobilePreference(DeviceType.TABLET);
+	}
+
+	private void urlPathDeviceMobilePreference(DeviceType deviceType) throws Exception {
+		device.setDeviceType(deviceType);
 		SiteSwitcherRequestFilter urlPath = new SiteSwitcherRequestFilter();
 		MockFilterConfig filterConfig = new MockFilterConfig();
 		filterConfig.addInitParameter("switcherMode", "urlPath");
 		filterConfig.addInitParameter("mobilePath", "/mob");
+		filterConfig.addInitParameter("tabletPath", "/tab");
 		urlPath.init(filterConfig);
 		request.addParameter("site_preference", "mobile");
 		urlPath.doFilter(request, response, filterChain);
@@ -494,12 +721,27 @@ public class SiteSwitcherRequestFilterTest {
 	}
 
 	@Test
+	public void urlPathRootPathNormalDeviceMobilePreference() throws Exception {
+		urlPathRootPathDeviceMobilePreference(DeviceType.NORMAL);
+	}
+
+	@Test
 	public void urlPathRootPathMobileDeviceMobilePreference() throws Exception {
-		device.setDeviceType(DeviceType.MOBILE);
+		urlPathRootPathDeviceMobilePreference(DeviceType.MOBILE);
+	}
+
+	@Test
+	public void urlPathRootPathTabletDeviceMobilePreference() throws Exception {
+		urlPathRootPathDeviceMobilePreference(DeviceType.TABLET);
+	}
+
+	private void urlPathRootPathDeviceMobilePreference(DeviceType deviceType) throws Exception {
+		device.setDeviceType(deviceType);
 		SiteSwitcherRequestFilter urlPath = new SiteSwitcherRequestFilter();
 		MockFilterConfig filterConfig = new MockFilterConfig();
 		filterConfig.addInitParameter("switcherMode", "urlPath");
 		filterConfig.addInitParameter("mobilePath", "/mob");
+		filterConfig.addInitParameter("tabletPath", "/tab");
 		filterConfig.addInitParameter("rootPath", "/app");
 		urlPath.init(filterConfig);
 		request.addParameter("site_preference", "mobile");
@@ -509,4 +751,90 @@ public class SiteSwitcherRequestFilterTest {
 		assertEquals("http://" + request.getServerName() + "/app/mob", response.getRedirectedUrl());
 	}
 
+	@Test
+	public void urlPathNormalDeviceTabletPreference() throws Exception {
+		urlPathDeviceTabletPreference(DeviceType.NORMAL);
+	}
+
+	@Test
+	public void urlPathMobileDeviceTabletPreference() throws Exception {
+		urlPathDeviceTabletPreference(DeviceType.MOBILE);
+	}
+
+	@Test
+	public void urlPathTabletDeviceTabletPreference() throws Exception {
+		urlPathDeviceTabletPreference(DeviceType.TABLET);
+	}
+
+	private void urlPathDeviceTabletPreference(DeviceType deviceType) throws Exception {
+		device.setDeviceType(deviceType);
+		SiteSwitcherRequestFilter urlPath = new SiteSwitcherRequestFilter();
+		MockFilterConfig filterConfig = new MockFilterConfig();
+		filterConfig.addInitParameter("switcherMode", "urlPath");
+		filterConfig.addInitParameter("mobilePath", "/mob");
+		filterConfig.addInitParameter("tabletPath", "/tab");
+		urlPath.init(filterConfig);
+		request.addParameter("site_preference", "tablet");
+		urlPath.doFilter(request, response, filterChain);
+		assertEquals(1, response.getCookies().length);
+		assertEquals("TABLET", response.getCookies()[0].getValue());
+		assertEquals("http://" + request.getServerName() + "/tab", response.getRedirectedUrl());
+	}
+
+	@Test
+	public void urlPathRootPathNormalDeviceTabletPreference() throws Exception {
+		urlPathRootPathDeviceTabletPreference(DeviceType.NORMAL);
+	}
+
+	@Test
+	public void urlPathRootPathMobileDeviceTabletPreference() throws Exception {
+		urlPathRootPathDeviceTabletPreference(DeviceType.MOBILE);
+	}
+
+	@Test
+	public void urlPathRootPathTabletDeviceTabletPreference() throws Exception {
+		urlPathRootPathDeviceTabletPreference(DeviceType.TABLET);
+	}
+
+	private void urlPathRootPathDeviceTabletPreference(DeviceType deviceType) throws Exception {
+		device.setDeviceType(deviceType);
+		SiteSwitcherRequestFilter urlPath = new SiteSwitcherRequestFilter();
+		MockFilterConfig filterConfig = new MockFilterConfig();
+		filterConfig.addInitParameter("switcherMode", "urlPath");
+		filterConfig.addInitParameter("mobilePath", "/mob");
+		filterConfig.addInitParameter("tabletPath", "/tab");
+		filterConfig.addInitParameter("rootPath", "/app");
+		urlPath.init(filterConfig);
+		request.addParameter("site_preference", "tablet");
+		urlPath.doFilter(request, response, filterChain);
+		assertEquals(1, response.getCookies().length);
+		assertEquals("TABLET", response.getCookies()[0].getValue());
+		assertEquals("http://" + request.getServerName() + "/app/tab", response.getRedirectedUrl());
+	}
+
+	@Test
+	public void urlPathNormalDeviceNoPreferenceNoConfig() throws Exception {
+		urlPathDeviceNoPreferenceNoConfig(DeviceType.NORMAL);
+	}
+
+	@Test
+	public void urlPathMobileDeviceNoPreferenceNoConfig() throws Exception {
+		urlPathDeviceNoPreferenceNoConfig(DeviceType.MOBILE);
+	}
+
+	@Test
+	public void urlPathTabletDeviceNoPreferenceNoConfig() throws Exception {
+		urlPathDeviceNoPreferenceNoConfig(DeviceType.TABLET);
+	}
+
+	private void urlPathDeviceNoPreferenceNoConfig(DeviceType deviceType) throws Exception {
+		device.setDeviceType(deviceType);
+		SiteSwitcherRequestFilter urlPath = new SiteSwitcherRequestFilter();
+		MockFilterConfig filterConfig = new MockFilterConfig();
+		filterConfig.addInitParameter("switcherMode", "urlPath");
+		urlPath.init(filterConfig);
+		urlPath.doFilter(request, response, filterChain);
+		assertEquals(0, response.getCookies().length);
+		assertNull(response.getRedirectedUrl());
+	}
 }
