@@ -54,7 +54,7 @@ public enum SitePreference {
 	 * Designed to support concise SitePreference boolean expressions e.g. &lt;c:if test="${currentSitePreference.normal}"&gt;&lt;/c:if&gt;.
 	 */
 	public boolean isNormal() {
-		return false;
+		return (!isMobile() && !isTablet());
 	}
 
 	/**
