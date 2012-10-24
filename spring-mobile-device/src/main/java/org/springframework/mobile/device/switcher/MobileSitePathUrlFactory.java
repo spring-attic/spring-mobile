@@ -27,35 +27,35 @@ public class MobileSitePathUrlFactory extends AbstractSitePathUrlFactory impleme
 	/**
 	 * Creates a new mobile site path URL factory.
 	 * @param mobilePath the path to the mobile site
+	 * @param tabletPath the path to the tablet site
 	 */
-	public MobileSitePathUrlFactory(final String mobilePath) {
-		this(mobilePath, null);
+	public MobileSitePathUrlFactory(final String mobilePath, final String tabletPath) {
+		this(mobilePath, tabletPath, null);
 	}
-	
+
 	/**
 	 * Creates a new mobile site path URL factory
 	 * @param mobilePath the path to the mobile site
+	 * @param tabletPath the path to the tablet site
 	 * @param rootPath the root path of the application
 	 */
-	public MobileSitePathUrlFactory(final String mobilePath, final String rootPath) {
-		super(mobilePath, null, rootPath);
+	public MobileSitePathUrlFactory(final String mobilePath, final String tabletPath, final String rootPath) {
+		super(mobilePath, tabletPath, rootPath);
 	}
 
 	public boolean isRequestForSite(HttpServletRequest request) {
-//		if (getFullMobilePath() == null) {
-//			return false;
-//		}
 		return request.getRequestURI().startsWith(this.getFullMobilePath());
 	}
 
 	public String createSiteUrl(HttpServletRequest request) {
-		String adjustedRequestURI;
-		if (getRootPath() != null && request.getRequestURI().startsWith(getRootPath())) {
-			adjustedRequestURI = getFullMobilePath() + request.getRequestURI().substring(getRootPath().length());
-		} else {
-			adjustedRequestURI = this.getCleanMobilePath() + request.getRequestURI();
+		String urlPath = request.getRequestURI();
+		if (getCleanTabletPath() != null && urlPath.startsWith(getCleanTabletPath())) {
+			urlPath = urlPath.substring(getCleanTabletPath().length());
+		} else if (getRootPath() != null && urlPath.startsWith(getCleanRootPath())) {
+			urlPath = urlPath.substring(getCleanRootPath().length());
 		}
-		return createSiteUrlInternal(request, request.getServerName(), adjustedRequestURI);
+		urlPath = getCleanMobilePath() + urlPath;
+		return createSiteUrlInternal(request, request.getServerName(), urlPath);
 	}
 
 }

@@ -7,89 +7,58 @@ import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 
 public abstract class AbstractSitePathUrlFactoryTest {
-		
-	protected AbstractSitePathUrlFactory rootFactory;
-	
-	protected AbstractSitePathUrlFactory pathFactory;
+
+	protected AbstractSitePathUrlFactory basicRootFactory;
+
+	protected AbstractSitePathUrlFactory advRootFactory;
+
+	protected AbstractSitePathUrlFactory basicPathFactory;
+
+	protected AbstractSitePathUrlFactory advPathFactory;
 
 	protected MockHttpServletRequest request = new MockHttpServletRequest();
-	
+
 	@Before
 	public void setUp() {
 		request.setServerName("www.app.com");
 	}
-	
-	@Test
-	public void rootFullNormalPath() {
-		assertEquals("/", rootFactory.getFullNormalPath());
-	}
-	
-	@Test
-	abstract void rootFullTabletPath();
-	
-	@Test
-	abstract void rootFullMobilePath();
-	
-	@Test
-	public void rootCleanNormalPath() {
-		assertEquals("", rootFactory.getCleanNormalPath());
-	}
-	
-	@Test
-	abstract void rootCleanTabletPath();
-	
-	@Test
-	abstract void rootCleanMobilePath();
-	
-	@Test
-	public void pathFullNormalPath() {
-		assertEquals("/showcase/", pathFactory.getFullNormalPath());
-	}
-	
-	@Test
-	abstract void pathFullTabletPath();
-	
-	@Test
-	abstract void pathFullMobilePath();
-	
-	@Test
-	public void pathCleanNormalPath() {
-		assertEquals("/showcase", pathFactory.getCleanNormalPath());
-	}
-	
-	@Test
-	abstract void pathCleanTabletPath();
-	
-	@Test
-	abstract void pathCleanMobilePath();
-	
-	@Test
-	abstract void isRequestForRootSite();
-	
-	@Test
-	abstract void isRequestForPathSite();
-	
-	@Test
-	abstract void notRequestForRootSite();
-	
-	@Test
-	abstract void notRequestForPathSite();
-	
-	@Test
-	abstract void notRequestForRootSiteWithPath();
-	
-	@Test
-	abstract void notRequestForPathSiteWithPath();
 
 	@Test
-	abstract void createRootSiteUrl();
-	
+	public void rootFullNormalPath() {
+		assertEquals("/", basicRootFactory.getFullNormalPath());
+	}
+
 	@Test
-	abstract void createRootSiteUrlPort8080();
-	
+	abstract void rootFullTabletPath();
+
 	@Test
-	abstract void createPathSiteUrl();
-	
+	abstract void rootFullMobilePath();
+
 	@Test
-	abstract void createPathSiteUrlPort8080();
+	public void rootCleanNormalPath() {
+		assertEquals("", basicRootFactory.getCleanNormalPath());
+	}
+
+	@Test
+	abstract void rootCleanTabletPath();
+
+	@Test
+	abstract void rootCleanMobilePath();
+
+	@Test
+	public void pathFullNormalPath() {
+		assertEquals("/showcase/", basicPathFactory.getFullNormalPath());
+	}
+
+	@Test
+	abstract void pathFullTabletPath();
+
+	@Test
+	abstract void pathFullMobilePath();
+
+	@Test
+	public void pathCleanNormalPath() {
+		assertEquals("/showcase", basicPathFactory.getCleanNormalPath());
+	}
+
 }

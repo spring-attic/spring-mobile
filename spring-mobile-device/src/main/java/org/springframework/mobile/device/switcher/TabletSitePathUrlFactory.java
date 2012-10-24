@@ -26,18 +26,20 @@ public class TabletSitePathUrlFactory extends AbstractSitePathUrlFactory impleme
 	/**
 	 * Creates a new tablet site path URL factory.
 	 * @param tabletPath the path to the tablet site
+	 * @param mobilePath the path to the mobile site
 	 */
-	public TabletSitePathUrlFactory(final String tabletPath) {
-		this(tabletPath, null);
+	public TabletSitePathUrlFactory(final String tabletPath, final String mobilePath) {
+		this(tabletPath, mobilePath, null);
 	}
-	
+
 	/**
 	 * Creates a new tablet site path URL factory.
 	 * @param tabletPath the path to the tablet site
+	 * @param mobilePath the path to the mobile site
 	 * @param rootPath the root path of the application
 	 */
-	public TabletSitePathUrlFactory(final String tabletPath, final String rootPath) {
-		super(null, tabletPath, rootPath);
+	public TabletSitePathUrlFactory(final String tabletPath, final String mobilePath, final String rootPath) {
+		super(mobilePath, tabletPath, rootPath);
 	}
 
 	public boolean isRequestForSite(HttpServletRequest request) {
@@ -45,13 +47,14 @@ public class TabletSitePathUrlFactory extends AbstractSitePathUrlFactory impleme
 	}
 
 	public String createSiteUrl(HttpServletRequest request) {
-		String adjustedRequestURI;
-		if (getRootPath() != null && request.getRequestURI().startsWith(getRootPath())) {
-			adjustedRequestURI = getFullTabletPath() + request.getRequestURI().substring(getRootPath().length());
-		} else {
-			adjustedRequestURI = this.getCleanTabletPath() + request.getRequestURI();
+		String urlPath = request.getRequestURI();
+		if (getCleanMobilePath() != null && urlPath.startsWith(getCleanMobilePath())) {
+			urlPath = urlPath.substring(getCleanMobilePath().length());
+		} else if (getRootPath() != null && urlPath.startsWith(getCleanRootPath())) {
+			urlPath = urlPath.substring(getCleanRootPath().length());
 		}
-		return createSiteUrlInternal(request, request.getServerName(), adjustedRequestURI);
+		urlPath = getCleanTabletPath() + urlPath;
+		return createSiteUrlInternal(request, request.getServerName(), urlPath);
 	}
 
 }

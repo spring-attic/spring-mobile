@@ -46,7 +46,7 @@ public class NormalSitePathUrlFactory extends AbstractSitePathUrlFactory impleme
 	}
 
 	public boolean isRequestForSite(HttpServletRequest request) {
-		if (request.getRequestURI().startsWith(getFullMobilePath())) {
+		if (getFullMobilePath() != null && request.getRequestURI().startsWith(getFullMobilePath())) {
 			return false;
 		} else if (getFullTabletPath() != null && request.getRequestURI().startsWith(getFullTabletPath())) {
 			return false;

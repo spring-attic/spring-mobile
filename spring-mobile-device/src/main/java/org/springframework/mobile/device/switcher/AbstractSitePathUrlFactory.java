@@ -15,7 +15,6 @@
  */
 package org.springframework.mobile.device.switcher;
 
-
 /**
  * Abstract {@link SiteUrlFactory} implementation that differentiates each site by the 
  * HTTP request path.  Provides functionality common to all path based site URL factories. 
@@ -25,7 +24,7 @@ package org.springframework.mobile.device.switcher;
 public abstract class AbstractSitePathUrlFactory extends AbstractSiteUrlFactory implements SiteUrlFactory {
 
 	private final String mobilePath;
-	
+
 	private final String tabletPath;
 
 	private final String rootPath;
@@ -52,7 +51,7 @@ public abstract class AbstractSitePathUrlFactory extends AbstractSiteUrlFactory 
 	public String getMobilePath() {
 		return this.mobilePath;
 	}
-	
+
 	/**
 	 * The tablet path with a trailing slash.
 	 * <p>Examples:</p>
@@ -78,7 +77,18 @@ public abstract class AbstractSitePathUrlFactory extends AbstractSiteUrlFactory 
 	public String getRootPath() {
 		return this.rootPath;
 	}
-	
+
+	/**
+	 * The full path of the normal site
+	 * <p>Examples:</p>
+	 * <pre>
+	 *  "/"
+	 *  "/showcase/"
+	 *  "/demo/"
+	 * </pre> 
+	 * @see #getRootPath()
+	 * @return the full path of the normal site
+	 */
 	public String getFullNormalPath() {
 		return (this.rootPath == null ? "/" : getCleanPath(this.rootPath) + "/");
 	}
@@ -87,9 +97,11 @@ public abstract class AbstractSitePathUrlFactory extends AbstractSiteUrlFactory 
 	 * The full path of the mobile site. 
 	 * <p>Examples:</p>
 	 * <pre>
+	 *  "/mob/"
 	 *  "/showcase/m/"
 	 *  "/demo/mobile/"
 	 * </pre>
+	 * @see #getCleanMobilePath()
 	 * @return the full path of the mobile site
 	 */
 	public String getFullMobilePath() {
@@ -99,15 +111,17 @@ public abstract class AbstractSitePathUrlFactory extends AbstractSiteUrlFactory 
 		}
 		return path;
 	}
-	
+
 	/**
-	 * The full path of the mobile site. 
+	 * The full path of the tablet site. 
 	 * <p>Examples:</p>
 	 * <pre>
+	 *  "/tab/"
 	 *  "/showcase/t/"
 	 *  "/demo/tablet/"
 	 * </pre>
-	 * @return the full path of the mobile site
+	 * @see #getCleanTabletPath()
+	 * @return the full path of the tablet site	 * 
 	 */
 	public String getFullTabletPath() {
 		String path = null;
@@ -119,23 +133,34 @@ public abstract class AbstractSitePathUrlFactory extends AbstractSiteUrlFactory 
 
 	/**
 	 * Returns the full normal path without a trailing slash.
+	 * @see #getFullNormalPath()
 	 */
 	protected String getCleanNormalPath() {
 		return getCleanPath(getFullNormalPath());
 	}
-	
+
 	/**
 	 * Returns the full mobile path without a trailing slash.
+	 * @see #getFullMobilePath()
 	 */
 	protected String getCleanMobilePath() {
 		return getCleanPath(getFullMobilePath());
 	}
-	
+
 	/**
 	 * Returns the full tablet path without a trailing slash.
+	 * @see #getFullTabletPath()
 	 */
 	protected String getCleanTabletPath() {
 		return getCleanPath(getFullTabletPath());
+	}
+
+	/**
+	 * Returns the root path without a trailing slash.
+	 * @see #getRootPath()
+	 */
+	protected String getCleanRootPath() {
+		return getCleanPath(getRootPath());
 	}
 
 	// helpers

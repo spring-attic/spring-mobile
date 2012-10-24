@@ -208,7 +208,7 @@ public class SiteSwitcherHandlerInterceptor extends HandlerInterceptorAdapter {
 	 */
 	public static SiteSwitcherHandlerInterceptor urlPath(String mobilePath) {
 		return new SiteSwitcherHandlerInterceptor(new NormalSitePathUrlFactory(mobilePath),
-				new MobileSitePathUrlFactory(mobilePath), new StandardSitePreferenceHandler(
+				new MobileSitePathUrlFactory(mobilePath, null), new StandardSitePreferenceHandler(
 						new CookieSitePreferenceRepository()));
 	}
 
@@ -221,7 +221,7 @@ public class SiteSwitcherHandlerInterceptor extends HandlerInterceptorAdapter {
 	 */
 	public static SiteSwitcherHandlerInterceptor urlPath(String mobilePath, String rootPath) {
 		return new SiteSwitcherHandlerInterceptor(new NormalSitePathUrlFactory(mobilePath, rootPath),
-				new MobileSitePathUrlFactory(mobilePath, rootPath), new StandardSitePreferenceHandler(
+				new MobileSitePathUrlFactory(mobilePath, null, rootPath), new StandardSitePreferenceHandler(
 						new CookieSitePreferenceRepository()));
 	}
 
@@ -234,7 +234,7 @@ public class SiteSwitcherHandlerInterceptor extends HandlerInterceptorAdapter {
 	 */
 	public static SiteSwitcherHandlerInterceptor urlPath(String mobilePath, String tabletPath, String rootPath) {
 		return new SiteSwitcherHandlerInterceptor(new NormalSitePathUrlFactory(mobilePath, tabletPath, rootPath),
-				new MobileSitePathUrlFactory(mobilePath, rootPath), new TabletSitePathUrlFactory(tabletPath, rootPath),
+				new MobileSitePathUrlFactory(mobilePath, tabletPath, rootPath), new TabletSitePathUrlFactory(tabletPath, mobilePath, rootPath),
 				new StandardSitePreferenceHandler(new CookieSitePreferenceRepository()));
 	}
 

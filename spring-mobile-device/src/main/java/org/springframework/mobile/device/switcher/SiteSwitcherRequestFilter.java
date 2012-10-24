@@ -320,10 +320,10 @@ public class SiteSwitcherRequestFilter extends OncePerRequestFilter {
 	private void urlPath() throws ServletException {
 		this.normalSiteUrlFactory = new NormalSitePathUrlFactory(mobilePath, tabletPath, rootPath);
 		if (mobilePath != null) {
-			this.mobileSiteUrlFactory = new MobileSitePathUrlFactory(mobilePath, rootPath);
+			this.mobileSiteUrlFactory = new MobileSitePathUrlFactory(mobilePath, tabletPath, rootPath);
 		}
 		if (tabletPath != null) {
-			this.tabletSiteUrlFactory = new TabletSitePathUrlFactory(tabletPath, rootPath);
+			this.tabletSiteUrlFactory = new TabletSitePathUrlFactory(tabletPath, mobilePath, rootPath);
 		}
 		this.sitePreferenceHandler = new StandardSitePreferenceHandler(new CookieSitePreferenceRepository());
 	}

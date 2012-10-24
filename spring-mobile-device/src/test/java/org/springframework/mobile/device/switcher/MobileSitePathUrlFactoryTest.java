@@ -9,135 +9,196 @@ import org.junit.Before;
 import org.junit.Test;
 
 public final class MobileSitePathUrlFactoryTest extends AbstractSitePathUrlFactoryTest {
-	
+
 	@Before
 	public void setUp() {
 		super.setUp();
-		this.rootFactory = new MobileSitePathUrlFactory("/mobile");
-		this.pathFactory = new MobileSitePathUrlFactory("/mobile", "/showcase");
+		this.basicRootFactory = new MobileSitePathUrlFactory("/mobile", null);
+		this.advRootFactory = new MobileSitePathUrlFactory("/mobile", "/tablet");
+		this.basicPathFactory = new MobileSitePathUrlFactory("/mobile", null, "/showcase");
+		this.advPathFactory = new MobileSitePathUrlFactory("/mobile", "/tablet", "/showcase");
 	}
-	
+
 	@Test
 	public void rootFullNormalPath() {
-		assertEquals("/", rootFactory.getFullNormalPath());
+		assertEquals("/", basicRootFactory.getFullNormalPath());
 	}
-	
+
 	@Test
 	public void rootFullMobilePath() {
-		assertEquals("/mobile/", rootFactory.getFullMobilePath());
+		assertEquals("/mobile/", basicRootFactory.getFullMobilePath());
 	}
-	
+
 	@Test
 	public void rootFullTabletPath() {
-		assertNull(rootFactory.getFullTabletPath());
+		assertNull(basicRootFactory.getFullTabletPath());
 	}
-	
+
 	@Test
 	public void rootCleanNormalPath() {
-		assertEquals("", rootFactory.getCleanNormalPath());
+		assertEquals("", basicRootFactory.getCleanNormalPath());
 	}
-	
+
 	@Test
 	public void rootCleanMobilePath() {
-		assertEquals("/mobile", rootFactory.getCleanMobilePath());
+		assertEquals("/mobile", basicRootFactory.getCleanMobilePath());
 	}
-	
+
 	@Test
 	public void rootCleanTabletPath() {
-		assertNull(rootFactory.getCleanTabletPath());
-	}	
-	
+		assertNull(basicRootFactory.getCleanTabletPath());
+	}
+
 	@Test
 	public void pathFullNormalPath() {
-		assertEquals("/showcase/", pathFactory.getFullNormalPath());
+		assertEquals("/showcase/", basicPathFactory.getFullNormalPath());
 	}
-	
+
 	@Test
 	public void pathFullMobilePath() {
-		assertEquals("/showcase/mobile/", pathFactory.getFullMobilePath());
+		assertEquals("/showcase/mobile/", basicPathFactory.getFullMobilePath());
 	}
-	
+
 	@Test
 	public void pathFullTabletPath() {
-		assertNull(pathFactory.getFullTabletPath());
+		assertNull(basicPathFactory.getFullTabletPath());
 	}
-	
+
 	@Test
 	public void pathCleanNormalPath() {
-		assertEquals("/showcase", pathFactory.getCleanNormalPath());
+		assertEquals("/showcase", basicPathFactory.getCleanNormalPath());
 	}
-	
+
 	@Test
 	public void pathCleanMobilePath() {
-		assertEquals("/showcase/mobile", pathFactory.getCleanMobilePath());
+		assertEquals("/showcase/mobile", basicPathFactory.getCleanMobilePath());
 	}
-	
+
 	@Test
 	public void pathCleanTabletPath() {
-		assertNull(pathFactory.getCleanTabletPath());
+		assertNull(basicPathFactory.getCleanTabletPath());
 	}
-	
+
 	@Test
 	public void isRequestForRootSite() {
 		request.setRequestURI("/mobile/");
-		assertTrue(rootFactory.isRequestForSite(request));
+		assertTrue(basicRootFactory.isRequestForSite(request));
 	}
-	
+
 	@Test
 	public void isRequestForPathSite() {
 		request.setRequestURI("/showcase/mobile/");
-		assertTrue(pathFactory.isRequestForSite(request));
+		assertTrue(basicPathFactory.isRequestForSite(request));
 	}
-	
+
 	@Test
 	public void notRequestForRootSite() {
 		request.setRequestURI("/");
-		assertFalse(rootFactory.isRequestForSite(request));
+		assertFalse(basicRootFactory.isRequestForSite(request));
 	}
-	
+
 	@Test
 	public void notRequestForPathSite() {
 		request.setRequestURI("/showcase/");
-		assertFalse(pathFactory.isRequestForSite(request));
+		assertFalse(basicPathFactory.isRequestForSite(request));
 	}
-	
+
 	@Test
 	public void notRequestForRootSiteWithPath() {
 		request.setRequestURI("/marvelous/");
-		assertFalse(rootFactory.isRequestForSite(request));
+		assertFalse(basicRootFactory.isRequestForSite(request));
 	}
-	
+
 	@Test
 	public void notRequestForPathSiteWithPath() {
 		request.setRequestURI("/showcase/marvelous/");
-		assertFalse(pathFactory.isRequestForSite(request));
+		assertFalse(basicPathFactory.isRequestForSite(request));
 	}
 
 	@Test
 	public void createRootSiteUrl() {
 		request.setServerPort(80);
 		request.setRequestURI("/bar");
-		assertEquals("http://www.app.com/mobile/bar", rootFactory.createSiteUrl(request));
+		assertEquals("http://www.app.com/mobile/bar", basicRootFactory.createSiteUrl(request));
 	}
-	
+
 	@Test
 	public void createRootSiteUrlPort8080() {
 		request.setServerPort(8080);
 		request.setRequestURI("/bar");
-		assertEquals("http://www.app.com:8080/mobile/bar", rootFactory.createSiteUrl(request));
+		assertEquals("http://www.app.com:8080/mobile/bar", basicRootFactory.createSiteUrl(request));
 	}
-	
+
 	@Test
 	public void createPathSiteUrl() {
 		request.setServerPort(80);
 		request.setRequestURI("/showcase/bar");
-		assertEquals("http://www.app.com/showcase/mobile/bar", pathFactory.createSiteUrl(request));
+		assertEquals("http://www.app.com/showcase/mobile/bar", basicPathFactory.createSiteUrl(request));
 	}
-	
+
 	@Test
 	public void createPathSiteUrlPort8080() {
 		request.setServerPort(8080);
 		request.setRequestURI("/showcase/bar");
-		assertEquals("http://www.app.com:8080/showcase/mobile/bar", pathFactory.createSiteUrl(request));
+		assertEquals("http://www.app.com:8080/showcase/mobile/bar", basicPathFactory.createSiteUrl(request));
 	}
+
+	@Test
+	public void createRootSiteUrlFromTabletSite() {
+		request.setServerPort(80);
+		request.setRequestURI("/tablet/about");
+		assertEquals("http://www.app.com/mobile/about", advRootFactory.createSiteUrl(request));
+	}
+
+	@Test
+	public void createRootSiteUrlFromTabletSitePort8080() {
+		request.setServerPort(8080);
+		request.setRequestURI("/tablet/about");
+		assertEquals("http://www.app.com:8080/mobile/about", advRootFactory.createSiteUrl(request));
+	}
+
+	@Test
+	public void createLongRootSiteUrlFromTabletSite() {
+		request.setServerPort(80);
+		request.setRequestURI("/tablet/about/x/y/z/contact");
+		assertEquals("http://www.app.com/mobile/about/x/y/z/contact", advRootFactory.createSiteUrl(request));
+	}
+
+	@Test
+	public void createPathSiteUrlFromTabletSite() {
+		request.setServerPort(80);
+		request.setRequestURI("/showcase/tablet/about");
+		assertEquals("http://www.app.com/showcase/mobile/about", advPathFactory.createSiteUrl(request));
+	}
+
+	@Test
+	public void createPathSiteUrlFromTabletSitePort8080() {
+		request.setServerPort(8080);
+		request.setRequestURI("/showcase/tablet/about");
+		assertEquals("http://www.app.com:8080/showcase/mobile/about", advPathFactory.createSiteUrl(request));
+	}
+
+	@Test
+	public void createLongPathSiteUrlFromTabletSite() {
+		request.setServerPort(80);
+		request.setRequestURI("/showcase/tablet/about/x/y/z/contact");
+		assertEquals("http://www.app.com/showcase/mobile/about/x/y/z/contact", advPathFactory.createSiteUrl(request));
+	}
+
+	@Test
+	public void createLongPathSiteUrlFromTabletSiteMultipleTablet() {
+		request.setServerPort(80);
+		request.setRequestURI("/showcase/tablet/about/x/y/tablet/z/contact");
+		assertEquals("http://www.app.com/showcase/mobile/about/x/y/tablet/z/contact",
+				advPathFactory.createSiteUrl(request));
+	}
+
+	@Test
+	public void createLongPathSiteUrlFromTabletSiteMultipleTabletAndSlashes() {
+		request.setServerPort(80);
+		request.setRequestURI("/showcase/tablet//about/x/y/tablet///z/contact//");
+		assertEquals("http://www.app.com/showcase/mobile//about/x/y/tablet///z/contact//",
+				advPathFactory.createSiteUrl(request));
+	}
+
 }
