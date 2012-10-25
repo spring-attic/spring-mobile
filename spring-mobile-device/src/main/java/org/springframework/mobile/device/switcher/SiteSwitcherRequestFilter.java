@@ -22,10 +22,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.mobile.device.Device;
-import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.mobile.device.site.CookieSitePreferenceRepository;
-import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.mobile.device.site.SitePreferenceHandler;
 import org.springframework.mobile.device.site.StandardSitePreferenceHandler;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -36,15 +33,29 @@ import org.springframework.web.filter.OncePerRequestFilter;
  * <ul>
  * <li>If the request originates from the mobile site:
  *     <ul>
- *         <li>If the user prefers the normal site, then redirect the user to the normal site.</li>
+ *        <li>If the user prefers the normal site, then redirect the user to the normal site.</li>
+ *     </ul>
+ *     <ul>
+ *        <li>If the user prefers the tablet site, then redirect the user to the tablet site.</li>
+ *     </ul>
+ * </li>
+ * <li>If the request originates from the tablet site:
+ *     <ul>
+ *        <li>If the user prefers the normal site, then redirect the user to the normal site.</li>
+ *     </ul>
+ *     <ul>
+ *        <li>If the user prefers the mobile site, then redirect the user to the mobile site.</li>
  *     </ul>
  * </li>
  * <li>Otherwise, the request originates from the normal site, so:</li>
  *     <ul>
- *         <li>If the user prefers the mobile site, or the user has no site preference and is on a mobile device, 
- *         redirect the user to the mobile site.</li>
+ *        <li>If the user prefers the mobile site, or the user has no site preference and is on a mobile device, 
+ * redirect the user to the mobile site.</li>
  *     </ul>
- * </li>
+ *     <ul>
+ *        <li>If the user prefers the tablet site, or the user has no site preference and is on a tablet device, 
+ * redirect the user to the tablet site.</li>
+ *     </ul>
  * </ul>
  * <p>The initialization parameters available for configuring the servlet filter: 
  * <ul>
@@ -125,18 +136,12 @@ import org.springframework.web.filter.OncePerRequestFilter;
  */
 public class SiteSwitcherRequestFilter extends OncePerRequestFilter {
 
-	private SiteUrlFactory normalSiteUrlFactory;
-
-	private SiteUrlFactory mobileSiteUrlFactory;
-
-	private SiteUrlFactory tabletSiteUrlFactory;
-
-	private SitePreferenceHandler sitePreferenceHandler;
+	private SiteSwitcherHandler siteSwitcherHandler;
 
 	private String switcherMode;
 
 	private String serverName;
-	
+
 	private Boolean tabletIsMobile;
 
 	private String mobilePath;
@@ -157,10 +162,8 @@ public class SiteSwitcherRequestFilter extends OncePerRequestFilter {
 	 */
 	public SiteSwitcherRequestFilter(SiteUrlFactory normalSiteUrlFactory, SiteUrlFactory mobileSiteUrlFactory,
 			SiteUrlFactory tabletSiteUrlFactory, SitePreferenceHandler sitePreferenceHandler) {
-		this.normalSiteUrlFactory = normalSiteUrlFactory;
-		this.mobileSiteUrlFactory = mobileSiteUrlFactory;
-		this.tabletSiteUrlFactory = tabletSiteUrlFactory;
-		this.sitePreferenceHandler = sitePreferenceHandler;
+		this.siteSwitcherHandler = new StandardSiteSwitcherHandler(normalSiteUrlFactory, mobileSiteUrlFactory,
+				tabletSiteUrlFactory, sitePreferenceHandler, tabletIsMobile);
 	}
 
 	public String getSwitcherMode() {
@@ -178,11 +181,11 @@ public class SiteSwitcherRequestFilter extends OncePerRequestFilter {
 	public void setServerName(String serverName) {
 		this.serverName = serverName;
 	}
-	
+
 	public Boolean getTabletIsMobile() {
-		return tabletIsMobile == null ? false : tabletIsMobile;
+		return tabletIsMobile;
 	}
-	
+
 	public void setTabletIsMobile(Boolean tabletIsMobile) {
 		this.tabletIsMobile = tabletIsMobile;
 	}
@@ -234,50 +237,11 @@ public class SiteSwitcherRequestFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		SitePreference sitePreference = sitePreferenceHandler.handleSitePreference(request, response);
-		Device device = DeviceUtils.getRequiredCurrentDevice(request);
-		if (mobileSiteUrlFactory != null && mobileSiteUrlFactory.isRequestForSite(request)) {
-			if (sitePreference == SitePreference.NORMAL) {
-				redirectToNormalSite(request, response);
-			} else if (sitePreference == SitePreference.TABLET || device.isTablet() && sitePreference == null) {
-				redirectToTabletSite(request, response);
-			}
-		} else if (tabletSiteUrlFactory != null && tabletSiteUrlFactory.isRequestForSite(request)) {
-			if (sitePreference == SitePreference.NORMAL) {
-				redirectToNormalSite(request, response);
-			} else if (sitePreference == SitePreference.MOBILE || device.isMobile() && sitePreference == null) {
-				redirectToMobileSite(request, response);
-			}
-		} else {
-			if (sitePreference == SitePreference.MOBILE || device.isMobile() && sitePreference == null
-					|| device.isTablet() && getTabletIsMobile() == true) {
-				redirectToMobileSite(request, response);
-			} else if (sitePreference == SitePreference.TABLET || device.isTablet() && sitePreference == null) {
-				redirectToTabletSite(request, response);
-			}
-		}
+		siteSwitcherHandler.handleSiteSwitch(request, response);
 		filterChain.doFilter(request, response);
 	}
 
 	// helpers
-	
-	private void redirectToNormalSite(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		if (normalSiteUrlFactory != null) {
-			response.sendRedirect(response.encodeRedirectURL(normalSiteUrlFactory.createSiteUrl(request)));
-		}
-	}
-	
-	private void redirectToMobileSite(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		if (mobileSiteUrlFactory != null) {
-			response.sendRedirect(response.encodeRedirectURL(mobileSiteUrlFactory.createSiteUrl(request)));
-		}
-	}
-	
-	private void redirectToTabletSite(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		if (tabletSiteUrlFactory != null) {
-			response.sendRedirect(response.encodeRedirectURL(tabletSiteUrlFactory.createSiteUrl(request)));
-		}
-	}
 
 	/**
 	 * Configures a site switcher that redirects to a <code>m.</code> domain for normal site requests that either
@@ -288,10 +252,9 @@ public class SiteSwitcherRequestFilter extends OncePerRequestFilter {
 		if (serverName == null) {
 			throw new ServletException("serverName init parameter not found");
 		}
-		this.normalSiteUrlFactory = new StandardSiteUrlFactory(serverName);
-		this.mobileSiteUrlFactory = new StandardSiteUrlFactory("m." + serverName);
-		this.sitePreferenceHandler = new StandardSitePreferenceHandler(new CookieSitePreferenceRepository("."
-				+ serverName));
+		this.siteSwitcherHandler = new StandardSiteSwitcherHandler(new StandardSiteUrlFactory(serverName),
+				new StandardSiteUrlFactory("m." + serverName), null, new StandardSitePreferenceHandler(
+						new CookieSitePreferenceRepository("." + serverName)), tabletIsMobile);
 	}
 
 	/**
@@ -306,10 +269,9 @@ public class SiteSwitcherRequestFilter extends OncePerRequestFilter {
 			throw new ServletException("serverName init parameter not found");
 		}
 		int lastDot = serverName.lastIndexOf('.');
-		this.normalSiteUrlFactory = new StandardSiteUrlFactory(serverName);
-		this.mobileSiteUrlFactory = new StandardSiteUrlFactory(serverName.substring(0, lastDot) + ".mobi");
-		this.sitePreferenceHandler = new StandardSitePreferenceHandler(new CookieSitePreferenceRepository("."
-				+ serverName));
+		this.siteSwitcherHandler = new StandardSiteSwitcherHandler(new StandardSiteUrlFactory(serverName),
+				new StandardSiteUrlFactory(serverName.substring(0, lastDot) + ".mobi"), null,
+				new StandardSitePreferenceHandler(new CookieSitePreferenceRepository("." + serverName)), tabletIsMobile);
 	}
 
 	/**
@@ -318,14 +280,17 @@ public class SiteSwitcherRequestFilter extends OncePerRequestFilter {
 	 * Uses a {@link CookieSitePreferenceRepository} that saves a cookie that is stored on the root path.
 	 */
 	private void urlPath() throws ServletException {
-		this.normalSiteUrlFactory = new NormalSitePathUrlFactory(mobilePath, tabletPath, rootPath);
+		SiteUrlFactory normalSiteUrlFactory = new NormalSitePathUrlFactory(mobilePath, tabletPath, rootPath);
+		SiteUrlFactory mobileSiteUrlFactory = null;
+		SiteUrlFactory tabletSiteUrlFactory = null;
 		if (mobilePath != null) {
-			this.mobileSiteUrlFactory = new MobileSitePathUrlFactory(mobilePath, tabletPath, rootPath);
+			mobileSiteUrlFactory = new MobileSitePathUrlFactory(mobilePath, tabletPath, rootPath);
 		}
 		if (tabletPath != null) {
-			this.tabletSiteUrlFactory = new TabletSitePathUrlFactory(tabletPath, mobilePath, rootPath);
+			tabletSiteUrlFactory = new TabletSitePathUrlFactory(tabletPath, mobilePath, rootPath);
 		}
-		this.sitePreferenceHandler = new StandardSitePreferenceHandler(new CookieSitePreferenceRepository());
+		this.siteSwitcherHandler = new StandardSiteSwitcherHandler(normalSiteUrlFactory, mobileSiteUrlFactory,
+				tabletSiteUrlFactory, new StandardSitePreferenceHandler(new CookieSitePreferenceRepository()), null);
 	}
 
 	private enum SiteSwitcherMode {

@@ -15,32 +15,42 @@
  */
 package org.springframework.mobile.device.switcher;
 
-import java.io.IOException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.mobile.device.Device;
-import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.mobile.device.site.CookieSitePreferenceRepository;
-import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.mobile.device.site.SitePreferenceHandler;
 import org.springframework.mobile.device.site.StandardSitePreferenceHandler;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
- * A Spring MVC interceptor that switches the user between the mobile and normal site by employing a specific switching algorithm.
- * The switching algorithm is as follows:
+ * A Spring MVC interceptor that switches the user between the mobile, normal, and tablet sites by employing a specific 
+ * switching algorithm. The switching algorithm is as follows:
  * <ul>
  * <li>If the request originates from the mobile site:
  *     <ul>
  *        <li>If the user prefers the normal site, then redirect the user to the normal site.</li>
+ *     </ul>
+ *     <ul>
+ *        <li>If the user prefers the tablet site, then redirect the user to the tablet site.</li>
+ *     </ul>
+ * </li>
+ * <li>If the request originates from the tablet site:
+ *     <ul>
+ *        <li>If the user prefers the normal site, then redirect the user to the normal site.</li>
+ *     </ul>
+ *     <ul>
+ *        <li>If the user prefers the mobile site, then redirect the user to the mobile site.</li>
  *     </ul>
  * </li>
  * <li>Otherwise, the request originates from the normal site, so:</li>
  *     <ul>
  *        <li>If the user prefers the mobile site, or the user has no site preference and is on a mobile device, 
  * redirect the user to the mobile site.</li>
+ *     </ul>
+ *     <ul>
+ *        <li>If the user prefers the tablet site, or the user has no site preference and is on a tablet device, 
+ * redirect the user to the tablet site.</li>
  *     </ul>
  * </ul>
  * @author Keith Donald
@@ -49,15 +59,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  */
 public class SiteSwitcherHandlerInterceptor extends HandlerInterceptorAdapter {
 
-	private final SiteUrlFactory normalSiteUrlFactory;
-
-	private final SiteUrlFactory mobileSiteUrlFactory;
-
-	private final SiteUrlFactory tabletSiteUrlFactory;
-
-	private final SitePreferenceHandler sitePreferenceHandler;
-
-	private final boolean tabletIsMobile;
+	private final SiteSwitcherHandler siteSwitcherHandler;
 
 	/**
 	 * Creates a new site switcher.
@@ -79,11 +81,8 @@ public class SiteSwitcherHandlerInterceptor extends HandlerInterceptorAdapter {
 	 */
 	public SiteSwitcherHandlerInterceptor(SiteUrlFactory normalSiteUrlFactory, SiteUrlFactory mobileSiteUrlFactory,
 			SitePreferenceHandler sitePreferenceHandler, Boolean tabletIsMobile) {
-		this.normalSiteUrlFactory = normalSiteUrlFactory;
-		this.mobileSiteUrlFactory = mobileSiteUrlFactory;
-		this.tabletSiteUrlFactory = null;
-		this.sitePreferenceHandler = sitePreferenceHandler;
-		this.tabletIsMobile = tabletIsMobile == null ? false : tabletIsMobile;
+		this.siteSwitcherHandler = new StandardSiteSwitcherHandler(normalSiteUrlFactory, mobileSiteUrlFactory, null,
+				sitePreferenceHandler, tabletIsMobile);
 	}
 
 	/**
@@ -95,63 +94,12 @@ public class SiteSwitcherHandlerInterceptor extends HandlerInterceptorAdapter {
 	 */
 	public SiteSwitcherHandlerInterceptor(SiteUrlFactory normalSiteUrlFactory, SiteUrlFactory mobileSiteUrlFactory,
 			SiteUrlFactory tabletSiteUrlFactory, SitePreferenceHandler sitePreferenceHandler) {
-		this.normalSiteUrlFactory = normalSiteUrlFactory;
-		this.mobileSiteUrlFactory = mobileSiteUrlFactory;
-		this.tabletSiteUrlFactory = tabletSiteUrlFactory;
-		this.sitePreferenceHandler = sitePreferenceHandler;
-		this.tabletIsMobile = false;
+		this.siteSwitcherHandler = new StandardSiteSwitcherHandler(normalSiteUrlFactory, mobileSiteUrlFactory,
+				tabletSiteUrlFactory, sitePreferenceHandler, null);
 	}
 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		SitePreference sitePreference = sitePreferenceHandler.handleSitePreference(request, response);
-		Device device = DeviceUtils.getRequiredCurrentDevice(request);
-		if (mobileSiteUrlFactory != null && mobileSiteUrlFactory.isRequestForSite(request)) {
-			if (sitePreference == SitePreference.NORMAL) {
-				redirectToNormalSite(request, response);
-				return false;
-			} else if (sitePreference == SitePreference.TABLET || device.isTablet() && sitePreference == null) {
-				redirectToTabletSite(request, response);
-				return false;
-			}
-		} else if (tabletSiteUrlFactory != null && tabletSiteUrlFactory.isRequestForSite(request)) {
-			if (sitePreference == SitePreference.NORMAL) {
-				redirectToNormalSite(request, response);
-				return false;
-			} else if (sitePreference == SitePreference.MOBILE || device.isMobile() && sitePreference == null) {
-				redirectToMobileSite(request, response);
-				return false;
-			}
-		} else {
-			if (sitePreference == SitePreference.MOBILE || device.isMobile() && sitePreference == null
-					|| tabletIsMobile == true && device.isTablet() && sitePreference != SitePreference.NORMAL) {
-				redirectToMobileSite(request, response);
-				return false;
-			} else if (sitePreference == SitePreference.TABLET || device.isTablet() && sitePreference == null) {
-				redirectToTabletSite(request, response);
-				return false;
-			}
-		}
-		return true;
-	}
-
-	// helpers
-
-	private void redirectToNormalSite(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		if (normalSiteUrlFactory != null) {
-			response.sendRedirect(response.encodeRedirectURL(normalSiteUrlFactory.createSiteUrl(request)));
-		}
-	}
-
-	private void redirectToMobileSite(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		if (mobileSiteUrlFactory != null) {
-			response.sendRedirect(response.encodeRedirectURL(mobileSiteUrlFactory.createSiteUrl(request)));
-		}
-	}
-
-	private void redirectToTabletSite(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		if (tabletSiteUrlFactory != null) {
-			response.sendRedirect(response.encodeRedirectURL(tabletSiteUrlFactory.createSiteUrl(request)));
-		}
+		return siteSwitcherHandler.handleSiteSwitch(request, response);
 	}
 
 	// static factory methods
@@ -234,8 +182,9 @@ public class SiteSwitcherHandlerInterceptor extends HandlerInterceptorAdapter {
 	 */
 	public static SiteSwitcherHandlerInterceptor urlPath(String mobilePath, String tabletPath, String rootPath) {
 		return new SiteSwitcherHandlerInterceptor(new NormalSitePathUrlFactory(mobilePath, tabletPath, rootPath),
-				new MobileSitePathUrlFactory(mobilePath, tabletPath, rootPath), new TabletSitePathUrlFactory(tabletPath, mobilePath, rootPath),
-				new StandardSitePreferenceHandler(new CookieSitePreferenceRepository()));
+				new MobileSitePathUrlFactory(mobilePath, tabletPath, rootPath), new TabletSitePathUrlFactory(
+						tabletPath, mobilePath, rootPath), new StandardSitePreferenceHandler(
+						new CookieSitePreferenceRepository()));
 	}
 
 }
