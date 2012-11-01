@@ -23,12 +23,12 @@ package org.springframework.mobile.device;
  * @author Scott Rossillo
  */
 class LiteDevice implements Device {
+	
+	public static final LiteDevice NORMAL_INSTANCE = new LiteDevice(DeviceType.NORMAL);
 
 	public static final LiteDevice MOBILE_INSTANCE = new LiteDevice(DeviceType.MOBILE);
 
 	public static final LiteDevice TABLET_INSTANCE = new LiteDevice(DeviceType.TABLET);
-
-	public static final LiteDevice NORMAL_INSTANCE = new LiteDevice(DeviceType.NORMAL);
 	
 	public boolean isNormal() {
 		return this.deviceType == DeviceType.NORMAL;

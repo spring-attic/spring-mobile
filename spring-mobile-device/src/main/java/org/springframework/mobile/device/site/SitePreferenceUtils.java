@@ -32,7 +32,7 @@ public class SitePreferenceUtils {
 	 * @return the site preference, or null if none has been set
 	 */
 	public static SitePreference getCurrentSitePreference(HttpServletRequest request) {
-		return (SitePreference) request.getAttribute(CURRENT_SITE_PREFERENCE_ATTRIBUTE);		
+		return (SitePreference) request.getAttribute(CURRENT_SITE_PREFERENCE_ATTRIBUTE);
 	}
 
 	/**
@@ -40,11 +40,12 @@ public class SitePreferenceUtils {
 	 * @return the site preference, or null if none has been set
 	 */
 	public static SitePreference getCurrentSitePreference(RequestAttributes attributes) {
-		return (SitePreference) attributes.getAttribute(CURRENT_SITE_PREFERENCE_ATTRIBUTE, RequestAttributes.SCOPE_REQUEST);		
+		return (SitePreference) attributes.getAttribute(CURRENT_SITE_PREFERENCE_ATTRIBUTE,
+				RequestAttributes.SCOPE_REQUEST);
 	}
 
 	private SitePreferenceUtils() {
-		
+
 	}
-	
+
 }

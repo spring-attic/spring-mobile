@@ -221,7 +221,7 @@ public class SiteSwitcherRequestFilter extends OncePerRequestFilter {
 		}
 		SiteSwitcherMode mode;
 		try {
-			mode = Enum.valueOf(SiteSwitcherMode.class, switcherMode.toUpperCase());
+			mode = SiteSwitcherMode.valueOf(switcherMode.toUpperCase());
 		} catch (IllegalArgumentException ex) {
 			throw new ServletException("Invalid switcherMode init parameter", ex);
 		}
