@@ -61,53 +61,70 @@ public class StandardSiteSwitcherHandler implements SiteSwitcherHandler {
 		SitePreference sitePreference = sitePreferenceHandler.handleSitePreference(request, response);
 		Device device = DeviceUtils.getRequiredCurrentDevice(request);
 		if (mobileSiteUrlFactory != null && mobileSiteUrlFactory.isRequestForSite(request)) {
-			if (sitePreference == SitePreference.NORMAL) {
-				redirectToNormalSite(request, response);
-				return false;
-			} else if (sitePreference == SitePreference.TABLET || device.isTablet() && sitePreference == null) {
-				redirectToTabletSite(request, response);
-				return false;
+			if (handleTablet(device, sitePreference)) {
+				if (tabletSiteUrlFactory != null) {
+					response.sendRedirect(response.encodeRedirectURL(tabletSiteUrlFactory.createSiteUrl(request)));
+					return false;
+				}
+			}
+			if (handleNormal(device, sitePreference) || handleTabletIsNormal(device, sitePreference)) {
+				if (normalSiteUrlFactory != null) {
+					response.sendRedirect(response.encodeRedirectURL(normalSiteUrlFactory.createSiteUrl(request)));
+					return false;
+				}
 			}
 		} else if (tabletSiteUrlFactory != null && tabletSiteUrlFactory.isRequestForSite(request)) {
-			if (sitePreference == SitePreference.NORMAL) {
-				redirectToNormalSite(request, response);
-				return false;
-			} else if (sitePreference == SitePreference.MOBILE || device.isMobile() && sitePreference == null) {
-				redirectToMobileSite(request, response);
-				return false;
+			if (handleNormal(device, sitePreference)) {
+				if (normalSiteUrlFactory != null) {
+					response.sendRedirect(response.encodeRedirectURL(normalSiteUrlFactory.createSiteUrl(request)));
+					return false;
+				}
+			}
+			if (handleMobile(device, sitePreference)) {
+				if (mobileSiteUrlFactory != null) {
+					response.sendRedirect(response.encodeRedirectURL(mobileSiteUrlFactory.createSiteUrl(request)));
+					return false;
+				}
 			}
 		} else {
-			if (sitePreference == SitePreference.MOBILE || device.isMobile() && sitePreference == null
-					|| tabletIsMobile == true && device.isTablet() && sitePreference != SitePreference.NORMAL) {
-				redirectToMobileSite(request, response);
-				return false;
-			} else if (sitePreference == SitePreference.TABLET || device.isTablet() && sitePreference == null) {
-				redirectToTabletSite(request, response);
-				return false;
+			if (handleMobile(device, sitePreference) || handleTabletIsMobile(device, sitePreference)) {
+				if (mobileSiteUrlFactory != null) {
+					response.sendRedirect(response.encodeRedirectURL(mobileSiteUrlFactory.createSiteUrl(request)));
+					return false;
+				}
+			} else if (handleTablet(device, sitePreference)) {
+				if (tabletSiteUrlFactory != null) {
+					response.sendRedirect(response.encodeRedirectURL(tabletSiteUrlFactory.createSiteUrl(request)));
+					return false;
+				}
 			}
 		}
 		return true;
 
 	}
 
-	// helpers
+	// Helpers
 
-	private void redirectToNormalSite(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		if (normalSiteUrlFactory != null) {
-			response.sendRedirect(response.encodeRedirectURL(normalSiteUrlFactory.createSiteUrl(request)));
-		}
+	private boolean handleNormal(Device device, SitePreference sitePreference) {
+		return sitePreference == SitePreference.NORMAL || device.isNormal() && sitePreference == null;
 	}
 
-	private void redirectToMobileSite(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		if (mobileSiteUrlFactory != null) {
-			response.sendRedirect(response.encodeRedirectURL(mobileSiteUrlFactory.createSiteUrl(request)));
-		}
+	private boolean handleMobile(Device device, SitePreference sitePreference) {
+		return sitePreference == SitePreference.MOBILE || device.isMobile() && sitePreference == null;
 	}
 
-	private void redirectToTabletSite(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		if (tabletSiteUrlFactory != null) {
-			response.sendRedirect(response.encodeRedirectURL(tabletSiteUrlFactory.createSiteUrl(request)));
-		}
+	private boolean handleTablet(Device device, SitePreference sitePreference) {
+		return sitePreference == SitePreference.TABLET || device.isTablet() && sitePreference == null;
+	}
+
+	private boolean handleTabletIsNormal(Device device, SitePreference sitePreference) {
+		return sitePreference == SitePreference.TABLET && tabletIsMobile == false
+				&& (device.isTablet() || device.isMobile());
+	}
+
+	private boolean handleTabletIsMobile(Device device, SitePreference sitePreference) {
+		return tabletIsMobile == true && (sitePreference == SitePreference.TABLET || sitePreference == null)
+				&& (device.isTablet() || device.isMobile());
 	}
 
 }

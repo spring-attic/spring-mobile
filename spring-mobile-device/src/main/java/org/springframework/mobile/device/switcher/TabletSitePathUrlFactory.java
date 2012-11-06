@@ -43,7 +43,8 @@ public class TabletSitePathUrlFactory extends AbstractSitePathUrlFactory impleme
 	}
 
 	public boolean isRequestForSite(HttpServletRequest request) {
-		return request.getRequestURI().startsWith(this.getFullTabletPath());
+		return request.getRequestURI().startsWith(this.getFullTabletPath())
+				|| request.getRequestURI().equals(this.getCleanTabletPath());
 	}
 
 	public String createSiteUrl(HttpServletRequest request) {

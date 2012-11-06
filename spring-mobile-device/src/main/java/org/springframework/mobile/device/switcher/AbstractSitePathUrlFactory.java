@@ -46,7 +46,7 @@ public abstract class AbstractSitePathUrlFactory extends AbstractSiteUrlFactory 
 	 *  "/m/"
 	 *  "/mobile/"
 	 * </pre>
-	 * @return the mobile path
+	 * @return The mobile path. May be null.
 	 */
 	public String getMobilePath() {
 		return this.mobilePath;
@@ -59,7 +59,7 @@ public abstract class AbstractSitePathUrlFactory extends AbstractSiteUrlFactory 
 	 *  "/t/"
 	 *  "/tablet/"
 	 * </pre>
-	 * @return the mobile path
+	 * @return The mobile path. May be null.
 	 */
 	public String getTabletPath() {
 		return this.tabletPath;
@@ -72,10 +72,34 @@ public abstract class AbstractSitePathUrlFactory extends AbstractSiteUrlFactory 
 	 *  "/showcase/"
 	 *  "/demo/"
 	 * </pre>
-	 * @return the root path of the application
+	 * @return The root path of the application. May be null.
 	 */
 	public String getRootPath() {
 		return this.rootPath;
+	}
+
+	/**
+	 * Whether there is a mobile path or not
+	 * @return true if there is a mobile path
+	 */
+	public boolean hasMobilePath() {
+		return this.mobilePath != null;
+	}
+
+	/**
+	 * Whether there is a tablet path or not
+	 * @return true if there is a tablet path
+	 */
+	public boolean hasTabletPath() {
+		return this.tabletPath != null;
+	}
+
+	/**
+	 * Whether there is a root path or not
+	 * @return true if there is a root path
+	 */
+	public boolean hasRootPath() {
+		return this.rootPath != null;
 	}
 
 	/**
@@ -121,7 +145,7 @@ public abstract class AbstractSitePathUrlFactory extends AbstractSiteUrlFactory 
 	 *  "/demo/tablet/"
 	 * </pre>
 	 * @see #getCleanTabletPath()
-	 * @return the full path of the tablet site	 * 
+	 * @return the full path of the tablet site 
 	 */
 	public String getFullTabletPath() {
 		String path = null;

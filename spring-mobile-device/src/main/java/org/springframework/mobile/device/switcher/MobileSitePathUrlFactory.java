@@ -44,7 +44,8 @@ public class MobileSitePathUrlFactory extends AbstractSitePathUrlFactory impleme
 	}
 
 	public boolean isRequestForSite(HttpServletRequest request) {
-		return request.getRequestURI().startsWith(this.getFullMobilePath());
+		return request.getRequestURI().startsWith(this.getFullMobilePath())
+				|| request.getRequestURI().equals(this.getCleanMobilePath());
 	}
 
 	public String createSiteUrl(HttpServletRequest request) {

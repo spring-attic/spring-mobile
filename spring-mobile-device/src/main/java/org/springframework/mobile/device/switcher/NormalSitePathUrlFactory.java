@@ -46,26 +46,35 @@ public class NormalSitePathUrlFactory extends AbstractSitePathUrlFactory impleme
 	}
 
 	public boolean isRequestForSite(HttpServletRequest request) {
-		if (getFullMobilePath() != null && request.getRequestURI().startsWith(getFullMobilePath())) {
+		String requestURI = request.getRequestURI();
+		if (hasMobilePath() && (requestURI.startsWith(getFullMobilePath()) || requestURI.equals(getCleanMobilePath()))) {
 			return false;
-		} else if (getFullTabletPath() != null && request.getRequestURI().startsWith(getFullTabletPath())) {
+		} else if (hasTabletPath() && (requestURI.startsWith(getFullTabletPath()) || requestURI.equals(getCleanTabletPath()))) {
 			return false;
 		}
 		return true;
 	}
 
 	public String createSiteUrl(HttpServletRequest request) {
-		String adjustedRequestURI;
-		int beginIndex = 0;
-		if (getFullMobilePath() != null && request.getRequestURI().startsWith(getCleanMobilePath())) {
-			beginIndex = getRootPath() == null ? getCleanMobilePath().length() : getFullMobilePath().length();
-		} else if (getFullTabletPath() != null && request.getRequestURI().startsWith(getFullTabletPath())) {
-			beginIndex = getRootPath() == null ? getCleanTabletPath().length() : getFullTabletPath().length();
-		}		
-		if (getRootPath() != null && request.getRequestURI().startsWith(getRootPath())) {
-			adjustedRequestURI = getRootPath() + request.getRequestURI().substring(beginIndex);
-		} else {
-			adjustedRequestURI = request.getRequestURI().substring(beginIndex);
+		String requestURI = request.getRequestURI();
+		String adjustedRequestURI = "";
+		if (hasMobilePath() && requestURI.equals(getCleanMobilePath()) || 
+				hasTabletPath() && requestURI.equals(getCleanTabletPath())) {
+			if (hasRootPath()) {
+				adjustedRequestURI = getCleanRootPath();
+			}
+		} else if (hasMobilePath() && requestURI.startsWith(getFullMobilePath())) {
+			if (hasRootPath()) {
+				adjustedRequestURI = getRootPath() + requestURI.substring(getFullMobilePath().length());
+			} else {
+				adjustedRequestURI = requestURI.substring(getCleanMobilePath().length());
+			}
+		} else if (hasTabletPath() && requestURI.startsWith(getFullTabletPath())) {
+			if (hasRootPath()) {
+				adjustedRequestURI = getRootPath() + requestURI.substring(getFullTabletPath().length());
+			} else {
+				adjustedRequestURI = requestURI.substring(getCleanTabletPath().length());
+			}
 		}
 		return createSiteUrlInternal(request, request.getServerName(), adjustedRequestURI);
 	}
