@@ -106,4 +106,7 @@ public class UserAgent {
 	public static final String BlackBerry9930_OS6_1 = "Mozilla/5.0 (BlackBerry; U; BlackBerry 9930; xx-xx) AppleWebKit/534.11+ (KHTML, like Gecko) Version/6.1.0.61 Mobile Safari/534.11+";
 
 	public static final String BlackBerryPlaybook = "Mozilla/5.0 (PlayBook; U; RIM Tablet OS 1.0.0; en-US) AppleWebKit/534.8+(KHTML, like Gecko) Version/0.0.1 Safari/534.8+";
+
+	public static final String BlackBerryTouch_OS10 = "Mozilla/5.0 (BB10; Touch) AppleWebKit/537.3+ (KHTML, like Gecko) Version/10.0.9.386 Mobile Safari/537.3+";
+
 }

@@ -97,6 +97,10 @@ public class LiteDeviceResolver implements DeviceResolver {
 					return LiteDevice.TABLET_INSTANCE;
 				}
 			}
+			//BlackBerry 10 special case
+			if (userAgent.contains("bb10") && userAgent.contains("mobile")) {
+				return LiteDevice.MOBILE_INSTANCE;
+			}
 			// Android special case
 			if (userAgent.contains("android") && userAgent.contains("mobile")) {
 				return LiteDevice.MOBILE_INSTANCE;
