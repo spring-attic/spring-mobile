@@ -158,6 +158,13 @@ public class LiteDeviceResolverTest {
 		Device device = resolver.resolveDevice(request);
 		assertMobile(device);
 	}
+	
+	@Test
+	public void blackBerryTouch() {
+		request.addHeader("User-Agent", UserAgent.BlackBerryTouch_OS10);
+		Device device = resolver.resolveDevice(request);
+		assertMobile(device);
+	}
 
 	@Test
 	public void palmCentro() {
