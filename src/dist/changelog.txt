@@ -1,6 +1,10 @@
 Spring Mobile Changelog
 =======================
 
+1.0.1.RELEASE (2012.11.08)
+==========================
+* BlackBerry 10 mobile devices are now resolved to mobile devices in LiteDeviceResolver
+
 1.0.0.RELEASE (2012.05.14)
 ==========================
 * Renamed DeviceResolverHandlerFilter to DeviceResolverRequestFilter
