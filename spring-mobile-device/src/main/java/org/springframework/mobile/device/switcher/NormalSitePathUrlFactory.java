@@ -26,6 +26,7 @@ public class NormalSitePathUrlFactory extends AbstractSitePathUrlFactory impleme
 
 	/**
 	 * Creates a new normal site path URL factory.
+	 * @param mobilePath the path to the mobile site
 	 */
 	public NormalSitePathUrlFactory(final String mobilePath) {
 		this(mobilePath, null, null);
@@ -33,6 +34,8 @@ public class NormalSitePathUrlFactory extends AbstractSitePathUrlFactory impleme
 	
 	/**
 	 * Creates a new normal site path URL factory.
+	 * @param mobilePath the path to the mobile site
+	 * @param rootPath the root path of the application
 	 */
 	public NormalSitePathUrlFactory(final String mobilePath, final String rootPath) {
 		this(mobilePath, null, rootPath);
@@ -40,6 +43,9 @@ public class NormalSitePathUrlFactory extends AbstractSitePathUrlFactory impleme
 	
 	/**
 	 * Creates a new normal site path URL factory.
+	 * @param mobilePath the path to the mobile site
+	 * @param tabletPath the path to the tablet site
+	 * @param rootPath the root path of the application
 	 */
 	public NormalSitePathUrlFactory(final String mobilePath, final String tabletPath, final String rootPath) {
 		super(mobilePath, tabletPath, rootPath);
