@@ -1,6 +1,32 @@
 Spring Mobile Changelog
 =======================
 
+1.1.0.M1 (2012.11.13)
+=====================
+* Added tablet support in SitePreference handling. Users can now specify a preference for a "tablet" site, in addition to the existing "normal" and "mobile" preferences.
+
+* Added tablet support in SiteSwitcher handling. 
+    - The mDot and dotMobi factory methods now allow you to specify whether to return the "normal" or "mobile" sites for tablet devices.
+    - The urlPath factory method now adds the ability to specify a "tablet" site path. Tablet devices will automatically be redirected to the "tablet" path, while mobile and normal devices will continue to be redirected to the "normal" and "mobile" sites. For example, consider the following schema:
+        Normal site: http://domain.com/home
+        Mobile site: http://domain.com/mobile/home
+        Tablet site: http://domain.com/tablet/home
+    - SitePreference handling is fully integrated into SiteSwitcher handling. "normal", "mobile", and "tablet" preferences are redirected to their respective sites, regardless of device type.
+
+* Support for Java-based container configuration
+    - Added DeviceHandlerMethodArgumentResolver which is a HandlerMethodArgumentResolver implementation of DeviceWebArgumentResolver
+    - Added SitePreferenceHandlerMethodArgumentResolver which is a HandlerMethodArgumentResolver implementation of SitePreferenceWebArgumentResolver.
+
+* Improved support for Servlet Filter configuration
+    - Added SitePreferenceRequestFilter which is a Filter implementation of SitePreferenceHandlerInterceptor.
+    - Added SiteSwitcherRequestFilter which is a Filter implementation of SiteSwitcherHandlerInterceptor.
+    
+    See https://github.com/SpringSource/spring-mobile-samples for sample projects that demonstrate these new features
+
+1.0.1.RELEASE (2012.11.08)
+==========================
+* BlackBerry 10 mobile devices are now resolved to a mobile device in LiteDeviceResolver
+
 1.0.0.RELEASE (2012.05.14)
 ==========================
 * Renamed DeviceResolverHandlerFilter to DeviceResolverRequestFilter
