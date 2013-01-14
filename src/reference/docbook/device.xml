@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="device" xmlns:xlink="http://www.w3.org/1999/xlink">
+<chapter
+    xmlns="http://docbook.org/ns/docbook" version="5.0"
+    xmlns:xl="http://www.w3.org/1999/xlink"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd
+        http://www.w3.org/1999/xlink http://www.docbook.org/xml/5.0/xsd/xlink.xsd">
     
     <title>Spring Mobile Device Module</title>
     
-    <section id="spring-mobile-device-introduction">
+    <section xml:id="spring-mobile-device-introduction">
     
         <title>Introduction</title>
         
@@ -11,7 +18,7 @@
         
     </section>
 
-    <section id="spring-mobile-device-howtoget">
+    <section xml:id="spring-mobile-device-howtoget">
     
         <title>How to get</title>
         
@@ -65,7 +72,7 @@
         
     </section>
 
-    <section id="spring-mobile-device-resolution">
+    <section xml:id="spring-mobile-device-resolution">
 
         <title>Device resolution</title>
         
@@ -116,7 +123,7 @@ public interface Device {
             
         <para>As shown above, <methodname>Device.isMobile()</methodname> can be used to determine if the client is using a mobile device, such as a smart phone. Similarly, <methodname>Device.isTablet()</methodname> can be used to determine if the client is running on a tablet device. Depending on the <interfacename>DeviceResolver</interfacename> in use, a <interfacename>Device</interfacename> may support being downcast to access additional properties.</para>
         
-        <section id="spring-mobile-device-request-handling">
+        <section xml:id="spring-mobile-device-request-handling">
         
             <title>When to perform</title>
             
@@ -124,7 +131,7 @@ public interface Device {
             
             <para>By default, a <classname>LiteDeviceResolver</classname> is used for device resolution. You may plug-in another <interfacename>DeviceResolver</interfacename> implementation by injecting a constructor argument.</para>
             
-            <section id="spring-mobile-device-resolver-interceptor">
+            <section xml:id="spring-mobile-device-resolver-interceptor">
             
                 <title>DeviceResolverHandlerInterceptor</title>
                 
@@ -153,7 +160,7 @@ public void addInterceptors(InterceptorRegistry registry) {
                 
             </section>
             
-            <section id="spring-mobile-device-resolver-filter">
+            <section xml:id="spring-mobile-device-resolver-filter">
             
                 <title>DeviceResolverRequestFilter</title>
                 
@@ -174,7 +181,7 @@ public void addInterceptors(InterceptorRegistry registry) {
             
         </section>
         
-        <section id="spring-mobile-device-web-argument-resolver">
+        <section xml:id="spring-mobile-device-web-argument-resolver">
         
             <title>Obtaining a reference to the current device</title>
             
@@ -234,13 +241,13 @@ public class HomeController {
             
         </section>
         
-        <section id="spring-mobile-device-resolvers">
+        <section xml:id="spring-mobile-device-resolvers">
         
             <title>Supported DeviceResolver implementations</title>
             
             <para>Spring Mobile allows for the development of different DeviceResolver implementations that offer varying levels of resolution capability. The first, and the default, is a <classname>LiteDeviceResolver</classname> that detects the presence of a mobile device but does not detect specific capabilities.</para>
             
-            <section id="spring-mobile-device-resolvers-lite">
+            <section xml:id="spring-mobile-device-resolvers-lite">
             
                 <title>LiteDeviceResolver</title>
                 
@@ -289,7 +296,7 @@ public void addInterceptors(InterceptorRegistry registry) {
         
     </section>
 
-    <section id="spring-mobile-site-preference">
+    <section xml:id="spring-mobile-site-preference">
     
         <title>Site preference management</title>
         
@@ -386,7 +393,7 @@ public enum SitePreference {
         
         <para>Spring Mobile provides a single <interfacename>SitePreferenceHandler</interfacename> implementation named <classname>StandardSitePreferenceHandler</classname>, which should be suitable for most needs. It supports query-parameter-based site preference indication, pluggable <classname>SitePreference</classname> storage, and may be enabled in a Spring MVC application using a HandlerIntercepor. In addition, if no <interfacename>SitePreference</interfacename> has been explcitly indicated by the user, a default will be derived based on the user's Device (MOBILE for mobile devices, TABLET for tablet devices,  and NORMAL otherwise).</para>
         
-        <section id="spring-mobile-site-preference-indicating">
+        <section xml:id="spring-mobile-site-preference-indicating">
         
             <title>Indicating a site preference</title>
             
@@ -402,7 +409,7 @@ Site: <a href="${currentUrl}?site_preference=normal">Normal</a> | <a href="${cur
             
         </section>
         
-        <section id="spring-mobile-site-preference-storage">
+        <section xml:id="spring-mobile-site-preference-storage">
         
             <title>Site preference storage</title>
             
@@ -429,7 +436,7 @@ public interface SitePreferenceRepository {
             
         </section>
         
-        <section id="spring-mobile-site-preference-interceptor">
+        <section xml:id="spring-mobile-site-preference-interceptor">
         
             <title>Enabling site preference management</title>
             
@@ -457,7 +464,7 @@ public void addInterceptors(InterceptorRegistry registry) {
             
         </section>
         
-        <section id="spring-mobile-site-preference-argument-resolver">
+        <section xml:id="spring-mobile-site-preference-argument-resolver">
         
             <title>Obtaining a reference to the current site preference</title>
             
@@ -523,7 +530,7 @@ public class HomeController {
         
     </section>
     
-    <section id="spring-mobile-device-site-switcher-interceptor">
+    <section xml:id="spring-mobile-device-site-switcher-interceptor">
     
         <title>Site switching</title>
         
@@ -531,7 +538,7 @@ public class HomeController {
         
         <para>In Spring Mobile, you may use the <classname>SiteSwitcherHandlerInterceptor</classname> to redirect mobile users to a dedicated mobile site. Users may also indicate a site preference; for example, a mobile user may still wish to use the 'normal' site. Convenient static factory methods are provided that implement standard site switching conventions.</para>
         
-        <section id="spring-mobile-site-switcher-interceptor-mdot">
+        <section xml:id="spring-mobile-site-switcher-interceptor-mdot">
         
             <title>mDot SiteSwitcher</title>
             
@@ -575,7 +582,7 @@ public void addInterceptors(InterceptorRegistry registry) {
             
         </section>
         
-        <section id="spring-mobile-site-switcher-interceptor-dotmobi">
+        <section xml:id="spring-mobile-site-switcher-interceptor-dotmobi">
         
             <title>dotMobi SiteSwitcher</title>
             
@@ -619,7 +626,7 @@ public void addInterceptors(InterceptorRegistry registry) {
             
         </section>
 
-        <section id="spring-mobile-site-switcher-interceptor-urlpath">
+        <section xml:id="spring-mobile-site-switcher-interceptor-urlpath">
             
             <title>urlPath SiteSwitcher</title>
             
@@ -743,6 +750,203 @@ public void addInterceptors(InterceptorRegistry registry) {
             
         <para>See the JavaDoc of <classname>SiteSwitcherHandlerInterceptor</classname> for additional options when you need more control. See the spring-mobile <ulink url="https://github.com/SpringSource/spring-mobile-samples">samples</ulink> repository for runnable SiteSwitcher examples.</para>
         
+    </section>
+
+    <section xml:id="spring-mobile-device-view-resolution">
+
+        <title>Device aware view management</title>
+
+        <para>Using device detection, it is possible to add conditional logic within your controllers to return
+        specific views based on device type. But this process can be laborious if you are dealing with a large
+        number of views. Fortunately, Spring Mobile offers an alternative method for managing views for different
+        device types.</para>
+
+        <section xml:id="spring-mobile-device-view-delegating-resolver">
+
+            <title>Device aware view resolving</title>
+
+            <para>Spring Mobile includes <classname>AbstractDeviceDelegatingViewResolver</classname>, an abstract
+            <classname>ViewResolver</classname> wrapper that delegates to  another view resolver implementation,
+            allowing for resolution of device specific view names without the need for a dedicated mapping to be
+            defined for each view. A lightweight implementation is provided, which supports adjusting view names
+            based on whether the calling device is normal, mobile, or tablet based.</para>
+
+            <para>Within your application, you can then create alternate views for normal, mobile or tablet devices,
+            and given the proper configuration, Spring Mobile will adjust the view name to resolve to the correct one.
+            This happens internally, without the need to add conditional logic through your controllers. The following
+            table illustrates the behavior of the <classname>LiteDeviceDelegatingViewResolver</classname> when
+            receiving a request for the "home" view and adjusting it to use a prefix. This allows you to store
+            "mobile" views in a subdirectory, for example.</para>
+
+            <table>
+                <title>Prefixes</title>
+                <tgroup cols="4">
+                <thead>
+                    <row>
+                        <entry>Resolved Device</entry>
+                        <entry>Method</entry>
+                        <entry>Prefix</entry>
+                        <entry>Adjusted View</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>Normal</entry>
+                        <entry><methodname>setNormalPrefix()</methodname></entry>
+                        <entry>"normal/"</entry>
+                        <entry>"normal/home"</entry>
+                    </row>
+                    <row>
+                        <entry>Mobile</entry>
+                        <entry><methodname>setMobilePrefix()</methodname></entry>
+                        <entry>"mobile/"</entry>
+                        <entry>"mobile/home"</entry>
+                    </row>
+                    <row>
+                        <entry>Tablet</entry>
+                        <entry><methodname>setTabletPrefix()</methodname></entry>
+                        <entry>"tablet/"</entry>
+                        <entry>"tablet/home"</entry>
+                    </row>
+                </tbody>
+                </tgroup>
+            </table>
+
+            <para>Alternatively, the <classname>LiteDeviceDelegatingViewResolver</classname> also supports adjusting
+            views with suffixes. The following table shows the results of receiving a request for the "home" view.
+            For example, this allows you to store all your views in the same folder, and distinguish between them by
+            using different suffixes.</para>
+
+            <table>
+                <title>Suffixes</title>
+                <tgroup cols="4">
+                <thead>
+                    <row>
+                        <entry>Resolved Device</entry>
+                        <entry>Method</entry>
+                        <entry>Suffix</entry>
+                        <entry>Adjusted View</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>Normal</entry>
+                        <entry><methodname>setNormalSuffix()</methodname></entry>
+                        <entry>".nor"</entry>
+                        <entry>"home.nor"</entry>
+                    </row>
+                    <row>
+                        <entry>Mobile</entry>
+                        <entry><methodname>setMobileSuffix()</methodname></entry>
+                        <entry>".mob"</entry>
+                        <entry>"home.mob"</entry>
+                    </row>
+                    <row>
+                        <entry>Tablet</entry>
+                        <entry><methodname>setTabletSuffix()</methodname></entry>
+                        <entry>".tab"</entry>
+                        <entry>"home.tab"</entry>
+                    </row>
+                </tbody>
+                </tgroup>
+            </table>
+
+        </section>
+
+        <section>
+
+            <title>Enabling device aware views</title>
+
+            <para>The following example illustrates how to configure a site that delegates to an
+            <classname>InternalResourceViewResolver</classname>. It is configurated to adjust the view name by adding
+            a <literal>mobile/</literal> or <literal>tablet/</literal> prefix if the requesting device is determined
+            to be mobile or tablet respectively.</para>
+
+            <para>XML configuration:
+
+                <programlisting language="xml"><![CDATA[
+<beans:bean class="org.springframework.mobile.device.view.LiteDeviceDelegatingViewResolver">
+    <beans:constructor-arg>
+        <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+            <beans:property name="prefix" value="/WEB-INF/views/" />
+            <beans:property name="suffix" value=".jsp" />
+        </beans:bean>
+    </beans:constructor-arg>
+    <beans:property name="mobilePrefix" value="mobile/" />
+    <beans:property name="tabletPrefix" value="tablet/" />
+</beans:bean>]]>
+                </programlisting>
+
+            </para>
+
+            <para>Java-based configuration:
+
+                <programlisting language="java"><![CDATA[
+@Bean
+public LiteDeviceDelegatingViewResolver liteDeviceAwareViewResolver() {
+    InternalResourceViewResolver delegate = new InternalResourceViewResolver();
+    delegate.setPrefix("/WEB-INF/views/");
+    delegate.setSuffix(".jsp");
+    LiteDeviceDelegatingViewResolver resolver = new LiteDeviceDelegatingViewResolver(delegate);
+    resolver.setMobilePrefix("mobile/");
+    resolver.setTabletPrefix("tablet/");
+    return resolver;
+}]]>
+                </programlisting>
+
+            </para>
+
+        </section>
+
+        <section>
+
+            <title>Fallback resolution</title>
+
+            <para>Because using a <interfacename>ViewResolver</interfacename> will apply the view name strategy to
+            your entire site, there may be times when some of your views do not have separate implementations for
+            different device types or you do not need different versions. In this case, you can enable fallback
+            support. Enabling fallback support means if an adjusted view name cannot be resolved, the
+            <interfacename>ViewResolver</interfacename> will attempt to resolve the original view request. In the
+            following examples, the previous configurations have been adjusted to enable fallback support.</para>
+
+            <para>XML configuration:
+
+                <programlisting language="xml"><![CDATA[
+<beans:bean class="org.springframework.mobile.device.view.LiteDeviceDelegatingViewResolver">
+    <beans:constructor-arg>
+        <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+            <beans:property name="prefix" value="/WEB-INF/views/" />
+            <beans:property name="suffix" value=".jsp" />
+        </beans:bean>
+    </beans:constructor-arg>
+    <beans:property name="enableFallback" value="true" />
+    <beans:property name="mobilePrefix" value="mobile/" />
+    <beans:property name="tabletPrefix" value="tablet/" />
+</beans:bean>]]>
+                </programlisting>
+
+            </para>
+
+            <para>Java-based configuration:
+
+                <programlisting language="java"><![CDATA[
+@Bean
+public LiteDeviceDelegatingViewResolver liteDeviceAwareViewResolver() {
+    InternalResourceViewResolver delegate = new InternalResourceViewResolver();
+    delegate.setPrefix("/WEB-INF/views/");
+    delegate.setSuffix(".jsp");
+    LiteDeviceDelegatingViewResolver resolver = new LiteDeviceDelegatingViewResolver(delegate);
+    resolver.setEnableFallback(true);
+    resolver.setMobilePrefix("mobile/");
+    resolver.setTabletPrefix("tablet/");
+    return resolver;
+}]]>
+                </programlisting>
+
+            </para>
+
+        </section>
+
     </section>
 
 </chapter>

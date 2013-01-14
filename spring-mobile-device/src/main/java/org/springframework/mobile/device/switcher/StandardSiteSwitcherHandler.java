@@ -25,6 +25,7 @@ import org.springframework.mobile.device.Device;
 import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.mobile.device.site.SitePreferenceHandler;
+import org.springframework.mobile.device.util.ResolverUtils;
 
 /**
  * @author Roy Clarkson
@@ -62,38 +63,38 @@ public class StandardSiteSwitcherHandler implements SiteSwitcherHandler {
 		SitePreference sitePreference = sitePreferenceHandler.handleSitePreference(request, response);
 		Device device = DeviceUtils.getRequiredCurrentDevice(request);
 		if (mobileSiteUrlFactory != null && mobileSiteUrlFactory.isRequestForSite(request)) {
-			if (handleTablet(device, sitePreference)) {
+			if (ResolverUtils.isTablet(device, sitePreference)) {
 				if (tabletSiteUrlFactory != null) {
 					response.sendRedirect(response.encodeRedirectURL(tabletSiteUrlFactory.createSiteUrl(request)));
 					return false;
 				}
 			}
-			if (handleNormal(device, sitePreference) || handleTabletIsNormal(device, sitePreference)) {
+			if (ResolverUtils.isNormal(device, sitePreference) || handleTabletIsNormal(device, sitePreference)) {
 				if (normalSiteUrlFactory != null) {
 					response.sendRedirect(response.encodeRedirectURL(normalSiteUrlFactory.createSiteUrl(request)));
 					return false;
 				}
 			}
 		} else if (tabletSiteUrlFactory != null && tabletSiteUrlFactory.isRequestForSite(request)) {
-			if (handleNormal(device, sitePreference)) {
+			if (ResolverUtils.isNormal(device, sitePreference)) {
 				if (normalSiteUrlFactory != null) {
 					response.sendRedirect(response.encodeRedirectURL(normalSiteUrlFactory.createSiteUrl(request)));
 					return false;
 				}
 			}
-			if (handleMobile(device, sitePreference)) {
+			if (ResolverUtils.isMobile(device, sitePreference)) {
 				if (mobileSiteUrlFactory != null) {
 					response.sendRedirect(response.encodeRedirectURL(mobileSiteUrlFactory.createSiteUrl(request)));
 					return false;
 				}
 			}
 		} else {
-			if (handleMobile(device, sitePreference) || handleTabletIsMobile(device, sitePreference)) {
+			if (ResolverUtils.isMobile(device, sitePreference) || handleTabletIsMobile(device, sitePreference)) {
 				if (mobileSiteUrlFactory != null) {
 					response.sendRedirect(response.encodeRedirectURL(mobileSiteUrlFactory.createSiteUrl(request)));
 					return false;
 				}
-			} else if (handleTablet(device, sitePreference)) {
+			} else if (ResolverUtils.isTablet(device, sitePreference)) {
 				if (tabletSiteUrlFactory != null) {
 					response.sendRedirect(response.encodeRedirectURL(tabletSiteUrlFactory.createSiteUrl(request)));
 					return false;
@@ -105,18 +106,6 @@ public class StandardSiteSwitcherHandler implements SiteSwitcherHandler {
 	}
 
 	// Helpers
-
-	private boolean handleNormal(Device device, SitePreference sitePreference) {
-		return sitePreference == SitePreference.NORMAL || device.isNormal() && sitePreference == null;
-	}
-
-	private boolean handleMobile(Device device, SitePreference sitePreference) {
-		return sitePreference == SitePreference.MOBILE || device.isMobile() && sitePreference == null;
-	}
-
-	private boolean handleTablet(Device device, SitePreference sitePreference) {
-		return sitePreference == SitePreference.TABLET || device.isTablet() && sitePreference == null;
-	}
 
 	private boolean handleTabletIsNormal(Device device, SitePreference sitePreference) {
 		return sitePreference == SitePreference.TABLET && tabletIsMobile == false
