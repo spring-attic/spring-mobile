@@ -3,7 +3,7 @@ buildscript {
         maven { url 'http://repo.springsource.org/plugins-release' }
     }
     dependencies {
-        classpath 'org.springframework.build.gradle:docbook-reference-plugin:0.2.2'
+        classpath 'org.springframework.build.gradle:docbook-reference-plugin:0.2.4'
     }
 }
 
@@ -121,7 +121,7 @@ configure(rootProject) {
             'http://docs.jboss.org/jbossas/javadoc/4.0.5/connector',
             'http://docs.oracle.com/javase/6/docs/api',
             'http://docs.oracle.com/javaee/6/api',
-            'http://static.springsource.org/spring/docs/3.1.x/javadoc-api' 
+            'http://static.springsource.org/spring/docs/3.2.x/javadoc-api' 
         )
         source subprojects.collect { project ->
             project.sourceSets.main.allJava
