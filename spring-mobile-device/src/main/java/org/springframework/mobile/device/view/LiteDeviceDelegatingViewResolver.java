@@ -122,6 +122,14 @@ public class LiteDeviceDelegatingViewResolver extends AbstractDeviceDelegatingVi
 	private String tabletSuffix = "";
 
 	/**
+	 * Creates a new LiteDeviceDelegatingViewResolver
+	 * @param delegate the ViewResolver in which to delegate
+	 */
+	public LiteDeviceDelegatingViewResolver(ViewResolver delegate) {
+		super(delegate);
+	}
+
+	/**
 	 * Set the prefix that gets prepended to view names for normal devices.
 	 */
 	public void setNormalPrefix(String normalPrefix) {
@@ -203,14 +211,6 @@ public class LiteDeviceDelegatingViewResolver extends AbstractDeviceDelegatingVi
 	 */
 	protected String getTabletSuffix() {
 		return this.tabletSuffix;
-	}
-
-	/**
-	 * Creates a new LiteDeviceDelegatingViewResolver
-	 * @param delegate the ViewResolver in which to delegate
-	 */
-	public LiteDeviceDelegatingViewResolver(ViewResolver delegate) {
-		super(delegate);
 	}
 
 	@Override

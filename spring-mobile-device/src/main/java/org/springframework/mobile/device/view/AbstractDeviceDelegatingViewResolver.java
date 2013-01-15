@@ -48,9 +48,18 @@ public abstract class AbstractDeviceDelegatingViewResolver extends WebApplicatio
 	 */
 	public static final String FORWARD_URL_PREFIX = "forward:";
 
-	private ViewResolver delegate;
+	private final ViewResolver delegate;
 
 	private boolean enableFallback = false;
+
+	/**
+	 * Creates a new AbstractDeviceDelegatingViewResolver
+	 * @param delegate the ViewResolver in which to delegate
+	 */
+	protected AbstractDeviceDelegatingViewResolver(ViewResolver delegate) {
+		Assert.notNull(delegate, "delegate is required");
+		this.delegate = delegate;
+	}
 
 	/**
 	 * Returns the delegate view resolver
@@ -75,15 +84,6 @@ public abstract class AbstractDeviceDelegatingViewResolver extends WebApplicatio
 	 */
 	protected boolean getEnableFallback() {
 		return this.enableFallback;
-	}
-
-	/**
-	 * Creates a new AbstractDeviceDelegatingViewResolver
-	 * @param delegate the ViewResolver in which to delegate
-	 */
-	protected AbstractDeviceDelegatingViewResolver(ViewResolver delegate) {
-		Assert.notNull(delegate, "delegate is required");
-		this.delegate = delegate;
 	}
 
 	public View resolveViewName(String viewName, Locale locale) throws Exception {
