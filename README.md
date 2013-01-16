@@ -92,11 +92,13 @@ Generate IDEA metadata (.iml and .ipr files):
 
 
 ## Contributing
+
 [Pull requests] are welcome. See the [contributor guidelines] for details.
 
 
 ## License
-Spring Mobile is released under version 2.0 of the [Apache License](http://www.apache.org/licenses/LICENSE-2.0).
+
+[Spring Mobile] is released under version 2.0 of the [Apache License](http://www.apache.org/licenses/LICENSE-2.0).
 
 
 [Spring Mobile]: http://www.springsource.org/spring-mobile
