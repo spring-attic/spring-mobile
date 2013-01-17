@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xml:id="spring-mobile-overview"
+<chapter xml:id="overview"
     xmlns="http://docbook.org/ns/docbook" version="5.0"
     xmlns:xl="http://www.w3.org/1999/xlink"
     xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -10,7 +10,7 @@
     
   <title>Spring Mobile Overview</title>
 
-  <section id="spring-mobile-overview-introduction">
+  <section xml:id="overview-introduction">
     
     <title>Introduction</title>
     
