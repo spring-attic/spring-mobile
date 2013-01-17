@@ -105,8 +105,8 @@ Generate IDEA metadata (.iml and .ipr files):
 [Spring MVC]: http://static.springsource.org/spring/docs/current/spring-framework-reference/html/mvc.html
 [downloading Spring artifacts]: https://github.com/SpringSource/spring-framework/wiki/Downloading-Spring-artifacts
 [building a distribution with dependencies]: https://github.com/SpringSource/spring-framework/wiki/Building-a-distribution-with-dependencies
-[Javadoc]: http://static.springsource.org/spring-mobile/docs/1.1.x/api/
-[reference docs]: http://static.springsource.org/spring-mobile/docs/1.1.x/reference/html/
+[Javadoc]: http://static.springsource.org/spring-mobile/docs/current/api/
+[reference docs]: http://static.springsource.org/spring-mobile/docs/current/reference/html/
 [samples repository]: https://github.com/SpringSource/spring-mobile-samples
 [Spring Mobile JIRA]: http://jira.springsource.org/browse/MOBILE
 [GitHub issues]: https://github.com/SpringSource/spring-mobile/issues?direction=desc&sort=created&state=open
