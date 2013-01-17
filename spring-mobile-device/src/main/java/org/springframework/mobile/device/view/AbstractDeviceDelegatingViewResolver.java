@@ -101,20 +101,20 @@ public abstract class AbstractDeviceDelegatingViewResolver extends WebApplicatio
 	 * "forward:", the view name will be adjusted to maintain those prefixes.
 	 * @param viewName the name of the view before device resolution
 	 * @return the adjusted view name
-	 * @see #getDeviceViewNameInteral(String)
+	 * @see #getDeviceViewNameInternal(String)
 	 */
 	protected String getDeviceViewName(String viewName) {
 		// Check for special "redirect:" prefix.
 		if (viewName.startsWith(REDIRECT_URL_PREFIX)) {
 			String redirectUrl = viewName.substring(REDIRECT_URL_PREFIX.length());
-			return REDIRECT_URL_PREFIX + getDeviceViewNameInteral(redirectUrl);
+			return REDIRECT_URL_PREFIX + getDeviceViewNameInternal(redirectUrl);
 		}
 		// Check for special "forward:" prefix.
 		if (viewName.startsWith(FORWARD_URL_PREFIX)) {
 			String forwardUrl = viewName.substring(FORWARD_URL_PREFIX.length());
-			return FORWARD_URL_PREFIX + getDeviceViewNameInteral(forwardUrl);
+			return FORWARD_URL_PREFIX + getDeviceViewNameInternal(forwardUrl);
 		}
-		return getDeviceViewNameInteral(viewName);
+		return getDeviceViewNameInternal(viewName);
 	}
 
 	/**
@@ -124,7 +124,7 @@ public abstract class AbstractDeviceDelegatingViewResolver extends WebApplicatio
 	 * @return the adjusted view name
 	 * @see #getDeviceViewName(String)
 	 */
-	protected abstract String getDeviceViewNameInteral(String viewName);
+	protected abstract String getDeviceViewNameInternal(String viewName);
 
 	@Override
 	protected void initServletContext(ServletContext servletContext) {

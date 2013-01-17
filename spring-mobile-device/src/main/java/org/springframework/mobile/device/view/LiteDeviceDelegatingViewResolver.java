@@ -214,7 +214,7 @@ public class LiteDeviceDelegatingViewResolver extends AbstractDeviceDelegatingVi
 	}
 
 	@Override
-	protected String getDeviceViewNameInteral(String viewName) {
+	protected String getDeviceViewNameInternal(String viewName) {
 		RequestAttributes attrs = RequestContextHolder.getRequestAttributes();
 		Assert.isInstanceOf(ServletRequestAttributes.class, attrs);
 		HttpServletRequest request = ((ServletRequestAttributes) attrs).getRequest();
