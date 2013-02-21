@@ -104,6 +104,24 @@ public final class LiteDeviceDelegatingViewResolverTest {
 	}
 
 	@Test
+	public void resolveViewNameNormalDeviceNormalPrefixRedirectToRoot() throws Exception {
+		this.viewName = "redirect:/";
+		device.setDeviceType(DeviceType.NORMAL);
+		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
+		viewResolver.setNormalPrefix("normal/");
+		replayMocks("redirect:normal/");
+	}
+
+	@Test
+	public void resolveViewNameNormalDeviceNormalPrefixRedirectToEmpty() throws Exception {
+		this.viewName = "redirect:";
+		device.setDeviceType(DeviceType.NORMAL);
+		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
+		viewResolver.setNormalPrefix("normal/");
+		replayMocks("redirect:normal/");
+	}
+
+	@Test
 	public void resolveViewNameNormalDeviceNormalSuffixRedirect() throws Exception {
 		this.viewName = "redirect:about";
 		device.setDeviceType(DeviceType.NORMAL);
@@ -122,12 +140,48 @@ public final class LiteDeviceDelegatingViewResolverTest {
 	}
 
 	@Test
+	public void resolveViewNameNormalDeviceNormalPrefixForwardToRoot() throws Exception {
+		this.viewName = "forward:/";
+		device.setDeviceType(DeviceType.NORMAL);
+		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
+		viewResolver.setNormalPrefix("normal/");
+		replayMocks("forward:normal/");
+	}
+
+	@Test
+	public void resolveViewNameNormalDeviceNormalPrefixForwardToEmpty() throws Exception {
+		this.viewName = "forward:";
+		device.setDeviceType(DeviceType.NORMAL);
+		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
+		viewResolver.setNormalPrefix("normal/");
+		replayMocks("forward:normal/");
+	}
+
+	@Test
 	public void resolveViewNameMobileDeviceMobilePrefixRedirect() throws Exception {
 		this.viewName = "redirect:about";
 		device.setDeviceType(DeviceType.MOBILE);
 		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
 		viewResolver.setMobilePrefix("mobile/");
 		replayMocks("redirect:mobile/about");
+	}
+
+	@Test
+	public void resolveViewNameMobileDeviceMobilePrefixRedirectToRoot() throws Exception {
+		this.viewName = "redirect:/";
+		device.setDeviceType(DeviceType.MOBILE);
+		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
+		viewResolver.setMobilePrefix("mobile/");
+		replayMocks("redirect:mobile/");
+	}
+
+	@Test
+	public void resolveViewNameMobileDeviceMobilePrefixRedirectToEmpty() throws Exception {
+		this.viewName = "redirect:";
+		device.setDeviceType(DeviceType.MOBILE);
+		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
+		viewResolver.setMobilePrefix("mobile/");
+		replayMocks("redirect:mobile/");
 	}
 
 	@Test
@@ -149,12 +203,48 @@ public final class LiteDeviceDelegatingViewResolverTest {
 	}
 
 	@Test
+	public void resolveViewNameMobileDeviceMobilePrefixForwardToRoot() throws Exception {
+		this.viewName = "forward:/";
+		device.setDeviceType(DeviceType.MOBILE);
+		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
+		viewResolver.setMobilePrefix("mobile/");
+		replayMocks("forward:mobile/");
+	}
+
+	@Test
+	public void resolveViewNameMobileDeviceMobilePrefixForwardToEmpty() throws Exception {
+		this.viewName = "forward:";
+		device.setDeviceType(DeviceType.MOBILE);
+		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
+		viewResolver.setMobilePrefix("mobile/");
+		replayMocks("forward:mobile/");
+	}
+
+	@Test
 	public void resolveViewNameTabletDeviceTabletPrefixRedirect() throws Exception {
 		this.viewName = "redirect:about";
 		device.setDeviceType(DeviceType.TABLET);
 		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
 		viewResolver.setTabletPrefix("tablet/");
 		replayMocks("redirect:tablet/about");
+	}
+
+	@Test
+	public void resolveViewNameTabletDeviceTabletPrefixRedirectToRoot() throws Exception {
+		this.viewName = "redirect:/";
+		device.setDeviceType(DeviceType.TABLET);
+		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
+		viewResolver.setTabletPrefix("tablet/");
+		replayMocks("redirect:tablet/");
+	}
+
+	@Test
+	public void resolveViewNameTabletDeviceTabletPrefixRedirectToEmpty() throws Exception {
+		this.viewName = "redirect:";
+		device.setDeviceType(DeviceType.TABLET);
+		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
+		viewResolver.setTabletPrefix("tablet/");
+		replayMocks("redirect:tablet/");
 	}
 
 	@Test
@@ -173,6 +263,24 @@ public final class LiteDeviceDelegatingViewResolverTest {
 		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
 		viewResolver.setTabletPrefix("tablet/");
 		replayMocks("forward:tablet/about");
+	}
+
+	@Test
+	public void resolveViewNameTabletDeviceTabletPrefixForwardToRoot() throws Exception {
+		this.viewName = "forward:/";
+		device.setDeviceType(DeviceType.TABLET);
+		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
+		viewResolver.setTabletPrefix("tablet/");
+		replayMocks("forward:tablet/");
+	}
+
+	@Test
+	public void resolveViewNameTabletDeviceTabletPrefixForwardToEmpty() throws Exception {
+		this.viewName = "forward:";
+		device.setDeviceType(DeviceType.TABLET);
+		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
+		viewResolver.setTabletPrefix("tablet/");
+		replayMocks("forward:tablet/");
 	}
 
 	@Test

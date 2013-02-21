@@ -228,7 +228,16 @@ public class LiteDeviceDelegatingViewResolver extends AbstractDeviceDelegatingVi
 		} else if (ResolverUtils.isTablet(device, sitePreference)) {
 			resolvedViewName = getTabletPrefix() + viewName + getTabletSuffix();
 		}
-		return resolvedViewName;
+
+		// MOBILE-63 "redirect:/" and "forward:/" can result in the view name containing multiple trailing slashes 
+		return stripTrailingSlash(resolvedViewName);
+	}
+
+	private String stripTrailingSlash(String viewName) {
+		if (viewName.endsWith("//")) {
+			return viewName.substring(0, viewName.length() - 1);
+		}
+		return viewName;
 	}
 
 }
