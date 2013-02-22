@@ -83,6 +83,7 @@ public class SiteSwitcherRequestFilterTest {
 		SitePreferenceHandler sitePreferenceHandler = new StandardSitePreferenceHandler(sitePreferenceRepository);
 		siteSwitcher = new SiteSwitcherRequestFilter(normalSiteUrlFactory, mobileSiteUrlFactory, tabletSiteUrlFactory,
 				sitePreferenceHandler);
+		siteSwitcher.initFilterBean();
 	}
 
 	@Test
@@ -176,17 +177,6 @@ public class SiteSwitcherRequestFilterTest {
 		sitePreferenceRepository.setSitePreference(SitePreference.TABLET);
 		siteSwitcher.doFilter(request, response, filterChain);
 		assertEquals("http://app.com/t", response.getRedirectedUrl());
-	}
-
-	@Test(expected = ServletException.class)
-	public void missingSwitcherModeInitParameter() throws Exception {
-		SiteSwitcherRequestFilter filter = new SiteSwitcherRequestFilter();
-		try {
-			filter.init(new MockFilterConfig());
-		} catch (ServletException ex) {
-			assertEquals("switcherMode init parameter not found", ex.getLocalizedMessage());
-			throw ex;
-		}
 	}
 
 	@Test(expected = ServletException.class)

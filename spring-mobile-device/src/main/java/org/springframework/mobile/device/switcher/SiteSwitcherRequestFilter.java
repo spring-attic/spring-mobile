@@ -217,21 +217,20 @@ public class SiteSwitcherRequestFilter extends OncePerRequestFilter {
 
 	@Override
 	protected void initFilterBean() throws ServletException {
-		if (switcherMode == null) {
-			throw new ServletException("switcherMode init parameter not found");
-		}
-		SiteSwitcherMode mode;
-		try {
-			mode = SiteSwitcherMode.valueOf(switcherMode.toUpperCase());
-		} catch (IllegalArgumentException ex) {
-			throw new ServletException("Invalid switcherMode init parameter", ex);
-		}
-		if (mode == SiteSwitcherMode.MDOT) {
-			mDot();
-		} else if (mode == SiteSwitcherMode.DOTMOBI) {
-			dotMobi();
-		} else if (mode == SiteSwitcherMode.URLPATH) {
-			urlPath();
+		if (switcherMode != null) {
+			SiteSwitcherMode mode;
+			try {
+				mode = SiteSwitcherMode.valueOf(switcherMode.toUpperCase());
+			} catch (IllegalArgumentException ex) {
+				throw new ServletException("Invalid switcherMode init parameter", ex);
+			}
+			if (mode == SiteSwitcherMode.MDOT) {
+				mDot();
+			} else if (mode == SiteSwitcherMode.DOTMOBI) {
+				dotMobi();
+			} else if (mode == SiteSwitcherMode.URLPATH) {
+				urlPath();
+			}
 		}
 	}
 
