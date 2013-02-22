@@ -237,8 +237,9 @@ public class SiteSwitcherRequestFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		siteSwitcherHandler.handleSiteSwitch(request, response);
-		filterChain.doFilter(request, response);
+		if (siteSwitcherHandler.handleSiteSwitch(request, response)) {
+			filterChain.doFilter(request, response);
+		}
 	}
 
 	// helpers

@@ -16,10 +16,23 @@
 
 package org.springframework.mobile.device.switcher;
 
+import static org.easymock.EasyMock.createMock;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.verify;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.Servlet;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Before;
@@ -843,4 +856,61 @@ public class SiteSwitcherRequestFilterTest {
 		assertEquals(0, response.getCookies().length);
 		assertNull(response.getRedirectedUrl());
 	}
+
+	@Test
+	public void doFilterWithoutRedirect() throws Exception {
+		device.setDeviceType(DeviceType.NORMAL);
+		Servlet servlet = createMock(Servlet.class);
+		servlet.service(this.request, this.response);
+		replay(servlet);
+		MockFilter otherFilter = new MockFilter(servlet);
+		MockFilterChain chain = new MockFilterChain(servlet, siteSwitcher, otherFilter);
+		chain.doFilter(this.request, this.response);
+		assertNull(response.getRedirectedUrl());
+		assertTrue(otherFilter.invoked);
+		verify(servlet);
+	}
+
+	@Test
+	public void doFilterWithRedirect() throws Exception {
+		device.setDeviceType(DeviceType.MOBILE);
+		Servlet servlet = createMock(Servlet.class);
+		replay(servlet);
+		MockFilter otherFilter = new MockFilter(servlet);
+		MockFilterChain chain = new MockFilterChain(servlet, siteSwitcher, otherFilter);
+		chain.doFilter(this.request, this.response);
+		assertEquals("http://m.app.com", response.getRedirectedUrl());
+		assertFalse(otherFilter.invoked);
+		verify(servlet);
+	}
+
+	private static class MockFilter implements Filter {
+
+		private final Servlet servlet;
+
+		private boolean invoked;
+
+		public MockFilter(Servlet servlet) {
+			this.servlet = servlet;
+		}
+
+		public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
+				ServletException {
+
+			this.invoked = true;
+
+			if (this.servlet != null) {
+				this.servlet.service(request, response);
+			} else {
+				chain.doFilter(request, response);
+			}
+		}
+
+		public void init(FilterConfig filterConfig) throws ServletException {
+		}
+
+		public void destroy() {
+		}
+	}
+
 }
