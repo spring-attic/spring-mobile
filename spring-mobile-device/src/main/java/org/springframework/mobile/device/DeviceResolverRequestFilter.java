@@ -34,30 +34,30 @@ import org.springframework.web.filter.OncePerRequestFilter;
  * @author Roy Clarkson
  */
 public class DeviceResolverRequestFilter extends OncePerRequestFilter {
-    
-    private final DeviceResolver deviceResolver;
-    
-    /**
-     * Create a device resolving {@link Filter} that defaults to a {@link LiteDeviceResolver} implementation.
-     */
-    public DeviceResolverRequestFilter() {
-        this(new LiteDeviceResolver());
-    }
-    
-    /**
-     * Create a device resolving {@link Filter}.
-     * @param deviceResolver the device resolver to delegate to.
-     */
-    public DeviceResolverRequestFilter(DeviceResolver deviceResolver) {
-        this.deviceResolver = deviceResolver;
-    }
 
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) 
-            throws ServletException, IOException {
-        Device device = deviceResolver.resolveDevice(request);
-        request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
-        filterChain.doFilter(request, response);
-    }
+	private final DeviceResolver deviceResolver;
+
+	/**
+	 * Create a device resolving {@link Filter} that defaults to a {@link LiteDeviceResolver} implementation.
+	 */
+	public DeviceResolverRequestFilter() {
+		this(new LiteDeviceResolver());
+	}
+
+	/**
+	 * Create a device resolving {@link Filter}.
+	 * @param deviceResolver the device resolver to delegate to.
+	 */
+	public DeviceResolverRequestFilter(DeviceResolver deviceResolver) {
+		this.deviceResolver = deviceResolver;
+	}
+
+	@Override
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+			throws ServletException, IOException {
+		Device device = deviceResolver.resolveDevice(request);
+		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
+		filterChain.doFilter(request, response);
+	}
 
 }
