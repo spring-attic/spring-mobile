@@ -114,16 +114,16 @@ public class LiteDeviceResolverTest {
 		Device device = resolver2.resolveDevice(request);
 		assertNormal(device);
 	}
-	
+
 	// Normal device User-Agent tests
-	
+
 	@Test
 	public void safari5_1_5_Mac10_7_3() {
 		request.addHeader("User-Agent", UserAgent.Safari5_1_5_Mac10_7_3);
 		Device device = resolver.resolveDevice(request);
 		assertEquals(device.toString(), NORMAL_TO_STRING);
 	}
-	
+
 	@Test
 	public void fireFox3_6_Mac10_6() {
 		request.addHeader("User-Agent", UserAgent.FireFox3_6_Mac10_6);
@@ -174,7 +174,7 @@ public class LiteDeviceResolverTest {
 		Device device = resolver.resolveDevice(request);
 		assertMobile(device);
 	}
-	
+
 	@Test
 	public void blackBerryTouch() {
 		request.addHeader("User-Agent", UserAgent.BlackBerryTouch_OS10);
@@ -213,6 +213,20 @@ public class LiteDeviceResolverTest {
 	@Test
 	public void palmPixi() {
 		request.addHeader("User-Agent", UserAgent.PalmPixi_webOS1_4);
+		Device device = resolver.resolveDevice(request);
+		assertMobile(device);
+	}
+
+	@Test
+	public void kindleFireGen1SilkMobile() {
+		request.addHeader("User-Agent", UserAgent.KindleFire1_Silk_mobile);
+		Device device = resolver.resolveDevice(request);
+		assertMobile(device);
+	}
+
+	@Test
+	public void kindleFireGen2SilkMobile() {
+		request.addHeader("User-Agent", UserAgent.KindleFire2_Silk_mobile);
 		Device device = resolver.resolveDevice(request);
 		assertMobile(device);
 	}
@@ -265,6 +279,62 @@ public class LiteDeviceResolverTest {
 	@Test
 	public void hpTouchPad() {
 		request.addHeader("User-Agent", UserAgent.HPTouchPad_webOS3);
+		Device device = resolver.resolveDevice(request);
+		assertTablet(device);
+	}
+
+	@Test
+	public void kindle1() {
+		request.addHeader("User-Agent", UserAgent.Kindle1);
+		Device device = resolver.resolveDevice(request);
+		assertTablet(device);
+	}
+
+	@Test
+	public void kindle2() {
+		request.addHeader("User-Agent", UserAgent.Kindle2);
+		Device device = resolver.resolveDevice(request);
+		assertTablet(device);
+	}
+
+	@Test
+	public void kindle2_5() {
+		request.addHeader("User-Agent", UserAgent.Kindle2_5);
+		Device device = resolver.resolveDevice(request);
+		assertTablet(device);
+	}
+
+	@Test
+	public void kindle3() {
+		request.addHeader("User-Agent", UserAgent.Kindle3);
+		Device device = resolver.resolveDevice(request);
+		assertTablet(device);
+	}
+
+	@Test
+	public void kindleFireGen1SilkDesktop() {
+		request.addHeader("User-Agent", UserAgent.KindleFire1_Silk_desktop);
+		Device device = resolver.resolveDevice(request);
+		assertTablet(device);
+	}
+
+	@Test
+	public void kindleFireGen1AndroidWebView() {
+		request.addHeader("User-Agent", UserAgent.KindleFire2_Android_webview);
+		Device device = resolver.resolveDevice(request);
+		assertTablet(device);
+	}
+
+	@Test
+	public void kindleFireGen2SilkDesktop() {
+		request.addHeader("User-Agent", UserAgent.KindleFire2_Silk_desktop);
+		Device device = resolver.resolveDevice(request);
+		assertTablet(device);
+	}
+
+	@Test
+	public void kindleFireGen2AndroidWebView() {
+		request.addHeader("User-Agent", UserAgent.KindleFire2_Android_webview);
 		Device device = resolver.resolveDevice(request);
 		assertTablet(device);
 	}

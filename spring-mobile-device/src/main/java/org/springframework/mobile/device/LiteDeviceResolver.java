@@ -88,14 +88,14 @@ public class LiteDeviceResolver implements DeviceResolver {
 		// UserAgent keyword detection for Mobile and Tablet devices
 		if (userAgent != null) {
 			userAgent = userAgent.toLowerCase();
-			for (String keyword : mobileUserAgentKeywords) {
-				if (userAgent.contains(keyword)) {
-					return LiteDevice.MOBILE_INSTANCE;
-				}
-			}
 			for (String keyword : tabletUserAgentKeywords) {
 				if (userAgent.contains(keyword)) {
 					return LiteDevice.TABLET_INSTANCE;
+				}
+			}
+			for (String keyword : mobileUserAgentKeywords) {
+				if (userAgent.contains(keyword)) {
+					return LiteDevice.MOBILE_INSTANCE;
 				}
 			}
 			//BlackBerry 10 special case
@@ -106,6 +106,12 @@ public class LiteDeviceResolver implements DeviceResolver {
 			if (userAgent.contains("android") && userAgent.contains("mobile")) {
 				return LiteDevice.MOBILE_INSTANCE;
 			} else if (userAgent.contains("android") && !userAgent.contains("mobile")) {
+				return LiteDevice.TABLET_INSTANCE;
+			}
+			// Kindle Fire special case
+			if (userAgent.contains("silk") && userAgent.contains("mobile")) {
+				return LiteDevice.MOBILE_INSTANCE;
+			} else if (userAgent.contains("silk") && !userAgent.contains("mobile")) {
 				return LiteDevice.TABLET_INSTANCE;
 			}
 		}
@@ -191,6 +197,7 @@ public class LiteDeviceResolver implements DeviceResolver {
 			"lge vx", "midp", "maemo", "mmp", "netfront", "hiptop", "nintendo DS", "novarra", "openweb", "opera mobi",
 			"opera mini", "palm", "psp", "phone", "smartphone", "symbian", "up.browser", "up.link", "wap", "windows ce" };
 
-	private static final String[] KNOWN_TABLET_USER_AGENT_KEYWORDS = new String[] { "ipad", "playbook", "hp-tablet" };
+	private static final String[] KNOWN_TABLET_USER_AGENT_KEYWORDS = new String[] { "ipad", "playbook", "hp-tablet",
+			"kindle" };
 
 }
