@@ -194,7 +194,7 @@ public abstract class AbstractSitePathUrlFactory extends AbstractSiteUrlFactory 
 		String formattedPath = null;
 		if (path != null) {
 			formattedPath = (path.startsWith("/") ? path : "/" + path);
-			formattedPath = (path.endsWith("/") ? path : path + "/");
+			formattedPath = (path.endsWith("/") ? formattedPath : formattedPath + "/");
 		}
 		return formattedPath;
 	}

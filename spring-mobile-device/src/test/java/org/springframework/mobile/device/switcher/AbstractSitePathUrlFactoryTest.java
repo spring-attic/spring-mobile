@@ -18,6 +18,8 @@ package org.springframework.mobile.device.switcher;
 
 import static org.junit.Assert.assertEquals;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -75,6 +77,54 @@ public abstract class AbstractSitePathUrlFactoryTest {
 	@Test
 	public void pathCleanNormalPath() {
 		assertEquals("/showcase", basicPathFactory.getCleanNormalPath());
+	}
+	
+	@Test
+	public void formatPathNoSlashes() {
+		AbstractSitePathUrlFactory factory = new MockSitePathUrlFactory("mobile", "tablet", "root");
+		assertEquals("/mobile/", factory.getMobilePath());
+		assertEquals("/tablet/", factory.getTabletPath());
+		assertEquals("/root/", factory.getRootPath());
+	}
+	
+	@Test
+	public void formatPathBeginsWithSlash() {
+		AbstractSitePathUrlFactory factory = new MockSitePathUrlFactory("/mobile", "/tablet", "/root");
+		assertEquals("/mobile/", factory.getMobilePath());
+		assertEquals("/tablet/", factory.getTabletPath());
+		assertEquals("/root/", factory.getRootPath());
+	}
+	
+	@Test
+	public void formatPathEndsWithSlash() {
+		AbstractSitePathUrlFactory factory = new MockSitePathUrlFactory("mobile/", "tablet/", "root/");
+		assertEquals("/mobile/", factory.getMobilePath());
+		assertEquals("/tablet/", factory.getTabletPath());
+		assertEquals("/root/", factory.getRootPath());
+	}
+	
+	@Test
+	public void formatPathBeginsWithAndEndsWithSlashes() {
+		AbstractSitePathUrlFactory factory = new MockSitePathUrlFactory("/mobile/", "/tablet/", "/root/");
+		assertEquals("/mobile/", factory.getMobilePath());
+		assertEquals("/tablet/", factory.getTabletPath());
+		assertEquals("/root/", factory.getRootPath());
+	}
+	
+	private class MockSitePathUrlFactory extends AbstractSitePathUrlFactory {
+
+		public MockSitePathUrlFactory(String mobilePath, String tabletPath, String rootPath) {
+			super(mobilePath, tabletPath, rootPath);
+		}
+
+		public boolean isRequestForSite(HttpServletRequest request) {
+			return false;
+		}
+
+		public String createSiteUrl(HttpServletRequest request) {
+			return null;
+		}
+
 	}
 
 }
