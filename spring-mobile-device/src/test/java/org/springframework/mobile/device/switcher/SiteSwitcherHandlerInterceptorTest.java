@@ -34,6 +34,7 @@ import org.springframework.mobile.device.site.StandardSitePreferenceHandler;
 import org.springframework.mobile.device.site.StubSitePreferenceRepository;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.web.util.UriUtils;
 
 public class SiteSwitcherHandlerInterceptorTest {
 
@@ -282,6 +283,16 @@ public class SiteSwitcherHandlerInterceptorTest {
 	}
 	
 	@Test
+	public void mDotMobileDeviceNoPreferenceQueryString() throws Exception {
+		device.setDeviceType(DeviceType.MOBILE);
+		request.setQueryString(UriUtils.encodeQuery("city=Z\u00fcrich", "UTF-8"));
+		SiteSwitcherHandlerInterceptor mDot = SiteSwitcherHandlerInterceptor.mDot("app.com");
+		assertFalse(mDot.preHandle(request, response, null));
+		assertEquals(0, response.getCookies().length);
+		assertEquals("http://m.app.com?city=Z%C3%BCrich", response.getRedirectedUrl());
+	}
+	
+	@Test
 	public void mDotMobileDeviceNoPreferenceRequestMobileSite() throws Exception {
 		device.setDeviceType(DeviceType.MOBILE);
 		request.setServerName("m.app.com");
@@ -470,6 +481,16 @@ public class SiteSwitcherHandlerInterceptorTest {
 	}
 	
 	@Test
+	public void mDotTabletDeviceNoPreferenceTabletIsMobileQueryString() throws Exception {
+		device.setDeviceType(DeviceType.TABLET);
+		request.setQueryString("x=123");
+		SiteSwitcherHandlerInterceptor mDot = SiteSwitcherHandlerInterceptor.mDot("app.com", true);
+		assertFalse(mDot.preHandle(request, response, null));
+		assertEquals(0, response.getCookies().length);
+		assertEquals("http://m.app.com?x=123", response.getRedirectedUrl());
+	}
+	
+	@Test
 	public void mDotTabletDeviceNoPreferenceTabletIsMobileRequestMobileSite() throws Exception {
 		device.setDeviceType(DeviceType.TABLET);
 		request.setServerName("m.app.com");
@@ -575,6 +596,17 @@ public class SiteSwitcherHandlerInterceptorTest {
 		assertEquals(0, response.getCookies().length);
 		assertEquals("http://app.com", response.getRedirectedUrl());
 	}
+	
+	@Test
+	public void dotMobiNormalDeviceNoPreferenceRequestMobileSiteQueryString() throws Exception {
+		device.setDeviceType(DeviceType.NORMAL);
+		request.setServerName("app.mobi");
+		request.setQueryString("x=123");
+		SiteSwitcherHandlerInterceptor dotMobi = SiteSwitcherHandlerInterceptor.dotMobi("app.com");
+		assertFalse(dotMobi.preHandle(request, response, null));
+		assertEquals(0, response.getCookies().length);
+		assertEquals("http://app.com?x=123", response.getRedirectedUrl());
+	}
 
 	@Test
 	public void dotMobiNormalDeviceNormalPreference() throws Exception {
@@ -658,6 +690,16 @@ public class SiteSwitcherHandlerInterceptorTest {
 		assertFalse(dotMobi.preHandle(request, response, null));
 		assertEquals(0, response.getCookies().length);
 		assertEquals("http://app.mobi", response.getRedirectedUrl());
+	}
+	
+	@Test
+	public void dotMobiMobileDeviceNoPreferenceQueryString() throws Exception {
+		device.setDeviceType(DeviceType.MOBILE);
+		request.setQueryString("x=123");
+		SiteSwitcherHandlerInterceptor dotMobi = SiteSwitcherHandlerInterceptor.dotMobi("app.com");
+		assertFalse(dotMobi.preHandle(request, response, null));
+		assertEquals(0, response.getCookies().length);
+		assertEquals("http://app.mobi?x=123", response.getRedirectedUrl());
 	}
 	
 	@Test
@@ -824,6 +866,16 @@ public class SiteSwitcherHandlerInterceptorTest {
 	}
 	
 	@Test
+	public void dotMobiTabletDeviceNoPreferenceTabletIsMobileQueryString() throws Exception {
+		device.setDeviceType(DeviceType.TABLET);
+		request.setQueryString("x=123");
+		SiteSwitcherHandlerInterceptor dotMobi = SiteSwitcherHandlerInterceptor.dotMobi("app.com", true);
+		assertFalse(dotMobi.preHandle(request, response, null));
+		assertEquals(0, response.getCookies().length);
+		assertEquals("http://app.mobi?x=123", response.getRedirectedUrl());
+	}
+	
+	@Test
 	public void dotMobiTabletDeviceNoPreferenceTabletIsMobileRequestMobileSite() throws Exception {
 		device.setDeviceType(DeviceType.TABLET);
 		request.setServerName("app.mobi");
@@ -921,6 +973,16 @@ public class SiteSwitcherHandlerInterceptorTest {
 	}
 	
 	@Test
+	public void urlPathMobileDeviceNoPreferenceQueryString() throws Exception {
+		SiteSwitcherHandlerInterceptor urlPath = SiteSwitcherHandlerInterceptor.urlPath("/mob");
+		device.setDeviceType(DeviceType.MOBILE);
+		request.setQueryString("x=123");
+		assertFalse(urlPath.preHandle(request, response, null));
+		assertEquals(0, response.getCookies().length);
+		assertEquals("http://" + request.getServerName() + "/mob?x=123", response.getRedirectedUrl());
+	}
+	
+	@Test
 	public void urlPathMobileDeviceNoPreferenceRequestMobileSite() throws Exception {
 		SiteSwitcherHandlerInterceptor urlPath = SiteSwitcherHandlerInterceptor.urlPath("/mob");
 		device.setDeviceType(DeviceType.MOBILE);
@@ -967,6 +1029,16 @@ public class SiteSwitcherHandlerInterceptorTest {
 		assertFalse(urlPath.preHandle(request, response, null));
 		assertEquals(0, response.getCookies().length);
 		assertEquals("http://" + request.getServerName() + "/tab", response.getRedirectedUrl());
+	}
+	
+	@Test
+	public void urlPathTabletDeviceNoPreferenceQueryString() throws Exception {
+		SiteSwitcherHandlerInterceptor urlPath = SiteSwitcherHandlerInterceptor.urlPath("/mob", "/tab", null);
+		device.setDeviceType(DeviceType.TABLET);
+		request.setQueryString("x=123");
+		assertFalse(urlPath.preHandle(request, response, null));
+		assertEquals(0, response.getCookies().length);
+		assertEquals("http://" + request.getServerName() + "/tab?x=123", response.getRedirectedUrl());
 	}
 	
 	@Test
@@ -1019,6 +1091,16 @@ public class SiteSwitcherHandlerInterceptorTest {
 	}
 	
 	@Test
+	public void urlPathRootPathMobileDeviceNoPreferenceQueryString() throws Exception {
+		SiteSwitcherHandlerInterceptor urlPath = SiteSwitcherHandlerInterceptor.urlPath("/mob", "/app");
+		device.setDeviceType(DeviceType.MOBILE);
+		request.setQueryString("x=123");
+		assertFalse(urlPath.preHandle(request, response, null));
+		assertEquals(0, response.getCookies().length);
+		assertEquals("http://" + request.getServerName() + "/app/mob?x=123", response.getRedirectedUrl());
+	}
+	
+	@Test
 	public void urlPathRootPathMobileDeviceNoPreferenceRequestMobileSite() throws Exception {
 		SiteSwitcherHandlerInterceptor urlPath = SiteSwitcherHandlerInterceptor.urlPath("/mob", "/app");
 		device.setDeviceType(DeviceType.MOBILE);
@@ -1065,6 +1147,16 @@ public class SiteSwitcherHandlerInterceptorTest {
 		assertFalse(urlPath.preHandle(request, response, null));
 		assertEquals(0, response.getCookies().length);
 		assertEquals("http://" + request.getServerName() + "/app/tab", response.getRedirectedUrl());
+	}
+	
+	@Test
+	public void urlPathRootPathTabletDeviceNoPreferenceQueryString() throws Exception {
+		SiteSwitcherHandlerInterceptor urlPath = SiteSwitcherHandlerInterceptor.urlPath("/mob", "/tab", "/app");
+		device.setDeviceType(DeviceType.TABLET);
+		request.setQueryString("x=123");
+		assertFalse(urlPath.preHandle(request, response, null));
+		assertEquals(0, response.getCookies().length);
+		assertEquals("http://" + request.getServerName() + "/app/tab?x=123", response.getRedirectedUrl());
 	}
 	
 	@Test

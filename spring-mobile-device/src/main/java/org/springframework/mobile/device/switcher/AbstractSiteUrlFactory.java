@@ -52,6 +52,9 @@ public abstract class AbstractSiteUrlFactory implements SiteUrlFactory {
 			builder.append(optionalPort);
 		}
 		builder.append(path);
+		if (request.getQueryString() != null) {
+			builder.append('?').append(request.getQueryString());
+		}
 		return builder.toString();
 	}
 

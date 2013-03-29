@@ -48,6 +48,7 @@ import org.springframework.mock.web.MockFilterChain;
 import org.springframework.mock.web.MockFilterConfig;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.web.util.UriUtils;
 
 public class SiteSwitcherRequestFilterTest {
 
@@ -273,6 +274,15 @@ public class SiteSwitcherRequestFilterTest {
 		filterTest("mDot");
 		assertEquals(0, response.getCookies().length);
 		assertEquals("http://m.app.com", response.getRedirectedUrl());
+	}
+	
+	@Test
+	public void mDotMobileDeviceNoPreferenceQueryString() throws Exception {
+		device.setDeviceType(DeviceType.MOBILE);
+		request.setQueryString(UriUtils.encodeQuery("city=Z\u00fcrich", "UTF-8"));
+		filterTest("mDot");
+		assertEquals(0, response.getCookies().length);
+		assertEquals("http://m.app.com?city=Z%C3%BCrich", response.getRedirectedUrl());
 	}
 
 	@Test

@@ -158,6 +158,13 @@ public final class MobileSitePathUrlFactoryTest extends AbstractSitePathUrlFacto
 		request.setRequestURI("/showcase/bar");
 		assertEquals("http://www.app.com:8080/showcase/mobile/bar", basicPathFactory.createSiteUrl(request));
 	}
+	
+	@Test
+	public void createPathSiteUrlPort8080withQueryString() {
+		request.setServerPort(8080);
+		request.setRequestURI("/showcase/bar?xval=123&yval=456");
+		assertEquals("http://www.app.com:8080/showcase/mobile/bar?xval=123&yval=456", basicPathFactory.createSiteUrl(request));
+	}
 
 	@Test
 	public void createRootSiteUrlFromTabletSite() {
@@ -192,6 +199,13 @@ public final class MobileSitePathUrlFactoryTest extends AbstractSitePathUrlFacto
 		request.setServerPort(8080);
 		request.setRequestURI("/showcase/tablet/about");
 		assertEquals("http://www.app.com:8080/showcase/mobile/about", advPathFactory.createSiteUrl(request));
+	}
+	
+	@Test
+	public void createPathSiteUrlFromTabletSitePort8080withQueryString() {
+		request.setServerPort(8080);
+		request.setRequestURI("/showcase/tablet/about?x=123");
+		assertEquals("http://www.app.com:8080/showcase/mobile/about?x=123", advPathFactory.createSiteUrl(request));
 	}
 
 	@Test
