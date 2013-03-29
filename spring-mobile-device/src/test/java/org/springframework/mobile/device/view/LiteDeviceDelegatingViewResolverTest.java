@@ -87,11 +87,41 @@ public final class LiteDeviceDelegatingViewResolverTest {
 		this.viewName = "redirect:about";
 		replayMocks("redirect:about");
 	}
+	
+	@Test
+	public void resolveViewNameNoDeviceNoSitePreferenceRedirectEmpty() throws Exception {
+		this.viewName = "redirect:";
+		replayMocks("redirect:");
+	}
+	
+	@Test
+	public void resolveViewNameNoDeviceNoSitePreferenceRedirectAbsoluteUrl() throws Exception {
+		this.viewName = "redirect:http://www.springsource.org";
+		replayMocks("redirect:http://www.springsource.org");
+	}
+	
+	@Test
+	public void resolveViewNameNoDeviceNoSitePreferenceRedirectAbsoluteUrlSSL() throws Exception {
+		this.viewName = "redirect:https://www.springsource.org";
+		replayMocks("redirect:https://www.springsource.org");
+	}
+	
+	@Test
+	public void resolveViewNameNoDeviceNoSitePreferenceRedirectAbsoluteUrlFTP() throws Exception {
+		this.viewName = "redirect:ftp://www.springsource.org";
+		replayMocks("redirect:ftp://www.springsource.org");
+	}
 
 	@Test
 	public void resolveViewNameNoDeviceNoSitePreferenceForward() throws Exception {
 		this.viewName = "forward:about";
 		replayMocks("forward:about");
+	}
+	
+	@Test
+	public void resolveViewNameNoDeviceNoSitePreferenceForwardAbsoluteUrl() throws Exception {
+		this.viewName = "forward:http://www.springsource.org";
+		replayMocks("forward:http://www.springsource.org");
 	}
 
 	@Test
@@ -119,6 +149,24 @@ public final class LiteDeviceDelegatingViewResolverTest {
 		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
 		viewResolver.setNormalPrefix("normal/");
 		replayMocks("redirect:normal/");
+	}
+	
+	@Test
+	public void resolveViewNameNormalDeviceNormalPrefixRedirectToAbsoluteUrl() throws Exception {
+		this.viewName = "redirect:http://www.springsource.org";
+		device.setDeviceType(DeviceType.NORMAL);
+		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
+		viewResolver.setNormalPrefix("normal/");
+		replayMocks("redirect:http://www.springsource.org");
+	}
+	
+	@Test
+	public void resolveViewNameNormalDeviceNormalPrefixRedirectToAbsoluteUrlFTP() throws Exception {
+		this.viewName = "redirect:ftp://www.springsource.org";
+		device.setDeviceType(DeviceType.NORMAL);
+		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
+		viewResolver.setNormalPrefix("normal/");
+		replayMocks("redirect:ftp://www.springsource.org");
 	}
 
 	@Test
@@ -156,6 +204,15 @@ public final class LiteDeviceDelegatingViewResolverTest {
 		viewResolver.setNormalPrefix("normal/");
 		replayMocks("forward:normal/");
 	}
+	
+	@Test
+	public void resolveViewNameNormalDeviceNormalPrefixForwardToAbsoluteUrl() throws Exception {
+		this.viewName = "forward:http://www.springsource.org";
+		device.setDeviceType(DeviceType.NORMAL);
+		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
+		viewResolver.setNormalPrefix("normal/");
+		replayMocks("forward:http://www.springsource.org");
+	}
 
 	@Test
 	public void resolveViewNameMobileDeviceMobilePrefixRedirect() throws Exception {
@@ -182,6 +239,24 @@ public final class LiteDeviceDelegatingViewResolverTest {
 		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
 		viewResolver.setMobilePrefix("mobile/");
 		replayMocks("redirect:mobile/");
+	}
+	
+	@Test
+	public void resolveViewNameMobileDeviceNormalPrefixRedirectToAbsoluteUrl() throws Exception {
+		this.viewName = "redirect:http://www.springsource.org";
+		device.setDeviceType(DeviceType.MOBILE);
+		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
+		viewResolver.setMobilePrefix("mobile/");
+		replayMocks("redirect:http://www.springsource.org");
+	}
+	
+	@Test
+	public void resolveViewNameMobileDeviceNormalPrefixRedirectToAbsoluteUrlSSL() throws Exception {
+		this.viewName = "redirect:https://www.springsource.org";
+		device.setDeviceType(DeviceType.MOBILE);
+		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
+		viewResolver.setMobilePrefix("mobile/");
+		replayMocks("redirect:https://www.springsource.org");
 	}
 
 	@Test
@@ -219,6 +294,15 @@ public final class LiteDeviceDelegatingViewResolverTest {
 		viewResolver.setMobilePrefix("mobile/");
 		replayMocks("forward:mobile/");
 	}
+	
+	@Test
+	public void resolveViewNameMobileDeviceNormalPrefixForwardToAbsoluteUrl() throws Exception {
+		this.viewName = "forward:HTTP://www.springsource.org";
+		device.setDeviceType(DeviceType.MOBILE);
+		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
+		viewResolver.setMobilePrefix("mobile/");
+		replayMocks("forward:HTTP://www.springsource.org");
+	}
 
 	@Test
 	public void resolveViewNameTabletDeviceTabletPrefixRedirect() throws Exception {
@@ -245,6 +329,15 @@ public final class LiteDeviceDelegatingViewResolverTest {
 		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
 		viewResolver.setTabletPrefix("tablet/");
 		replayMocks("redirect:tablet/");
+	}
+	
+	@Test
+	public void resolveViewNameTabletDeviceNormalPrefixRedirectToAbsoluteUrl() throws Exception {
+		this.viewName = "redirect:http://www.springsource.org";
+		device.setDeviceType(DeviceType.TABLET);
+		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
+		viewResolver.setTabletPrefix("tablet/");
+		replayMocks("redirect:http://www.springsource.org");
 	}
 
 	@Test
@@ -281,6 +374,15 @@ public final class LiteDeviceDelegatingViewResolverTest {
 		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
 		viewResolver.setTabletPrefix("tablet/");
 		replayMocks("forward:tablet/");
+	}
+	
+	@Test
+	public void resolveViewNameTabletDeviceNormalPrefixForwardToAbsoluteUrl() throws Exception {
+		this.viewName = "forward:http://www.springsource.org";
+		device.setDeviceType(DeviceType.TABLET);
+		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
+		viewResolver.setTabletPrefix("tablet/");
+		replayMocks("forward:http://www.springsource.org");
 	}
 
 	@Test
