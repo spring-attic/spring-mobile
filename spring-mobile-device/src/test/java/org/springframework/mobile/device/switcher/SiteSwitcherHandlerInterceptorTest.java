@@ -957,6 +957,121 @@ public class SiteSwitcherHandlerInterceptorTest {
 		assertEquals("TABLET", response.getCookies()[0].getValue());
 		assertNull(response.getRedirectedUrl());
 	}
+	
+	// standard tests
+
+	@Test
+	public void standardNormalDeviceNoPreference() throws Exception {
+		device.setDeviceType(DeviceType.NORMAL);
+		SiteSwitcherHandlerInterceptor interceptor = SiteSwitcherHandlerInterceptor.standard("normal.com", "mobile.com", "tablet.com", "." + "normal.com");
+		assertTrue(interceptor.preHandle(request, response, null));
+		assertNull(response.getRedirectedUrl());
+	}
+
+	@Test
+	public void standardNormalDeviceNoPreferenceRequestNormalSite() throws Exception {
+		device.setDeviceType(DeviceType.NORMAL);
+		request.setServerName("normal.com");
+		SiteSwitcherHandlerInterceptor interceptor = SiteSwitcherHandlerInterceptor.standard("normal.com", "mobile.com", "tablet.com", "." + "normal.com");
+		assertTrue(interceptor.preHandle(request, response, null));
+		assertNull(response.getRedirectedUrl());
+	}
+
+	@Test
+	public void standardNormalDeviceNoPreferenceRequestMobileSite() throws Exception {
+		device.setDeviceType(DeviceType.NORMAL);
+		request.setServerName("mobile.com");
+		SiteSwitcherHandlerInterceptor interceptor = SiteSwitcherHandlerInterceptor.standard("normal.com", "mobile.com", "tablet.com", "." + "normal.com");
+		assertFalse(interceptor.preHandle(request, response, null));
+		assertEquals("http://normal.com", response.getRedirectedUrl());
+	}
+
+	@Test
+	public void standardNormalDeviceNoPreferenceRequestTabletSite() throws Exception {
+		device.setDeviceType(DeviceType.NORMAL);
+		request.setServerName("tablet.com");
+		SiteSwitcherHandlerInterceptor interceptor = SiteSwitcherHandlerInterceptor.standard("normal.com", "mobile.com", "tablet.com", "." + "normal.com");
+		assertFalse(interceptor.preHandle(request, response, null));
+		assertEquals("http://normal.com", response.getRedirectedUrl());
+	}
+
+	@Test
+	public void standardMobileDeviceNoPreferenceTabletIsNotMobile() throws Exception {
+		device.setDeviceType(DeviceType.MOBILE);
+		SiteSwitcherHandlerInterceptor interceptor = SiteSwitcherHandlerInterceptor.standard("normal.com", "mobile.com", "." + "normal.com");
+		assertFalse(interceptor.preHandle(request, response, null));
+		assertEquals("http://mobile.com", response.getRedirectedUrl());
+	}
+
+	@Test
+	public void standardMobileDeviceNoPreference() throws Exception {
+		device.setDeviceType(DeviceType.MOBILE);
+		SiteSwitcherHandlerInterceptor interceptor = SiteSwitcherHandlerInterceptor.standard("normal.com", "mobile.com", "tablet.com", "." + "normal.com");
+		assertFalse(interceptor.preHandle(request, response, null));
+		assertEquals("http://mobile.com", response.getRedirectedUrl());
+	}
+
+	@Test
+	public void standardMobileDeviceNoPreferenceRequestNormalSite() throws Exception {
+		device.setDeviceType(DeviceType.MOBILE);
+		request.setServerName("normal.com");
+		SiteSwitcherHandlerInterceptor interceptor = SiteSwitcherHandlerInterceptor.standard("normal.com", "mobile.com", "tablet.com", "." + "normal.com");
+		assertFalse(interceptor.preHandle(request, response, null));
+		assertEquals("http://mobile.com", response.getRedirectedUrl());
+	}
+
+	@Test
+	public void standardMobileDeviceNoPreferenceRequestMobileSite() throws Exception {
+		device.setDeviceType(DeviceType.MOBILE);
+		request.setServerName("mobile.com");
+		SiteSwitcherHandlerInterceptor interceptor = SiteSwitcherHandlerInterceptor.standard("normal.com", "mobile.com", "tablet.com", "." + "normal.com");
+		assertTrue(interceptor.preHandle(request, response, null));
+		assertNull(response.getRedirectedUrl());
+	}
+
+	@Test
+	public void standardMobileDeviceNoPreferenceRequestTabletSite() throws Exception {
+		device.setDeviceType(DeviceType.MOBILE);
+		request.setServerName("tablet.com");
+		SiteSwitcherHandlerInterceptor interceptor = SiteSwitcherHandlerInterceptor.standard("normal.com", "mobile.com", "tablet.com", "." + "normal.com");
+		assertFalse(interceptor.preHandle(request, response, null));
+		assertEquals("http://mobile.com", response.getRedirectedUrl());
+	}
+
+	@Test
+	public void standardTabletDeviceNoPreference() throws Exception {
+		device.setDeviceType(DeviceType.TABLET);
+		SiteSwitcherHandlerInterceptor interceptor = SiteSwitcherHandlerInterceptor.standard("normal.com", "mobile.com", "tablet.com", "." + "normal.com");
+		assertFalse(interceptor.preHandle(request, response, null));
+		assertEquals("http://tablet.com", response.getRedirectedUrl());
+	}
+
+	@Test
+	public void standardTabletDeviceNoPreferenceRequestNormalSite() throws Exception {
+		device.setDeviceType(DeviceType.TABLET);
+		request.setServerName("normal.com");
+		SiteSwitcherHandlerInterceptor interceptor = SiteSwitcherHandlerInterceptor.standard("normal.com", "mobile.com", "tablet.com", "." + "normal.com");
+		assertFalse(interceptor.preHandle(request, response, null));
+		assertEquals("http://tablet.com", response.getRedirectedUrl());
+	}
+
+	@Test
+	public void standardTabletDeviceNoPreferenceRequestMobileSite() throws Exception {
+		device.setDeviceType(DeviceType.TABLET);
+		request.setServerName("mobile.com");
+		SiteSwitcherHandlerInterceptor interceptor = SiteSwitcherHandlerInterceptor.standard("normal.com", "mobile.com", "tablet.com", "." + "normal.com");
+		assertFalse(interceptor.preHandle(request, response, null));
+		assertEquals("http://tablet.com", response.getRedirectedUrl());
+	}
+
+	@Test
+	public void standardTabletDeviceNoPreferenceRequestTabletSite() throws Exception {
+		device.setDeviceType(DeviceType.TABLET);
+		request.setServerName("tablet.com");
+		SiteSwitcherHandlerInterceptor interceptor = SiteSwitcherHandlerInterceptor.standard("normal.com", "mobile.com", "tablet.com", "." + "normal.com");
+		assertTrue(interceptor.preHandle(request, response, null));
+		assertNull(response.getRedirectedUrl());
+	}
 
 	// urlPath tests
 
