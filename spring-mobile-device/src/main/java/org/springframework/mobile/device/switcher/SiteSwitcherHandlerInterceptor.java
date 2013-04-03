@@ -120,9 +120,7 @@ public class SiteSwitcherHandlerInterceptor extends HandlerInterceptorAdapter {
 	 * Uses a {@link CookieSitePreferenceRepository} that saves a cookie that is shared between the two domains.
 	 */
 	public static SiteSwitcherHandlerInterceptor mDot(String serverName, Boolean tabletIsMobile) {
-		return new SiteSwitcherHandlerInterceptor(new StandardSiteUrlFactory(serverName), new StandardSiteUrlFactory(
-				"m." + serverName), new StandardSitePreferenceHandler(new CookieSitePreferenceRepository("."
-				+ serverName)), tabletIsMobile);
+		return standard(serverName, "m." + serverName, "." + serverName, tabletIsMobile);
 	}
 
 	/**
@@ -145,9 +143,40 @@ public class SiteSwitcherHandlerInterceptor extends HandlerInterceptorAdapter {
 	 */
 	public static SiteSwitcherHandlerInterceptor dotMobi(String serverName, Boolean tabletIsMobile) {
 		int lastDot = serverName.lastIndexOf('.');
-		return new SiteSwitcherHandlerInterceptor(new StandardSiteUrlFactory(serverName), new StandardSiteUrlFactory(
-				serverName.substring(0, lastDot) + ".mobi"), new StandardSitePreferenceHandler(
-				new CookieSitePreferenceRepository("." + serverName)), tabletIsMobile);
+		return standard(serverName, serverName.substring(0, lastDot) + ".mobi", "." + serverName, tabletIsMobile);
+	}
+
+	/**
+	 * Creates a site switcher that redirects to a custom domain for normal site requests that either
+	 * originate from a mobile device or indicate a mobile site preference.
+	 * Uses a {@link CookieSitePreferenceRepository} that saves a cookie that is shared between the two domains.
+	 * @param normalServerName the 'normal' domain name e.g. "foo.com"
+	 * @param mobileServerName the 'mobile domain name e.g. "bar.com"
+	 * @param cookieDomain the name to use for saving the cookie
+	 * @see SiteSwitcherHandlerInterceptor#standard(String, String, String, Boolean)
+	 * @see StandardSiteUrlFactory
+	 */
+	public static SiteSwitcherHandlerInterceptor standard(String normalServerName, String mobileServerName, String cookieDomain) {
+		return standard(normalServerName, mobileServerName, cookieDomain, false);
+	}
+
+	/**
+	 * Creates a site switcher that redirects to a custom domain for normal site requests that either
+	 * originate from a mobile device or indicate a mobile site preference.
+	 * Uses a {@link CookieSitePreferenceRepository} that saves a cookie that is shared between the two domains.
+	 * @param normalServerName the 'normal' domain name e.g. "foo.com"
+	 * @param mobileServerName the 'mobile domain name e.g. "bar.com"
+	 * @param cookieDomain the name to use for saving the cookie
+	 * @param tabletIsMobile true if tablets should be presented with the 'mobile' site
+	 * @see SiteSwitcherHandlerInterceptor#standard(String, String, String)
+	 * @see StandardSiteUrlFactory
+	 */
+	public static SiteSwitcherHandlerInterceptor standard(String normalServerName, String mobileServerName, String cookieDomain, Boolean tabletIsMobile) {
+		return new SiteSwitcherHandlerInterceptor(
+				new StandardSiteUrlFactory(normalServerName),
+				new StandardSiteUrlFactory(mobileServerName),
+				new StandardSitePreferenceHandler(new CookieSitePreferenceRepository(cookieDomain)),
+				tabletIsMobile);
 	}
 
 	/**
