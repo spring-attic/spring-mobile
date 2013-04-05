@@ -1,7 +1,7 @@
 Spring Mobile Changelog
 =======================
 
-1.1.0.M3 (TBD)
+1.1.0.M3 (2013.04.04)
 =====================
 * Added factory method support for tablets when configuring SiteSwitcherHandlerInterceptor to use a custom domain
   strategy (MOBILE-73)
