@@ -1,6 +1,31 @@
 Spring Mobile Changelog
 =======================
 
+1.1.0.M3 (TBD)
+=====================
+* Added factory method support for tablets when configuring SiteSwitcherHandlerInterceptor to use a custom domain
+  strategy (MOBILE-73)
+* Added additional factory methods to SiteSwitcherHandlerInterceptor to allow easier configuration when using a 
+  custom domain strategy other than mDot or dotMobi (MOBILE-72)
+* Upgraded to Spring Framework 3.2.2 (MOBILE-71)
+* Fixed an issue in LiteDeviceDelegatingViewResolver where absolute URLs were not handled correctly when redirecting 
+  to the mobile or tablet sites (MOBILE-70)
+* Fixed an issue in AbstractSiteUrlFactory where querystring parameters were being dropped when the SiteSwitcher was 
+  rewriting the URL for the mobile or tablet sites. (MOBILE-69) 
+* Fixed an issue in AbstractSitePathUrlFactory where if a site path is configured with no slashes or only a trailing 
+  slash path then formatPath(...) was overwriting parts of of the path (MOBILE-68)
+* Updated build to test against Java 7 (MOBILE-66)
+* Now detecting Kindle Fire devices in LiteDeviceResolver (MOBILE-64)
+    - Silk Desktop mode is detected as Tablet
+    - Silk Mobile mode is detected as Mobile
+    - Android webviews are also detected as Tablet
+* Fixed an issue in DeviceDelegatingViewResolver to remove an extra trailing slash in certain situations (MOBILE-63)
+* Addressed an issue in SiteSwitcherRequestFilter to only call filterChain.doFilter(...) if the response has not 
+  been committed (MOBILE-62)  
+* Fixed an issue in SiteSwitcherRequestFilter where in certain situations, initFilterBean() was overwriting values 
+  from the constructor (MOBILE-61)
+* Updated build to use Gradle 1.4 (MOBILE-60)
+
 1.1.0.M2 (2013.01.16)
 =====================
 * Updated to Spring Framework 3.2
