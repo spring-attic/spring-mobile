@@ -82,7 +82,7 @@ Report issues via the [Spring Mobile JIRA]. While JIRA is preferred, [GitHub iss
 
 		File -> Import -> Existing projects into workspace
 
-	_Note: [SpringSource Tool Suite] has built in support for [Gradle], and you can simply import as Gradle projects._
+> **Note:** [Spring Tool Suite] has built in support for [Gradle], and you can simply import as Gradle projects.
 
 ### IDEA
 
@@ -112,6 +112,6 @@ Generate IDEA metadata (.iml and .ipr files):
 [GitHub issues]: https://github.com/SpringSource/spring-mobile/issues?direction=desc&sort=created&state=open
 [the lifecycle of an issue]: https://github.com/cbeams/spring-framework/wiki/The-Lifecycle-of-an-Issue
 [Gradle]: http://gradle.org
-[SpringSource Tool Suite]: http://www.springsource.com/developer/sts
+[Spring Tool Suite]: http://www.springsource.com/developer/sts
 [Pull requests]: http://help.github.com/send-pull-requests
 [contributor guidelines]: https://github.com/SpringSource/spring-mobile/wiki/Contributor-Guidelines
