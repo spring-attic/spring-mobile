@@ -54,7 +54,7 @@ public abstract class AbstractDeviceDelegatingViewResolver extends WebApplicatio
 
 	private boolean enableFallback = false;
 	private boolean forwardToViews = true;
-	private boolean redirectToViews = false;
+	private boolean redirectToViews = true;
 
 	/**
 	 * Creates a new AbstractDeviceDelegatingViewResolver
