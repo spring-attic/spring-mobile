@@ -88,6 +88,14 @@ public class LiteDeviceResolver implements DeviceResolver {
 		// UserAgent keyword detection for Mobile and Tablet devices
 		if (userAgent != null) {
 			userAgent = userAgent.toLowerCase();
+			// Android special case 
+			if (userAgent.contains("android") && !userAgent.contains("mobile")) {
+				return LiteDevice.TABLET_INSTANCE;
+			}
+			// Kindle Fire special case 
+			if (userAgent.contains("silk") && !userAgent.contains("mobile")) {
+				return LiteDevice.TABLET_INSTANCE;
+			}
 			for (String keyword : tabletUserAgentKeywords) {
 				if (userAgent.contains(keyword)) {
 					return LiteDevice.TABLET_INSTANCE;
@@ -97,22 +105,6 @@ public class LiteDeviceResolver implements DeviceResolver {
 				if (userAgent.contains(keyword)) {
 					return LiteDevice.MOBILE_INSTANCE;
 				}
-			}
-			//BlackBerry 10 special case
-			if (userAgent.contains("bb10") && userAgent.contains("mobile")) {
-				return LiteDevice.MOBILE_INSTANCE;
-			}
-			// Android special case
-			if (userAgent.contains("android") && userAgent.contains("mobile")) {
-				return LiteDevice.MOBILE_INSTANCE;
-			} else if (userAgent.contains("android") && !userAgent.contains("mobile")) {
-				return LiteDevice.TABLET_INSTANCE;
-			}
-			// Kindle Fire special case
-			if (userAgent.contains("silk") && userAgent.contains("mobile")) {
-				return LiteDevice.MOBILE_INSTANCE;
-			} else if (userAgent.contains("silk") && !userAgent.contains("mobile")) {
-				return LiteDevice.TABLET_INSTANCE;
 			}
 		}
 		// OperaMini special case
@@ -194,8 +186,9 @@ public class LiteDeviceResolver implements DeviceResolver {
 			"wapr", "webc", "winw", "winw", "xda ", "xda-" };
 
 	private static final String[] KNOWN_MOBILE_USER_AGENT_KEYWORDS = new String[] { "blackberry", "webos", "ipod",
-			"lge vx", "midp", "maemo", "mmp", "netfront", "hiptop", "nintendo DS", "novarra", "openweb", "opera mobi",
-			"opera mini", "palm", "psp", "phone", "smartphone", "symbian", "up.browser", "up.link", "wap", "windows ce" };
+			"lge vx", "midp", "maemo", "mmp", "mobile", "netfront", "hiptop", "nintendo DS", "novarra", "openweb",
+			"opera mobi", "opera mini", "palm", "psp", "phone", "smartphone", "symbian", "up.browser", "up.link",
+			"wap", "windows ce" };
 
 	private static final String[] KNOWN_TABLET_USER_AGENT_KEYWORDS = new String[] { "ipad", "playbook", "hp-tablet",
 			"kindle" };

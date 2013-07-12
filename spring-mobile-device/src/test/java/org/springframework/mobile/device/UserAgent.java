@@ -126,13 +126,13 @@ public class UserAgent {
 	public static final String BlackBerryTouch_OS10 = "Mozilla/5.0 (BB10; Touch) AppleWebKit/537.3+ (KHTML, like Gecko) Version/10.0.9.386 Mobile Safari/537.3+";
 
 	// Kindle
-	
+
 	public static final String Kindle1 = "Mozilla/4.0 (compatible; Linux 2.6.10) NetFront/3.3 Kindle/1.0 (screen 600x800)";
-	
+
 	public static final String Kindle2 = "Mozilla/4.0 (compatible; Linux 2.6.22) NetFront/3.4 Kindle/2.0 (screen 600x800)";
-	
+
 	public static final String Kindle2_5 = "Mozilla/4.0 (compatible; Linux 2.6.22) NetFront/3.4 Kindle/2.5 (screen 600x800; rotate)";
-	
+
 	public static final String Kindle3 = "Mozilla/5.0 (Linux; U; en-US) AppleWebKit/528.5+ (KHTML, like Gecko, Safari/528.5+) Version/4.0 Kindle/3.0 (screen 600X800; rotate)";
 
 	public static final String KindleFire1_Silk_desktop = "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_3; en-us; Silk/1.0.22.79_10013310) AppleWebKit/533.16 (KHTML, like Gecko) Version/5.0 Safari/533.16 Silk-Accelerated=<state>";
@@ -146,5 +146,9 @@ public class UserAgent {
 	public static final String KindleFire2_Silk_mobile = "Mozilla/5.0 (Linux; U; Android 4.0.3; <locale>; KFOT Build/IML74K) AppleWebKit/<webkit> (KHTML, like Gecko) Silk/<version> Mobile Safari/<safari> Silk-Accelerated=<state>";
 
 	public static final String KindleFire2_Android_webview = "Mozilla/5.0 (Linux; U; Android 4.0.3; <locale>; KFOT Build/IML74K) AppleWebKit/<webkit> (KHTML, like Gecko) Version/4.0 Safari/<safari>";
+
+	// Firefox OS
+
+	public static final String FirefoxOS_mobile = "Mozilla/5.0 (Mobile; rv:15.0) Gecko/15.0 Firefox/15.0";
 
 }
