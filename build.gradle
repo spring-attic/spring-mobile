@@ -4,6 +4,7 @@ buildscript {
     }
     dependencies { 
         classpath 'org.springframework.build.gradle:docbook-reference-plugin:0.2.6'
+        classpath 'me.champeau.gradle:gradle-javadoc-hotfix-plugin:0.1'
     }
 }
 
