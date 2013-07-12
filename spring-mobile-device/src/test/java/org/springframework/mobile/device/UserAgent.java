@@ -131,4 +131,8 @@ public class UserAgent {
 
 	public static final String KindleFire2_Android_webview = "Mozilla/5.0 (Linux; U; Android 4.0.3; <locale>; KFOT Build/IML74K) AppleWebKit/<webkit> (KHTML, like Gecko) Version/4.0 Safari/<safari>";
 
+	// Firefox OS
+
+	public static final String FirefoxOS_mobile = "Mozilla/5.0 (Mobile; rv:15.0) Gecko/15.0 Firefox/15.0";
+
 }

@@ -214,6 +214,13 @@ public class LiteDeviceResolverTest {
 		Device device = resolver.resolveDevice(request);
 		assertMobile(device);
 	}
+	
+	@Test
+	public void firefoxOSMobile() {
+		request.addHeader("User-Agent", UserAgent.FirefoxOS_mobile);
+		Device device = resolver.resolveDevice(request);
+		assertMobile(device);
+	}
 
 	// Tablet device User-Agent tests
 
