@@ -31,7 +31,7 @@ configure(allprojects) {
     dependencies {
         testCompile "junit:junit:4.9"
         testCompile "org.easymock:easymock:2.5.1"
-        testCompile "org.springframework:spring-test:3.1.1.RELEASE"
+        testCompile "org.springframework:spring-test:3.1.4.RELEASE"
     }
 
     // servlet-api (2.5) and tomcat-servlet-api (3.0) classpath entries should not be
@@ -83,7 +83,7 @@ configure(subprojects) { subproject ->
 project('spring-mobile-device') {
     description = 'Spring Mobile Device Resolution Support'
     dependencies {
-        compile "org.springframework:spring-webmvc:3.1.1.RELEASE"
+        compile "org.springframework:spring-webmvc:3.1.4.RELEASE"
         compile ("javax.servlet:servlet-api:2.5", provided)
     }
 }
