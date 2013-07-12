@@ -26,6 +26,7 @@ import org.springframework.util.Assert;
 import org.springframework.web.context.support.WebApplicationObjectSupport;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 /**
  * Abstract {@link ViewResolver} implementation, providing a device
@@ -75,6 +76,12 @@ public abstract class AbstractDeviceDelegatingViewResolver extends WebApplicatio
 	 * name cannot be resolved, and attempt will be made to resolve the
 	 * original view name. This may be helpful in situations where not all
 	 * views within a web site have device specific implementations.
+	 * 
+	 * <p>Note: fallback resolution will only work when delegating to a view 
+	 * resolver which returns null from 
+	 * {@link #resolveViewName(String, Locale)} if it cannot resolve a view. 
+	 * For example, {@link InternalResourceViewResolver} never returns null,
+	 * so fallback resolution will not be available.
 	 */
 	public void setEnableFallback(boolean enableFallback) {
 		this.enableFallback = enableFallback;
@@ -93,6 +100,9 @@ public abstract class AbstractDeviceDelegatingViewResolver extends WebApplicatio
 		View view = delegate.resolveViewName(deviceViewName, locale);
 		if (enableFallback && view == null) {
 			view = delegate.resolveViewName(viewName, locale);
+		}
+		if (logger.isDebugEnabled() && view != null) {
+			logger.debug("Resolved View: " + view.toString());
 		}
 		return view;
 	}

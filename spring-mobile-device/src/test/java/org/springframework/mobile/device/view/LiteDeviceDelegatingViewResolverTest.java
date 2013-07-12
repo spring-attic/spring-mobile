@@ -386,7 +386,7 @@ public final class LiteDeviceDelegatingViewResolverTest {
 	}
 
 	@Test
-	public void resolveViewNameNormalDeviceNoSitePreferenceFallback() throws Exception {
+	public void resolveViewNameNormalDevicePrefixFallback() throws Exception {
 		device.setDeviceType(DeviceType.NORMAL);
 		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
 		viewResolver.setNormalPrefix("normal/");
@@ -400,7 +400,21 @@ public final class LiteDeviceDelegatingViewResolverTest {
 	}
 
 	@Test
-	public void resolveViewNameMobileDeviceNoSitePreferenceFallback() throws Exception {
+	public void resolveViewNameNormalDeviceSuffixFallback() throws Exception {
+		device.setDeviceType(DeviceType.NORMAL);
+		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
+		viewResolver.setNormalSuffix(".nor");
+		viewResolver.setEnableFallback(true);
+		expect(delegateViewResolver.resolveViewName(viewName + ".nor", locale)).andReturn(null);
+		expect(delegateViewResolver.resolveViewName(viewName, locale)).andReturn(view);
+		replay(delegateViewResolver, view);
+		View result = viewResolver.resolveViewName(viewName, locale);
+		assertSame("Invalid view", view, result);
+		verify(delegateViewResolver, view);
+	}
+
+	@Test
+	public void resolveViewNameMobileDevicePrefixFallback() throws Exception {
 		device.setDeviceType(DeviceType.MOBILE);
 		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
 		viewResolver.setMobilePrefix("mobile/");
@@ -414,12 +428,40 @@ public final class LiteDeviceDelegatingViewResolverTest {
 	}
 
 	@Test
-	public void resolveViewNameTabletDeviceNoSitePreferenceFallback() throws Exception {
+	public void resolveViewNameMobileDeviceSuffixFallback() throws Exception {
+		device.setDeviceType(DeviceType.MOBILE);
+		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
+		viewResolver.setMobileSuffix(".mob");
+		viewResolver.setEnableFallback(true);
+		expect(delegateViewResolver.resolveViewName(viewName + ".mob", locale)).andReturn(null);
+		expect(delegateViewResolver.resolveViewName(viewName, locale)).andReturn(view);
+		replay(delegateViewResolver, view);
+		View result = viewResolver.resolveViewName(viewName, locale);
+		assertSame("Invalid view", view, result);
+		verify(delegateViewResolver, view);
+	}
+
+	@Test
+	public void resolveViewNameTabletDevicePrefixFallback() throws Exception {
 		device.setDeviceType(DeviceType.TABLET);
 		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
 		viewResolver.setTabletPrefix("tablet/");
 		viewResolver.setEnableFallback(true);
 		expect(delegateViewResolver.resolveViewName("tablet/" + viewName, locale)).andReturn(null);
+		expect(delegateViewResolver.resolveViewName(viewName, locale)).andReturn(view);
+		replay(delegateViewResolver, view);
+		View result = viewResolver.resolveViewName(viewName, locale);
+		assertSame("Invalid view", view, result);
+		verify(delegateViewResolver, view);
+	}
+
+	@Test
+	public void resolveViewNameTabletDeviceSuffixFallback() throws Exception {
+		device.setDeviceType(DeviceType.TABLET);
+		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
+		viewResolver.setTabletSuffix(".tab");
+		viewResolver.setEnableFallback(true);
+		expect(delegateViewResolver.resolveViewName(viewName + ".tab", locale)).andReturn(null);
 		expect(delegateViewResolver.resolveViewName(viewName, locale)).andReturn(view);
 		replay(delegateViewResolver, view);
 		View result = viewResolver.resolveViewName(viewName, locale);
