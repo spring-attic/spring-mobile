@@ -16,8 +16,6 @@
 
 package org.springframework.mobile.device.view;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Locale;
 
 import javax.servlet.ServletContext;
@@ -110,9 +108,7 @@ public abstract class AbstractDeviceDelegatingViewResolver extends WebApplicatio
 	/**
 	 * Returns the adjusted view name as determined by subclass implementation.
 	 * In the case where a requested URL is prefixed with "redirect:" or
-	 * "forward:", the view name will be adjusted to maintain those prefixes.
-	 * A redirect or forward to an absolute URL, e.g. "http://springsource.org"
-	 * will not be adjusted. 
+	 * "forward:", the view name will not be adjusted.
 	 * @param viewName the name of the view before device resolution
 	 * @return the adjusted view name
 	 * @see #getDeviceViewNameInternal(String)
@@ -120,32 +116,13 @@ public abstract class AbstractDeviceDelegatingViewResolver extends WebApplicatio
 	protected String getDeviceViewName(String viewName) {
 		// Check for special "redirect:" prefix.
 		if (viewName.startsWith(REDIRECT_URL_PREFIX)) {
-			String redirectUrl = viewName.substring(REDIRECT_URL_PREFIX.length());
-			// do not adjust absolute URL's
-			if (isAbsoluteUrl(redirectUrl)) {
-				return viewName;
-			}
-			return REDIRECT_URL_PREFIX + getDeviceViewNameInternal(redirectUrl);
+			return viewName;
 		}
 		// Check for special "forward:" prefix.
 		if (viewName.startsWith(FORWARD_URL_PREFIX)) {
-			String forwardUrl = viewName.substring(FORWARD_URL_PREFIX.length());
-			// do not adjust absolute URL's
-			if (isAbsoluteUrl(forwardUrl)) {
-				return viewName;
-			}
-			return FORWARD_URL_PREFIX + getDeviceViewNameInternal(forwardUrl);
+			return viewName;
 		}
 		return getDeviceViewNameInternal(viewName);
-	}
-	
-	private boolean isAbsoluteUrl(String url) {
-		try {
-			URI uri = new URI(url);
-			return uri.isAbsolute();
-		} catch (URISyntaxException e) {
-			return false;
-		}
 	}
 
 	/**

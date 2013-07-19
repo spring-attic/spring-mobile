@@ -130,7 +130,7 @@ public final class LiteDeviceDelegatingViewResolverTest {
 		device.setDeviceType(DeviceType.NORMAL);
 		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
 		viewResolver.setNormalPrefix("normal/");
-		replayMocks("redirect:normal/about");
+		replayMocks("redirect:about");
 	}
 
 	@Test
@@ -139,7 +139,7 @@ public final class LiteDeviceDelegatingViewResolverTest {
 		device.setDeviceType(DeviceType.NORMAL);
 		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
 		viewResolver.setNormalPrefix("normal/");
-		replayMocks("redirect:normal/");
+		replayMocks("redirect:/");
 	}
 
 	@Test
@@ -148,7 +148,7 @@ public final class LiteDeviceDelegatingViewResolverTest {
 		device.setDeviceType(DeviceType.NORMAL);
 		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
 		viewResolver.setNormalPrefix("normal/");
-		replayMocks("redirect:normal/");
+		replayMocks("redirect:");
 	}
 	
 	@Test
@@ -175,7 +175,7 @@ public final class LiteDeviceDelegatingViewResolverTest {
 		device.setDeviceType(DeviceType.NORMAL);
 		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
 		viewResolver.setNormalSuffix(".nor");
-		replayMocks("redirect:about.nor");
+		replayMocks("redirect:about");
 	}
 
 	@Test
@@ -184,7 +184,7 @@ public final class LiteDeviceDelegatingViewResolverTest {
 		device.setDeviceType(DeviceType.NORMAL);
 		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
 		viewResolver.setNormalPrefix("normal/");
-		replayMocks("forward:normal/about");
+		replayMocks("forward:about");
 	}
 
 	@Test
@@ -193,7 +193,7 @@ public final class LiteDeviceDelegatingViewResolverTest {
 		device.setDeviceType(DeviceType.NORMAL);
 		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
 		viewResolver.setNormalPrefix("normal/");
-		replayMocks("forward:normal/");
+		replayMocks("forward:/");
 	}
 
 	@Test
@@ -202,7 +202,7 @@ public final class LiteDeviceDelegatingViewResolverTest {
 		device.setDeviceType(DeviceType.NORMAL);
 		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
 		viewResolver.setNormalPrefix("normal/");
-		replayMocks("forward:normal/");
+		replayMocks("forward:");
 	}
 	
 	@Test
@@ -220,7 +220,7 @@ public final class LiteDeviceDelegatingViewResolverTest {
 		device.setDeviceType(DeviceType.MOBILE);
 		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
 		viewResolver.setMobilePrefix("mobile/");
-		replayMocks("redirect:mobile/about");
+		replayMocks("redirect:about");
 	}
 
 	@Test
@@ -229,7 +229,7 @@ public final class LiteDeviceDelegatingViewResolverTest {
 		device.setDeviceType(DeviceType.MOBILE);
 		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
 		viewResolver.setMobilePrefix("mobile/");
-		replayMocks("redirect:mobile/");
+		replayMocks("redirect:/");
 	}
 
 	@Test
@@ -238,7 +238,7 @@ public final class LiteDeviceDelegatingViewResolverTest {
 		device.setDeviceType(DeviceType.MOBILE);
 		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
 		viewResolver.setMobilePrefix("mobile/");
-		replayMocks("redirect:mobile/");
+		replayMocks("redirect:");
 	}
 	
 	@Test
@@ -265,7 +265,7 @@ public final class LiteDeviceDelegatingViewResolverTest {
 		device.setDeviceType(DeviceType.MOBILE);
 		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
 		viewResolver.setMobileSuffix(".mob");
-		replayMocks("redirect:about.mob");
+		replayMocks("redirect:about");
 	}
 
 	@Test
@@ -274,7 +274,7 @@ public final class LiteDeviceDelegatingViewResolverTest {
 		device.setDeviceType(DeviceType.MOBILE);
 		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
 		viewResolver.setMobilePrefix("mobile/");
-		replayMocks("forward:mobile/about");
+		replayMocks("forward:about");
 	}
 
 	@Test
@@ -283,7 +283,7 @@ public final class LiteDeviceDelegatingViewResolverTest {
 		device.setDeviceType(DeviceType.MOBILE);
 		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
 		viewResolver.setMobilePrefix("mobile/");
-		replayMocks("forward:mobile/");
+		replayMocks("forward:/");
 	}
 
 	@Test
@@ -292,7 +292,7 @@ public final class LiteDeviceDelegatingViewResolverTest {
 		device.setDeviceType(DeviceType.MOBILE);
 		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
 		viewResolver.setMobilePrefix("mobile/");
-		replayMocks("forward:mobile/");
+		replayMocks("forward:");
 	}
 	
 	@Test
@@ -310,7 +310,7 @@ public final class LiteDeviceDelegatingViewResolverTest {
 		device.setDeviceType(DeviceType.TABLET);
 		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
 		viewResolver.setTabletPrefix("tablet/");
-		replayMocks("redirect:tablet/about");
+		replayMocks("redirect:about");
 	}
 
 	@Test
@@ -319,7 +319,7 @@ public final class LiteDeviceDelegatingViewResolverTest {
 		device.setDeviceType(DeviceType.TABLET);
 		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
 		viewResolver.setTabletPrefix("tablet/");
-		replayMocks("redirect:tablet/");
+		replayMocks("redirect:/");
 	}
 
 	@Test
@@ -328,7 +328,7 @@ public final class LiteDeviceDelegatingViewResolverTest {
 		device.setDeviceType(DeviceType.TABLET);
 		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
 		viewResolver.setTabletPrefix("tablet/");
-		replayMocks("redirect:tablet/");
+		replayMocks("redirect:");
 	}
 	
 	@Test
@@ -346,7 +346,7 @@ public final class LiteDeviceDelegatingViewResolverTest {
 		device.setDeviceType(DeviceType.TABLET);
 		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
 		viewResolver.setTabletSuffix(".tab");
-		replayMocks("redirect:about.tab");
+		replayMocks("redirect:about");
 	}
 
 	@Test
@@ -355,7 +355,7 @@ public final class LiteDeviceDelegatingViewResolverTest {
 		device.setDeviceType(DeviceType.TABLET);
 		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
 		viewResolver.setTabletPrefix("tablet/");
-		replayMocks("forward:tablet/about");
+		replayMocks("forward:about");
 	}
 
 	@Test
@@ -364,7 +364,7 @@ public final class LiteDeviceDelegatingViewResolverTest {
 		device.setDeviceType(DeviceType.TABLET);
 		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
 		viewResolver.setTabletPrefix("tablet/");
-		replayMocks("forward:tablet/");
+		replayMocks("forward:/");
 	}
 
 	@Test
@@ -373,7 +373,7 @@ public final class LiteDeviceDelegatingViewResolverTest {
 		device.setDeviceType(DeviceType.TABLET);
 		request.setAttribute(DeviceUtils.CURRENT_DEVICE_ATTRIBUTE, device);
 		viewResolver.setTabletPrefix("tablet/");
-		replayMocks("forward:tablet/");
+		replayMocks("forward:");
 	}
 	
 	@Test
