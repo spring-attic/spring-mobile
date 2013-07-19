@@ -54,6 +54,8 @@ public abstract class AbstractDeviceDelegatingViewResolver extends WebApplicatio
 	private final ViewResolver delegate;
 
 	private boolean enableFallback = false;
+	private boolean forwardToViews = true;
+	private boolean redirectToViews = true;
 
 	/**
 	 * Creates a new AbstractDeviceDelegatingViewResolver
@@ -95,6 +97,38 @@ public abstract class AbstractDeviceDelegatingViewResolver extends WebApplicatio
 		return this.enableFallback;
 	}
 
+	/**
+	 * Return whether forwarding to device specific views is enabled.
+	 * @see #setForwardToViews(boolean)
+	 */
+	public boolean isForwardToViews() {
+		return forwardToViews;
+	}
+
+	/**
+	 * Sets whether this view resolver forwards requests to device specific views when
+	 * {@link #FORWARD_URL_PREFIX} prefixes the view name.
+	 */
+	public void setForwardToViews(boolean forwardToViews) {
+		this.forwardToViews = forwardToViews;
+	}
+
+	/**
+	 * Returns whether redirecting to device specific views is enabled.
+	 * @see #setRedirectToViews(boolean)
+	 */
+	public boolean isRedirectToViews() {
+		return redirectToViews;
+	}
+
+	/**
+	 * Sets whether this view resolver redirects requests to device specific views when
+	 * {@link #REDIRECT_URL_PREFIX} prefixes the view name.
+	 */
+	public void setRedirectToViews(boolean redirectToViews) {
+		this.redirectToViews = redirectToViews;
+	}
+
 	public View resolveViewName(String viewName, Locale locale) throws Exception {
 		String deviceViewName = getDeviceViewName(viewName);
 		View view = delegate.resolveViewName(deviceViewName, locale);
@@ -112,17 +146,20 @@ public abstract class AbstractDeviceDelegatingViewResolver extends WebApplicatio
 	 * In the case where a requested URL is prefixed with "redirect:" or
 	 * "forward:", the view name will be adjusted to maintain those prefixes.
 	 * A redirect or forward to an absolute URL, e.g. "http://springsource.org"
-	 * will not be adjusted. 
+	 * will not be adjusted. Additionally, redirecting and forwarding to device
+	 * specific views may be disabled.
 	 * @param viewName the name of the view before device resolution
 	 * @return the adjusted view name
 	 * @see #getDeviceViewNameInternal(String)
+	 * @see #setRedirectToViews(boolean)
+	 * @see #setForwardToViews(boolean)
 	 */
 	protected String getDeviceViewName(String viewName) {
 		// Check for special "redirect:" prefix.
 		if (viewName.startsWith(REDIRECT_URL_PREFIX)) {
 			String redirectUrl = viewName.substring(REDIRECT_URL_PREFIX.length());
 			// do not adjust absolute URL's
-			if (isAbsoluteUrl(redirectUrl)) {
+			if (isAbsoluteUrl(redirectUrl) || !redirectToViews) {
 				return viewName;
 			}
 			return REDIRECT_URL_PREFIX + getDeviceViewNameInternal(redirectUrl);
@@ -131,7 +168,7 @@ public abstract class AbstractDeviceDelegatingViewResolver extends WebApplicatio
 		if (viewName.startsWith(FORWARD_URL_PREFIX)) {
 			String forwardUrl = viewName.substring(FORWARD_URL_PREFIX.length());
 			// do not adjust absolute URL's
-			if (isAbsoluteUrl(forwardUrl)) {
+			if (isAbsoluteUrl(forwardUrl) || !forwardToViews) {
 				return viewName;
 			}
 			return FORWARD_URL_PREFIX + getDeviceViewNameInternal(forwardUrl);
