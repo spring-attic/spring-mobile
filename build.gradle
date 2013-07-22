@@ -12,6 +12,7 @@ configure(allprojects) {
     apply plugin: 'java'
     apply plugin: 'eclipse'
     apply plugin: 'idea'
+    apply plugin: 'javadocHotfix'
 
     group = 'org.springframework.mobile'
 
