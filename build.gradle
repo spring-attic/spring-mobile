@@ -20,6 +20,7 @@ configure(allprojects) {
 	apply plugin: 'java'
 	apply plugin: 'eclipse'
 	apply plugin: 'idea'
+	apply plugin: 'javadocHotfix'
 
 	compileJava {
 		sourceCompatibility=1.5
