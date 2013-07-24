@@ -3,10 +3,10 @@ Spring Mobile Changelog
 
 1.1.0.RC1 (2013.XX.XX)
 ======================
-* Fixed an issue where LiteDeviceDelegatingViewResolver was adjusting view names for "redirect:" and "forward:" 
-  requests based on the type of requesting devices. (MOBILE-70)
+* Fixed an issue where LiteDeviceDelegatingViewResolver was incorrectly adjusting view names for "redirect:" and 
+  "forward:" requests based on the type of requesting devices. (MOBILE-70)
 * Firefox OS devices are now resolved to a mobile device in LiteDeviceResolver (MOBILE-79)
-* Update build to use Javadoc hotfix plugin to address a frame injection volnerability (MOBILE-81)
+* Update build to use Javadoc hotfix plugin to address a frame injection vulnerability (MOBILE-81)
 * Upgrade to Spring Framework 3.2.3 (MOBILE-80)
 * Upgrade build to use Gradle 1.6 (MOBILE-75)
 
