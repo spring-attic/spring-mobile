@@ -1,6 +1,17 @@
 Spring Mobile Changelog
 =======================
 
+1.0.2.RELEASE (2013.08.05)
+==========================
+* Firefox OS devices are now resolved to a mobile device in LiteDeviceResolver (MOBILE-79)
+* Now detecting Kindle Fire devices in LiteDeviceResolver (MOBILE-64)
+    - Silk Desktop mode is detected as Tablet
+    - Silk Mobile mode is detected as Mobile
+    - Android webviews are also detected as Tablet
+* Update build to use Javadoc hotfix plugin to address a frame injection vulnerability (MOBILE-81)
+* Upgrade to Spring Framework 3.1.4 (MOBILE-82)
+* Upgrade build to use Gradle 1.6 (MOBILE-75)
+
 1.0.1.RELEASE (2012.11.08)
 ==========================
 * BlackBerry 10 mobile devices are now resolved to mobile devices in LiteDeviceResolver
