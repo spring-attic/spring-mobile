@@ -48,7 +48,7 @@
             
         </para>
         
-        <para>If you are developing against a milestone version, such as 1.1.0.M2, you will need to add the following 
+        <para>If you are developing against a milestone version, such as 1.1.0.RC1, you will need to add the following 
         repository in order to resolve the artifact:
         
             <programlisting language="xml"><![CDATA[
@@ -1039,22 +1039,20 @@ public LiteDeviceDelegatingViewResolver liteDeviceAwareViewResolver() {
             your entire site, there may be times when some of your views do not have separate implementations for
             different device types or you do not need different versions. In this case, you can enable fallback
             support. Enabling fallback support means if an adjusted view name cannot be resolved, the
-            <interfacename>ViewResolver</interfacename> will attempt to resolve the original view request. In the
-            following examples, the previous configurations have been adjusted to enable fallback support.</para>
+            <interfacename>ViewResolver</interfacename> will attempt to resolve the original view request. This 
+            feature is only supported if the delegate <interfacename>ViewResolver</interfacename> returns 
+            <literal>null</literal> from a call to <methodname>resolveViewName</methodname> when attempting to 
+            resolve a view that does not exist.</para>
+
+            <para>Enable fallback support by setting the <literal>enableFallback</literal> property.</para>
 
             <para>XML configuration:
 
                 <programlisting language="xml"><![CDATA[
 <bean class="org.springframework.mobile.device.view.LiteDeviceDelegatingViewResolver">
-  <constructor-arg>
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-      <property name="prefix" value="/WEB-INF/views/" />
-      <property name="suffix" value=".jsp" />
-    </bean>
-  </constructor-arg>
-  <property name="enableFallback" value="true" />
-  <property name="mobilePrefix" value="mobile/" />
-  <property name="tabletPrefix" value="tablet/" />
+    ...
+    <property name="enableFallback" value="true" />
+    ...
 </bean>]]>
                 </programlisting>
 
@@ -1065,13 +1063,9 @@ public LiteDeviceDelegatingViewResolver liteDeviceAwareViewResolver() {
                 <programlisting language="java"><![CDATA[
 @Bean
 public LiteDeviceDelegatingViewResolver liteDeviceAwareViewResolver() {
-    InternalResourceViewResolver delegate = new InternalResourceViewResolver();
-    delegate.setPrefix("/WEB-INF/views/");
-    delegate.setSuffix(".jsp");
-    LiteDeviceDelegatingViewResolver resolver = new LiteDeviceDelegatingViewResolver(delegate);
+    ...
     resolver.setEnableFallback(true);
-    resolver.setMobilePrefix("mobile/");
-    resolver.setTabletPrefix("tablet/");
+    ...
     return resolver;
 }]]>
                 </programlisting>
