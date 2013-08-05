@@ -59,7 +59,9 @@ configure(allprojects) {
 
     test.systemProperty("java.awt.headless", "true")
 
-    repositories { maven { url "http://repo.springsource.org/libs-release" } }
+    repositories { 
+        maven { url "http://repo.springsource.org/libs-release" } 
+    }
 
     dependencies {
         testCompile("org.springframework:spring-test:${springVersion}")
