@@ -57,4 +57,8 @@ public class StubDevice implements Device {
 		this.deviceType = deviceType;
 	}
 
+	public String getCapability(String capabilityName) {
+		
+		return null;
+	}
 }

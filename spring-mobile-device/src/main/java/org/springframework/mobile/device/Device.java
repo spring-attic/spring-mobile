@@ -44,4 +44,14 @@ public interface Device {
 	 */
 	boolean isTablet();
 
+	
+	/**
+	 * Given name of capability, returns its value for current device. For example, if current device is iPhone and capabilityName = Touch, method will return 'true'.
+	 * This method should be used when using a device repository, e.g. WURFL, DeviceAtlas, DetectRight or a custom one. If the user-agent of current device is present in
+	 * device repository being used, the method will simply return capability value as present in device repository. If no device repository is being used or device repository does not
+	 * have user agent of current device, method will return null.
+	 * @param capabilityName
+	 * @return
+	 */
+	String getCapability( String capabilityName );
 }
