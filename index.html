@@ -1,0 +1,175 @@
+---
+# The name of your project
+title: Spring Mobile
+
+badges:
+
+  # Customize your project's badges. Delete any entries that do not apply.
+  custom:
+    - name: Source (GitHub)
+      url:  https://github.com/spring-projects/spring-mobile
+      icon: github
+
+    - name: Issues (JIRA)
+      url:  http://jira.springsource.org/browse/MOBILE
+      icon: tracking
+
+    - name: CI (Bamboo)
+      url:  https://build.springsource.org/browse/MOBILE
+      icon: ci
+
+    - name: Forum
+      url:  http://forum.spring.io/forum/spring-projects/web/mobile
+      icon: forum
+
+    - name: StackOverflow
+      url:  http://stackoverflow.com/questions/tagged/spring-mobile
+      icon: stackoverflow
+
+---
+<!DOCTYPE HTML>
+<html lang="en-US">
+
+{% capture billboard_description %}
+
+Spring Mobile is an extension to Spring MVC that aims to simplify the development of mobile web applications.
+
+{% endcapture %}
+
+{% capture main_content %}
+
+Spring Mobile is a framework that provides capabilities to detect the type of device making a request to your Spring web site and serve alternative views based on that device. Like all Spring projects, the real power of Spring Mobile is found in how easily it can be extended.
+
+## Features
+
+* A Device resolver abstraction for server-side detection of mobile and tablet devices
+* Site preference management that allows the user to indicate if he or she prefers a "normal", "mobile", or "tablet" experience
+* A site switcher capable of switching the user to the most appropriate site, either mobile, tablet, or normal, based on his or her device and optionally indicated site preference
+* Device aware view management for organizing and managing different views for specific devices
+
+<span id="quick-start"></span>
+## Quick Start
+
+{% include download_widget.md %}
+
+### Device detection
+
+Add the following Java-based configuration to enable device detection in a Spring web application:
+
+```java
+public void addInterceptors(InterceptorRegistry registry) {
+    registry.addInterceptor(new DeviceResolverHandlerInterceptor());
+}
+
+public void addArgumentResolvers(
+        List<HandlerMethodArgumentResolver> argumentResolvers) {
+    argumentResolvers.add(new DeviceHandlerMethodArgumentResolver());
+}
+```
+
+Inject the `Device` into your controller:
+
+```java
+@Controller
+public class HomeController {
+
+    private static final Logger logger = 
+            LoggerFactory.getLogger(HomeController.class);
+
+    @RequestMapping("/")
+    public void home(Device device) {
+        if (device.isMobile()) {
+            logger.info("Hello mobile user!");
+        } else if (device.isTablet()) {
+            logger.info("Hello tablet user!");
+        } else {
+            logger.info("Hello desktop user!");         
+        }
+    }
+
+}
+```
+
+### Site preference
+
+Add the following Java-based configuration to enable site preference management in a Spring web application:
+
+```java
+public void addInterceptors(InterceptorRegistry registry) {
+    registry.addInterceptor(new DeviceResolverHandlerInterceptor());
+    registry.addInterceptor(new SitePreferenceHandlerInterceptor());
+}
+
+public void addArgumentResolvers(
+        List<HandlerMethodArgumentResolver> argumentResolvers) { 
+    argumentResolvers.add(new DeviceHandlerMethodArgumentResolver());
+    argumentResolvers.add(new SitePreferenceHandlerMethodArgumentResolver());
+}
+```
+
+Inject the `SitePreference` into your controller:
+
+```java
+@Controller
+public class HomeController {
+
+    private static final Logger logger = 
+            LoggerFactory.getLogger(HomeController.class);
+
+    @RequestMapping("/")
+    public String home(SitePreference sitePreference, Model model) {
+        if (sitePreference == SitePreference.NORMAL) {
+            logger.info("Site preference is normal");
+            return "home";
+        } else if (sitePreference == SitePreference.MOBILE) {
+            logger.info("Site preference is mobile");
+            return "home-mobile";
+        } else if (sitePreference == SitePreference.TABLET) {
+            logger.info("Site preference is tablet");
+            return "home-tablet";
+        } else {
+            logger.info("no site preference");
+            return "home";
+        }
+    }
+
+}
+```
+
+### Device aware view resolution
+
+Add the following Java-based configuration to enable device aware views in a Spring web application. This specifies that Spring Mobile will look for mobile views in `/WEB-INF/views/mobile/` and tablet views in `/WEB-INF/views/tablet/`.
+
+```java
+@Bean
+public LiteDeviceDelegatingViewResolver liteDeviceAwareViewResolver() {
+    InternalResourceViewResolver delegate = 
+            new InternalResourceViewResolver();
+    delegate.setPrefix("/WEB-INF/views/");
+    delegate.setSuffix(".jsp");
+    LiteDeviceDelegatingViewResolver resolver = 
+            new LiteDeviceDelegatingViewResolver(delegate);
+    resolver.setMobilePrefix("mobile/");
+    resolver.setTabletPrefix("tablet/");
+    return resolver;
+}
+```
+
+{% endcapture %}
+
+{% capture related_resources %}
+
+### Sample Projects
+
+* [Spring Mobile Samples](https://github.com/SpringSource/spring-mobile-samples)
+
+### Getting Started Guides
+
+* [Detecting a Device]({{site.main_site_url}}/guides/gs/device-detection)
+* [Serving Web Content]({{site.main_site_url}}/guides/gs/serving-web-content)
+
+{% endcapture %}
+
+
+{% include project_page.html %}
+</html>
