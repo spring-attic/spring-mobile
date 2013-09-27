@@ -174,7 +174,7 @@ public interface Device {
                 </para>
                 
                 <para>Alternatively, you can add the <classname>DeviceResolverHandlerInterceptor</classname> using 
-                Spring's <ulink url="http://docs.spring.io/spring/docs/3.1.x/spring-framework-reference/html/beans.html#beans-java">
+                Spring's <ulink url="http://docs.spring.io/spring/docs/3.2.4.RELEASE/spring-framework-reference/html/beans.html#beans-java">
                 <citetitle>Java-based container configuration</citetitle></ulink>: 
                 
                 <programlisting language="java"><![CDATA[

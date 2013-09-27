@@ -1,246 +1,246 @@
 buildscript {
-    repositories { 
-		maven { url 'http://repo.spring.io/plugins-release' }
-    }
-    dependencies { 
-        classpath 'org.springframework.build.gradle:docbook-reference-plugin:0.2.6'
-        classpath 'me.champeau.gradle:gradle-javadoc-hotfix-plugin:0.1'
-    }
+	repositories {  
+		maven { url 'http://repo.spring.io/plugins-release' }  
+	}
+	dependencies {
+		classpath 'org.springframework.build.gradle:docbook-reference-plugin:0.2.6'
+		classpath 'me.champeau.gradle:gradle-javadoc-hotfix-plugin:0.1'
+	}
 }
 
 configure(allprojects) {
-    group = 'org.springframework.mobile'
+	group = 'org.springframework.mobile'
 
-    ext.springVersion     = "3.2.3.RELEASE"
-    ext.junitVersion      = "4.11"
-    ext.easymockVersion   = "2.5.2"
-    ext.hamcrestVersion   = "1.3"
-    ext.servletApiVersion = "3.0.1"
+	ext.springVersion     = "3.2.4.RELEASE"
+	ext.junitVersion      = "4.11"
+	ext.easymockVersion   = "2.5.2"
+	ext.hamcrestVersion   = "1.3"
+	ext.servletApiVersion = "3.0.1"
 
-    apply plugin: 'java'
-    apply plugin: 'eclipse'
-    apply plugin: 'idea'
-    apply plugin: 'javadocHotfix'
+	apply plugin: 'java'
+	apply plugin: 'eclipse'
+	apply plugin: 'idea'
+	apply plugin: 'javadocHotfix'
 
-    compileJava {
-        sourceCompatibility=1.5
-        targetCompatibility=1.5
-    }
-    compileTestJava {
-        sourceCompatibility=1.7
-        targetCompatibility=1.7
-    }
+	compileJava {
+		sourceCompatibility=1.5
+		targetCompatibility=1.5
+	}
+	compileTestJava {
+		sourceCompatibility=1.7
+		targetCompatibility=1.7
+	}
 
-    [compileJava, compileTestJava]*.options*.compilerArgs = [
-        "-Xlint:serial",
-        "-Xlint:varargs",
-        "-Xlint:cast",
-        "-Xlint:classfile",
-        "-Xlint:dep-ann",
-        "-Xlint:divzero",
-        "-Xlint:empty",
-        "-Xlint:finally",
-        "-Xlint:overrides",
-        "-Xlint:path",
-        "-Xlint:processing",
-        "-Xlint:static",
-        "-Xlint:try",
-        "-Xlint:-options",     // intentionally disabled
-        "-Xlint:-fallthrough", // intentionally disabled
-        "-Xlint:rawtypes",
-        "-Xlint:deprecation",
-        "-Xlint:unchecked"
-    ]
+	[compileJava, compileTestJava]*.options*.compilerArgs = [
+		"-Xlint:serial",
+		"-Xlint:varargs",
+		"-Xlint:cast",
+		"-Xlint:classfile",
+		"-Xlint:dep-ann",
+		"-Xlint:divzero",
+		"-Xlint:empty",
+		"-Xlint:finally",
+		"-Xlint:overrides",
+		"-Xlint:path",
+		"-Xlint:processing",
+		"-Xlint:static",
+		"-Xlint:try",
+		"-Xlint:-options",     // intentionally disabled
+		"-Xlint:-fallthrough", // intentionally disabled
+		"-Xlint:rawtypes",
+		"-Xlint:deprecation",
+		"-Xlint:unchecked"
+	]
 
-    sourceSets.test.resources.srcDirs = [
-        'src/test/resources',
-        'src/test/java'
-    ]
+	sourceSets.test.resources.srcDirs = [
+		'src/test/resources',
+		'src/test/java'
+	]
 
-    test.systemProperty("java.awt.headless", "true")
+	test.systemProperty("java.awt.headless", "true")
 
-    repositories { 
+	repositories {
 		maven { url "http://repo.spring.io/libs-release" }
-    }
+	}
 
-    dependencies {
-        testCompile("org.springframework:spring-test:${springVersion}")
-        testCompile("junit:junit:${junitVersion}")
-        testCompile("org.hamcrest:hamcrest-all:${hamcrestVersion}")
-        testCompile("org.easymock:easymock:${easymockVersion}")
-    }
+	dependencies {
+		testCompile("org.springframework:spring-test:${springVersion}")
+		testCompile("junit:junit:${junitVersion}")
+		testCompile("org.hamcrest:hamcrest-all:${hamcrestVersion}")
+		testCompile("org.easymock:easymock:${easymockVersion}")
+	}
 
-    // servlet-api (2.5) and tomcat-servlet-api (3.0) classpath entries should not be
-    // exported to dependent projects in Eclipse to avoid false compilation errors due
-    // to changing APIs across these versions
-    eclipse.classpath.file.whenMerged { classpath ->
-        classpath.entries.findAll { entry -> entry.path.contains('servlet-api') }*.exported = false
-    }
+	// servlet-api (2.5) and tomcat-servlet-api (3.0) classpath entries should not be
+	// exported to dependent projects in Eclipse to avoid false compilation errors due
+	// to changing APIs across these versions
+	eclipse.classpath.file.whenMerged { classpath ->
+		classpath.entries.findAll { entry -> entry.path.contains('servlet-api') }*.exported = false
+	}
 }
 
 ext.javadocLinks = [
-    "http://docs.jboss.org/jbossas/javadoc/4.0.5/connector",
-    "http://docs.oracle.com/javase/6/docs/api",
-    "http://docs.oracle.com/javaee/6/api",
-	"http://docs.spring.io/spring/docs/3.2.x/javadoc-api",
+	"http://docs.jboss.org/jbossas/javadoc/4.0.5/connector",
+	"http://docs.oracle.com/javase/6/docs/api",
+	"http://docs.oracle.com/javaee/6/api",
+	"http://docs.spring.io/spring/docs/3.2.4.RELEASE/javadoc-api",
 ] as String[]
 
 configure(subprojects) { subproject ->
-    apply from: "${rootProject.projectDir}/publish-maven.gradle"
+	apply from: "${rootProject.projectDir}/publish-maven.gradle"
 
-    jar {
-        manifest.attributes["Created-By"] =
-            "${System.getProperty("java.version")} (${System.getProperty("java.specification.vendor")})"
-        manifest.attributes['Implementation-Title'] = subproject.name
-        manifest.attributes['Implementation-Version'] = subproject.version
+	jar {
+		manifest.attributes["Created-By"] =
+				"${System.getProperty("java.version")} (${System.getProperty("java.specification.vendor")})"
+		manifest.attributes['Implementation-Title'] = subproject.name
+		manifest.attributes['Implementation-Version'] = subproject.version
 
-        from("${rootProject.projectDir}/src/dist") {
-            include "license.txt"
-            include "notice.txt"
-            into "META-INF"
-            expand(copyright: new Date().format('yyyy'), version: project.version)
-        }
-    }
+		from("${rootProject.projectDir}/src/dist") {
+			include "license.txt"
+			include "notice.txt"
+			into "META-INF"
+			expand(copyright: new Date().format('yyyy'), version: project.version)
+		}
+	}
 
-    javadoc {
-        options.memberLevel = org.gradle.external.javadoc.JavadocMemberLevel.PROTECTED
-        options.author = true
-        options.header = project.name
-    }
+	javadoc {
+		options.memberLevel = org.gradle.external.javadoc.JavadocMemberLevel.PROTECTED
+		options.author = true
+		options.header = project.name
+	}
 
-    task sourcesJar(type: Jar, dependsOn:classes) {
-        classifier = 'sources'
-        from sourceSets.main.allJava
-    }
+	task sourcesJar(type: Jar, dependsOn:classes) {
+		classifier = 'sources'
+		from sourceSets.main.allJava
+	}
 
-    task javadocJar(type: Jar) {
-        classifier = 'javadoc'
-        from javadoc
-    }
+	task javadocJar(type: Jar) {
+		classifier = 'javadoc'
+		from javadoc
+	}
 
-    artifacts {
-        archives sourcesJar
-        archives javadocJar
-    }
+	artifacts {
+		archives sourcesJar
+		archives javadocJar
+	}
 }
 
 
 project('spring-mobile-device') {
-    description = 'Spring Mobile Device Resolution Support'
-    dependencies {
-        compile("org.springframework:spring-web:${springVersion}")
-        compile("org.springframework:spring-webmvc:${springVersion}")
-        compile("javax.servlet:javax.servlet-api:${servletApiVersion}", provided)
-    }
+	description = 'Spring Mobile Device Resolution Support'
+	dependencies {
+		compile("org.springframework:spring-web:${springVersion}")
+		compile("org.springframework:spring-webmvc:${springVersion}")
+		compile("javax.servlet:javax.servlet-api:${servletApiVersion}", provided)
+	}
 }
 
 configure(rootProject) {
-    description = 'Spring Mobile'
+	description = 'Spring Mobile'
 
-    apply plugin: 'docbook-reference'
+	apply plugin: 'docbook-reference'
 
-    reference { sourceDir = file('src/reference/docbook') }
+	reference { sourceDir = file('src/reference/docbook') }
 
-    // don't publish the default jar for the root project
-    configurations.archives.artifacts.clear()
+	// don't publish the default jar for the root project
+	configurations.archives.artifacts.clear()
 
-    dependencies {
-        // for integration tests
-    }
+	dependencies {
+		// for integration tests
+	}
 
-    task api(type: Javadoc) {
-        group = 'Documentation'
-        description = 'Generates aggregated Javadoc API documentation.'
-        title = "${rootProject.description} ${version} API"
-        options.memberLevel = org.gradle.external.javadoc.JavadocMemberLevel.PROTECTED
-        options.author = true
-        options.header = rootProject.description
-        options.overview = 'src/api/overview.html'
-        options.links(project.ext.javadocLinks)
-        
-        source subprojects.collect { project ->
-            project.sourceSets.main.allJava
-        }
-        
-        classpath = files(subprojects.collect { project ->
-            project.sourceSets.main.compileClasspath
-        })
-        
-        maxMemory = '1024m'
-        destinationDir = new File(buildDir, "api")
-    }
+	task api(type: Javadoc) {
+		group = 'Documentation'
+		description = 'Generates aggregated Javadoc API documentation.'
+		title = "${rootProject.description} ${version} API"
+		options.memberLevel = org.gradle.external.javadoc.JavadocMemberLevel.PROTECTED
+		options.author = true
+		options.header = rootProject.description
+		options.overview = 'src/api/overview.html'
+		options.links(project.ext.javadocLinks)
 
-    task docsZip(type: Zip) {
-        group = 'Distribution'
-        classifier = 'docs'
-        description = "Builds -${classifier} archive containing api and reference " +
+		source subprojects.collect { project ->
+			project.sourceSets.main.allJava
+		}
+
+		classpath = files(subprojects.collect { project ->
+			project.sourceSets.main.compileClasspath
+		})
+
+		maxMemory = '1024m'
+		destinationDir = new File(buildDir, "api")
+	}
+
+	task docsZip(type: Zip) {
+		group = 'Distribution'
+		classifier = 'docs'
+		description = "Builds -${classifier} archive containing api and reference " +
 				"for deployment at docs.spring.io/spring-mobile/docs."
 
-        from('src/dist') { include 'changelog.txt' }
+		from('src/dist') { include 'changelog.txt' }
 
-        from (api) { into 'api' }
+		from (api) { into 'api' }
 
-        from (reference) { into 'reference' }
-    }
+		from (reference) { into 'reference' }
+	}
 
-    task distZip(type: Zip, dependsOn: docsZip) {
-        group = 'Distribution'
-        classifier = 'dist'
-        description = "Builds -${classifier} archive, containing all jars and docs, " +
-                "suitable for community download page."
+	task distZip(type: Zip, dependsOn: docsZip) {
+		group = 'Distribution'
+		classifier = 'dist'
+		description = "Builds -${classifier} archive, containing all jars and docs, " +
+				"suitable for community download page."
 
-        def baseDir = "${project.name}-${project.version}";
+		def baseDir = "${project.name}-${project.version}";
 
-        from('src/dist') {
-            include 'readme.txt'
-            include 'license.txt'
-            include 'notice.txt'
-            into "${baseDir}"
-            expand(copyright: new Date().format('yyyy'), version: project.version)
-        }
+		from('src/dist') {
+			include 'readme.txt'
+			include 'license.txt'
+			include 'notice.txt'
+			into "${baseDir}"
+			expand(copyright: new Date().format('yyyy'), version: project.version)
+		}
 
-        from(zipTree(docsZip.archivePath)) { into "${baseDir}/docs" }
+		from(zipTree(docsZip.archivePath)) { into "${baseDir}/docs" }
 
-        subprojects.each { subproject ->
-            into ("${baseDir}/libs") {
-                from subproject.jar
-                if (subproject.tasks.findByPath('sourcesJar')) {
-                    from subproject.sourcesJar
-                }
-                if (subproject.tasks.findByPath('javadocJar')) {
-                    from subproject.javadocJar
-                }
-            }
-        }
-    }
+		subprojects.each { subproject ->
+			into ("${baseDir}/libs") {
+				from subproject.jar
+				if (subproject.tasks.findByPath('sourcesJar')) {
+					from subproject.sourcesJar
+				}
+				if (subproject.tasks.findByPath('javadocJar')) {
+					from subproject.javadocJar
+				}
+			}
+		}
+	}
 
-    artifacts {
-        archives docsZip
-        archives distZip
-    }
+	artifacts {
+		archives docsZip
+		archives distZip
+	}
 
-    task wrapper(type: Wrapper) {
-        description = 'Generates gradlew[.bat] scripts'
-        gradleVersion = '1.6'
-    }
+	task wrapper(type: Wrapper) {
+		description = 'Generates gradlew[.bat] scripts'
+		gradleVersion = '1.6'
+	}
 
 }
 
 task updateRootDocs << {
-    copy {
-        from 'src/dist'
-        into "${rootProject.projectDir}"
-        include 'notice.txt'
-        expand(copyright: new Date().format('yyyy'), version: project.version)
-        rename { filename -> 'NOTICE' }
-    }
+	copy {
+		from 'src/dist'
+		into "${rootProject.projectDir}"
+		include 'notice.txt'
+		expand(copyright: new Date().format('yyyy'), version: project.version)
+		rename { filename -> 'NOTICE' }
+	}
 
-    copy {
-        from 'src/dist'
-        into "${rootProject.projectDir}"
-        include 'license.txt'
-        rename { filename -> 'LICENSE' }
-    }
+	copy {
+		from 'src/dist'
+		into "${rootProject.projectDir}"
+		include 'license.txt'
+		rename { filename -> 'LICENSE' }
+	}
 }
 
 build.dependsOn('updateRootDocs')
