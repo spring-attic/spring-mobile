@@ -42,7 +42,7 @@
 <repository>
     <id>springsource-repo</id>
     <name>SpringSource Repository</name>
-    <url>http://repo.springsource.org/release</url>
+    <url>http://repo.spring.io/release</url>
 </repository>]]>
             </programlisting>
             
@@ -55,7 +55,7 @@
 <repository>
     <id>springsource-milestone</id>
     <name>SpringSource Milestone Repository</name>
-    <url>http://repo.springsource.org/milestone</url>
+    <url>http://repo.spring.io/milestone</url>
 </repository>]]>
             </programlisting>
             
@@ -68,7 +68,7 @@
 <repository>
     <id>springsource-snapshot</id>
     <name>SpringSource Snapshot Repository</name>
-    <url>http://repo.springsource.org/snapshot</url>
+    <url>http://repo.spring.io/snapshot</url>
 </repository>]]>
             </programlisting>
             
@@ -174,7 +174,7 @@ public interface Device {
                 </para>
                 
                 <para>Alternatively, you can add the <classname>DeviceResolverHandlerInterceptor</classname> using 
-                Spring's <ulink url="http://static.springsource.org/spring/docs/3.1.x/spring-framework-reference/html/beans.html#beans-java">
+                Spring's <ulink url="http://docs.spring.io/spring/docs/3.1.x/spring-framework-reference/html/beans.html#beans-java">
                 <citetitle>Java-based container configuration</citetitle></ulink>: 
                 
                 <programlisting language="java"><![CDATA[

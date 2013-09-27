@@ -23,19 +23,19 @@ See [downloading Spring artifacts] for Maven repository information. Unable to u
 <repository>
     <id>spring-repo</id>
     <name>Spring Repository</name>
-    <url>http://repo.springsource.org/release</url>
+    <url>http://repo.spring.io/release</url>
 </repository>   
     
 <repository>
     <id>spring-milestone</id>
     <name>Spring Milestone Repository</name>
-    <url>http://repo.springsource.org/milestone</url>
+    <url>http://repo.spring.io/milestone</url>
 </repository>
 
 <repository>
     <id>spring-snapshot</id>
     <name>Spring Snapshot Repository</name>
-    <url>http://repo.springsource.org/snapshot</url>
+    <url>http://repo.spring.io/snapshot</url>
 </repository>
 ```
 
@@ -120,11 +120,11 @@ $ ./gradlew idea
 
 
 [Spring Mobile]: http://www.springsource.org/spring-mobile
-[Spring MVC]: http://static.springsource.org/spring/docs/current/spring-framework-reference/html/mvc.html
+[Spring MVC]: http://docs.spring.io/spring/docs/current/spring-framework-reference/html/mvc.html
 [downloading Spring artifacts]: https://github.com/SpringSource/spring-framework/wiki/Downloading-Spring-artifacts
 [building a distribution with dependencies]: https://github.com/SpringSource/spring-framework/wiki/Building-a-distribution-with-dependencies
-[Javadoc]: http://static.springsource.org/spring-mobile/docs/current/api/
-[reference docs]: http://static.springsource.org/spring-mobile/docs/current/reference/html/
+[Javadoc]: http://docs.spring.io/spring-mobile/docs/current/api/
+[reference docs]: http://docs.spring.io/spring-mobile/docs/current/reference/html/
 [samples repository]: https://github.com/SpringSource/spring-mobile-samples
 [Spring Mobile JIRA]: http://jira.springsource.org/browse/MOBILE
 [GitHub issues]: https://github.com/SpringSource/spring-mobile/issues?direction=desc&sort=created&state=open
