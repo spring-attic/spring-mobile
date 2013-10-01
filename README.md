@@ -1,6 +1,6 @@
 # Spring Mobile
 
-[Spring Mobile] is an extension to [Spring MVC] that aims to simplify the development of mobile web applications.
+[Spring Mobile] is an extension to [Spring Web MVC] that aims to simplify the development of mobile web applications.
 
 
 ## Downloading Artifacts
@@ -60,7 +60,7 @@ Report issues via the [Spring Mobile JIRA]. While JIRA is preferred, [GitHub iss
 1. Clone the repository from GitHub:
 
     ```sh
-    $ git clone git://github.com/SpringSource/spring-mobile.git
+    $ git clone https://github.com/spring-projects/spring-mobile.git
     ```
 
 2. Navigate into the cloned repository directory:
@@ -119,18 +119,18 @@ $ ./gradlew idea
 [Spring Mobile] is released under version 2.0 of the [Apache License].
 
 
-[Spring Mobile]: http://www.springsource.org/spring-mobile
-[Spring MVC]: http://docs.spring.io/spring/docs/current/spring-framework-reference/html/mvc.html
-[downloading Spring artifacts]: https://github.com/SpringSource/spring-framework/wiki/Downloading-Spring-artifacts
-[building a distribution with dependencies]: https://github.com/SpringSource/spring-framework/wiki/Building-a-distribution-with-dependencies
+[Spring Mobile]: http://projects.spring.io/spring-mobile
+[Spring Web MVC]: http://docs.spring.io/spring/docs/current/spring-framework-reference/html/mvc.html
+[downloading Spring artifacts]: https://github.com/spring-projects/spring-framework/wiki/Downloading-Spring-artifacts
+[building a distribution with dependencies]: https://github.com/spring-projects/spring-framework/wiki/Building-a-distribution-with-dependencies
 [Javadoc]: http://docs.spring.io/spring-mobile/docs/current/api/
 [reference docs]: http://docs.spring.io/spring-mobile/docs/current/reference/html/
-[samples repository]: https://github.com/SpringSource/spring-mobile-samples
+[samples repository]: https://github.com/spring-projects/spring-mobile-samples
 [Spring Mobile JIRA]: http://jira.springsource.org/browse/MOBILE
-[GitHub issues]: https://github.com/SpringSource/spring-mobile/issues?direction=desc&sort=created&state=open
-[the lifecycle of an issue]: https://github.com/cbeams/spring-framework/wiki/The-Lifecycle-of-an-Issue
+[GitHub issues]: https://github.com/spring-projects/spring-mobile/issues
+[the lifecycle of an issue]: https://github.com/spring-projects/spring-framework/wiki/The-Lifecycle-of-an-Issue
 [Gradle]: http://gradle.org
-[sts]: http://www.springsource.com/developer/sts
+[sts]: https://spring.io/tools
 [Pull requests]: http://help.github.com/send-pull-requests
-[contributor guidelines]: https://github.com/SpringSource/spring-mobile/wiki/Contributor-Guidelines
+[contributor guidelines]: https://github.com/spring-projects/spring-mobile/wiki/Contributor-Guidelines
 [Apache License]: http://www.apache.org/licenses/LICENSE-2.0
