@@ -16,7 +16,8 @@
         
         <para>Device detection is useful when requests by mobile devices need to be handled differently from requests 
         made by desktop browsers. The Spring Mobile Device module provides support for server-side device detection. 
-        This support consists of a device resolution framework, site preference management, and site switcher.</para>
+        This support consists of a device resolution framework, site preference management, site switcher, and view 
+        management.</para>
         
     </section>
 
@@ -48,7 +49,7 @@
             
         </para>
         
-        <para>If you are developing against a milestone version, such as 1.1.0.RC1, you will need to add the following 
+        <para>If you are developing against a milestone or release candidate, you will need to add the following 
         repository in order to resolve the artifact:
         
             <programlisting language="xml"><![CDATA[
@@ -61,8 +62,7 @@
             
         </para>
         
-        <para>If you are testing the latest snapshot build version (e.g. 1.1.0.BUILD-SNAPSHOT), you will need to add 
-        the following repository:
+        <para>If you are testing the latest snapshot build version, you will need to add the following repository:
         
             <programlisting language="xml"><![CDATA[
 <repository>
@@ -178,8 +178,14 @@ public interface Device {
                 <citetitle>Java-based container configuration</citetitle></ulink>: 
                 
                 <programlisting language="java"><![CDATA[
+@Bean
+public DeviceResolverHandlerInterceptor deviceResolverHandlerInterceptor() {
+    return new DeviceResolverHandlerInterceptor();
+}
+
+@Override
 public void addInterceptors(InterceptorRegistry registry) {
-    registry.addInterceptor(new DeviceResolverHandlerInterceptor());
+    registry.addInterceptor(deviceResolverHandlerInterceptor());
 }]]>
                     </programlisting>
                 
@@ -191,11 +197,11 @@ public void addInterceptors(InterceptorRegistry registry) {
             
                 <title>DeviceResolverRequestFilter</title>
                 
-                <para>Spring Mobile also ships with a Servlet Filter that delegates to a 
-                <interfacename>DeviceResolver</interfacename>. As with the 
-                <interfacename>HandlerInterceptor</interfacename>, the resolved <interfacename>Device</interfacename> 
-                is indexed under a request attribute named 'currentDevice', making it available to handlers throughout 
-                request processing.</para>
+                <para>As an alternative to the <classname>DeviceResolverHandlerInterceptor</classname>, Spring Mobile 
+                also ships with a Servlet Filter that delegates to a <interfacename>DeviceResolver</interfacename>. 
+                As with the <interfacename>HandlerInterceptor</interfacename>, the 
+                resolved <interfacename>Device</interfacename> is indexed under a request attribute named 
+                'currentDevice', making it available to handlers throughout request processing.</para>
                 
                 <para>To enable, add the <classname>DeviceResolverRequestFilter</classname> to your web.xml:
                 
@@ -244,8 +250,14 @@ Device currentDevice = DeviceUtils.getCurrentDevice(servletRequest);]]>
             Java-based configuration:
             
                 <programlisting language="java"><![CDATA[
+@Bean
+public DeviceHandlerMethodArgumentResolver deviceHandlerMethodArgumentResolver() {
+    return new DeviceHandlerMethodArgumentResolver();
+}
+
+@Override
 public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-    argumentResolvers.add(new DeviceHandlerMethodArgumentResolver());
+    argumentResolvers.add(deviceHandlerMethodArgumentResolver());
 }]]>
                 </programlisting>
                 
@@ -332,19 +344,45 @@ public class HomeController {
                 <para>The same thing can be accomplished using Java-based configuration.
                 
                     <programlisting language="java"><![CDATA[
-public void addInterceptors(InterceptorRegistry registry) {
+@Bean
+public LiteDeviceResolver liteDeviceResolver() {
     List<String> keywords = new ArrayList<String>();
     keywords.add("iphone");
     keywords.add("android");
-    registry.addInterceptor(new DeviceResolverHandlerInterceptor(new LiteDeviceResolver(keywords)));
+    return new LiteDeviceResolver(keywords);
+}
+
+@Bean
+public DeviceResolverHandlerInterceptor deviceResolverHandlerInterceptor() {
+    return new DeviceResolverHandlerInterceptor(liteDeviceResolver());
+}
+
+@Override
+public void addInterceptors(InterceptorRegistry registry) {
+    registry.addInterceptor(deviceResolverHandlerInterceptor());
 }]]>
                     </programlisting>
                     
                 </para>
                 
-                <para>Alternatively, you may subclass the <classname>LiteDeviceResolver</classname>, and either set 
-                these values in the constructor, or by calling the 
-                <methodname>getNormalUserAgentKeywords()</methodname> method.</para>
+                <para>Alternatively, you may subclass <classname>LiteDeviceResolver</classname>, and set the 
+                values by overriding the <methodname>init()</methodname> method.
+
+                    <programlisting language="java"><![CDATA[
+public class CustomLiteDeviceResolver extends LiteDeviceResolver {
+
+    @Override
+    protected void init() {
+        super.init();
+        getNormalUserAgentKeywords().addAll(Arrays.asList(NORMAL_KEYWORDS));
+    };
+
+    private static final String[] NORMAL_KEYWORDS = new String[] { "iphone", "android" };
+
+}]]>
+                    </programlisting>
+
+                </para>
                 
             </section>
             
@@ -533,8 +571,6 @@ public interface SitePreferenceRepository {
             
             <programlisting language="xml"><![CDATA[
 <interceptors>
-  <!-- On pre-handle, resolve the device that originated the web request -->
-  <bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
   <!-- On pre-handle, manage the user's site preference (declare after DeviceResolverHandlerInterceptor) -->
   <bean class="org.springframework.mobile.device.site.SitePreferenceHandlerInterceptor" />
 </interceptors>]]>
@@ -543,9 +579,14 @@ public interface SitePreferenceRepository {
             <para>Java-based configuration is also available:</para>
             
             <programlisting language="java"><![CDATA[
+@Bean
+public SitePreferenceHandlerInterceptor sitePreferenceHandlerInterceptor() {
+    return new SitePreferenceHandlerInterceptor();
+}
+
+@Override
 public void addInterceptors(InterceptorRegistry registry) {
-    registry.addInterceptor(new DeviceResolverHandlerInterceptor());
-    registry.addInterceptor(new SitePreferenceHandlerInterceptor());
+    registry.addInterceptor(sitePreferenceHandlerInterceptor());
 }]]>
             </programlisting>
             
@@ -577,7 +618,6 @@ SitePreference sitePreference = SitePreferenceUtils.getCurrentSitePreference(ser
                 <programlisting language="xml"><![CDATA[
 <annotation-driven>
   <argument-resolvers>
-    <bean class="org.springframework.mobile.device.DeviceWebArgumentResolver" />
     <bean class="org.springframework.mobile.device.site.SitePreferenceWebArgumentResolver" />
   </argument-resolvers>
 </annotation-driven>]]>
@@ -588,9 +628,14 @@ SitePreference sitePreference = SitePreferenceUtils.getCurrentSitePreference(ser
             <para>Java-based configuration is also available:
             
                 <programlisting language="java"><![CDATA[
+@Bean
+public SitePreferenceHandlerMethodArgumentResolver sitePreferenceHandlerMethodArgumentResolver() {
+    return new SitePreferenceHandlerMethodArgumentResolver();
+}
+
+@Override
 public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) { 
-    argumentResolvers.add(new DeviceHandlerMethodArgumentResolver());
-    argumentResolvers.add(new SitePreferenceHandlerMethodArgumentResolver());
+    argumentResolvers.add(sitePreferenceHandlerMethodArgumentResolver());
 }]]>
                 </programlisting>
                 
@@ -641,6 +686,12 @@ public class HomeController {
         mobile users to a dedicated mobile site. Users may also indicate a site preference; for example, a mobile user 
         may still wish to use the 'normal' site. Convenient static factory methods are provided that implement 
         standard site switching conventions.</para>
+
+        <para>The <methodname>mDot</methodname>, <methodname>dotMobi</methodname> and <methodname>urlPath</methodname> 
+        factory methods configure cookie-based <interfacename>SitePreference</interfacename> storage. The cookie value 
+        will be shared across the mobile and normal site domains. Internally, the interceptor delegates to a 
+        <interfacename>SitePreferenceHandler</interfacename>, so there is no need to register a 
+        <classname>SitePreferenceHandlerInterceptor</classname> when using the switcher.</para>
         
         <section xml:id="site-switcher-handler-interceptor-mdot">
         
@@ -680,9 +731,20 @@ public class HomeController {
                 Java-based configuration is also available:
                 
                 <programlisting language="java"><![CDATA[
+@Bean
+public DeviceResolverHandlerInterceptor deviceResolverHandlerInterceptor() {
+    return new DeviceResolverHandlerInterceptor();
+}
+
+@Bean
+public SiteSwitcherHandlerInterceptor siteSwitcherHandlerInterceptor() {
+    return SiteSwitcherHandlerInterceptor.mDot("myapp.com", true);
+}
+
+@Override
 public void addInterceptors(InterceptorRegistry registry) {
-    registry.addInterceptor(new DeviceResolverHandlerInterceptor());
-    registry.addInterceptor(SiteSwitcherHandlerInterceptor.mDot("myapp.com", true));
+    registry.addInterceptor(deviceResolverHandlerInterceptor());
+    registry.addInterceptor(siteSwitcherHandlerInterceptor());
 }]]>
                 </programlisting>
                 
@@ -729,9 +791,68 @@ public void addInterceptors(InterceptorRegistry registry) {
                 Java-based configuration is also available:
                 
                 <programlisting language="java"><![CDATA[
+@Bean
+public DeviceResolverHandlerInterceptor deviceResolverHandlerInterceptor() {
+    return new DeviceResolverHandlerInterceptor();
+}
+
+@Bean
+public SiteSwitcherHandlerInterceptor siteSwitcherHandlerInterceptor() {
+    return SiteSwitcherHandlerInterceptor.dotMobi("myapp.com", true);
+}
+
+@Override
 public void addInterceptors(InterceptorRegistry registry) {
-    registry.addInterceptor(new DeviceResolverHandlerInterceptor());
-    registry.addInterceptor(SiteSwitcherHandlerInterceptor.dotMobi("myapp.com", true));
+    registry.addInterceptor(deviceResolverHandlerInterceptor());
+    registry.addInterceptor(siteSwitcherHandlerInterceptor());
+}]]>
+                </programlisting>
+                
+            </para>
+            
+        </section>
+
+        <section xml:id="site-switcher-handler-interceptor-standard">
+        
+            <title>Standard SiteSwitcher</title>
+            
+            <para>For a more customized configuration of the <literal>mDot</literal> or <literal>dotMobi</literal>
+            strategies, the <methodname>standard</methodname> factory method is available. Construct a SiteSwitcher 
+            that redirects mobile and tablet users to a specified schema:
+            
+                <programlisting language="xml"><![CDATA[
+<interceptors>
+  <!-- On pre-handle, resolve the device that originated the web request -->
+  <bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
+  <!-- On pre-handle, redirects mobile users to "m.myapp.com" (declare after DeviceResolverHandlerInterceptor) -->
+  <bean class="org.springframework.mobile.device.switcher.SiteSwitcherHandlerInterceptor" 
+      factory-method="standard">
+    <constructor-arg value="app.com"/>
+    <constructor-arg value="mobile.app.com"/>
+    <constructor-arg value="tablet.app.com"/>
+    <constructor-arg value=".app.com"/>
+  </bean>
+</interceptors>]]>
+                </programlisting>
+                                
+                Java-based configuration is also available:
+                
+                <programlisting language="java"><![CDATA[
+@Bean
+public DeviceResolverHandlerInterceptor deviceResolverHandlerInterceptor() {
+    return new DeviceResolverHandlerInterceptor();
+}
+
+@Bean
+public SiteSwitcherHandlerInterceptor siteSwitcherHandlerInterceptor() {
+    return SiteSwitcherHandlerInterceptor.standard("app.com", 
+        "mobile.app.com", "tablet.app.com", ".app.com");
+}
+
+@Override
+public void addInterceptors(InterceptorRegistry registry) {
+    registry.addInterceptor(deviceResolverHandlerInterceptor());
+    registry.addInterceptor(siteSwitcherHandlerInterceptor());
 }]]>
                 </programlisting>
                 
@@ -770,9 +891,20 @@ public void addInterceptors(InterceptorRegistry registry) {
             Java-based configuration is also available:
             
                     <programlisting language="java"><![CDATA[
+@Bean
+public DeviceResolverHandlerInterceptor deviceResolverHandlerInterceptor() {
+    return new DeviceResolverHandlerInterceptor();
+}
+
+@Bean
+public SiteSwitcherHandlerInterceptor siteSwitcherHandlerInterceptor() {
+    return SiteSwitcherHandlerInterceptor.urlPath("/m");
+}
+
+@Override
 public void addInterceptors(InterceptorRegistry registry) {
-    registry.addInterceptor(new DeviceResolverHandlerInterceptor());
-    registry.addInterceptor(SiteSwitcherHandlerInterceptor.urlPath("/m"));
+    registry.addInterceptor(deviceResolverHandlerInterceptor());
+    registry.addInterceptor(siteSwitcherHandlerInterceptor());
 }]]>
                     </programlisting>
             
@@ -804,9 +936,20 @@ public void addInterceptors(InterceptorRegistry registry) {
             Java-based configuration is also available:
             
                     <programlisting language="java"><![CDATA[
+@Bean
+public DeviceResolverHandlerInterceptor deviceResolverHandlerInterceptor() {
+    return new DeviceResolverHandlerInterceptor();
+}
+
+@Bean
+public SiteSwitcherHandlerInterceptor siteSwitcherHandlerInterceptor() {
+    return SiteSwitcherHandlerInterceptor.urlPath("/m", "/showcase");
+}
+
+@Override
 public void addInterceptors(InterceptorRegistry registry) {
-    registry.addInterceptor(new DeviceResolverHandlerInterceptor());
-    registry.addInterceptor(SiteSwitcherHandlerInterceptor.urlPath("/m", "/showcase"));
+    registry.addInterceptor(deviceResolverHandlerInterceptor());
+    registry.addInterceptor(siteSwitcherHandlerInterceptor());
 }]]>
                     </programlisting>
             
@@ -842,9 +985,20 @@ public void addInterceptors(InterceptorRegistry registry) {
                 Java-based configuration is also available:
             
                     <programlisting language="java"><![CDATA[
+@Bean
+public DeviceResolverHandlerInterceptor deviceResolverHandlerInterceptor() {
+    return new DeviceResolverHandlerInterceptor();
+}
+
+@Bean
+public SiteSwitcherHandlerInterceptor siteSwitcherHandlerInterceptor() {
+    return SiteSwitcherHandlerInterceptor.urlPath("/m", "/t", "/showcase");
+}
+
+@Override
 public void addInterceptors(InterceptorRegistry registry) {
-    registry.addInterceptor(new DeviceResolverHandlerInterceptor());
-    registry.addInterceptor(SiteSwitcherHandlerInterceptor.urlPath("/m", "/t", "/showcase"));
+    registry.addInterceptor(deviceResolverHandlerInterceptor());
+    registry.addInterceptor(siteSwitcherHandlerInterceptor());
 }]]>
                     </programlisting>
             
@@ -872,15 +1026,9 @@ public void addInterceptors(InterceptorRegistry registry) {
             </section>
         
         </section>
-            
-        <para>The <methodname>mDot</methodname>, <methodname>dotMobi</methodname> and <methodname>urlPath</methodname> 
-        factory methods configure cookie-based <interfacename>SitePreference</interfacename> storage. The cookie value 
-        will be shared across the mobile and normal site domains. Internally, the interceptor delegates to a 
-        <interfacename>SitePreferenceHandler</interfacename>, so there is no need to register a 
-        <classname>SitePreferenceHandlerInterceptor</classname> when using the switcher.</para>
-            
+
         <para>See the JavaDoc of <classname>SiteSwitcherHandlerInterceptor</classname> for additional options when you 
-        need more control. See the spring-mobile <ulink url="https://github.com/SpringSource/spring-mobile-samples">
+        need more control. See the spring-mobile <ulink url="https://github.com/spring-projects/spring-mobile-samples">
         <citetitle>samples</citetitle></ulink> repository for runnable SiteSwitcher examples.</para>
         
     </section>
