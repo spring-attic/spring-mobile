@@ -1,6 +1,11 @@
 Spring Mobile Changelog
 =======================
 
+1.1.0.RELEASE (2013.10.03)
+==========================
+* Upgrade to Spring Framework 3.2.4 (MOBILE-86)
+* Update documentation
+
 1.1.0.RC1 (2013.08.05)
 ======================
 * Fixed an issue where LiteDeviceDelegatingViewResolver was incorrectly adjusting view names for "redirect:" and 
