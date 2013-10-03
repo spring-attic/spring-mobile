@@ -57,13 +57,27 @@ Spring Mobile is a framework that provides capabilities to detect the type of de
 Add the following Java-based configuration to enable device detection in a Spring web application:
 
 ```java
-public void addInterceptors(InterceptorRegistry registry) {
-    registry.addInterceptor(new DeviceResolverHandlerInterceptor());
+@Bean
+public DeviceResolverHandlerInterceptor 
+        deviceResolverHandlerInterceptor() {
+    return new DeviceResolverHandlerInterceptor();
 }
 
+@Bean
+public DeviceHandlerMethodArgumentResolver 
+        deviceHandlerMethodArgumentResolver() {
+    return new DeviceHandlerMethodArgumentResolver();
+}
+
+@Override
+public void addInterceptors(InterceptorRegistry registry) {
+    registry.addInterceptor(deviceResolverHandlerInterceptor());
+}
+
+@Override
 public void addArgumentResolvers(
         List<HandlerMethodArgumentResolver> argumentResolvers) {
-    argumentResolvers.add(new DeviceHandlerMethodArgumentResolver());
+    argumentResolvers.add(deviceHandlerMethodArgumentResolver());
 }
 ```
 
@@ -95,15 +109,33 @@ public class HomeController {
 Add the following Java-based configuration to enable site preference management in a Spring web application:
 
 ```java
-public void addInterceptors(InterceptorRegistry registry) {
-    registry.addInterceptor(new DeviceResolverHandlerInterceptor());
-    registry.addInterceptor(new SitePreferenceHandlerInterceptor());
+@Bean
+public DeviceResolverHandlerInterceptor 
+        deviceResolverHandlerInterceptor() {
+    return new DeviceResolverHandlerInterceptor();
 }
 
+@Bean
+public SitePreferenceHandlerInterceptor 
+        sitePreferenceHandlerInterceptor() {
+    return new SitePreferenceHandlerInterceptor();
+}
+
+@Bean
+public SitePreferenceHandlerMethodArgumentResolver 
+        sitePreferenceHandlerMethodArgumentResolver() {
+    return new SitePreferenceHandlerMethodArgumentResolver();
+}
+
+@Override
+public void addInterceptors(InterceptorRegistry registry) {
+    registry.addInterceptor(deviceResolverHandlerInterceptor());
+    registry.addInterceptor(sitePreferenceHandlerInterceptor());
+}
+@Override
 public void addArgumentResolvers(
-        List<HandlerMethodArgumentResolver> argumentResolvers) { 
-    argumentResolvers.add(new DeviceHandlerMethodArgumentResolver());
-    argumentResolvers.add(new SitePreferenceHandlerMethodArgumentResolver());
+        List<HandlerMethodArgumentResolver> argumentResolvers) {
+    argumentResolvers.add(sitePreferenceHandlerMethodArgumentResolver());
 }
 ```
 
