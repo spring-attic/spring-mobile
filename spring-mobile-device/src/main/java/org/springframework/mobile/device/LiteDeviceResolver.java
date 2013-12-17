@@ -69,6 +69,25 @@ public class LiteDeviceResolver implements DeviceResolver {
 				}
 			}
 		}
+
+		// UserAgent keyword detection for Tablet devices
+		if (userAgent != null) {
+			userAgent = userAgent.toLowerCase();
+			// Android special case 
+			if (userAgent.contains("android") && !userAgent.contains("mobile")) {
+				return LiteDevice.TABLET_INSTANCE;
+			}
+			// Kindle Fire special case 
+			if (userAgent.contains("silk") && !userAgent.contains("mobile")) {
+				return LiteDevice.TABLET_INSTANCE;
+			}
+			for (String keyword : tabletUserAgentKeywords) {
+				if (userAgent.contains(keyword)) {
+					return LiteDevice.TABLET_INSTANCE;
+				}
+			}
+		}
+
 		// UAProf detection
 		if (request.getHeader("x-wap-profile") != null || request.getHeader("Profile") != null) {
 			return LiteDevice.MOBILE_INSTANCE;
@@ -85,28 +104,13 @@ public class LiteDeviceResolver implements DeviceResolver {
 		if (accept != null && accept.contains("wap")) {
 			return LiteDevice.MOBILE_INSTANCE;
 		}
-		// UserAgent keyword detection for Mobile and Tablet devices
-		if (userAgent != null) {
-			userAgent = userAgent.toLowerCase();
-			// Android special case 
-			if (userAgent.contains("android") && !userAgent.contains("mobile")) {
-				return LiteDevice.TABLET_INSTANCE;
-			}
-			// Kindle Fire special case 
-			if (userAgent.contains("silk") && !userAgent.contains("mobile")) {
-				return LiteDevice.TABLET_INSTANCE;
-			}
-			for (String keyword : tabletUserAgentKeywords) {
-				if (userAgent.contains(keyword)) {
-					return LiteDevice.TABLET_INSTANCE;
-				}
-			}
-			for (String keyword : mobileUserAgentKeywords) {
-				if (userAgent.contains(keyword)) {
-					return LiteDevice.MOBILE_INSTANCE;
-				}
+		// User-Agent keyword detection
+		for (String keyword : mobileUserAgentKeywords) {
+			if (userAgent.contains(keyword)) {
+				return LiteDevice.MOBILE_INSTANCE;
 			}
 		}
+
 		// OperaMini special case
 		@SuppressWarnings("rawtypes")
 		Enumeration headers = request.getHeaderNames();
