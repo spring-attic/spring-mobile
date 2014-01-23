@@ -17,7 +17,8 @@
 package org.springframework.mobile.device;
 
 /**
- * This class contains a <emphasis>sampling</emphasis> of mobile and tablet user agent strings. It is by no means comprehensive.
+ * This class contains a <emphasis>sampling</emphasis> of mobile and tablet user agent
+ * strings. It is by no means comprehensive.
  * 
  * @author Roy Clarkson
  */
@@ -150,5 +151,15 @@ public class UserAgent {
 	// Firefox OS
 
 	public static final String FirefoxOS_mobile = "Mozilla/5.0 (Mobile; rv:15.0) Gecko/15.0 Firefox/15.0";
+
+	// Windows Phone
+
+	public static final String AsusGalaxy6_WindowsPhone7 = "Mozilla/4.0 (compatible; MSIE 7.0; Windows Phone OS 7.0; Trident/3.1; IEMobile/7.0) Asus;Galaxy6";
+
+	public static final String SamsungFocus_WindowsPhone7_5 = "Mozilla/5.0 (compatible; MSIE 9.0; Windows Phone OS 7.5; Trident/5.0; IEMobile/9.0; SAMSUNG; SGH-i917)";
+
+	public static final String NokiaLumia920_WindowsPhone8_mobile = "Mozilla/5.0 (compatible; MSIE 10.0; Windows Phone 8.0; Trident/6.0; IEMobile/10.0; ARM; Touch; NOKIA; Lumia 920)";
+
+	public static final String NokiaLumia920_WindowsPhone8_desktop = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0; ARM; Touch; WPDesktop)";
 
 }

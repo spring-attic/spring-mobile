@@ -230,12 +230,40 @@ public class LiteDeviceResolverTest {
 		Device device = resolver.resolveDevice(request);
 		assertMobile(device);
 	}
-	
+
 	@Test
 	public void firefoxOSMobile() {
 		request.addHeader("User-Agent", UserAgent.FirefoxOS_mobile);
 		Device device = resolver.resolveDevice(request);
 		assertMobile(device);
+	}
+
+	@Test
+	public void asusGalaxy6() {
+		request.addHeader("User-Agent", UserAgent.AsusGalaxy6_WindowsPhone7);
+		Device device = resolver.resolveDevice(request);
+		assertMobile(device);
+	}
+
+	@Test
+	public void samsungFocus() {
+		request.addHeader("User-Agent", UserAgent.SamsungFocus_WindowsPhone7_5);
+		Device device = resolver.resolveDevice(request);
+		assertMobile(device);
+	}
+
+	@Test
+	public void nokiaLumia920_mobile() {
+		request.addHeader("User-Agent", UserAgent.NokiaLumia920_WindowsPhone8_mobile);
+		Device device = resolver.resolveDevice(request);
+		assertMobile(device);
+	}
+
+	@Test
+	public void nokiaLumia920_desktop() {
+		request.addHeader("User-Agent", UserAgent.NokiaLumia920_WindowsPhone8_desktop);
+		Device device = resolver.resolveDevice(request);
+		assertNormal(device);
 	}
 
 	// Tablet device User-Agent tests
