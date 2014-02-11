@@ -88,7 +88,8 @@ public class LiteDeviceResolverTest {
 
 	@Test
 	public void operaMini() {
-		request.addHeader("X-OperaMini-Phone-UA",
+		request.addHeader(
+				"X-OperaMini-Phone-UA",
 				"X-OperaMini-Phone-UA: SonyEricssonK750i/R1AA Browser/SEMC-Browser/4.2 Profile/MIDP-2.0 Configuration/CLDC-1.1");
 		Device device = resolver.resolveDevice(request);
 		assertMobile(device);
@@ -121,7 +122,8 @@ public class LiteDeviceResolverTest {
 	@Test
 	public void constructorNormalDeviceOverride() {
 		String[] normalDevices = new String[] { "android", "iphone" };
-		LiteDeviceResolver resolver2 = new LiteDeviceResolver(Arrays.asList(normalDevices));
+		LiteDeviceResolver resolver2 = new LiteDeviceResolver(
+				Arrays.asList(normalDevices));
 		request.addHeader(USER_AGENT, UserAgent.iPhone_iOS5);
 		Device device = resolver2.resolveDevice(request);
 		assertNormal(device);
