@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2013 the original author or authors.
+ * Copyright 2010-2014 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,17 +17,18 @@
 package org.springframework.mobile.device;
 
 /**
- * This class contains a <emphasis>sampling</emphasis> of mobile and tablet user agent strings. It is by no means comprehensive.
+ * This class contains a <emphasis>sampling</emphasis> of mobile and tablet user agent
+ * strings. It is by no means comprehensive.
  * 
  * @author Roy Clarkson
  */
-public class UserAgent {
+class UserAgent {
 
 	// Browsers
 
-	public static final String FireFox3_6_Mac10_6 = "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.12) Gecko/20101026 Firefox/3.6.12";
+	public static final String OSX_10_6_FireFox3_6 = "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.12) Gecko/20101026 Firefox/3.6.12";
 
-	public static final String Safari5_1_5_Mac10_7_3 = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/534.55.3 (KHTML, like Gecko) Version/5.1.5 Safari/534.55.3";
+	public static final String OSX_10_7_3_Safari5_1_5 = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/534.55.3 (KHTML, like Gecko) Version/5.1.5 Safari/534.55.3";
 
 	// iOS
 
@@ -51,6 +52,10 @@ public class UserAgent {
 
 	public static final String iPhone_iOS5 = "Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3";
 
+	public static final String iPhone_iOS6 = "Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25";
+
+	public static final String iPhone_iOS7 = "Mozilla/5.0 (iPhone; CPU iPhone OS 7_0 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A465 Safari/9537.53";
+
 	public static final String iPad_iOS3_2 = "Mozilla/5.0 (iPad; U; CPU OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B334b Safari/531.21.10";
 
 	public static final String iPad_iOS3_2_1 = "Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B405 Safari/531.21.10";
@@ -60,6 +65,10 @@ public class UserAgent {
 	public static final String iPad_iOS4_3_5 = "Mozilla/5.0 (iPad; U; CPU OS 4_3_5 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8L1 Safari/6533.18.5";
 
 	public static final String iPad_iOS5 = "Mozilla/5.0 (iPad; CPU OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3";
+
+	public static final String iPad_iOS6 = "Mozilla/5.0 (iPad; CPU OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25";
+
+	public static final String iPad_iOS7 = "Mozilla/5.0 (iPad; CPU OS 7_0 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A465 Safari/9537.53";
 
 	// Android
 
@@ -77,11 +86,21 @@ public class UserAgent {
 
 	public static final String SamsungGalaxyNexus_Android4 = "Mozilla/5.0 (Linux; U; Android 4.0; xx-xx; Galaxy Nexus Build/IFL10C) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
 
-	public static final String SamsungGalaxyTab_Android2_2 = "Mozilla/5.0 (Linux; U; Android 2.2; en-gb; GT-P1000 Build/FROYO) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1";
+	public static final String SamsungGalaxyS2_GT_I9100_Android2_3 = "Mozilla/5.0 (Linux; U; Android 2.3; xx-xx; GT-I9100 Build/GRH78) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1";
 
-	public static final String SamsungGalaxyTab10_1V_Android3_0 = "Mozilla/5.0 (Linux; U; Android 3.0; xx-xx; GT-P7100 Build/HRI83) AppleWebkit/534.13 (KHTML, like Gecko) Version/4.0 Safari/534.13";
+	public static final String SamsungGalaxyS3_GT_I9300_Android4_0_4 = "Mozilla/5.0 (Linux; U; Android 4.0.4; xx-xx; GT-I9300 Build/IMM76D) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
 
-	public static final String SamsungGalaxyTab10_1_Android3_1 = "Mozilla/5.0 (Linux; U; Android 3.1; xx-xx; GT-P7510 Build/HMJ37) AppleWebKit/534.13 (KHTML, like Gecko) Version/4.0 Safari/534.13";
+	public static final String SamsungGalaxyS4_GT_I9500_Android4_2 = "Mozilla/5.0 (Linux; U; Android 4.2; xx-xx; GT-I9500 Build/JDQ39) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
+
+	public static final String SamsungGalaxyNote2_GT_N7100_Android4_1 = "Mozilla/5.0 (Linux; U; Android 4.1; xx-xx; GT-N7100 Build/JRO03C) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
+
+	public static final String SamsungGalaxyTab_GT_P1000_Android2_2 = "Mozilla/5.0 (Linux; U; Android 2.2; en-gb; GT-P1000 Build/FROYO) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1";
+
+	public static final String SamsungGalaxyTab8_9_GT_P7310_Android3_1 = "Mozilla/5.0 (Linux; U; Android 3.1; xx-xx; GT-P7310 Build/HMJ37) AppleWebKit/534.13 (KHTML, like Gecko) Version/4.0 Safari/534.13";
+
+	public static final String SamsungGalaxyTab10_1V_GT_P7100_Android3_0 = "Mozilla/5.0 (Linux; U; Android 3.0; xx-xx; GT-P7100 Build/HRI83) AppleWebkit/534.13 (KHTML, like Gecko) Version/4.0 Safari/534.13";
+
+	public static final String SamsungGalaxyTab10_1_GT_P7510_Android3_1 = "Mozilla/5.0 (Linux; U; Android 3.1; xx-xx; GT-P7510 Build/HMJ37) AppleWebKit/534.13 (KHTML, like Gecko) Version/4.0 Safari/534.13";
 
 	public static final String MotorolaDroid_Android2_1 = "Mozilla/5.0 (Linux; U; Android 2.1-update1; en-us; Droid Build/ESE81) AppleWebKit/530.17 (KHTML, like Gecko) Version/4.0 Mobile Safari/530.17";
 
@@ -150,5 +169,37 @@ public class UserAgent {
 	// Firefox OS
 
 	public static final String FirefoxOS_mobile = "Mozilla/5.0 (Mobile; rv:15.0) Gecko/15.0 Firefox/15.0";
+
+	// Windows
+
+	public static final String AsusGalaxy6_WindowsPhone7 = "Mozilla/4.0 (compatible; MSIE 7.0; Windows Phone OS 7.0; Trident/3.1; IEMobile/7.0) Asus;Galaxy6";
+
+	public static final String SamsungFocus_WindowsPhone7_5 = "Mozilla/5.0 (compatible; MSIE 9.0; Windows Phone OS 7.5; Trident/5.0; IEMobile/9.0; SAMSUNG; SGH-i917)";
+
+	public static final String NokiaLumia920_WindowsPhone8_mobile = "Mozilla/5.0 (compatible; MSIE 10.0; Windows Phone 8.0; Trident/6.0; IEMobile/10.0; ARM; Touch; NOKIA; Lumia 920)";
+
+	public static final String NokiaLumia920_WindowsPhone8_desktop = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0; ARM; Touch; WPDesktop)";
+
+	public static final String WindowsXP_IE8 = "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0)";
+
+	public static final String Windows7_IE9 = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)";
+
+	public static final String Windows7_IE9_compatibility = "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0; Trident/5.0)";
+
+	public static final String Windows7_IE10 = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)";
+
+	public static final String Windows7_IE11 = "Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko";
+
+	public static final String Windows8_IE10 = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)";
+
+	public static final String Windows8_IE10_touch = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0; Touch)";
+
+	public static final String WindowsRT_IE10 = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; ARM; Trident/6.0)";
+
+	public static final String WindowsRT_IE10_touch = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; ARM; Trident/6.0; Touch)";
+
+	public static final String Windows8_1_IE11 = "Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko";
+
+	public static final String Windows8_1_IE11_compatibility = "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.3; Trident/7.0)";
 
 }

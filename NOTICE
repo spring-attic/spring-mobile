@@ -1,5 +1,5 @@
 Spring Mobile 1.1.1.BUILD-SNAPSHOT
-Copyright (c) 2010-2014 VMware, Inc. All Rights Reserved. 
+Copyright (c) 2010-2014 Pivotal, Inc. All Rights Reserved. 
 
 This product is licensed to you under the Apache License, Version 2.0 (the "License").  
 You may not use this product except in compliance with the License.  
@@ -11,4 +11,3 @@ conditions of the subcomponent's license, as noted in the LICENSE file.
 This software downloads additional open source software components upon install
 that are distributed under separate terms and conditions.  Please see the license
 information provided in the individual software components for more information.
-

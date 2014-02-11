@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2013 the original author or authors.
+ * Copyright 2010-2014 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -69,6 +69,23 @@ public class LiteDeviceResolver implements DeviceResolver {
 				}
 			}
 		}
+		// UserAgent keyword detection of Tablet devices
+		if (userAgent != null) {
+			userAgent = userAgent.toLowerCase();
+			// Android special case
+			if (userAgent.contains("android") && !userAgent.contains("mobile")) {
+				return LiteDevice.TABLET_INSTANCE;
+			}
+			// Kindle Fire special case
+			if (userAgent.contains("silk") && !userAgent.contains("mobile")) {
+				return LiteDevice.TABLET_INSTANCE;
+			}
+			for (String keyword : tabletUserAgentKeywords) {
+				if (userAgent.contains(keyword)) {
+					return LiteDevice.TABLET_INSTANCE;
+				}
+			}
+		}
 		// UAProf detection
 		if (request.getHeader("x-wap-profile") != null || request.getHeader("Profile") != null) {
 			return LiteDevice.MOBILE_INSTANCE;
@@ -85,22 +102,8 @@ public class LiteDeviceResolver implements DeviceResolver {
 		if (accept != null && accept.contains("wap")) {
 			return LiteDevice.MOBILE_INSTANCE;
 		}
-		// UserAgent keyword detection for Mobile and Tablet devices
+		// UserAgent keyword detection for Mobile devices
 		if (userAgent != null) {
-			userAgent = userAgent.toLowerCase();
-			// Android special case 
-			if (userAgent.contains("android") && !userAgent.contains("mobile")) {
-				return LiteDevice.TABLET_INSTANCE;
-			}
-			// Kindle Fire special case 
-			if (userAgent.contains("silk") && !userAgent.contains("mobile")) {
-				return LiteDevice.TABLET_INSTANCE;
-			}
-			for (String keyword : tabletUserAgentKeywords) {
-				if (userAgent.contains(keyword)) {
-					return LiteDevice.TABLET_INSTANCE;
-				}
-			}
 			for (String keyword : mobileUserAgentKeywords) {
 				if (userAgent.contains(keyword)) {
 					return LiteDevice.MOBILE_INSTANCE;
