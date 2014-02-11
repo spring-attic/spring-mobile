@@ -22,7 +22,7 @@ package org.springframework.mobile.device;
  * 
  * @author Roy Clarkson
  */
-public class UserAgent {
+class UserAgent {
 
 	// Browsers
 
@@ -86,11 +86,21 @@ public class UserAgent {
 
 	public static final String SamsungGalaxyNexus_Android4 = "Mozilla/5.0 (Linux; U; Android 4.0; xx-xx; Galaxy Nexus Build/IFL10C) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
 
-	public static final String SamsungGalaxyTab_Android2_2 = "Mozilla/5.0 (Linux; U; Android 2.2; en-gb; GT-P1000 Build/FROYO) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1";
+	public static final String SamsungGalaxyS2_GT_I9100_Android2_3 = "Mozilla/5.0 (Linux; U; Android 2.3; xx-xx; GT-I9100 Build/GRH78) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1";
 
-	public static final String SamsungGalaxyTab10_1V_Android3_0 = "Mozilla/5.0 (Linux; U; Android 3.0; xx-xx; GT-P7100 Build/HRI83) AppleWebkit/534.13 (KHTML, like Gecko) Version/4.0 Safari/534.13";
+	public static final String SamsungGalaxyS3_GT_I9300_Android4_0_4 = "Mozilla/5.0 (Linux; U; Android 4.0.4; xx-xx; GT-I9300 Build/IMM76D) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
 
-	public static final String SamsungGalaxyTab10_1_Android3_1 = "Mozilla/5.0 (Linux; U; Android 3.1; xx-xx; GT-P7510 Build/HMJ37) AppleWebKit/534.13 (KHTML, like Gecko) Version/4.0 Safari/534.13";
+	public static final String SamsungGalaxyS4_GT_I9500_Android4_2 = "Mozilla/5.0 (Linux; U; Android 4.2; xx-xx; GT-I9500 Build/JDQ39) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
+
+	public static final String SamsungGalaxyNote2_GT_N7100_Android4_1 = "Mozilla/5.0 (Linux; U; Android 4.1; xx-xx; GT-N7100 Build/JRO03C) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
+
+	public static final String SamsungGalaxyTab_GT_P1000_Android2_2 = "Mozilla/5.0 (Linux; U; Android 2.2; en-gb; GT-P1000 Build/FROYO) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1";
+
+	public static final String SamsungGalaxyTab8_9_GT_P7310_Android3_1 = "Mozilla/5.0 (Linux; U; Android 3.1; xx-xx; GT-P7310 Build/HMJ37) AppleWebKit/534.13 (KHTML, like Gecko) Version/4.0 Safari/534.13";
+
+	public static final String SamsungGalaxyTab10_1V_GT_P7100_Android3_0 = "Mozilla/5.0 (Linux; U; Android 3.0; xx-xx; GT-P7100 Build/HRI83) AppleWebkit/534.13 (KHTML, like Gecko) Version/4.0 Safari/534.13";
+
+	public static final String SamsungGalaxyTab10_1_GT_P7510_Android3_1 = "Mozilla/5.0 (Linux; U; Android 3.1; xx-xx; GT-P7510 Build/HMJ37) AppleWebKit/534.13 (KHTML, like Gecko) Version/4.0 Safari/534.13";
 
 	public static final String MotorolaDroid_Android2_1 = "Mozilla/5.0 (Linux; U; Android 2.1-update1; en-us; Droid Build/ESE81) AppleWebKit/530.17 (KHTML, like Gecko) Version/4.0 Mobile Safari/530.17";
 
