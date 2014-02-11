@@ -38,6 +38,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Keith Donald
  * @author Roy Clarkson
  * @author Scott Rossillo
+ * @author Yuri Mednikov
  */
 public class LiteDeviceResolver implements DeviceResolver {
 
