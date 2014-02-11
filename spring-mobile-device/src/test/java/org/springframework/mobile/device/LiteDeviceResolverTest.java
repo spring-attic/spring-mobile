@@ -130,7 +130,7 @@ public class LiteDeviceResolverTest {
 		Device device = resolver.resolveDevice(request);
 		assertNormal(device);
 	}
-	
+
 	@Test
 	public void windowsXP_IE8() {
 		request.addHeader("User-Agent", UserAgent.WindowsXP_IE8);
@@ -176,8 +176,22 @@ public class LiteDeviceResolverTest {
 	}
 
 	@Test
-	public void iPhone() {
+	public void iPhone_iOS5() {
 		request.addHeader("User-Agent", UserAgent.iPhone_iOS5);
+		Device device = resolver.resolveDevice(request);
+		assertMobile(device);
+	}
+
+	@Test
+	public void iPhone_iOS6() {
+		request.addHeader("User-Agent", UserAgent.iPhone_iOS6);
+		Device device = resolver.resolveDevice(request);
+		assertMobile(device);
+	}
+
+	@Test
+	public void iPhone_iOS7() {
+		request.addHeader("User-Agent", UserAgent.iPhone_iOS7);
 		Device device = resolver.resolveDevice(request);
 		assertMobile(device);
 	}
@@ -304,8 +318,36 @@ public class LiteDeviceResolverTest {
 	// Tablet device User-Agent tests
 
 	@Test
-	public void iPad() {
+	public void iPad_iOS3_2() {
 		request.addHeader("User-Agent", UserAgent.iPad_iOS3_2);
+		Device device = resolver.resolveDevice(request);
+		assertTablet(device);
+	}
+
+	@Test
+	public void iPad_iOS4_3_5() {
+		request.addHeader("User-Agent", UserAgent.iPad_iOS4_3_5);
+		Device device = resolver.resolveDevice(request);
+		assertTablet(device);
+	}
+
+	@Test
+	public void iPad_iOS5() {
+		request.addHeader("User-Agent", UserAgent.iPad_iOS5);
+		Device device = resolver.resolveDevice(request);
+		assertTablet(device);
+	}
+
+	@Test
+	public void iPad_iOS6() {
+		request.addHeader("User-Agent", UserAgent.iPad_iOS6);
+		Device device = resolver.resolveDevice(request);
+		assertTablet(device);
+	}
+
+	@Test
+	public void iPad_iOS7() {
+		request.addHeader("User-Agent", UserAgent.iPad_iOS7);
 		Device device = resolver.resolveDevice(request);
 		assertTablet(device);
 	}
