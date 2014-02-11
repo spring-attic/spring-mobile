@@ -118,15 +118,50 @@ public class LiteDeviceResolverTest {
 	// Normal device User-Agent tests
 
 	@Test
-	public void safari5_1_5_Mac10_7_3() {
-		request.addHeader("User-Agent", UserAgent.Safari5_1_5_Mac10_7_3);
+	public void osX_10_7_3_Safari5_1_5() {
+		request.addHeader("User-Agent", UserAgent.OSX_10_7_3_Safari5_1_5);
 		Device device = resolver.resolveDevice(request);
 		assertEquals(device.toString(), NORMAL_TO_STRING);
 	}
 
 	@Test
-	public void fireFox3_6_Mac10_6() {
-		request.addHeader("User-Agent", UserAgent.FireFox3_6_Mac10_6);
+	public void osX_10_6_FireFox3_6() {
+		request.addHeader("User-Agent", UserAgent.OSX_10_6_FireFox3_6);
+		Device device = resolver.resolveDevice(request);
+		assertNormal(device);
+	}
+	
+	@Test
+	public void windowsXP_IE8() {
+		request.addHeader("User-Agent", UserAgent.WindowsXP_IE8);
+		Device device = resolver.resolveDevice(request);
+		assertNormal(device);
+	}
+
+	@Test
+	public void windowsRT_IE10() {
+		request.addHeader("User-Agent", UserAgent.WindowsRT_IE10);
+		Device device = resolver.resolveDevice(request);
+		assertNormal(device);
+	}
+
+	@Test
+	public void windowsRT_IE10_touch() {
+		request.addHeader("User-Agent", UserAgent.WindowsRT_IE10_touch);
+		Device device = resolver.resolveDevice(request);
+		assertNormal(device);
+	}
+
+	@Test
+	public void windows8_1_IE11() {
+		request.addHeader("User-Agent", UserAgent.Windows8_1_IE11);
+		Device device = resolver.resolveDevice(request);
+		assertNormal(device);
+	}
+
+	@Test
+	public void windows8_1_IE11_compatibility() {
+		request.addHeader("User-Agent", UserAgent.Windows8_1_IE11_compatibility);
 		Device device = resolver.resolveDevice(request);
 		assertNormal(device);
 	}

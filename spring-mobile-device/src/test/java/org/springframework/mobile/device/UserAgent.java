@@ -26,9 +26,9 @@ public class UserAgent {
 
 	// Browsers
 
-	public static final String FireFox3_6_Mac10_6 = "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.12) Gecko/20101026 Firefox/3.6.12";
+	public static final String OSX_10_6_FireFox3_6 = "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.12) Gecko/20101026 Firefox/3.6.12";
 
-	public static final String Safari5_1_5_Mac10_7_3 = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/534.55.3 (KHTML, like Gecko) Version/5.1.5 Safari/534.55.3";
+	public static final String OSX_10_7_3_Safari5_1_5 = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/534.55.3 (KHTML, like Gecko) Version/5.1.5 Safari/534.55.3";
 
 	// iOS
 
@@ -152,7 +152,7 @@ public class UserAgent {
 
 	public static final String FirefoxOS_mobile = "Mozilla/5.0 (Mobile; rv:15.0) Gecko/15.0 Firefox/15.0";
 
-	// Windows Phone
+	// Windows
 
 	public static final String AsusGalaxy6_WindowsPhone7 = "Mozilla/4.0 (compatible; MSIE 7.0; Windows Phone OS 7.0; Trident/3.1; IEMobile/7.0) Asus;Galaxy6";
 
@@ -161,5 +161,27 @@ public class UserAgent {
 	public static final String NokiaLumia920_WindowsPhone8_mobile = "Mozilla/5.0 (compatible; MSIE 10.0; Windows Phone 8.0; Trident/6.0; IEMobile/10.0; ARM; Touch; NOKIA; Lumia 920)";
 
 	public static final String NokiaLumia920_WindowsPhone8_desktop = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0; ARM; Touch; WPDesktop)";
+
+	public static final String WindowsXP_IE8 = "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0)";
+
+	public static final String Windows7_IE9 = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)";
+
+	public static final String Windows7_IE9_compatibility = "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0; Trident/5.0)";
+
+	public static final String Windows7_IE10 = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)";
+
+	public static final String Windows7_IE11 = "Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko";
+
+	public static final String Windows8_IE10 = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)";
+
+	public static final String Windows8_IE10_touch = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0; Touch)";
+
+	public static final String WindowsRT_IE10 = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; ARM; Trident/6.0)";
+
+	public static final String WindowsRT_IE10_touch = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; ARM; Trident/6.0; Touch)";
+
+	public static final String Windows8_1_IE11 = "Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko";
+
+	public static final String Windows8_1_IE11_compatibility = "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.3; Trident/7.0)";
 
 }
