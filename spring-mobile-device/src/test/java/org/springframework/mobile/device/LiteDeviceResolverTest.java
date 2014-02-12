@@ -51,21 +51,21 @@ public class LiteDeviceResolverTest {
 
 	@Test
 	public void wapProfileHeader() {
-		request.addHeader(X_WAP_PROFILE, WapProfile.Nokia3650);
+		request.addHeader(X_WAP_PROFILE, WapProfile.NOKIA3650_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertMobile(device);
 	}
 
 	@Test
 	public void profileHeader() {
-		request.addHeader(PROFILE, WapProfile.Nokia3650);
+		request.addHeader(PROFILE, WapProfile.NOKIA3650_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertMobile(device);
 	}
 
 	@Test
 	public void userAgentHeaderPrefix() {
-		request.addHeader(USER_AGENT, UserAgent.PalmCentro);
+		request.addHeader(USER_AGENT, UserAgent.PALM_CENTRO_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertMobile(device);
 	}
@@ -81,7 +81,7 @@ public class LiteDeviceResolverTest {
 
 	@Test
 	public void userAgentKeyword() {
-		request.addHeader(USER_AGENT, UserAgent.iPhone_iOS5);
+		request.addHeader(USER_AGENT, UserAgent.IPHONE_IOS5_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertMobile(device);
 	}
@@ -105,7 +105,7 @@ public class LiteDeviceResolverTest {
 	public void normalDeviceMobileOverride() {
 		String[] normalDevices = new String[] { "android", "iphone" };
 		resolver.getNormalUserAgentKeywords().addAll(Arrays.asList(normalDevices));
-		request.addHeader(USER_AGENT, UserAgent.iPhone_iOS5);
+		request.addHeader(USER_AGENT, UserAgent.IPHONE_IOS5_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertNormal(device);
 	}
@@ -114,7 +114,7 @@ public class LiteDeviceResolverTest {
 	public void normalDeviceTabletOverride() {
 		String[] normalDevices = new String[] { "ipad" };
 		resolver.getNormalUserAgentKeywords().addAll(Arrays.asList(normalDevices));
-		request.addHeader(USER_AGENT, UserAgent.iPad_iOS5);
+		request.addHeader(USER_AGENT, UserAgent.IPAD_IOS5_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertNormal(device);
 	}
@@ -124,7 +124,7 @@ public class LiteDeviceResolverTest {
 		String[] normalDevices = new String[] { "android", "iphone" };
 		LiteDeviceResolver resolver2 = new LiteDeviceResolver(
 				Arrays.asList(normalDevices));
-		request.addHeader(USER_AGENT, UserAgent.iPhone_iOS5);
+		request.addHeader(USER_AGENT, UserAgent.IPHONE_IOS5_STRING);
 		Device device = resolver2.resolveDevice(request);
 		assertNormal(device);
 	}
@@ -133,49 +133,49 @@ public class LiteDeviceResolverTest {
 
 	@Test
 	public void osX_10_7_3_Safari5_1_5() {
-		request.addHeader(USER_AGENT, UserAgent.OSX_10_7_3_Safari5_1_5);
+		request.addHeader(USER_AGENT, UserAgent.OSX_10_7_3_SAFARI5_1_5_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertEquals(device.toString(), NORMAL_TO_STRING);
 	}
 
 	@Test
 	public void osX_10_6_FireFox3_6() {
-		request.addHeader(USER_AGENT, UserAgent.OSX_10_6_FireFox3_6);
+		request.addHeader(USER_AGENT, UserAgent.OSX_10_6_FIREFOX3_6_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertNormal(device);
 	}
 
 	@Test
 	public void windowsXP_IE8() {
-		request.addHeader(USER_AGENT, UserAgent.WindowsXP_IE8);
+		request.addHeader(USER_AGENT, UserAgent.WINDOWSXP_IE8_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertNormal(device);
 	}
 
 	@Test
 	public void windowsRT_IE10() {
-		request.addHeader(USER_AGENT, UserAgent.WindowsRT_IE10);
+		request.addHeader(USER_AGENT, UserAgent.WINDOWSRT_IE10_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertNormal(device);
 	}
 
 	@Test
 	public void windowsRT_IE10_touch() {
-		request.addHeader(USER_AGENT, UserAgent.WindowsRT_IE10_touch);
+		request.addHeader(USER_AGENT, UserAgent.WINDOWSRT_IE10_TOUCH_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertNormal(device);
 	}
 
 	@Test
 	public void windows8_1_IE11() {
-		request.addHeader(USER_AGENT, UserAgent.Windows8_1_IE11);
+		request.addHeader(USER_AGENT, UserAgent.WINDOWS8_1_IE_11_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertNormal(device);
 	}
 
 	@Test
 	public void windows8_1_IE11_compatibility() {
-		request.addHeader(USER_AGENT, UserAgent.Windows8_1_IE11_compatibility);
+		request.addHeader(USER_AGENT, UserAgent.WINDOWS8_1_IE11_COMPATIBILITY_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertNormal(device);
 	}
@@ -184,154 +184,154 @@ public class LiteDeviceResolverTest {
 
 	@Test
 	public void iPodTouch() {
-		request.addHeader(USER_AGENT, UserAgent.iPodTouch_iOS1_1_3);
+		request.addHeader(USER_AGENT, UserAgent.IPODTOUCH_IOS1_1_3_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertMobile(device);
 	}
 
 	@Test
 	public void iPhone_iOS5() {
-		request.addHeader(USER_AGENT, UserAgent.iPhone_iOS5);
+		request.addHeader(USER_AGENT, UserAgent.IPHONE_IOS5_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertMobile(device);
 	}
 
 	@Test
 	public void iPhone_iOS6() {
-		request.addHeader(USER_AGENT, UserAgent.iPhone_iOS6);
+		request.addHeader(USER_AGENT, UserAgent.IPHONE_IOS6_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertMobile(device);
 	}
 
 	@Test
 	public void iPhone_iOS7() {
-		request.addHeader(USER_AGENT, UserAgent.iPhone_iOS7);
+		request.addHeader(USER_AGENT, UserAgent.IPHONE_IOS7_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertMobile(device);
 	}
 
 	@Test
 	public void googleNexusOne() {
-		request.addHeader(USER_AGENT, UserAgent.GoogleNexusOne_Android2_1);
+		request.addHeader(USER_AGENT, UserAgent.GOOGLE_NEXUSONE_ANDROID2_1_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertMobile(device);
 	}
 
 	@Test
 	public void googleNexusS() {
-		request.addHeader(USER_AGENT, UserAgent.GoogleNexusS_Android2_3);
+		request.addHeader(USER_AGENT, UserAgent.GOOGLE_NEXUSS_ANDROID2_3_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertMobile(device);
 	}
 
 	@Test
 	public void samsungGalaxyNexus() {
-		request.addHeader(USER_AGENT, UserAgent.SamsungGalaxyNexus_Android4);
+		request.addHeader(USER_AGENT, UserAgent.SAMSUNG_GALAXYNEXUS_ANDROID4_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertMobile(device);
 	}
 
 	@Test
 	public void blackBerry9850() {
-		request.addHeader(USER_AGENT, UserAgent.BlackBerry9850_OS7);
+		request.addHeader(USER_AGENT, UserAgent.BLACKBERRY9850_OS7_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertMobile(device);
 	}
 
 	@Test
 	public void blackBerry9800() {
-		request.addHeader(USER_AGENT, UserAgent.BlackBerry9800_OS5);
+		request.addHeader(USER_AGENT, UserAgent.BLACKBERRY9800_OS5_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertMobile(device);
 	}
 
 	@Test
 	public void blackBerryTouch() {
-		request.addHeader(USER_AGENT, UserAgent.BlackBerryTouch_OS10);
+		request.addHeader(USER_AGENT, UserAgent.BLACKBERRY_TOUCH_OS10_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertMobile(device);
 	}
 
 	@Test
 	public void palmCentro() {
-		request.addHeader(USER_AGENT, UserAgent.PalmCentro);
+		request.addHeader(USER_AGENT, UserAgent.PALM_CENTRO_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertMobile(device);
 	}
 
 	@Test
 	public void palmPre() {
-		request.addHeader(USER_AGENT, UserAgent.PalmPre_webOS1_4);
+		request.addHeader(USER_AGENT, UserAgent.PALM_PRE_WEBOS1_4_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertMobile(device);
 	}
 
 	@Test
 	public void palmPre2() {
-		request.addHeader(USER_AGENT, UserAgent.PalmPre2_webOS2_1);
+		request.addHeader(USER_AGENT, UserAgent.PALM_PRE2_WEBOS2_1_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertMobile(device);
 	}
 
 	@Test
 	public void hpPre3() {
-		request.addHeader(USER_AGENT, UserAgent.HPPre3_webOS2_1);
+		request.addHeader(USER_AGENT, UserAgent.HP_PRE3_WEBOS2_1_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertMobile(device);
 	}
 
 	@Test
 	public void palmPixi() {
-		request.addHeader(USER_AGENT, UserAgent.PalmPixi_webOS1_4);
+		request.addHeader(USER_AGENT, UserAgent.PALM_PIXI_WEBOS1_4_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertMobile(device);
 	}
 
 	@Test
 	public void kindleFireGen1SilkMobile() {
-		request.addHeader(USER_AGENT, UserAgent.KindleFire1_Silk_mobile);
+		request.addHeader(USER_AGENT, UserAgent.KINDLE_FIRE1_SILK_MOBILE_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertMobile(device);
 	}
 
 	@Test
 	public void kindleFireGen2SilkMobile() {
-		request.addHeader(USER_AGENT, UserAgent.KindleFire2_Silk_mobile);
+		request.addHeader(USER_AGENT, UserAgent.KINDLE_FIRE2_SILK_MOBILE_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertMobile(device);
 	}
 
 	@Test
 	public void firefoxOSMobile() {
-		request.addHeader(USER_AGENT, UserAgent.FirefoxOS_mobile);
+		request.addHeader(USER_AGENT, UserAgent.FIREFOXOS_MOBILE_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertMobile(device);
 	}
 
 	@Test
 	public void asusGalaxy6() {
-		request.addHeader(USER_AGENT, UserAgent.AsusGalaxy6_WindowsPhone7);
+		request.addHeader(USER_AGENT, UserAgent.ASUS_GALAXY6_WINDOWSPHONE7_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertMobile(device);
 	}
 
 	@Test
 	public void samsungFocus() {
-		request.addHeader(USER_AGENT, UserAgent.SamsungFocus_WindowsPhone7_5);
+		request.addHeader(USER_AGENT, UserAgent.SAMSUNG_FOCUS_WINDOWSPHONE7_5_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertMobile(device);
 	}
 
 	@Test
 	public void nokiaLumia920_mobile() {
-		request.addHeader(USER_AGENT, UserAgent.NokiaLumia920_WindowsPhone8_mobile);
+		request.addHeader(USER_AGENT, UserAgent.NOKIA_LUMIA920_WINDOWSPHONE8_MOBILE_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertMobile(device);
 	}
 
 	@Test
 	public void nokiaLumia920_desktop() {
-		request.addHeader(USER_AGENT, UserAgent.NokiaLumia920_WindowsPhone8_desktop);
+		request.addHeader(USER_AGENT, UserAgent.NOKIA_LUMIA920_WINDOWSPHONE8_DESKTOP_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertNormal(device);
 	}
@@ -340,43 +340,43 @@ public class LiteDeviceResolverTest {
 
 	@Test
 	public void iPad_iOS3_2() {
-		request.addHeader(USER_AGENT, UserAgent.iPad_iOS3_2);
+		request.addHeader(USER_AGENT, UserAgent.IPAD_IOS3_2_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertTablet(device);
 	}
 
 	@Test
 	public void iPad_iOS4_3_5() {
-		request.addHeader(USER_AGENT, UserAgent.iPad_iOS4_3_5);
+		request.addHeader(USER_AGENT, UserAgent.IPAD_IOS4_3_5_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertTablet(device);
 	}
 
 	@Test
 	public void iPad_iOS5() {
-		request.addHeader(USER_AGENT, UserAgent.iPad_iOS5);
+		request.addHeader(USER_AGENT, UserAgent.IPAD_IOS5_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertTablet(device);
 	}
 
 	@Test
 	public void iPad_iOS6() {
-		request.addHeader(USER_AGENT, UserAgent.iPad_iOS6);
+		request.addHeader(USER_AGENT, UserAgent.IPAD_IOS6_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertTablet(device);
 	}
 
 	@Test
 	public void iPad_iOS7() {
-		request.addHeader(USER_AGENT, UserAgent.iPad_iOS7);
+		request.addHeader(USER_AGENT, UserAgent.IPAD_IOS7_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertTablet(device);
 	}
 
 	@Test
 	public void samsungGalaxyTab() {
-		request.addHeader(X_WAP_PROFILE, WapProfile.SamsungGalaxyTab_GT_P1000);
-		request.addHeader(USER_AGENT, UserAgent.SamsungGalaxyTab_GT_P1000_Android2_2);
+		request.addHeader(X_WAP_PROFILE, WapProfile.SAMSUNG_GALAXYTAB_GT_P1000_STRING);
+		request.addHeader(USER_AGENT, UserAgent.SAMSUNG_GALAXYTAB_GT_P1000_ANDROID2_2_STRING);
 		Device device = resolver.resolveDevice(request);
 		// Device reports standard Android user agent, indicating it as a mobile device
 		assertMobile(device);
@@ -384,100 +384,100 @@ public class LiteDeviceResolverTest {
 
 	@Test
 	public void samsungGalaxyTab10_1V() {
-		request.addHeader(USER_AGENT, UserAgent.SamsungGalaxyTab10_1V_GT_P7100_Android3_0);
+		request.addHeader(USER_AGENT, UserAgent.SAMSUNG_GALAXYTAB10_1V_GT_P7100_ANDROID3_0_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertTablet(device);
 	}
 
 	@Test
 	public void samsungGalaxyTab10_1() {
-		request.addHeader(X_WAP_PROFILE, WapProfile.SamsungGalaxyTab10_1_GT_P7510);
-		request.addHeader(USER_AGENT, UserAgent.SamsungGalaxyTab10_1_GT_P7510_Android3_1);
+		request.addHeader(X_WAP_PROFILE, WapProfile.SAMSUNG_GALAXYTAB10_1_GT_P7510_STRING);
+		request.addHeader(USER_AGENT, UserAgent.SAMSUNG_GALAXYTAB10_1_GT_P7510_ANDROID3_1_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertTablet(device);
 	}
 
 	@Test
 	public void samsungGalaxyTab8_9() {
-		request.addHeader(X_WAP_PROFILE, WapProfile.SamsungGalaxyTab8_9_GT_P7310);
-		request.addHeader(USER_AGENT, UserAgent.SamsungGalaxyTab8_9_GT_P7310_Android3_1);
+		request.addHeader(X_WAP_PROFILE, WapProfile.SAMSUNG_GALAXYTAB8_9_GT_P7310_STRING);
+		request.addHeader(USER_AGENT, UserAgent.SAMSUNG_GALAXYTAB8_9_GT_P7310_ANDROID3_1_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertTablet(device);
 	}
 
 	@Test
 	public void motorolaXoom() {
-		request.addHeader(USER_AGENT, UserAgent.MotorolaXoom_Android3_1);
+		request.addHeader(USER_AGENT, UserAgent.MOTOROLA_XOOM_ANDROID3_1_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertTablet(device);
 	}
 
 	@Test
 	public void blackBerryPlaybook() {
-		request.addHeader(USER_AGENT, UserAgent.BlackBerryPlaybook);
+		request.addHeader(USER_AGENT, UserAgent.BLACKBERRY_PLAYBOOK_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertTablet(device);
 	}
 
 	@Test
 	public void hpTouchPad() {
-		request.addHeader(USER_AGENT, UserAgent.HPTouchPad_webOS3);
+		request.addHeader(USER_AGENT, UserAgent.HPTOUCHPAD_WEBOS3_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertTablet(device);
 	}
 
 	@Test
 	public void kindle1() {
-		request.addHeader(USER_AGENT, UserAgent.Kindle1);
+		request.addHeader(USER_AGENT, UserAgent.KINDLE1_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertTablet(device);
 	}
 
 	@Test
 	public void kindle2() {
-		request.addHeader(USER_AGENT, UserAgent.Kindle2);
+		request.addHeader(USER_AGENT, UserAgent.KINDLE2_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertTablet(device);
 	}
 
 	@Test
 	public void kindle2_5() {
-		request.addHeader(USER_AGENT, UserAgent.Kindle2_5);
+		request.addHeader(USER_AGENT, UserAgent.KINDLE2_5_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertTablet(device);
 	}
 
 	@Test
 	public void kindle3() {
-		request.addHeader(USER_AGENT, UserAgent.Kindle3);
+		request.addHeader(USER_AGENT, UserAgent.KINDLE3_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertTablet(device);
 	}
 
 	@Test
 	public void kindleFireGen1SilkDesktop() {
-		request.addHeader(USER_AGENT, UserAgent.KindleFire1_Silk_desktop);
+		request.addHeader(USER_AGENT, UserAgent.KINDLE_FIRE1_SILK_DESKTOP_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertTablet(device);
 	}
 
 	@Test
 	public void kindleFireGen1AndroidWebView() {
-		request.addHeader(USER_AGENT, UserAgent.KindleFire2_Android_webview);
+		request.addHeader(USER_AGENT, UserAgent.KINDLE_FIRE2_ANDROID_WEBVIEW_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertTablet(device);
 	}
 
 	@Test
 	public void kindleFireGen2SilkDesktop() {
-		request.addHeader(USER_AGENT, UserAgent.KindleFire2_Silk_desktop);
+		request.addHeader(USER_AGENT, UserAgent.KINDLE_FIRE2_SILK_DESKTOP_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertTablet(device);
 	}
 
 	@Test
 	public void kindleFireGen2AndroidWebView() {
-		request.addHeader(USER_AGENT, UserAgent.KindleFire2_Android_webview);
+		request.addHeader(USER_AGENT, UserAgent.KINDLE_FIRE2_ANDROID_WEBVIEW_STRING);
 		Device device = resolver.resolveDevice(request);
 		assertTablet(device);
 	}
