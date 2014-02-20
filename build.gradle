@@ -12,8 +12,8 @@ configure(allprojects) {
 	group = "org.springframework.mobile"
 
 	ext.springVersion         = "3.2.8.RELEASE"
-	ext.springReleaseVersion  = "4.0.1.RELEASE"
-	ext.springSnapshotVersion = "4.0.2.BUILD-SNAPSHOT"
+	ext.springReleaseVersion  = "4.0.2.RELEASE"
+	ext.springSnapshotVersion = "4.0.3.BUILD-SNAPSHOT"
 	ext.junitVersion          = "4.11"
 	ext.easymockVersion       = "3.2"
 	ext.hamcrestVersion       = "1.3"
