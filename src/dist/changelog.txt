@@ -1,6 +1,16 @@
 Spring Mobile Changelog
 =======================
 
+1.1.1.RELEASE (2014.02.20)
+==========================
+* Upgrade to Spring Framework 3.2.8 (MOBILE-102)
+* Upgrade build to use Gradle 1.11 (MOBILE-101)
+* Added Windows 8 tests (MOBILE-99)
+* Added tests for new iOS versions (MOBILE-98)
+* Fixed an issue where some Samsung tablets were incorrectly being resolved as "mobile" devices (MOBILE-95)
+* Added integration tests for testing against latest Spring Framework release and snapshot (MOBILE-92)
+* Added Windows Phone tests (MOBILE-89)
+
 1.1.0.RELEASE (2013.10.03)
 ==========================
 * Upgrade to Spring Framework 3.2.4 (MOBILE-86)
