@@ -1,6 +1,17 @@
 # Spring Mobile
 
-[Spring Mobile] is an extension to [Spring Web MVC] that aims to simplify the development of mobile web applications.
+[Spring Mobile] is an extension of the [Spring Framework] and [Spring Web MVC] that aims to simplify the development of mobile web applications.
+
+
+## Features
+
+- A device resolver abstraction for server-side detection of mobile and tablet devices
+
+- Site preference management that allows the user to indicate if he or she prefers a "normal", "mobile", or "tablet" experience
+
+- A site switcher capable of switching the user to the most appropriate site, either mobile, tablet, or normal, based on his or her device and optionally indicated site preference
+
+- Device aware view management for organizing and managing different views for specific devices
 
 
 ## Downloading Artifacts
@@ -120,6 +131,7 @@ $ ./gradlew idea
 
 
 [Spring Mobile]: http://projects.spring.io/spring-mobile
+[Spring Framework]: http://projects.spring.io/spring-framework
 [Spring Web MVC]: http://docs.spring.io/spring/docs/current/spring-framework-reference/html/mvc.html
 [downloading Spring artifacts]: https://github.com/spring-projects/spring-framework/wiki/Downloading-Spring-artifacts
 [building a distribution with dependencies]: https://github.com/spring-projects/spring-framework/wiki/Building-a-distribution-with-dependencies
