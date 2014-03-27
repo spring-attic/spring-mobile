@@ -1,5 +1,7 @@
 # Spring Mobile
 
+[!["Build Status"](https://build.spring.io/plugins/servlet/buildStatusImage/MOBILE-MASTER)](https://build.spring.io/browse/MOBILE-MASTER)
+
 [Spring Mobile] is an extension of the [Spring Framework] and [Spring Web MVC] that aims to simplify the development of mobile web applications.
 
 
@@ -14,7 +16,7 @@
 - Device aware view management for organizing and managing different views for specific devices
 
 
-## Downloading Artifacts
+## Download Artifacts
 
 See [downloading Spring artifacts] for Maven repository information. Unable to use Maven or other transitive dependency management tools? See [building a distribution with dependencies].
 
@@ -120,7 +122,7 @@ $ ./gradlew idea
 ```
 
 
-## Contributing
+## Contribute
 
 [Pull requests] are welcome. See the [contributor guidelines] for details.
 
