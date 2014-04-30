@@ -29,11 +29,9 @@ dependencies {
     compile("org.springframework.mobile:spring-mobile-device:${springMobileVersion}")
 }
 repositories {
-    maven {
-        url "http://repo.spring.io/release"
-        url "http://repo.spring.io/milestone"
-        url "http://repo.spring.io/snapshot"
-    }
+    maven { url "http://repo.spring.io/release" }
+    maven { url "http://repo.spring.io/milestone" }
+    maven { url "http://repo.spring.io/snapshot" }
 }
 ```
 
@@ -159,6 +157,11 @@ $ ./gradlew idea
 [Pull requests] are welcome. See the [contributor guidelines] for details.
 
 
+## Stay in Touch
+
+Follow [@SpringCentral] as well as [@SpringFramework] on Twitter. In-depth articles can be found at [The Spring Blog], and releases are announced via our [news feed].
+
+
 ## License
 
 [Spring Mobile] is released under version 2.0 of the [Apache License].
@@ -185,4 +188,8 @@ $ ./gradlew idea
 [sts]: https://spring.io/tools
 [Pull requests]: http://help.github.com/send-pull-requests
 [contributor guidelines]: CONTRIBUTING.md
+[@SpringFramework]: https://twitter.com/springframework
+[@SpringCentral]: https://twitter.com/springcentral
+[The Spring Blog]: http://spring.io/blog/
+[news feed]: http://spring.io/blog/category/news
 [Apache License]: http://www.apache.org/licenses/LICENSE-2.0
