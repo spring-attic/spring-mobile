@@ -20,36 +20,54 @@
 
 See [downloading Spring artifacts] for Maven repository information. Unable to use Maven or other transitive dependency management tools? See [building a distribution with dependencies].
 
-### Dependencies
+> **Note:** You do not need to include all three repositories, rather select the one that corresponds to the release type of the dependency.
 
-```xml
-<dependency>
-    <groupId>org.springframework.mobile</groupId>
-    <artifactId>spring-mobile-device</artifactId>
-    <version>${org.springframework.mobile-version}</version>
-</dependency>
+### Gradle
+
+```groovy
+dependencies {
+    compile("org.springframework.mobile:spring-mobile-device:${springMobileVersion}")
+}
+repositories {
+    maven {
+        url "http://repo.spring.io/release"
+        url "http://repo.spring.io/milestone"
+        url "http://repo.spring.io/snapshot"
+    }
+}
 ```
 
-### Repositories
+### Maven
 
 ```xml
-<repository>
-    <id>spring-repo</id>
-    <name>Spring Repository</name>
-    <url>http://repo.spring.io/release</url>
-</repository>
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.mobile</groupId>
+        <artifactId>spring-mobile-device</artifactId>
+        <version>${org.springframework.mobile-version}</version>
+    </dependency>
+</dependencies>
 
-<repository>
-    <id>spring-milestones</id>
-    <name>Spring Milestone Repository</name>
-    <url>http://repo.spring.io/milestone</url>
-</repository>
-
-<repository>
-    <id>spring-snapshots</id>
-    <name>Spring Snapshot Repository</name>
-    <url>http://repo.spring.io/snapshot</url>
-</repository>
+<repositories>
+    <repository>
+        <id>spring-repo</id>
+        <name>Spring Repository</name>
+        <url>http://repo.spring.io/release</url>
+    </repository>
+    <repository>
+        <id>spring-milestones</id>
+        <name>Spring Milestones</name>
+        <url>http://repo.spring.io/milestone</url>
+    </repository>
+    <repository>
+        <id>spring-snapshots</id>
+        <name>Spring Snapshots</name>
+        <url>http://repo.spring.io/snapshot</url>
+        <snapshots>
+            <enabled>true</enabled>
+        </snapshots>
+    </repository>
+</repositories>
 ```
 
 
@@ -61,6 +79,20 @@ See the current [Javadoc] and [reference docs].
 ## Sample Applications
 
 Several example projects are available in the [samples repository].
+
+
+## Getting Started Guides
+
+The [spring.io] web site contains many [getting started guides][guides] that cover a broad range of topics. 
+
+- [Serving Mobile Web Content with Spring MVC](https://spring.io/guides/gs/serving-mobile-web-content/)
+- [Detecting a Device](https://spring.io/guides/gs/device-detection/)
+- [Handling Web Site Preference](https://spring.io/guides/gs/handling-site-preference/)
+
+
+## Support
+
+Check out the [Spring forums] and the [spring-mobile][spring-mobile tag] tag on [Stack Overflow]. [Commercial support] is also available.
 
 
 ## Issue Tracking
@@ -140,7 +172,13 @@ $ ./gradlew idea
 [Javadoc]: http://docs.spring.io/spring-mobile/docs/current/api/
 [reference docs]: http://docs.spring.io/spring-mobile/docs/current/reference/html/
 [samples repository]: https://github.com/spring-projects/spring-mobile-samples
+[Spring forums]: http://forum.spring.io/forum/spring-projects/web/mobile
+[spring-mobile tag]: http://stackoverflow.com/questions/tagged/spring-mobile
+[Stack Overflow]: http://stackoverflow.com/faq
+[Commercial support]: http://spring.io/services
 [Spring Mobile JIRA]: http://jira.spring.io/browse/MOBILE
+[spring.io]: http://spring.io
+[guides]: http://spring.io/guides
 [GitHub issues]: https://github.com/spring-projects/spring-mobile/issues
 [the lifecycle of an issue]: https://github.com/spring-projects/spring-framework/wiki/The-Lifecycle-of-an-Issue
 [Gradle]: http://gradle.org
