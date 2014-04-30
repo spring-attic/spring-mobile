@@ -37,16 +37,16 @@ See [downloading Spring artifacts] for Maven repository information. Unable to u
     <id>spring-repo</id>
     <name>Spring Repository</name>
     <url>http://repo.spring.io/release</url>
-</repository>   
-    
+</repository>
+
 <repository>
-    <id>spring-milestone</id>
+    <id>spring-milestones</id>
     <name>Spring Milestone Repository</name>
     <url>http://repo.spring.io/milestone</url>
 </repository>
 
 <repository>
-    <id>spring-snapshot</id>
+    <id>spring-snapshots</id>
     <name>Spring Snapshot Repository</name>
     <url>http://repo.spring.io/snapshot</url>
 </repository>
@@ -140,11 +140,11 @@ $ ./gradlew idea
 [Javadoc]: http://docs.spring.io/spring-mobile/docs/current/api/
 [reference docs]: http://docs.spring.io/spring-mobile/docs/current/reference/html/
 [samples repository]: https://github.com/spring-projects/spring-mobile-samples
-[Spring Mobile JIRA]: http://jira.springsource.org/browse/MOBILE
+[Spring Mobile JIRA]: http://jira.spring.io/browse/MOBILE
 [GitHub issues]: https://github.com/spring-projects/spring-mobile/issues
 [the lifecycle of an issue]: https://github.com/spring-projects/spring-framework/wiki/The-Lifecycle-of-an-Issue
 [Gradle]: http://gradle.org
 [sts]: https://spring.io/tools
 [Pull requests]: http://help.github.com/send-pull-requests
-[contributor guidelines]: https://github.com/spring-projects/spring-mobile/wiki/Contributor-Guidelines
+[contributor guidelines]: CONTRIBUTING.md
 [Apache License]: http://www.apache.org/licenses/LICENSE-2.0
