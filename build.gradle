@@ -4,6 +4,7 @@ buildscript {
 	}
 	dependencies {
 		classpath("org.springframework.build.gradle:propdeps-plugin:0.0.6")
+		classpath("org.springframework.build.gradle:spring-io-plugin:0.0.3.RELEASE")
 		classpath("org.springframework.build.gradle:docbook-reference-plugin:0.2.8")
 		classpath("me.champeau.gradle:gradle-javadoc-hotfix-plugin:0.1")
 	}
@@ -27,6 +28,18 @@ configure(allprojects) {
 	apply plugin: "eclipse"
 	apply plugin: "idea"
 	apply plugin: "javadocHotfix"
+
+	if (project.hasProperty('platformVersion')) {
+		apply plugin: 'spring-io'
+
+		repositories {
+			maven { url "https://repo.spring.io/libs-snapshot" }
+		}
+
+		dependencies {
+			springIoVersions "io.spring.platform:platform-versions:${platformVersion}@properties"
+		}
+	}
 
 	compileJava {
 		sourceCompatibility=1.5
@@ -63,7 +76,9 @@ configure(allprojects) {
 		"src/test/java"
 	]
 
-	test.systemProperty("java.awt.headless", "true")
+	tasks.withType(Test).all {
+		systemProperty("java.awt.headless", "true")
+	}
 
 	repositories {
 		maven { url "http://repo.spring.io/libs-snapshot" }
