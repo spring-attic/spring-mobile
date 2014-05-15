@@ -64,11 +64,12 @@ configure(allprojects) {
 		"-Xlint:processing",
 		"-Xlint:static",
 		"-Xlint:try",
-		"-Xlint:-options",     // intentionally disabled
-		"-Xlint:-fallthrough", // intentionally disabled
+		"-Xlint:fallthrough",
 		"-Xlint:rawtypes",
 		"-Xlint:deprecation",
-		"-Xlint:unchecked"
+		"-Xlint:unchecked",
+		"-Xlint:-options",
+		"-Werror"
 	]
 
 	sourceSets.test.resources.srcDirs = [
