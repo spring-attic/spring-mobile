@@ -20,6 +20,7 @@ import java.util.Locale;
 
 import javax.servlet.ServletContext;
 
+import org.springframework.core.Ordered;
 import org.springframework.util.Assert;
 import org.springframework.web.context.support.WebApplicationObjectSupport;
 import org.springframework.web.servlet.View;
@@ -35,7 +36,8 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
  * @since 1.1
  * @see LiteDeviceDelegatingViewResolver
  */
-public abstract class AbstractDeviceDelegatingViewResolver extends WebApplicationObjectSupport implements ViewResolver {
+public abstract class AbstractDeviceDelegatingViewResolver extends
+		WebApplicationObjectSupport implements ViewResolver, Ordered {
 
 	/**
 	 * Prefix for special view names that specify a redirect URL (usually
@@ -50,6 +52,8 @@ public abstract class AbstractDeviceDelegatingViewResolver extends WebApplicatio
 	public static final String FORWARD_URL_PREFIX = "forward:";
 
 	private final ViewResolver delegate;
+
+	private int order = Ordered.LOWEST_PRECEDENCE;
 
 	private boolean enableFallback = false;
 
@@ -67,6 +71,15 @@ public abstract class AbstractDeviceDelegatingViewResolver extends WebApplicatio
 	 */
 	public ViewResolver getViewResolver() {
 		return this.delegate;
+	}
+
+	public void setOrder(int order) {
+		this.order = order;
+	}
+
+	@Override
+	public int getOrder() {
+		return this.order;
 	}
 
 	/**
