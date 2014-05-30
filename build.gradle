@@ -13,7 +13,7 @@ buildscript {
 configure(allprojects) {
 	group = "org.springframework.mobile"
 
-	ext.springVersion         = "3.2.8.RELEASE"
+	ext.springVersion         = "3.2.9.RELEASE"
 	ext.springReleaseVersion  = "latest.release"
 	ext.springSnapshotVersion = "latest.integration"
 	ext.junitVersion          = "4.11"
