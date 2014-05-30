@@ -20,13 +20,16 @@ import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Locale;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.core.Ordered;
 import org.springframework.mobile.device.DeviceType;
 import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.mobile.device.StubDevice;
@@ -916,6 +919,22 @@ public final class LiteDeviceDelegatingViewResolverTest {
 	public void resolveViewNameComplexPath() throws Exception {
 		viewResolver.setNormalPrefix("/vi/e/w/s/");
 		replayMocks("/vi/e/w/s/" + viewName);
+	}
+
+	@Test
+	public void implementsOrdered() {
+		assertTrue(viewResolver instanceof Ordered);
+	}
+
+	@Test
+	public void defaultOrder() {
+		assertEquals(Ordered.LOWEST_PRECEDENCE, viewResolver.getOrder());
+	}
+	
+	@Test
+	public void modifiedOrdered() {
+		viewResolver.setOrder(Ordered.HIGHEST_PRECEDENCE + 10);
+		assertEquals(Ordered.HIGHEST_PRECEDENCE + 10, viewResolver.getOrder());
 	}
 
 	// helpers
