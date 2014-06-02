@@ -52,7 +52,7 @@ public class DeviceUtils {
 	public static Device getRequiredCurrentDevice(HttpServletRequest request) {
 		Device device = getCurrentDevice(request);
 		if (device == null) {
-			throw new IllegalStateException("No currenet device is set in this request and one is required - have you configured a DeviceResolvingHandlerInterceptor?");
+			throw new IllegalStateException("No current device is set in this request and one is required - have you configured a DeviceResolvingHandlerInterceptor?");
 		}
 		return device;
 	}
@@ -66,6 +66,6 @@ public class DeviceUtils {
 	public static Device getCurrentDevice(RequestAttributes attributes) {
 		return (Device) attributes.getAttribute(CURRENT_DEVICE_ATTRIBUTE, RequestAttributes.SCOPE_REQUEST);
 	}
-	
+
 
 }
