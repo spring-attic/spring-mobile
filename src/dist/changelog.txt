@@ -1,6 +1,11 @@
 Spring Mobile Changelog
 =======================
 
+1.1.2.RELEASE (2014.06.06)
+==========================
+* Upgrade to Spring Framework 3.2.9 (MOBILE-111)
+* Implement Ordered interface on AbstractDeviceDelegatingViewResolver (MOBILE-110)
+
 1.1.1.RELEASE (2014.02.20)
 ==========================
 * Upgrade to Spring Framework 3.2.8 (MOBILE-102)
