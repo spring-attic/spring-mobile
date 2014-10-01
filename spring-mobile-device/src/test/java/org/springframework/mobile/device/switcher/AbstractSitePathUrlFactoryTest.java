@@ -110,7 +110,15 @@ public abstract class AbstractSitePathUrlFactoryTest {
 		assertEquals("/tablet/", factory.getTabletPath());
 		assertEquals("/root/", factory.getRootPath());
 	}
-	
+
+	@Test
+	public void formatPathWithEmptyRootPath() {
+		AbstractSitePathUrlFactory factory = new MockSitePathUrlFactory("mobile", "tablet", "");
+		assertEquals("/mobile/", factory.getMobilePath());
+		assertEquals("/tablet/", factory.getTabletPath());
+		assertEquals("/", factory.getRootPath());
+	}
+
 	private class MockSitePathUrlFactory extends AbstractSitePathUrlFactory {
 
 		public MockSitePathUrlFactory(String mobilePath, String tabletPath, String rootPath) {
