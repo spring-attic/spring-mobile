@@ -1,6 +1,11 @@
 Spring Mobile Changelog
 =======================
 
+1.1.3.RELEASE (2014.10.06)
+==========================
+* Upgrade to Spring Framework 3.2.11 (MOBILE-114)
+* Fixed an issue where AbstractSitePathUrlFactory did not handle empty paths correctly (MOBILE-113)
+
 1.1.2.RELEASE (2014.06.06)
 ==========================
 * Upgrade to Spring Framework 3.2.9 (MOBILE-111)
