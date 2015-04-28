@@ -16,17 +16,18 @@
 
 package org.springframework.mobile.device;
 
-import org.springframework.mobile.device.Device;
-
 public class StubDevice implements Device {
 
 	private DeviceType deviceType;
+
+	private DevicePlatform devicePlatform;
 
 	/**
 	 * @return new 'normal' device
 	 */
 	public StubDevice() {
 		this.deviceType = DeviceType.NORMAL;
+		this.devicePlatform = DevicePlatform.UNKNOWN;
 	}
 
 	/**
@@ -47,6 +48,11 @@ public class StubDevice implements Device {
 
 	public boolean isTablet() {
 		return this.deviceType == DeviceType.TABLET;
+	}
+
+	@Override
+	public DevicePlatform getDevicePlatform() {
+		return devicePlatform;
 	}
 
 	public DeviceType getDeviceType() {

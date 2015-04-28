@@ -42,6 +42,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Roy Clarkson
  * @author Scott Rossillo
  * @author Yuri Mednikov
+ * @author Onur Kagan Ozcan
  */
 public class LiteDeviceResolver implements DeviceResolver {
 
@@ -78,40 +79,61 @@ public class LiteDeviceResolver implements DeviceResolver {
 			userAgent = userAgent.toLowerCase();
 			// Android special case
 			if (userAgent.contains("android") && !userAgent.contains("mobile")) {
-				return LiteDevice.TABLET_INSTANCE;
+				return resolveWithPlatform(DeviceType.TABLET, DevicePlatform.ANDROID);
+			}
+			// Apple special case
+			if (userAgent.contains("ipad")) {
+				return resolveWithPlatform(DeviceType.TABLET, DevicePlatform.IOS);
 			}
 			// Kindle Fire special case
 			if (userAgent.contains("silk") && !userAgent.contains("mobile")) {
-				return LiteDevice.TABLET_INSTANCE;
+				return resolveWithPlatform(DeviceType.TABLET, DevicePlatform.UNKNOWN);
 			}
 			for (String keyword : tabletUserAgentKeywords) {
 				if (userAgent.contains(keyword)) {
-					return LiteDevice.TABLET_INSTANCE;
+					return resolveWithPlatform(DeviceType.TABLET, DevicePlatform.UNKNOWN);
 				}
 			}
 		}
 		// UAProf detection
-		if (request.getHeader("x-wap-profile") != null
-				|| request.getHeader("Profile") != null) {
-			return LiteDevice.MOBILE_INSTANCE;
+		if (request.getHeader("x-wap-profile") != null || request.getHeader("Profile") != null) {
+			if (userAgent != null) {
+				// Android special case
+				if (userAgent.contains("android")) {
+					return resolveWithPlatform(DeviceType.MOBILE, DevicePlatform.ANDROID);
+				}
+				// Apple special case
+				if (userAgent.contains("iphone") || userAgent.contains("ipod") || userAgent.contains("ipad")) {
+					return resolveWithPlatform(DeviceType.MOBILE, DevicePlatform.IOS);
+				}
+			}
+			return resolveWithPlatform(DeviceType.MOBILE, DevicePlatform.UNKNOWN);
 		}
 		// User-Agent prefix detection
 		if (userAgent != null && userAgent.length() >= 4) {
 			String prefix = userAgent.substring(0, 4).toLowerCase();
 			if (mobileUserAgentPrefixes.contains(prefix)) {
-				return LiteDevice.MOBILE_INSTANCE;
+				return resolveWithPlatform(DeviceType.MOBILE, DevicePlatform.UNKNOWN);
 			}
 		}
 		// Accept-header based detection
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("wap")) {
-			return LiteDevice.MOBILE_INSTANCE;
+			return resolveWithPlatform(DeviceType.MOBILE, DevicePlatform.UNKNOWN);
 		}
 		// UserAgent keyword detection for Mobile devices
 		if (userAgent != null) {
+			// Android special case
+			if (userAgent.contains("android")) {
+				return resolveWithPlatform(DeviceType.MOBILE, DevicePlatform.ANDROID);
+			}
+			// Apple special case
+			if (userAgent.contains("iphone") || userAgent.contains("ipod") || userAgent.contains("ipad")) {
+				return resolveWithPlatform(DeviceType.MOBILE, DevicePlatform.IOS);
+			}
 			for (String keyword : mobileUserAgentKeywords) {
 				if (userAgent.contains(keyword)) {
-					return LiteDevice.MOBILE_INSTANCE;
+					return resolveWithPlatform(DeviceType.MOBILE, DevicePlatform.UNKNOWN);
 				}
 			}
 		}
@@ -121,13 +143,21 @@ public class LiteDeviceResolver implements DeviceResolver {
 		while (headers.hasMoreElements()) {
 			String header = (String) headers.nextElement();
 			if (header.contains("OperaMini")) {
-				return LiteDevice.MOBILE_INSTANCE;
+				/*return LiteDevice.MOBILE_INSTANCE;*/
+				return resolveWithPlatform(DeviceType.MOBILE, DevicePlatform.UNKNOWN);
 			}
 		}
 		return resolveFallback(request);
 	}
 
 	// subclassing hooks
+
+	/**
+	 * Wrapper method for allow subclassing platform based resolution
+	 */
+	protected Device resolveWithPlatform(DeviceType deviceType, DevicePlatform devicePlatform) {
+		return LiteDevice.from(deviceType, devicePlatform);
+	}
 
 	/**
 	 * List of user agent prefixes that identify mobile devices. Used primarily to match

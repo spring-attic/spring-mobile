@@ -22,15 +22,16 @@ package org.springframework.mobile.device;
  * @author Keith Donald
  * @author Roy Clarkson
  * @author Scott Rossillo
+ * @author Onur Kagan Ozcan
  */
 class LiteDevice implements Device {
-	
-	public static final LiteDevice NORMAL_INSTANCE = new LiteDevice(DeviceType.NORMAL);
 
-	public static final LiteDevice MOBILE_INSTANCE = new LiteDevice(DeviceType.MOBILE);
+	public static final LiteDevice NORMAL_INSTANCE = new LiteDevice(DeviceType.NORMAL, DevicePlatform.UNKNOWN);
 
-	public static final LiteDevice TABLET_INSTANCE = new LiteDevice(DeviceType.TABLET);
-	
+	public static final LiteDevice MOBILE_INSTANCE = new LiteDevice(DeviceType.MOBILE, DevicePlatform.UNKNOWN);
+
+	public static final LiteDevice TABLET_INSTANCE = new LiteDevice(DeviceType.TABLET, DevicePlatform.UNKNOWN);
+
 	public boolean isNormal() {
 		return this.deviceType == DeviceType.NORMAL;
 	}
@@ -43,10 +44,19 @@ class LiteDevice implements Device {
 		return this.deviceType == DeviceType.TABLET;
 	}
 
+	@Override
+	public DevicePlatform getDevicePlatform() {
+		return this.devicePlatform;
+	}
+
 	public DeviceType getDeviceType() {
 		return this.deviceType;
 	}
-	
+
+	public static Device from(DeviceType deviceType, DevicePlatform devicePlatform) {
+		return new LiteDevice(deviceType, devicePlatform);
+	}
+
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("[LiteDevice ");
@@ -57,11 +67,14 @@ class LiteDevice implements Device {
 
 	private final DeviceType deviceType;
 
+	private final DevicePlatform devicePlatform;
+
 	/**
-	 * Creates a LiteDevice.
+	 * Creates a LiteDevice with DevicePlatform.
 	 */
-	private LiteDevice(DeviceType deviceType) {
+	private LiteDevice(DeviceType deviceType, DevicePlatform devicePlatform) {
 		this.deviceType = deviceType;
+		this.devicePlatform = devicePlatform;
 	}
 
 }
