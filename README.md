@@ -29,9 +29,9 @@ dependencies {
     compile("org.springframework.mobile:spring-mobile-device:${springMobileVersion}")
 }
 repositories {
-    maven { url "http://repo.spring.io/release" }
-    maven { url "http://repo.spring.io/milestone" }
-    maven { url "http://repo.spring.io/snapshot" }
+    maven { url "https://repo.spring.io/release" }
+    maven { url "https://repo.spring.io/milestone" }
+    maven { url "https://repo.spring.io/snapshot" }
 }
 ```
 
@@ -50,17 +50,17 @@ repositories {
     <repository>
         <id>spring-repo</id>
         <name>Spring Repository</name>
-        <url>http://repo.spring.io/release</url>
+        <url>https://repo.spring.io/release</url>
     </repository>
     <repository>
         <id>spring-milestones</id>
         <name>Spring Milestones</name>
-        <url>http://repo.spring.io/milestone</url>
+        <url>https://repo.spring.io/milestone</url>
     </repository>
     <repository>
         <id>spring-snapshots</id>
         <name>Spring Snapshots</name>
-        <url>http://repo.spring.io/snapshot</url>
+        <url>https://repo.spring.io/snapshot</url>
         <snapshots>
             <enabled>true</enabled>
         </snapshots>
@@ -90,7 +90,7 @@ The [spring.io] web site contains many [getting started guides][guides] that cov
 
 ## Support
 
-Check out the [Spring forums] and the [spring-mobile][spring-mobile tag] tag on [Stack Overflow]. [Commercial support] is also available.
+Review the [spring-mobile][spring-mobile tag] tag on [Stack Overflow].
 
 
 ## Issue Tracking
@@ -178,7 +178,6 @@ Follow [@SpringCentral] as well as [@SpringFramework] on Twitter. In-depth artic
 [Spring forums]: http://forum.spring.io/forum/spring-projects/web/mobile
 [spring-mobile tag]: http://stackoverflow.com/questions/tagged/spring-mobile
 [Stack Overflow]: http://stackoverflow.com/faq
-[Commercial support]: http://spring.io/services
 [Spring Mobile JIRA]: http://jira.spring.io/browse/MOBILE
 [spring.io]: http://spring.io
 [guides]: http://spring.io/guides
