@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter xml:id="device"
-    xmlns="http://docbook.org/ns/docbook" version="5.0"
+         xmlns="http://docbook.org/ns/docbook" version="5.0"
     xmlns:xl="http://www.w3.org/1999/xlink"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="
         http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd
         http://www.w3.org/1999/xlink http://www.docbook.org/xml/5.0/xsd/xlink.xsd">
@@ -128,6 +128,12 @@ public interface Device {
      */
     boolean isTablet();
 
+    /**
+     *
+     * @return resolved DevicePlatform
+     */
+    DevicePlatform getDevicePlatform();
+
 }]]>
             </programlisting>
             
@@ -135,7 +141,8 @@ public interface Device {
             
         <para>As shown above, <methodname>Device.isMobile()</methodname> can be used to determine if the client is 
         using a mobile device, such as a smart phone. Similarly, <methodname>Device.isTablet()</methodname> can be 
-        used to determine if the client is running on a tablet device. Depending on the 
+        used to determine if the client is running on a tablet device. Additionally, the device platform may be
+        determined by inspecting the <methodname>Device.getDevicePlatform()</methodname> property. Depending on the
         <interfacename>DeviceResolver</interfacename> in use, a <interfacename>Device</interfacename> may support 
         being downcast to access additional properties.</para>
         
