@@ -50,7 +50,6 @@ public class StubDevice implements Device {
 		return this.deviceType == DeviceType.TABLET;
 	}
 
-	@Override
 	public DevicePlatform getDevicePlatform() {
 		return devicePlatform;
 	}

@@ -44,7 +44,6 @@ class LiteDevice implements Device {
 		return this.deviceType == DeviceType.TABLET;
 	}
 
-	@Override
 	public DevicePlatform getDevicePlatform() {
 		return this.devicePlatform;
 	}
@@ -57,6 +56,7 @@ class LiteDevice implements Device {
 		return new LiteDevice(deviceType, devicePlatform);
 	}
 
+	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("[LiteDevice ");
