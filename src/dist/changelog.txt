@@ -1,6 +1,11 @@
 Spring Mobile Changelog
 =======================
 
+1.1.4.RELEASE (2015.06.22)
+==========================
+* Upgrade to Spring Framework 3.2.13 (MOBILE-115)
+* Add DevicePlatform property to Device interface to specify iOS or Android (MOBILE-116)
+
 1.1.3.RELEASE (2014.10.06)
 ==========================
 * Upgrade to Spring Framework 3.2.11 (MOBILE-114)
