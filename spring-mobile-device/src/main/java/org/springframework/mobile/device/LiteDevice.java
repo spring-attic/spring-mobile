@@ -24,7 +24,7 @@ package org.springframework.mobile.device;
  * @author Scott Rossillo
  * @author Onur Kagan Ozcan
  */
-class LiteDevice implements Device {
+public class LiteDevice implements Device {
 
 	public static final LiteDevice NORMAL_INSTANCE = new LiteDevice(DeviceType.NORMAL, DevicePlatform.UNKNOWN);
 
