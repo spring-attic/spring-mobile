@@ -19,7 +19,7 @@ configure(allprojects) {
 	ext.junitVersion          = "4.12"
 	ext.easymockVersion       = "3.4"
 	ext.hamcrestVersion       = "1.3"
-	ext.servletApiVersion     = "3.0.1"
+	ext.servletVersion        = "3.1.0"
 
 	apply plugin: "propdeps"
 	apply plugin: "propdeps-eclipse"
@@ -208,7 +208,7 @@ project('spring-mobile-device') {
 	dependencies {
 		compile("org.springframework:spring-web")
 		compile("org.springframework:spring-webmvc")
-		provided("javax.servlet:javax.servlet-api:${servletApiVersion}")
+		provided("javax.servlet:javax.servlet-api:${servletVersion}")
 	}
 }
 
