@@ -300,7 +300,7 @@ configure(rootProject) {
 
 }
 
-task updateRootDocs << {
+task updateRootDocs {
 	copy {
 		from "src/dist"
 		into "${rootProject.projectDir}"
@@ -317,4 +317,6 @@ task updateRootDocs << {
 	}
 }
 
-build.dependsOn("updateRootDocs")
+build.doLast() {
+	updateRootDocs
+}
