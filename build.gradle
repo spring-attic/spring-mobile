@@ -191,14 +191,12 @@ configure(subprojects) { subproject ->
 		getReports().getJunitXml().setDestination(file("$buildDir/spring-release-test-results/"))
 		getReports().getHtml().setDestination(file("$buildDir/reports/spring-release-tests/"))
 	}
-	check.dependsOn springReleaseTest
 
 	task springSnapshotTest(type: Test) {
 		classpath = sourceSets.test.output + sourceSets.main.output + configurations.springSnapshotTestRuntime
 		getReports().getJunitXml().setDestination(file("$buildDir/spring-snapshot-test-results/"))
 		getReports().getHtml().setDestination(file("$buildDir/reports/spring-snapshot-tests/"))
 	}
-	check.dependsOn springSnapshotTest
 
 	configure([test, springReleaseTest, springSnapshotTest]) {
 		systemProperties['springVersion'] = springVersion
