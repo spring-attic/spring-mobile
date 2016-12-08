@@ -103,7 +103,7 @@ configure(allprojects) {
 	}
 
 	ext.javadocLinks = [
-		"http://docs.oracle.com/javase/7/docs/api/",
+		"http://docs.oracle.com/javase/8/docs/api/",
 		"http://docs.oracle.com/javaee/7/api/",
 		"http://docs.spring.io/spring/docs/${springVersion}/javadoc-api/",
 		"http://docs.jboss.org/jbossas/javadoc/4.0.5/connector/"
