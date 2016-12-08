@@ -4,6 +4,7 @@ buildscript {
 	}
 	dependencies {
 		classpath("org.springframework.build.gradle:propdeps-plugin:0.0.7")
+		classpath("io.spring.gradle:dependency-management-plugin:0.6.1.RELEASE")
 		classpath("io.spring.gradle:spring-io-plugin:0.0.5.RELEASE")
 		classpath("io.spring.gradle:docbook-reference-plugin:0.3.1")
 	}
@@ -26,6 +27,7 @@ configure(allprojects) {
 	apply plugin: "java"
 	apply plugin: "eclipse"
 	apply plugin: "idea"
+	apply plugin: "io.spring.dependency-management"
 
 	if (project.hasProperty('platformVersion')) {
 		apply plugin: 'spring-io'
@@ -40,6 +42,12 @@ configure(allprojects) {
 					mavenBom "io.spring.platform:platform-bom:${platformVersion}"
 				}
 			}
+		}
+	}
+
+	dependencyManagement {
+		imports {
+			mavenBom "org.springframework:spring-framework-bom:${springVersion}"
 		}
 	}
 
@@ -84,11 +92,11 @@ configure(allprojects) {
 	}
 
 	repositories {
-		maven { url "https://repo.spring.io/libs-snapshot" }
+		maven { url "https://repo.spring.io/libs-milestone" }
 	}
 
 	dependencies {
-		testCompile("org.springframework:spring-test:${springVersion}")
+		testCompile("org.springframework:spring-test")
 		testCompile("junit:junit:${junitVersion}")
 		testCompile("org.hamcrest:hamcrest-all:${hamcrestVersion}")
 		testCompile("org.easymock:easymock:${easymockVersion}")
@@ -198,8 +206,8 @@ configure(subprojects) { subproject ->
 project('spring-mobile-device') {
 	description = "Spring Mobile Device Resolution Support"
 	dependencies {
-		compile("org.springframework:spring-web:${springVersion}")
-		compile("org.springframework:spring-webmvc:${springVersion}")
+		compile("org.springframework:spring-web")
+		compile("org.springframework:spring-webmvc")
 		provided("javax.servlet:javax.servlet-api:${servletApiVersion}")
 	}
 }
