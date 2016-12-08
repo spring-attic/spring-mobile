@@ -6,7 +6,6 @@ buildscript {
 		classpath("org.springframework.build.gradle:propdeps-plugin:0.0.7")
 		classpath("io.spring.gradle:spring-io-plugin:0.0.4.RELEASE")
 		classpath("io.spring.gradle:docbook-reference-plugin:0.3.1")
-		classpath("me.champeau.gradle:gradle-javadoc-hotfix-plugin:0.1")
 	}
 }
 
@@ -27,7 +26,6 @@ configure(allprojects) {
 	apply plugin: "java"
 	apply plugin: "eclipse"
 	apply plugin: "idea"
-	apply plugin: "javadocHotfix"
 
 	if (project.hasProperty('platformVersion')) {
 		apply plugin: 'spring-io'
