@@ -4,9 +4,7 @@
 
 Very important, before we can accept your Spring Mobile contribution, we will need you to sign the S2 contributor license agreement (CLA). Signing the contributor's agreement does not grant anyone commit rights to the main repository, but it does mean that we can accept your contributions, and you will get an author credit if we do. Active contributors might be asked to join the core team, and given the ability to merge pull requests. In order to read and sign the CLA, please go to:
 
-* https://support.springsource.com/spring_committer_signup
-
-As **Project**, please select **Spring Mobile**. The **Project Lead** is **Roy Clarkson**.
+* https://cla.pivotal.io
 
 
 ## Fork the Repository
