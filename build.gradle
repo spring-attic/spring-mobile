@@ -16,10 +16,10 @@ configure(allprojects) {
 	ext.springVersion         = "5.0.0.RELEASE"
 	ext.springReleaseVersion  = "latest.release"
 	ext.springSnapshotVersion = "latest.integration"
+	ext.servletVersion        = "4.0.0"
 	ext.junitVersion          = "4.12"
 	ext.easymockVersion       = "3.4"
 	ext.hamcrestVersion       = "1.3"
-	ext.servletVersion        = "3.1.0"
 
 	apply plugin: "propdeps"
 	apply plugin: "propdeps-eclipse"
