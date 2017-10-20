@@ -299,11 +299,6 @@ configure(rootProject) {
 		archives docsZip
 		archives distZip
 	}
-
-	task wrapper(type: Wrapper) {
-		gradleVersion = "4.2.1"
-	}
-
 }
 
 task updateRootDocs {
