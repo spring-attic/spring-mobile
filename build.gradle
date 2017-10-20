@@ -99,7 +99,9 @@ configure(allprojects) {
 
 	dependencies {
 		testCompile("org.springframework:spring-test")
-		testCompile("junit:junit:${junitVersion}")
+		testCompile("junit:junit:${junitVersion}") {
+			exclude group:'org.hamcrest', module:'hamcrest-core'
+		}
 		testCompile("org.hamcrest:hamcrest-all:${hamcrestVersion}")
 		testCompile("org.easymock:easymock:${easymockVersion}")
 	}
