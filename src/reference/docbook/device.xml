@@ -311,8 +311,7 @@ public class HomeController {
                 <title>LiteDeviceResolver</title>
                 
                 <para>The default <interfacename>DeviceResolver</interfacename> implementation is based on the "lite" 
-                <ulink url="http://plugins.trac.wordpress.org/browser/wordpress-mobile-pack/trunk/plugins/wpmp_switcher/lite_detection.php">
-                <citetitle>detection algorithm</citetitle></ulink> implemented as part of the 
+                detection algorithm implemented as part of the
                 <ulink url="http://wordpress.org/extend/plugins/wordpress-mobile-pack"><citetitle>Wordpress Mobile Pack
                 </citetitle></ulink>. This resolver only detects the presence of a mobile or tablet device, and does 
                 not detect specific capabilities. No special configuration is required to enable this resolver, simply 
