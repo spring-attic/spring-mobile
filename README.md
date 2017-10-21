@@ -1,6 +1,6 @@
 # Spring Mobile
 
-[!["Build Status"](https://build.spring.io/plugins/servlet/buildStatusImage/MOBILE-MASTER)](https://build.spring.io/browse/MOBILE-MASTER)
+[!["Build Status"](https://build.spring.io/plugins/servlet/wittified/build-status/MOBILE-MASTER)](https://build.spring.io/browse/MOBILE-MASTER)
 
 [Spring Mobile] is an extension of the [Spring Framework] and [Spring Web MVC] that aims to simplify the development of mobile web applications.
 
