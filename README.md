@@ -95,7 +95,7 @@ Review the [spring-mobile][spring-mobile tag] tag on [Stack Overflow].
 
 ## Issue Tracking
 
-Report issues via the [Spring Mobile JIRA]. While JIRA is preferred, [GitHub issues] are also welcome. Understand our issue management process by reading about [the lifecycle of an issue].
+Report issues via [GitHub issues]. Understand our issue management process by reading about [the lifecycle of an issue].
 
 
 ## Build from Source
@@ -178,7 +178,6 @@ Follow [@SpringCentral] as well as [@SpringFramework] on Twitter. In-depth artic
 [Spring forums]: http://forum.spring.io/forum/spring-projects/web/mobile
 [spring-mobile tag]: http://stackoverflow.com/questions/tagged/spring-mobile
 [Stack Overflow]: http://stackoverflow.com/faq
-[Spring Mobile JIRA]: http://jira.spring.io/browse/MOBILE
 [spring.io]: http://spring.io
 [guides]: http://spring.io/guides
 [GitHub issues]: https://github.com/spring-projects/spring-mobile/issues
