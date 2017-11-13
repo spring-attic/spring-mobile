@@ -14,20 +14,26 @@
  * limitations under the License.
  */
 
-package org.springframework.mobile.device;
+package org.springframework.mobile.device.annotation;
 
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.lang.Nullable;
+import org.springframework.mobile.device.DeviceResolver;
 
 /**
- * Service interface for resolving Devices that originate web requests with the application.
- * @author Keith Donald
+ * Defines callback methods to customize the Java-based configuration for
+ * Spring Mobile enabled via {@code @EnableDeviceResolver}.
+ *
+ * <p>{@code @EnableDeviceResolver}-annotated configuration classes may implement
+ * this interface to be called back and given a chance to customize the
+ * default configuration.
+ *
+ * @author Roy Clarkson
+ * @since 2.0
  */
-public interface DeviceResolver {
+public interface DeviceResolverConfigurer {
 
-	/**
-	 * Resolve the device that originated the web request.
-	 */
-	default Device resolveDevice(HttpServletRequest request) {
+	@Nullable
+	default DeviceResolver getDeviceResolver() {
 		return null;
 	}
 

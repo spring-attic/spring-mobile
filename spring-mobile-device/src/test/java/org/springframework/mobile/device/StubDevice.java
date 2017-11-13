@@ -51,7 +51,7 @@ public class StubDevice implements Device {
 	}
 
 	public DevicePlatform getDevicePlatform() {
-		return devicePlatform;
+		return this.devicePlatform;
 	}
 
 	public DeviceType getDeviceType() {

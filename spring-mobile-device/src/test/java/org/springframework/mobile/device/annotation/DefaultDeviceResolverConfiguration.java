@@ -14,21 +14,11 @@
  * limitations under the License.
  */
 
-package org.springframework.mobile.device;
+package org.springframework.mobile.device.annotation;
 
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.context.annotation.Configuration;
 
-/**
- * Service interface for resolving Devices that originate web requests with the application.
- * @author Keith Donald
- */
-public interface DeviceResolver {
-
-	/**
-	 * Resolve the device that originated the web request.
-	 */
-	default Device resolveDevice(HttpServletRequest request) {
-		return null;
-	}
-
+@Configuration
+@EnableDeviceResolver
+public class DefaultDeviceResolverConfiguration {
 }
