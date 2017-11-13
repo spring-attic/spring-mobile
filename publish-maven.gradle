@@ -24,8 +24,8 @@ def customizePom(pom, gradleProject) {
 			description = gradleProject.description
 			url = "https://github.com/spring-projects/spring-mobile"
 			organization {
-				name = "Spring IO"
-				url = "http://projects.spring.io/spring-mobile"
+				name = "Pivotal Software, Inc."
+				url = "https://www.spring.io"
 			}
 			licenses {
 				license {
