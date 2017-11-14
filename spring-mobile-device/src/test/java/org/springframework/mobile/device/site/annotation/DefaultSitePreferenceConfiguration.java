@@ -14,8 +14,14 @@
  * limitations under the License.
  */
 
-/**
- * Ability for the user to specify whether they prefer the mobile or normal site.
- */
-package org.springframework.mobile.device.site;
+package org.springframework.mobile.device.site.annotation;
 
+import org.springframework.context.annotation.Configuration;
+
+/**
+ * @author Roy Clarkson
+ */
+@Configuration
+@EnableSitePreference
+public class DefaultSitePreferenceConfiguration {
+}
