@@ -55,7 +55,7 @@ public class DeviceResolverConfiguration {
 		for (DeviceResolverConfigurer configurer : deviceResolverConfigurers) {
 			DeviceResolver deviceResolver = configurer.getDeviceResolver();
 			if (deviceResolver != null) {
-				logger.debug("Using custom DeviceResolver");
+				logger.info("Using custom DeviceResolver");
 				return new DeviceResolverHandlerInterceptor(deviceResolver);
 			}
 		}
