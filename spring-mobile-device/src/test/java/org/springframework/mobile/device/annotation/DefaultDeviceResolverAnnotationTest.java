@@ -32,6 +32,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * @author Roy Clarkson
+ */
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = DefaultDeviceResolverConfiguration.class)
 public class DefaultDeviceResolverAnnotationTest {

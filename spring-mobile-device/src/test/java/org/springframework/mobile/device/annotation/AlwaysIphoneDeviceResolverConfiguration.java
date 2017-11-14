@@ -24,6 +24,9 @@ import org.springframework.mobile.device.Device;
 import org.springframework.mobile.device.DevicePlatform;
 import org.springframework.mobile.device.DeviceResolver;
 
+/**
+ * @author Roy Clarkson
+ */
 @Configuration
 @EnableDeviceResolver
 public class AlwaysIphoneDeviceResolverConfiguration implements DeviceResolverConfigurer {

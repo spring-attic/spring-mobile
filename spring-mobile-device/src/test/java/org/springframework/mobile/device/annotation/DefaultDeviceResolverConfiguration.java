@@ -18,6 +18,9 @@ package org.springframework.mobile.device.annotation;
 
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * @author Roy Clarkson
+ */
 @Configuration
 @EnableDeviceResolver
 public class DefaultDeviceResolverConfiguration {
