@@ -40,7 +40,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class SitePreferenceConfiguration {
 
-	private static final Log logger = LogFactory.getLog(DeviceResolverConfiguration.class);
+	private static final Log logger = LogFactory.getLog(SitePreferenceConfiguration.class);
 
 	private List<SitePreferenceConfigurer> sitePreferenceConfigurers = new ArrayList<>();
 
