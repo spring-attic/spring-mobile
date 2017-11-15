@@ -60,4 +60,5 @@ public class AlwaysMobileSitePreferenceAnnotationTest {
 		interceptor.preHandle(request, response, null);
 		assertThat(request.getAttribute("currentSitePreference")).isEqualTo(SitePreference.MOBILE);
 	}
+
 }

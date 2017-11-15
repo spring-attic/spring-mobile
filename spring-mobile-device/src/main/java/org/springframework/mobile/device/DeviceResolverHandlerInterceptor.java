@@ -38,7 +38,7 @@ public class DeviceResolverHandlerInterceptor extends HandlerInterceptorAdapter 
 	public DeviceResolverHandlerInterceptor() {
 		this(new LiteDeviceResolver());
 	}
-	
+
 	/**
 	 * Create a device resolving {@link HandlerInterceptor}.
 	 * @param deviceResolver the device resolver to delegate to in {@link #preHandle(HttpServletRequest, HttpServletResponse, Object)}.
