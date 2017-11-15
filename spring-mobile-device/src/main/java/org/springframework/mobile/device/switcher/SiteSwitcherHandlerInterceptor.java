@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.mobile.device.site.CookieSitePreferenceRepository;
 import org.springframework.mobile.device.site.SitePreferenceHandler;
-import org.springframework.mobile.device.site.StandardSitePreferenceHandler;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
@@ -61,6 +60,15 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 public class SiteSwitcherHandlerInterceptor extends HandlerInterceptorAdapter {
 
 	private final SiteSwitcherHandler siteSwitcherHandler;
+
+	/**
+	 * Creates a new site switcher
+	 * @param siteSwitcherHandler the handler for the site switcher
+	 * @since 2.0
+	 */
+	public SiteSwitcherHandlerInterceptor(SiteSwitcherHandler siteSwitcherHandler) {
+		this.siteSwitcherHandler = siteSwitcherHandler;
+	}
 
 	/**
 	 * Creates a new site switcher.
@@ -111,7 +119,7 @@ public class SiteSwitcherHandlerInterceptor extends HandlerInterceptorAdapter {
 	 * Uses a {@link CookieSitePreferenceRepository} that saves a cookie that is shared between the two domains.
 	 */
 	public static SiteSwitcherHandlerInterceptor mDot(String serverName) {
-		return mDot(serverName, false);
+		return new SiteSwitcherHandlerInterceptor(StandardSiteSwitcherHandlerFactory.mDot(serverName));
 	}
 
 	/**
@@ -120,7 +128,7 @@ public class SiteSwitcherHandlerInterceptor extends HandlerInterceptorAdapter {
 	 * Uses a {@link CookieSitePreferenceRepository} that saves a cookie that is shared between the two domains.
 	 */
 	public static SiteSwitcherHandlerInterceptor mDot(String serverName, Boolean tabletIsMobile) {
-		return standard(serverName, "m." + serverName, "." + serverName, tabletIsMobile);
+		return new SiteSwitcherHandlerInterceptor(StandardSiteSwitcherHandlerFactory.mDot(serverName, tabletIsMobile));
 	}
 
 	/**
@@ -131,7 +139,7 @@ public class SiteSwitcherHandlerInterceptor extends HandlerInterceptorAdapter {
 	 * Uses a {@link CookieSitePreferenceRepository} that saves a cookie that is shared between the two domains.
 	 */
 	public static SiteSwitcherHandlerInterceptor dotMobi(String serverName) {
-		return dotMobi(serverName, false);
+		return new SiteSwitcherHandlerInterceptor(StandardSiteSwitcherHandlerFactory.dotMobi(serverName));
 	}
 
 	/**
@@ -142,8 +150,7 @@ public class SiteSwitcherHandlerInterceptor extends HandlerInterceptorAdapter {
 	 * Uses a {@link CookieSitePreferenceRepository} that saves a cookie that is shared between the two domains.
 	 */
 	public static SiteSwitcherHandlerInterceptor dotMobi(String serverName, Boolean tabletIsMobile) {
-		int lastDot = serverName.lastIndexOf('.');
-		return standard(serverName, serverName.substring(0, lastDot) + ".mobi", "." + serverName, tabletIsMobile);
+		return new SiteSwitcherHandlerInterceptor(StandardSiteSwitcherHandlerFactory.dotMobi(serverName, tabletIsMobile));
 	}
 
 	/**
@@ -158,7 +165,7 @@ public class SiteSwitcherHandlerInterceptor extends HandlerInterceptorAdapter {
 	 * @see StandardSiteUrlFactory
 	 */
 	public static SiteSwitcherHandlerInterceptor standard(String normalServerName, String mobileServerName, String cookieDomain) {
-		return standard(normalServerName, mobileServerName, cookieDomain, false);
+		return new SiteSwitcherHandlerInterceptor(StandardSiteSwitcherHandlerFactory.standard(normalServerName, mobileServerName, cookieDomain));
 	}
 
 	/**
@@ -174,11 +181,7 @@ public class SiteSwitcherHandlerInterceptor extends HandlerInterceptorAdapter {
 	 * @see StandardSiteUrlFactory
 	 */
 	public static SiteSwitcherHandlerInterceptor standard(String normalServerName, String mobileServerName, String cookieDomain, Boolean tabletIsMobile) {
-		return new SiteSwitcherHandlerInterceptor(
-				new StandardSiteUrlFactory(normalServerName),
-				new StandardSiteUrlFactory(mobileServerName),
-				new StandardSitePreferenceHandler(new CookieSitePreferenceRepository(cookieDomain)),
-				tabletIsMobile);
+		return new SiteSwitcherHandlerInterceptor(StandardSiteSwitcherHandlerFactory.standard(normalServerName, mobileServerName, cookieDomain, tabletIsMobile));
 	}
 
 	/**
@@ -194,11 +197,7 @@ public class SiteSwitcherHandlerInterceptor extends HandlerInterceptorAdapter {
 	 * @see StandardSiteUrlFactory
 	 */
 	public static SiteSwitcherHandlerInterceptor standard(String normalServerName, String mobileServerName, String tabletServerName, String cookieDomain) {
-		return new SiteSwitcherHandlerInterceptor(
-				new StandardSiteUrlFactory(normalServerName),
-				new StandardSiteUrlFactory(mobileServerName),
-				new StandardSiteUrlFactory(tabletServerName),
-				new StandardSitePreferenceHandler(new CookieSitePreferenceRepository(cookieDomain)));
+		return new SiteSwitcherHandlerInterceptor(StandardSiteSwitcherHandlerFactory.standard(normalServerName, mobileServerName, tabletServerName, cookieDomain));
 	}
 
 	/**
@@ -207,10 +206,7 @@ public class SiteSwitcherHandlerInterceptor extends HandlerInterceptorAdapter {
 	 * Uses a {@link CookieSitePreferenceRepository} that saves a cookie that is stored on the root path.
 	 */
 	public static SiteSwitcherHandlerInterceptor urlPath(String mobilePath) {
-		return new SiteSwitcherHandlerInterceptor(
-				new NormalSitePathUrlFactory(mobilePath),
-				new MobileSitePathUrlFactory(mobilePath, null), 
-				new StandardSitePreferenceHandler(new CookieSitePreferenceRepository()));
+		return new SiteSwitcherHandlerInterceptor(StandardSiteSwitcherHandlerFactory.urlPath(mobilePath));
 	}
 
 	/**
@@ -221,10 +217,7 @@ public class SiteSwitcherHandlerInterceptor extends HandlerInterceptorAdapter {
 	 * Uses a {@link CookieSitePreferenceRepository} that saves a cookie that is stored on the root path.
 	 */
 	public static SiteSwitcherHandlerInterceptor urlPath(String mobilePath, String rootPath) {
-		return new SiteSwitcherHandlerInterceptor(
-				new NormalSitePathUrlFactory(mobilePath, rootPath),
-				new MobileSitePathUrlFactory(mobilePath, null, rootPath), 
-				new StandardSitePreferenceHandler(new CookieSitePreferenceRepository()));
+		return new SiteSwitcherHandlerInterceptor(StandardSiteSwitcherHandlerFactory.urlPath(mobilePath, rootPath));
 	}
 
 	/**
@@ -235,11 +228,7 @@ public class SiteSwitcherHandlerInterceptor extends HandlerInterceptorAdapter {
 	 * Uses a {@link CookieSitePreferenceRepository} that saves a cookie that is stored on the root path.
 	 */
 	public static SiteSwitcherHandlerInterceptor urlPath(String mobilePath, String tabletPath, String rootPath) {
-		return new SiteSwitcherHandlerInterceptor(
-				new NormalSitePathUrlFactory(mobilePath, tabletPath, rootPath),
-				new MobileSitePathUrlFactory(mobilePath, tabletPath, rootPath), 
-				new TabletSitePathUrlFactory(tabletPath, mobilePath, rootPath), 
-				new StandardSitePreferenceHandler(new CookieSitePreferenceRepository()));
+		return new SiteSwitcherHandlerInterceptor(StandardSiteSwitcherHandlerFactory.urlPath(mobilePath, tabletPath, rootPath));
 	}
 
 }
