@@ -2,3 +2,4 @@ rootProject.name = "spring-mobile"
 
 include "spring-mobile-device"
 include "spring-mobile-autoconfigure"
+include "spring-mobile-starter"

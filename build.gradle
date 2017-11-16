@@ -129,7 +129,7 @@ configure(allprojects) {
 	}
 }
 
-configure(subprojects) { subproject ->
+configure(subprojects.findAll {it.name != 'spring-mobile-starter'}) { subproject ->
 	apply from: "${rootProject.projectDir}/publish-maven.gradle"
 
 	jar {
@@ -214,6 +214,33 @@ project("spring-mobile-autoconfigure") {
 		// JSR-305 only used for non-required meta-annotations
 		compileOnly("com.google.code.findbugs:jsr305:${jsr305Version}")
 		testCompileOnly("com.google.code.findbugs:jsr305:${jsr305Version}")
+	}
+}
+
+project("spring-mobile-starter") {
+	description = "Starter for building web applications using Spring Mobile"
+
+	apply from: "${rootProject.projectDir}/publish-maven.gradle"
+
+	dependencyManagement {
+		imports {
+			mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+		}
+	}
+
+	dependencies {
+		compile project(":spring-mobile-autoconfigure")
+		compile("org.springframework.boot:spring-boot-starter")
+		compile("org.springframework.boot:spring-boot-starter-web")
+	}
+
+	install {
+		repositories.mavenInstaller {
+			pom.whenConfigured { generatedPom ->
+				generatedPom.name = "Spring Boot Mobile Starter"
+				generatedPom.packaging = "pom"
+			}
+		}
 	}
 }
 
