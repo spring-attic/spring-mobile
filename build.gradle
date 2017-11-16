@@ -16,6 +16,9 @@ configure(allprojects) {
 	if (!project.hasProperty("springVersion")) {
 		ext.springVersion = "5.0.1.RELEASE"
 	}
+	if (!project.hasProperty("springBootVersion")) {
+		ext.springBootVersion = "2.0.0.M6"
+	}
 	ext.servletVersion        = "4.0.0"
 	ext.jsr305Version         = "3.0.2"
 	ext.junitVersion          = "4.12"
@@ -31,7 +34,7 @@ configure(allprojects) {
 	apply plugin: "idea"
 	apply plugin: "io.spring.dependency-management"
 
-	if (project.hasProperty("springVersion")) {
+	if (project.hasProperty("springVersion") || project.hasProperty("springBootVersion")) {
 		repositories {
 			maven { url "https://repo.spring.io/libs-snapshot" }
 		}
@@ -52,13 +55,7 @@ configure(allprojects) {
 			}
 		}
 	}
-
-	dependencyManagement {
-		imports {
-			mavenBom "org.springframework:spring-framework-bom:${springVersion}"
-		}
-	}
-
+	
 	compileJava {
 		sourceCompatibility=1.8
 		targetCompatibility=1.8
@@ -179,10 +176,41 @@ configure(subprojects) { subproject ->
 
 project("spring-mobile-device") {
 	description = "Spring Mobile Device Resolution Support"
+
+	dependencyManagement {
+		imports {
+			mavenBom "org.springframework:spring-framework-bom:${springVersion}"
+		}
+	}
+
 	dependencies {
 		compile("org.springframework:spring-web")
 		compile("org.springframework:spring-webmvc")
 		provided("javax.servlet:javax.servlet-api:${servletVersion}")
+		// JSR-305 only used for non-required meta-annotations
+		compileOnly("com.google.code.findbugs:jsr305:${jsr305Version}")
+		testCompileOnly("com.google.code.findbugs:jsr305:${jsr305Version}")
+	}
+}
+
+project("spring-mobile-autoconfigure") {
+	description = "Spring Boot Auto-Configuration for Spring Mobile"
+
+	dependencyManagement {
+		imports {
+			mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+		}
+	}
+
+	dependencies {
+		compile project(":spring-mobile-device")
+		compile("org.springframework.boot:spring-boot-starter")
+		compile("org.springframework.boot:spring-boot-starter-web")
+		optional("org.springframework.boot:spring-boot-starter-thymeleaf")
+		optional("org.springframework.boot:spring-boot-starter-freemarker")
+		optional("org.springframework.boot:spring-boot-starter-groovy-templates")
+		optional("org.springframework.boot:spring-boot-starter-mustache")
+		testCompile("org.springframework.boot:spring-boot-starter-test")
 		// JSR-305 only used for non-required meta-annotations
 		compileOnly("com.google.code.findbugs:jsr305:${jsr305Version}")
 		testCompileOnly("com.google.code.findbugs:jsr305:${jsr305Version}")
