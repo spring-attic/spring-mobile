@@ -29,6 +29,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mobile.device.Device;
+import org.springframework.mobile.device.DeviceHandlerMethodArgumentResolver;
 import org.springframework.mobile.device.DevicePlatform;
 import org.springframework.mobile.device.DeviceResolverHandlerInterceptor;
 import org.springframework.mobile.device.DeviceUtils;
@@ -56,20 +57,23 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class DeviceResolverAutoConfigurationTests extends AbstractDeviceResolverAutoConfigurationTests {
 
 	@Test
-	public void resolveDevice() throws Exception {
+	public void deviceResolverHandlerInterceptorCreated() throws Exception {
 		this.context = new AnnotationConfigWebApplicationContext();
 		this.context.setServletContext(new MockServletContext());
 		this.context.register(Config.class);
 		this.context.refresh();
 		DeviceResolverHandlerInterceptor interceptor = this.context.getBean(DeviceResolverHandlerInterceptor.class);
-		MockHttpServletRequest request = new MockHttpServletRequest();
-		MockHttpServletResponse response = new MockHttpServletResponse();
-		interceptor.preHandle(request, response, null);
-		Device device = DeviceUtils.getCurrentDevice(request);
-		assertThat(device.isNormal()).isTrue();
-		assertThat(device.isMobile()).isFalse();
-		assertThat(device.isTablet()).isFalse();
-		assertThat(device.getDevicePlatform()).isEqualByComparingTo(DevicePlatform.UNKNOWN);
+		assertThat(interceptor).isNotNull();
+	}
+
+	@Test
+	public void deviceHandlerMethodArgumentResolverCreated() throws Exception {
+		this.context = new AnnotationConfigWebApplicationContext();
+		this.context.setServletContext(new MockServletContext());
+		this.context.register(Config.class);
+		this.context.refresh();
+		DeviceHandlerMethodArgumentResolver resolver = this.context.getBean(DeviceHandlerMethodArgumentResolver.class);
+		assertThat(resolver).isNotNull();
 	}
 
 	@Test
@@ -84,6 +88,23 @@ public class DeviceResolverAutoConfigurationTests extends AbstractDeviceResolver
 				.getHandler(new MockHttpServletRequest()).getInterceptors();
 		assertThat(interceptors)
 				.hasAtLeastOneElementOfType(DeviceResolverHandlerInterceptor.class);
+	}
+
+	@Test
+	public void resolveDevice() throws Exception {
+		this.context = new AnnotationConfigWebApplicationContext();
+		this.context.setServletContext(new MockServletContext());
+		this.context.register(Config.class);
+		this.context.refresh();
+		DeviceResolverHandlerInterceptor interceptor = this.context.getBean(DeviceResolverHandlerInterceptor.class);
+		MockHttpServletRequest request = new MockHttpServletRequest();
+		MockHttpServletResponse response = new MockHttpServletResponse();
+		interceptor.preHandle(request, response, null);
+		Device device = DeviceUtils.getCurrentDevice(request);
+		assertThat(device.isNormal()).isTrue();
+		assertThat(device.isMobile()).isFalse();
+		assertThat(device.isTablet()).isFalse();
+		assertThat(device.getDevicePlatform()).isEqualByComparingTo(DevicePlatform.UNKNOWN);
 	}
 
 	@Test
