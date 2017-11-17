@@ -47,7 +47,6 @@ public class DeviceResolverAutoConfiguration {
 
 	@Configuration
 	@ConditionalOnBean(DeviceResolver.class)
-	@ConditionalOnWebApplication(type = Type.SERVLET)
 	@EnableDeviceResolver
 	protected static class DeviceResolverConfigurationAdapter implements DeviceResolverConfigurer {
 
@@ -65,7 +64,6 @@ public class DeviceResolverAutoConfiguration {
 
 	@Configuration
 	@ConditionalOnMissingBean(DeviceResolver.class)
-	@ConditionalOnWebApplication(type = Type.SERVLET)
 	@EnableDeviceResolver
 	protected static class DefaultDeviceResolverConfigurationAdapter {
 
