@@ -1,5 +1,6 @@
 # Auto Configure
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 org.springframework.mobile.autoconfigure.DeviceDelegatingViewResolverAutoConfiguration,\
 org.springframework.mobile.autoconfigure.DeviceResolverAutoConfiguration,\
 org.springframework.mobile.autoconfigure.SitePreferenceAutoConfiguration,\
-org.springframework.mobile.autoconfigure.SiteSwitcherAutoConfiguration,\
+org.springframework.mobile.autoconfigure.SiteSwitcherAutoConfiguration
