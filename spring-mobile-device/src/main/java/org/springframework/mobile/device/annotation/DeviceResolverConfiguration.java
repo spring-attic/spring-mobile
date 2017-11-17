@@ -25,6 +25,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.mobile.device.DeviceHandlerMethodArgumentResolver;
 import org.springframework.mobile.device.DeviceResolver;
 import org.springframework.mobile.device.DeviceResolverHandlerInterceptor;
@@ -68,6 +69,7 @@ public class DeviceResolverConfiguration {
 	}
 
 	@Configuration
+	@Order(0)
 	protected static class DeviceResolverMvcConfiguration implements WebMvcConfigurer {
 
 		private DeviceResolverHandlerInterceptor deviceResolverHandlerInterceptor;
