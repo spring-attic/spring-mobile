@@ -18,20 +18,17 @@
 
 ## Download Artifacts
 
-See [downloading Spring artifacts] for Maven repository information. Unable to use Maven or other transitive dependency management tools? See [building a distribution with dependencies].
+Include the `spring-mobile-starter` in your Spring Boot application to enable Spring Mobile's Auto-Configuration. See [downloading Spring artifacts] for Maven repository information. Unable to use Maven or other transitive dependency management tools? See [building a distribution with dependencies].
 
-> **Note:** You do not need to include all three repositories, rather select the one that corresponds to the release type of the dependency.
 
 ### Gradle
 
 ```groovy
 dependencies {
-    compile("org.springframework.mobile:spring-mobile-device:${springMobileVersion}")
+    compile("org.springframework.mobile:spring-mobile-starter:2.0.0.M2")
 }
 repositories {
-    maven { url "https://repo.spring.io/release" }
     maven { url "https://repo.spring.io/milestone" }
-    maven { url "https://repo.spring.io/snapshot" }
 }
 ```
 
@@ -41,29 +38,16 @@ repositories {
 <dependencies>
     <dependency>
         <groupId>org.springframework.mobile</groupId>
-        <artifactId>spring-mobile-device</artifactId>
-        <version>${org.springframework.mobile-version}</version>
+        <artifactId>spring-mobile-starter</artifactId>
+        <version>2.0.0.M2</version>
     </dependency>
 </dependencies>
 
 <repositories>
     <repository>
-        <id>spring-repo</id>
-        <name>Spring Repository</name>
-        <url>https://repo.spring.io/release</url>
-    </repository>
-    <repository>
         <id>spring-milestones</id>
         <name>Spring Milestones</name>
         <url>https://repo.spring.io/milestone</url>
-    </repository>
-    <repository>
-        <id>spring-snapshots</id>
-        <name>Spring Snapshots</name>
-        <url>https://repo.spring.io/snapshot</url>
-        <snapshots>
-            <enabled>true</enabled>
-        </snapshots>
     </repository>
 </repositories>
 ```
