@@ -103,9 +103,6 @@ configure(allprojects) {
 	}
 
 	dependencies {
-		testCompile("org.springframework:spring-test") {
-			exclude group:"commons-logging", module:"commons-logging"
-		}
 		testCompile("junit:junit:${junitVersion}") {
 			exclude group:"org.hamcrest", module:"hamcrest-core"
 		}
@@ -187,6 +184,9 @@ project("spring-mobile-device") {
 		compile("org.springframework:spring-web")
 		compile("org.springframework:spring-webmvc")
 		provided("javax.servlet:javax.servlet-api:${servletVersion}")
+		testCompile("org.springframework:spring-test") {
+			exclude group:"commons-logging", module:"commons-logging"
+		}
 		// JSR-305 only used for non-required meta-annotations
 		compileOnly("com.google.code.findbugs:jsr305:${jsr305Version}")
 		testCompileOnly("com.google.code.findbugs:jsr305:${jsr305Version}")
