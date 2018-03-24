@@ -78,7 +78,7 @@ configure(allprojects) {
 		"-Xlint:finally",
 		"-Xlint:overrides",
 		"-Xlint:path",
-		"-Xlint:processing",
+		"-Xlint:-processing",
 		"-Xlint:static",
 		"-Xlint:try",
 		"-Xlint:fallthrough",
@@ -206,6 +206,7 @@ project("spring-mobile-autoconfigure") {
 		compile project(":spring-mobile-device")
 		compile("org.springframework.boot:spring-boot-starter")
 		compile("org.springframework.boot:spring-boot-starter-web")
+		compileOnly("org.springframework.boot:spring-boot-configuration-processor")
 		optional("org.springframework.boot:spring-boot-starter-thymeleaf")
 		optional("org.springframework.boot:spring-boot-starter-freemarker")
 		optional("org.springframework.boot:spring-boot-starter-groovy-templates")
