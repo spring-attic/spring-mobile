@@ -14,10 +14,10 @@ configure(allprojects) {
 	group = "org.springframework.mobile"
 
 	if (!project.hasProperty("springVersion")) {
-		ext.springVersion = "5.0.2.RELEASE"
+		ext.springVersion = "5.0.4.RELEASE"
 	}
 	if (!project.hasProperty("springBootVersion")) {
-		ext.springBootVersion = "2.0.0.M6"
+		ext.springBootVersion = "2.0.0.RELEASE"
 	}
 	ext.servletVersion        = "4.0.0"
 	ext.jsr305Version         = "3.0.2"
