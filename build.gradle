@@ -282,8 +282,6 @@ configure(rootProject) {
 		description = "Builds -${classifier} archive containing api and reference " +
 				"for deployment at docs.spring.io/spring-mobile/docs."
 
-		from("src/dist") { include "changelog.txt" }
-
 		from (api) { into "api" }
 
 		from (reference) { into "reference" }
