@@ -5,8 +5,8 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="
-        http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd
-        http://www.w3.org/1999/xlink http://www.docbook.org/xml/5.0/xsd/xlink.xsd">
+        http://docbook.org/ns/docbook https://www.docbook.org/xml/5.0/xsd/docbook.xsd
+        http://www.w3.org/1999/xlink https://www.docbook.org/xml/5.0/xsd/xlink.xsd">
     
     <title>Spring Mobile Device Module</title>
     
@@ -43,7 +43,7 @@
 <repository>
     <id>spring-repo</id>
     <name>Spring Repository</name>
-    <url>http://repo.spring.io/release</url>
+    <url>https://repo.spring.io/release</url>
 </repository>]]>
             </programlisting>
             
@@ -56,7 +56,7 @@
 <repository>
     <id>spring-milestone</id>
     <name>Spring Milestone Repository</name>
-    <url>http://repo.spring.io/milestone</url>
+    <url>https://repo.spring.io/milestone</url>
 </repository>]]>
             </programlisting>
             
@@ -68,7 +68,7 @@
 <repository>
     <id>spring-snapshot</id>
     <name>Spring Snapshot Repository</name>
-    <url>http://repo.spring.io/snapshot</url>
+    <url>https://repo.spring.io/snapshot</url>
 </repository>]]>
             </programlisting>
             
@@ -181,7 +181,7 @@ public interface Device {
                 </para>
                 
                 <para>Alternatively, you can add the <classname>DeviceResolverHandlerInterceptor</classname> using 
-                Spring's <ulink url="http://docs.spring.io/spring/docs/3.2.4.RELEASE/spring-framework-reference/html/beans.html#beans-java">
+                Spring's <ulink url="https://docs.spring.io/spring/docs/3.2.4.RELEASE/spring-framework-reference/html/beans.html#beans-java">
                 <citetitle>Java-based container configuration</citetitle></ulink>: 
                 
                 <programlisting language="java"><![CDATA[
@@ -312,7 +312,7 @@ public class HomeController {
                 
                 <para>The default <interfacename>DeviceResolver</interfacename> implementation is based on the "lite" 
                 detection algorithm implemented as part of the
-                <ulink url="http://wordpress.org/extend/plugins/wordpress-mobile-pack"><citetitle>Wordpress Mobile Pack
+                <ulink url="https://wordpress.org/extend/plugins/wordpress-mobile-pack"><citetitle>Wordpress Mobile Pack
                 </citetitle></ulink>. This resolver only detects the presence of a mobile or tablet device, and does 
                 not detect specific capabilities. No special configuration is required to enable this resolver, simply 
                 configure a default <classname>DeviceResolverHandlerInterceptor</classname> and it will be enabled for 
