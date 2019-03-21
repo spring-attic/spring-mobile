@@ -72,8 +72,8 @@ public class SiteSwitcherHandlerInterceptor extends HandlerInterceptorAdapter {
 
 	/**
 	 * Creates a new site switcher.
-	 * @param normalSiteUrlFactory the factory for a "normal" site URL e.g. http://app.com
-	 * @param mobileSiteUrlFactory the factory for a "mobile" site URL e.g. http://m.app.com
+	 * @param normalSiteUrlFactory the factory for a "normal" site URL e.g. https://app.com
+	 * @param mobileSiteUrlFactory the factory for a "mobile" site URL e.g. https://m.app.com
 	 * @param sitePreferenceHandler the handler for the user site preference
 	 */
 	public SiteSwitcherHandlerInterceptor(SiteUrlFactory normalSiteUrlFactory, SiteUrlFactory mobileSiteUrlFactory,
@@ -83,8 +83,8 @@ public class SiteSwitcherHandlerInterceptor extends HandlerInterceptorAdapter {
 
 	/**
 	 * Creates a new site switcher.
-	 * @param normalSiteUrlFactory the factory for a "normal" site URL e.g. http://app.com
-	 * @param mobileSiteUrlFactory the factory for a "mobile" site URL e.g. http://m.app.com 
+	 * @param normalSiteUrlFactory the factory for a "normal" site URL e.g. https://app.com
+	 * @param mobileSiteUrlFactory the factory for a "mobile" site URL e.g. https://m.app.com 
 	 * @param sitePreferenceHandler the handler for the user site preference
 	 * @param tabletIsMobile true to send tablets to the 'mobile' site.
 	 */
@@ -96,9 +96,9 @@ public class SiteSwitcherHandlerInterceptor extends HandlerInterceptorAdapter {
 
 	/**
 	 * Creates a new site switcher.
-	 * @param normalSiteUrlFactory the factory for a "normal" site URL e.g. http://app.com
-	 * @param mobileSiteUrlFactory the factory for a "mobile" site URL e.g. http://m.app.com
-	 * @param tabletSiteUrlFactory the factory for a "tablet" site URL e.g. http://app.com/tablet
+	 * @param normalSiteUrlFactory the factory for a "normal" site URL e.g. https://app.com
+	 * @param mobileSiteUrlFactory the factory for a "mobile" site URL e.g. https://m.app.com
+	 * @param tabletSiteUrlFactory the factory for a "tablet" site URL e.g. https://app.com/tablet
 	 * @param sitePreferenceHandler the handler for the user site preference
 	 */
 	public SiteSwitcherHandlerInterceptor(SiteUrlFactory normalSiteUrlFactory, SiteUrlFactory mobileSiteUrlFactory,
@@ -212,7 +212,7 @@ public class SiteSwitcherHandlerInterceptor extends HandlerInterceptorAdapter {
 	/**
 	 * Creates a site switcher that redirects to a path on the current domain for normal site requests that either
 	 * originate from a mobile device or indicate a mobile site preference.
-	 * Allows you to configure a root path for an application. For example, if your app is running at <code>http://www.domain.com/myapp</code>,
+	 * Allows you to configure a root path for an application. For example, if your app is running at <code>https://www.domain.com/myapp</code>,
 	 * then the root path is <code>/myapp</code>.
 	 * Uses a {@link CookieSitePreferenceRepository} that saves a cookie that is stored on the root path.
 	 */
@@ -223,7 +223,7 @@ public class SiteSwitcherHandlerInterceptor extends HandlerInterceptorAdapter {
 	/**
 	 * Creates a site switcher that redirects to a path on the current domain for normal site requests that either
 	 * originate from a mobile device or tablet device, or indicate a mobile or tablet site preference.
-	 * Allows you to configure a root path for an application. For example, if your app is running at <code>http://www.domain.com/myapp</code>,
+	 * Allows you to configure a root path for an application. For example, if your app is running at <code>https://www.domain.com/myapp</code>,
 	 * then the root path is <code>/myapp</code>.
 	 * Uses a {@link CookieSitePreferenceRepository} that saves a cookie that is stored on the root path.
 	 */

@@ -125,7 +125,7 @@ public class SiteSwitcherAutoConfigurationTests {
 			}
 		});
 		interceptor.preHandle(request, response, null);
-		assertThat(response.getRedirectedUrl()).isEqualToIgnoringWhitespace("http://m.app.local");
+		assertThat(response.getRedirectedUrl()).isEqualToIgnoringWhitespace("https://m.app.local");
 	}
 
 	@Configuration

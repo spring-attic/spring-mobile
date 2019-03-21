@@ -6,6 +6,6 @@ application development.
 
 Please consult the documentation located within the 'docs/reference' directory
 of this release and also visit the official Spring Mobile home at:
-http://projects.spring.io/spring-mobile/
+https://projects.spring.io/spring-mobile/
 
 There you will find links to the issue tracker, samples, and other resources.

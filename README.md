@@ -151,27 +151,27 @@ Follow [@SpringCentral] as well as [@SpringFramework] on Twitter. In-depth artic
 [Spring Mobile] is released under version 2.0 of the [Apache License].
 
 
-[Spring Mobile]: http://projects.spring.io/spring-mobile
-[Spring Framework]: http://projects.spring.io/spring-framework
-[Spring Web MVC]: http://docs.spring.io/spring/docs/current/spring-framework-reference/html/mvc.html
+[Spring Mobile]: https://projects.spring.io/spring-mobile
+[Spring Framework]: https://projects.spring.io/spring-framework
+[Spring Web MVC]: https://docs.spring.io/spring/docs/current/spring-framework-reference/html/mvc.html
 [downloading Spring artifacts]: https://github.com/spring-projects/spring-framework/wiki/Downloading-Spring-artifacts
 [building a distribution with dependencies]: https://github.com/spring-projects/spring-framework/wiki/Building-a-distribution-with-dependencies
-[Javadoc]: http://docs.spring.io/spring-mobile/docs/current/api/
-[reference docs]: http://docs.spring.io/spring-mobile/docs/current/reference/html/
+[Javadoc]: https://docs.spring.io/spring-mobile/docs/current/api/
+[reference docs]: https://docs.spring.io/spring-mobile/docs/current/reference/html/
 [samples repository]: https://github.com/spring-projects/spring-mobile-samples
-[Spring forums]: http://forum.spring.io/forum/spring-projects/web/mobile
-[spring-mobile tag]: http://stackoverflow.com/questions/tagged/spring-mobile
-[Stack Overflow]: http://stackoverflow.com/faq
-[spring.io]: http://spring.io
-[guides]: http://spring.io/guides
+[Spring forums]: https://forum.spring.io/forum/spring-projects/web/mobile
+[spring-mobile tag]: https://stackoverflow.com/questions/tagged/spring-mobile
+[Stack Overflow]: https://stackoverflow.com/faq
+[spring.io]: https://spring.io
+[guides]: https://spring.io/guides
 [GitHub issues]: https://github.com/spring-projects/spring-mobile/issues
 [the lifecycle of an issue]: https://github.com/spring-projects/spring-framework/wiki/The-Lifecycle-of-an-Issue
-[Gradle]: http://gradle.org
+[Gradle]: https://gradle.org
 [sts]: https://spring.io/tools
-[Pull requests]: http://help.github.com/send-pull-requests
+[Pull requests]: https://help.github.com/send-pull-requests
 [contributor guidelines]: CONTRIBUTING.md
 [@SpringFramework]: https://twitter.com/springframework
 [@SpringCentral]: https://twitter.com/springcentral
-[The Spring Blog]: http://spring.io/blog/
-[news feed]: http://spring.io/blog/category/news
+[The Spring Blog]: https://spring.io/blog/
+[news feed]: https://spring.io/blog/category/news
 [Apache License]: http://www.apache.org/licenses/LICENSE-2.0
