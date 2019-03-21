@@ -73,7 +73,7 @@ public class SiteSwitcherRequestFilterTest {
 			}
 
 			public String createSiteUrl(HttpServletRequest request) {
-				return "http://app.com";
+				return "https://app.com";
 			}
 		};
 		SiteUrlFactory mobileSiteUrlFactory = new SiteUrlFactory() {
@@ -82,7 +82,7 @@ public class SiteSwitcherRequestFilterTest {
 			}
 
 			public String createSiteUrl(HttpServletRequest request) {
-				return "http://m.app.com";
+				return "https://m.app.com";
 			}
 		};
 		SiteUrlFactory tabletSiteUrlFactory = new SiteUrlFactory() {
@@ -91,7 +91,7 @@ public class SiteSwitcherRequestFilterTest {
 			}
 
 			public String createSiteUrl(HttpServletRequest request) {
-				return "http://app.com/t";
+				return "https://app.com/t";
 			}
 		};
 		SitePreferenceHandler sitePreferenceHandler = new StandardSitePreferenceHandler(sitePreferenceRepository);
@@ -120,7 +120,7 @@ public class SiteSwitcherRequestFilterTest {
 		device.setDeviceType(DeviceType.NORMAL);
 		sitePreferenceRepository.setSitePreference(SitePreference.MOBILE);
 		siteSwitcher.doFilter(request, response, filterChain);
-		assertEquals("http://m.app.com", response.getRedirectedUrl());
+		assertEquals("https://m.app.com", response.getRedirectedUrl());
 	}
 
 	@Test
@@ -128,14 +128,14 @@ public class SiteSwitcherRequestFilterTest {
 		device.setDeviceType(DeviceType.NORMAL);
 		sitePreferenceRepository.setSitePreference(SitePreference.TABLET);
 		siteSwitcher.doFilter(request, response, filterChain);
-		assertEquals("http://app.com/t", response.getRedirectedUrl());
+		assertEquals("https://app.com/t", response.getRedirectedUrl());
 	}
 
 	@Test
 	public void mobileDeviceNoPreference() throws Exception {
 		device.setDeviceType(DeviceType.MOBILE);
 		siteSwitcher.doFilter(request, response, filterChain);
-		assertEquals("http://m.app.com", response.getRedirectedUrl());
+		assertEquals("https://m.app.com", response.getRedirectedUrl());
 	}
 
 	@Test
@@ -151,7 +151,7 @@ public class SiteSwitcherRequestFilterTest {
 		device.setDeviceType(DeviceType.MOBILE);
 		sitePreferenceRepository.setSitePreference(SitePreference.MOBILE);
 		siteSwitcher.doFilter(request, response, filterChain);
-		assertEquals("http://m.app.com", response.getRedirectedUrl());
+		assertEquals("https://m.app.com", response.getRedirectedUrl());
 	}
 
 	@Test
@@ -159,14 +159,14 @@ public class SiteSwitcherRequestFilterTest {
 		device.setDeviceType(DeviceType.MOBILE);
 		sitePreferenceRepository.setSitePreference(SitePreference.TABLET);
 		siteSwitcher.doFilter(request, response, filterChain);
-		assertEquals("http://app.com/t", response.getRedirectedUrl());
+		assertEquals("https://app.com/t", response.getRedirectedUrl());
 	}
 
 	@Test
 	public void tabletDeviceNoPreference() throws Exception {
 		device.setDeviceType(DeviceType.TABLET);
 		siteSwitcher.doFilter(request, response, filterChain);
-		assertEquals("http://app.com/t", response.getRedirectedUrl());
+		assertEquals("https://app.com/t", response.getRedirectedUrl());
 	}
 
 	@Test
@@ -182,7 +182,7 @@ public class SiteSwitcherRequestFilterTest {
 		device.setDeviceType(DeviceType.TABLET);
 		sitePreferenceRepository.setSitePreference(SitePreference.MOBILE);
 		siteSwitcher.doFilter(request, response, filterChain);
-		assertEquals("http://m.app.com", response.getRedirectedUrl());
+		assertEquals("https://m.app.com", response.getRedirectedUrl());
 	}
 
 	@Test
@@ -190,7 +190,7 @@ public class SiteSwitcherRequestFilterTest {
 		device.setDeviceType(DeviceType.TABLET);
 		sitePreferenceRepository.setSitePreference(SitePreference.TABLET);
 		siteSwitcher.doFilter(request, response, filterChain);
-		assertEquals("http://app.com/t", response.getRedirectedUrl());
+		assertEquals("https://app.com/t", response.getRedirectedUrl());
 	}
 
 	@Test(expected = ServletException.class)
@@ -254,7 +254,7 @@ public class SiteSwitcherRequestFilterTest {
 		assertEquals(1, response.getCookies().length);
 		assertEquals(".app.com", response.getCookies()[0].getDomain());
 		assertEquals("MOBILE", response.getCookies()[0].getValue());
-		assertEquals("http://m.app.com", response.getRedirectedUrl());
+		assertEquals("https://m.app.com", response.getRedirectedUrl());
 	}
 
 	@Test
@@ -273,7 +273,7 @@ public class SiteSwitcherRequestFilterTest {
 		device.setDeviceType(DeviceType.MOBILE);
 		filterTest("mDot");
 		assertEquals(0, response.getCookies().length);
-		assertEquals("http://m.app.com", response.getRedirectedUrl());
+		assertEquals("https://m.app.com", response.getRedirectedUrl());
 	}
 	
 	@Test
@@ -282,7 +282,7 @@ public class SiteSwitcherRequestFilterTest {
 		request.setQueryString(UriUtils.encodeQuery("city=Z\u00fcrich", "UTF-8"));
 		filterTest("mDot");
 		assertEquals(0, response.getCookies().length);
-		assertEquals("http://m.app.com?city=Z%C3%BCrich", response.getRedirectedUrl());
+		assertEquals("https://m.app.com?city=Z%C3%BCrich", response.getRedirectedUrl());
 	}
 
 	@Test
@@ -304,7 +304,7 @@ public class SiteSwitcherRequestFilterTest {
 		assertEquals(1, response.getCookies().length);
 		assertEquals(".app.com", response.getCookies()[0].getDomain());
 		assertEquals("MOBILE", response.getCookies()[0].getValue());
-		assertEquals("http://m.app.com", response.getRedirectedUrl());
+		assertEquals("https://m.app.com", response.getRedirectedUrl());
 	}
 
 	@Test
@@ -345,7 +345,7 @@ public class SiteSwitcherRequestFilterTest {
 		assertEquals(1, response.getCookies().length);
 		assertEquals(".app.com", response.getCookies()[0].getDomain());
 		assertEquals("MOBILE", response.getCookies()[0].getValue());
-		assertEquals("http://m.app.com", response.getRedirectedUrl());
+		assertEquals("https://m.app.com", response.getRedirectedUrl());
 	}
 
 	@Test
@@ -384,7 +384,7 @@ public class SiteSwitcherRequestFilterTest {
 		mDot.init(filterConfig);
 		mDot.doFilter(request, response, filterChain);
 		assertEquals(0, response.getCookies().length);
-		assertEquals("http://m.app.com", response.getRedirectedUrl());
+		assertEquals("https://m.app.com", response.getRedirectedUrl());
 	}
 
 	@Test
@@ -398,7 +398,7 @@ public class SiteSwitcherRequestFilterTest {
 		mDot.init(filterConfig);
 		mDot.doFilter(request, response, filterChain);
 		assertEquals(0, response.getCookies().length);
-		assertEquals("http://m.app.com", response.getRedirectedUrl());
+		assertEquals("https://m.app.com", response.getRedirectedUrl());
 	}
 
 	// dotMobi tests
@@ -889,7 +889,7 @@ public class SiteSwitcherRequestFilterTest {
 		MockFilter otherFilter = new MockFilter(servlet);
 		MockFilterChain chain = new MockFilterChain(servlet, siteSwitcher, otherFilter);
 		chain.doFilter(this.request, this.response);
-		assertEquals("http://m.app.com", response.getRedirectedUrl());
+		assertEquals("https://m.app.com", response.getRedirectedUrl());
 		assertFalse(otherFilter.invoked);
 		verify(servlet);
 	}

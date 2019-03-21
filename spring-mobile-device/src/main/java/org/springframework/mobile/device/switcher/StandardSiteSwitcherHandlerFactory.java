@@ -140,7 +140,7 @@ public class StandardSiteSwitcherHandlerFactory {
 	/**
 	 * Creates a site switcher that redirects to a path on the current domain for normal site requests that either
 	 * originate from a mobile device or indicate a mobile site preference.
-	 * Allows you to configure a root path for an application. For example, if your app is running at <code>http://www.domain.com/myapp</code>,
+	 * Allows you to configure a root path for an application. For example, if your app is running at <code>https://www.domain.com/myapp</code>,
 	 * then the root path is <code>/myapp</code>.
 	 * Uses a {@link CookieSitePreferenceRepository} that saves a cookie that is stored on the root path.
 	 */
@@ -156,7 +156,7 @@ public class StandardSiteSwitcherHandlerFactory {
 	/**
 	 * Creates a site switcher that redirects to a path on the current domain for normal site requests that either
 	 * originate from a mobile device or tablet device, or indicate a mobile or tablet site preference.
-	 * Allows you to configure a root path for an application. For example, if your app is running at <code>http://www.domain.com/myapp</code>,
+	 * Allows you to configure a root path for an application. For example, if your app is running at <code>https://www.domain.com/myapp</code>,
 	 * then the root path is <code>/myapp</code>.
 	 * Uses a {@link CookieSitePreferenceRepository} that saves a cookie that is stored on the root path.
 	 */

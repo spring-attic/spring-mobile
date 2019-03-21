@@ -136,56 +136,56 @@ public final class NormalSitePathUrlFactoryTest extends AbstractSitePathUrlFacto
 	public void createRootSiteUrlMobile() {
 		request.setServerPort(80);
 		request.setRequestURI("/mob/foo");
-		assertEquals("http://www.app.com/foo", basicRootFactory.createSiteUrl(request));
+		assertEquals("https://www.app.com/foo", basicRootFactory.createSiteUrl(request));
 	}
 
 	@Test
 	public void createRootSiteUrlTablet() {
 		request.setServerPort(80);
 		request.setRequestURI("/tab/foo");
-		assertEquals("http://www.app.com/foo", basicRootFactory.createSiteUrl(request));
+		assertEquals("https://www.app.com/foo", basicRootFactory.createSiteUrl(request));
 	}
 
 	@Test
 	public void createRootSiteUrlMobilePort8080() {
 		request.setServerPort(8080);
 		request.setRequestURI("/mob/foo");
-		assertEquals("http://www.app.com:8080/foo", basicRootFactory.createSiteUrl(request));
+		assertEquals("https://www.app.com:8080/foo", basicRootFactory.createSiteUrl(request));
 	}
 
 	@Test
 	public void createRootSiteUrlTabletPort8080() {
 		request.setServerPort(8080);
 		request.setRequestURI("/tab/foo");
-		assertEquals("http://www.app.com:8080/foo", basicRootFactory.createSiteUrl(request));
+		assertEquals("https://www.app.com:8080/foo", basicRootFactory.createSiteUrl(request));
 	}
 
 	@Test
 	public void createPathSiteUrlMobile() {
 		request.setServerPort(80);
 		request.setRequestURI("/showcase/mob/foo");
-		assertEquals("http://www.app.com/showcase/foo", basicPathFactory.createSiteUrl(request));
+		assertEquals("https://www.app.com/showcase/foo", basicPathFactory.createSiteUrl(request));
 	}
 
 	@Test
 	public void createPathSiteUrlTablet() {
 		request.setServerPort(80);
 		request.setRequestURI("/showcase/tab/foo");
-		assertEquals("http://www.app.com/showcase/foo", basicPathFactory.createSiteUrl(request));
+		assertEquals("https://www.app.com/showcase/foo", basicPathFactory.createSiteUrl(request));
 	}
 
 	@Test
 	public void createPathSiteUrlMobilePort8080() {
 		request.setServerPort(8080);
 		request.setRequestURI("/showcase/mob/foo");
-		assertEquals("http://www.app.com:8080/showcase/foo", basicPathFactory.createSiteUrl(request));
+		assertEquals("https://www.app.com:8080/showcase/foo", basicPathFactory.createSiteUrl(request));
 	}
 
 	@Test
 	public void createPathSiteUrlTabletPort8080() {
 		request.setServerPort(8080);
 		request.setRequestURI("/showcase/tab/foo");
-		assertEquals("http://www.app.com:8080/showcase/foo", basicPathFactory.createSiteUrl(request));
+		assertEquals("https://www.app.com:8080/showcase/foo", basicPathFactory.createSiteUrl(request));
 	}
 
 }

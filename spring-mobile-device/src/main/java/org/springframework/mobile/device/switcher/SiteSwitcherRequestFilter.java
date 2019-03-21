@@ -156,8 +156,8 @@ public class SiteSwitcherRequestFilter extends OncePerRequestFilter {
 
 	/**
 	 * Creates a new site switcher.
-	 * @param normalSiteUrlFactory the factory for a "normal" site URL e.g. http://app.com
-	 * @param mobileSiteUrlFactory the factory for a "mobile" site URL e.g. http://m.app.com
+	 * @param normalSiteUrlFactory the factory for a "normal" site URL e.g. https://app.com
+	 * @param mobileSiteUrlFactory the factory for a "mobile" site URL e.g. https://m.app.com
 	 * @param tabletSiteUrlFactory the factory for a "tablet" site
 	 * @param sitePreferenceHandler the handler for the user site preference
 	 */

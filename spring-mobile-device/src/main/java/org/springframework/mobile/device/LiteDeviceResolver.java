@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServletRequest;
  * 
  * Tablet resolution is also performed based on known tablet browser UA strings. Android
  * tablets are detected based on <a href=
- * "http://googlewebmastercentral.blogspot.com/2011/03/mo-better-to-also-detect-mobile-user.html"
+ * "https://googlewebmastercentral.blogspot.com/2011/03/mo-better-to-also-detect-mobile-user.html"
  * >Google's recommendations</a>.
  * 
  * @author Keith Donald

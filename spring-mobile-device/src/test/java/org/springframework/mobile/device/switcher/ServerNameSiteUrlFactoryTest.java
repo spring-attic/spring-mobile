@@ -46,7 +46,7 @@ public class ServerNameSiteUrlFactoryTest {
 		request.setServerName("m.app.com");
 		request.setServerPort(80);
 		request.setRequestURI("/foo");
-		assertEquals("http://m.app.com/foo", factory.createSiteUrl(request));
+		assertEquals("https://m.app.com/foo", factory.createSiteUrl(request));
 	}
 
 }

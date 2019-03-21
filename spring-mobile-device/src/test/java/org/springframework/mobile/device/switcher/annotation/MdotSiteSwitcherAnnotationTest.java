@@ -59,7 +59,7 @@ public class MdotSiteSwitcherAnnotationTest {
 			}
 		});
 		interceptor.preHandle(request, response, null);
-		assertThat(response.getRedirectedUrl()).isEqualToIgnoringWhitespace("http://m.server.local");
+		assertThat(response.getRedirectedUrl()).isEqualToIgnoringWhitespace("https://m.server.local");
 	}
 
 }
