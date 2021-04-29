@@ -1,3 +1,5 @@
+**This project is no longer active and has reached end of life**
+
 # Spring Mobile
 
 [!["Build Status"](https://build.spring.io/plugins/servlet/wittified/build-status/MOBILE-MASTER)](https://build.spring.io/browse/MOBILE-MASTER)
