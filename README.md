@@ -1,3 +1,5 @@
+# spring-mobile is no longer actively maintained by VMware, Inc.
+
 **This project is no longer active and has reached end of life**
 
 # Spring Mobile
